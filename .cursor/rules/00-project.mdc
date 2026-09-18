@@ -1,0 +1,12 @@
+---
+description: Route every Agent turn through the F1 AI/quantum strategy project rules
+alwaysApply: true
+---
+
+Read `AGENTS.md` and `PROJECT_STATUS.md` before acting. Inspect the local evidence ledger before running anything.
+
+Authoritative scientific protocol: `docs/protocol/` (dossier PDF, extracted text, SOURCE_HASH, traceability, protocol record). The dossier is not to be silently rewritten.
+
+Stage 1 only. Do not implement the scenario generator, simulator, QUBO, learned policy, or any provider/QPU submission path. Hardware execution stays disabled. Zero additional spending.
+
+Command contract: `python -m f1q doctor|status|run --plan bootstrap|resume --run-id|receipt --run-id`. Pushing to GitHub is a separate user instruction.

@@ -1,0 +1,236 @@
+{
+  "$defs": {
+    "ArtifactRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "created_at_utc": {
+          "title": "Created At Utc",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "relative_path": {
+          "title": "Relative Path",
+          "type": "string"
+        },
+        "run_id": {
+          "title": "Run Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sha256": {
+          "maxLength": 64,
+          "minLength": 64,
+          "title": "Sha256",
+          "type": "string"
+        },
+        "unit_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit Id"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "run_id",
+        "relative_path",
+        "sha256",
+        "kind",
+        "created_at_utc"
+      ],
+      "title": "ArtifactRecord",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifact_index": {
+      "items": {
+        "$ref": "#/$defs/ArtifactRecord"
+      },
+      "title": "Artifact Index",
+      "type": "array"
+    },
+    "authorization_scope": {
+      "title": "Authorization Scope",
+      "type": "string"
+    },
+    "configuration_hash": {
+      "title": "Configuration Hash",
+      "type": "string"
+    },
+    "configuration_hash_kind": {
+      "const": "draft",
+      "default": "draft",
+      "title": "Configuration Hash Kind",
+      "type": "string"
+    },
+    "dependency_lock_hash": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Dependency Lock Hash"
+    },
+    "dossier_sha256": {
+      "title": "Dossier Sha256",
+      "type": "string"
+    },
+    "duration_monotonic_s": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Duration Monotonic S"
+    },
+    "ended_at_utc": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ended At Utc"
+    },
+    "evidence_kind": {
+      "enum": [
+        "setup_fixture",
+        "training",
+        "tuning",
+        "calibration",
+        "test",
+        "shift",
+        "development"
+      ],
+      "title": "Evidence Kind",
+      "type": "string"
+    },
+    "git_commit": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Git Commit"
+    },
+    "git_dirty": {
+      "title": "Git Dirty",
+      "type": "boolean"
+    },
+    "plan_id": {
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "planned_unit_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Planned Unit Ids",
+      "type": "array"
+    },
+    "provider_job_id": {
+      "default": null,
+      "title": "Provider Job Id",
+      "type": "null"
+    },
+    "provider_job_id_reason": {
+      "default": "Not applicable: Stage 1 has no provider submission path and hardware is disabled.",
+      "title": "Provider Job Id Reason",
+      "type": "string"
+    },
+    "qpu_usage_seconds": {
+      "const": 0,
+      "default": 0,
+      "title": "Qpu Usage Seconds",
+      "type": "integer"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed_specification": {
+      "additionalProperties": true,
+      "title": "Seed Specification",
+      "type": "object"
+    },
+    "source_snapshot_hash": {
+      "title": "Source Snapshot Hash",
+      "type": "string"
+    },
+    "stage": {
+      "title": "Stage",
+      "type": "integer"
+    },
+    "started_at_utc": {
+      "title": "Started At Utc",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "running",
+        "completed",
+        "failed",
+        "interrupted"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "stage",
+    "plan_id",
+    "evidence_kind",
+    "source_snapshot_hash",
+    "git_commit",
+    "git_dirty",
+    "dossier_sha256",
+    "configuration_hash",
+    "dependency_lock_hash",
+    "planned_unit_ids",
+    "seed_specification",
+    "authorization_scope",
+    "started_at_utc",
+    "status"
+  ],
+  "title": "RunManifest",
+  "type": "object"
+}

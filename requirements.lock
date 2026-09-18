@@ -1,0 +1,14 @@
+# Dependency lock for Stage 1 (third-party pins). This is not a machine-specific environment inventory.
+# Install: python3.12 -m venv .venv && .venv/bin/python -m pip install -r requirements.lock && .venv/bin/python -m pip install -e ".[dev]"
+# Generated 2026-09-19 from CPython 3.12.13 on macOS arm64.
+annotated-types==0.8.0
+iniconfig==2.3.0
+packaging==26.3
+pluggy==1.6.0
+pydantic==2.13.5
+pydantic_core==2.46.5
+Pygments==2.21.0
+pytest==8.4.2
+PyYAML==6.0.3
+typing-inspection==0.4.4
+typing_extensions==4.16.0

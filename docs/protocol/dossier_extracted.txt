@@ -1,0 +1,1552 @@
+
+
+===== PAGE 1 / 33 =====
+Research dossier
+Deadline constrained AI and quantum optimisation for Formula 1 strategy
+Version 3.1 | Research design and execution specification
+Kawin Rehan Perera | Doctor of Business Administration Programme
+18 September 2026 | Literature and provider policies checked on this date
+This corrected revision supersedes version 3.0 and retains the redesign of version 2. It
+proposes a study; it reports no new experimental results. Implementation, protocol freeze,
+physical quantum execution, manuscript writing and journal selection remain subsequent
+stages.
+Decision. Proceed with a staged, zero additional spending research project. The
+strongest defensible direction is an auditable study of when a learned quantum candidate
+generator can contribute to a two-car pit decision before a deadline, and when the available
+classical solution or model uncertainty leaves it no useful role.
+The immediate deliverable is a reproducible motorsport decision benchmark, a learned
+parameter-selection component, carefully controlled circuit comparisons, and an empirical map
+of their limits. Demonstrating benefit in actual Formula 1 operations requires additional
+evidence beyond a simulator. Neither this dossier nor a successful hardware run establishes
+that benefit.
+The design changes materially. Small one-hot formulations are treated as compiler and
+sampling tests, not evidence of computational difficulty. Historical timing data becomes an
+optional, permission-gated validation track. Local experiments carry the statistical workload.
+Physical hardware has a narrowly defined validation role within the reported 540-second
+balance.
+Absolute novelty, future quantum advantage, publication acceptance and recruitment by a
+team cannot be guaranteed. The study is designed to earn a specific, bounded contribution
+through comparisons and reproducible evidence, including evidence that quantum execution is
+presently unnecessary.
+What remains non-negotiable
+AI must perform an evaluated runtime function. The quantum component must be physically
+tested if the preceding scientific and budget gates pass. The decision problem must retain
+meaningful motorsport mechanisms. No study-specific paid services are assumed. The
+completed earlier study and its evidence remain unchanged.
+This is independent research. No association with, endorsement by, or access to a Formula 1
+team is represented.
+Research design | Version 3.1 | 18 September 2026
+1 / 33
+
+----- PAGE 1 META: chars=2446 images=0 -----
+
+===== PAGE 2 / 33 =====
+Corrections in version 3.1
+This review found implementation and inference gaps that needed correction before coding. No
+experiment has been conducted or reinterpreted. The changes below form part of the
+specification and take precedence over version 3.0.
+Issue found
+Correction
+Nominal deadline could exceed
+pit-entry opportunity
+Effective deadlines now include action expiry, state freshness and a
+commitment margin.
+Development data could fit, tune and
+calibrate the same model
+Training, tuning and calibration have separate block assignments
+and frozen roles.
+Readiness score called a confidence
+estimate without a coverage
+argument
+It is now an empirical prediction score, with separate held-out
+coverage checks and no guaranteed improvement claim.
+Circuit matrix assumed an optional
+third circuit on every case
+C0 and C1 define the core; C2 is a separately registered conditional
+local study.
+Circuit comparisons and
+parameter-policy ablations were
+incompletely counted
+The matrix states which counts are per parameter policy and which
+experiments remain conditional.
+Dropping repetitions did not fix an
+individual job's insufficient cap
+Pilot-based reservations and two alternative complete hardware
+schedules replace the ambiguous fallback.
+Quantum penalty and
+parameter-scaling conditions were
+incomplete
+The feasibility assumptions, a sufficient penalty bound and
+normalisation rules are explicit.
+Repeated stochastic decisions and
+simulation uncertainty were
+underspecified
+Policy seeds, paired blocks and a single primary resampling
+procedure are specified.
+Small exact cases could trigger an
+uninformative large superiority study
+A pre-test headroom gate prevents powering a mathematically
+unavailable improvement.
+Generic learned solver allocation had
+insufficient prior-art coverage
+Algorithm-selection precedent is now cited directly.
+What this correction does not establish
+The research design still needs its implementation pilot, frozen simulator parameters and
+source permissions for any historical extension. Those are declared future tasks, not completed
+checks. Neither this review nor the proposed run counts establishes absolute novelty,
+operational F1 benefit or future quantum superiority.
+The main restrictions remain unchanged: no additional spending, the reported 540-second QPU
+allowance, a protected reserve, immutable evidence, and the copy-paste Cursor workflow.
+Research design | Version 3.1 | 18 September 2026
+2 / 33
+
+----- PAGE 2 META: chars=2453 images=0 -----
+
+===== PAGE 3 / 33 =====
+1 How to use this specification
+The project proceeds in three distinct stages: finalise this research design; implement and
+collect evidence through Cursor; then write the article and select a suitable journal. A plan is
+not a result, and a generated configuration is not a frozen protocol until its unresolved
+feasibility choices have been recorded.
+Reading map
+Sections
+Purpose
+2 to 4
+Corrections, related work and the proposed contribution
+5 to 10
+Decision domain, data, simulator, formulation and exact references
+11 to 15
+AI, circuits, acceptance and deadlines
+16 to 19
+Comparators, experiment counts and statistical analysis
+20 to 22
+Physical hardware campaign and conditional readiness analysis
+23 to 27
+Cursor workflow, evidence, implementation and claim limits
+28 to 30
+Sources and the protocol freeze record
+Fixed constraints
+The user is a non-coder and has no assumed circuit-design expertise. ChatGPT prepares
+complete, scoped prompts; the user copies them into Cursor. Cursor must eventually translate
+“do a run” into one clearly identified, resumable unit of the frozen plan. It must save the raw
+evidence and report actual completion. Pushing to GitHub remains a separate requested
+action.
+Only existing paid subscriptions may be used. Core work uses local computation and free
+software. The hardware allowance is the user's reported nine minutes, provisionally 540
+seconds, to be checked against the provider account before any job. It is not an authenticated
+balance in this document.
+The closed project is not reopened. Its manuscript, 20 historical GHZ observations and other
+decision-study evidence are not reused as new F1 results. A new isolated repository is
+preferred. If the existing repository is retained, use a separate top-level directory and enforce
+an allowlist of writable paths.
+Meaning of the labels
+Verified refers to a checked source or a completed implementation check with evidence.
+Proposed denotes a research choice in this dossier. Conditional means the choice depends
+on a stated gate. Measured may be used only after a run produces its raw record. These
+distinctions apply to every report, table and later manuscript.
+Approving the dossier is not a command to execute experiments or publish results. Subsequent
+implementation and run instructions determine the authorised scope.
+Research design | Version 3.1 | 18 September 2026
+3 / 33
+
+----- PAGE 3 META: chars=2379 images=0 -----
+
+===== PAGE 4 / 33 =====
+2 Corrections to version 2
+Version 2 contains useful priorities: deadline accounting, fallback decisions, strong classical
+references, independent counterfactual evaluation, learned parameter transfer, limited
+hardware use and immutable evidence. Those priorities are retained. Several supporting claims
+require replacement.
+Version 2 issue
+Required correction
+24 binary variables imply 2²⁴ relevant
+choices
+Exactly one selected action gives only 24 legal choices; a stay option
+may add one. Count legal plans, not unused bit strings.
+Published timings settle unmatched
+current comparisons
+Timings concern particular models, machines and objectives.
+Benchmark equivalent problems; do not infer a universal
+impossibility.
+A predictor must beat an optimised
+ceiling
+Compare with a best-found offline reference using non-inferiority,
+and with simpler runtime parameter policies using superiority.
+No predictor means no
+deadline-feasible quantum arm
+Fixed angles and lookup transfer also avoid an online optimisation
+loop. They are required baselines.
+Identical candidate pools across
+solvers
+Use identical information, objectives and budgets. Candidate
+generation must be allowed to differ.
+Same seed guarantees effective CRN
+Couple random quantities by event identity; measure the covariance
+and variance reduction.
+Simulator model error is inherited
+from citations
+Validate this implementation and corpus. Sampling intervals do not
+cover structural model error.
+Historical longest stint is a safety
+limit
+Treat it as a prior or modelling assumption, not a physical or
+regulatory maximum.
+Deadline admissibility is a new
+general theoretical result
+Deadline-aware metareasoning has precedent. Establish a narrower
+empirical or methodological contribution.
+Replication and sample-size
+justification are unspecified
+Match sample size to effect, variance, dependence and precision.
+Hardware evidence remains small.
+The revised design also removes an implicit guarantee that improved quantum hardware will
+eventually win. A faster processor cannot create value where encoding has already revealed
+the optimum, where model error dominates the action gap, or where a stronger classical
+method solves the same task first.
+The empirical question is therefore conditional: under which explicitly measured combinations
+of decision difficulty, uncertainty, circuit quality and latency is a quantum candidate useful?
+Research design | Version 3.1 | 18 September 2026
+4 / 33
+
+----- PAGE 4 META: chars=2459 images=0 -----
+
+===== PAGE 5 / 33 =====
+3 Related work and novelty boundaries
+The literature check establishes nearby precedents, not an exhaustive proof of originality.
+Search again before protocol freeze and manuscript submission, recording queries, dates,
+versions and full texts actually inspected.
+Race strategy optimisation. Carrasco Heine and Thraves develop deterministic and
+stochastic dynamic programming for pit strategies [1]. Their model is a baseline source, not
+proof that every traffic-coupled team problem is solved. The accessible implementation
+provides a route to validating a restricted DP reference [2].
+Direct F1 QUBO precedent. Sophie Kolstee's 2026 Leiden bachelor's thesis, previously
+unverified in version 2, is available [3]. It studies QUBO formulations using simulated and
+quantum-inspired annealing on synthetic instances. It does not report physical QPU
+experiments. A first-F1-QUBO claim is unavailable.
+Learned racing decisions. Thomas and colleagues study reinforcement-learning pit strategy
+with a proprietary Mercedes simulator [4]. Fieni and colleagues study learned multi-agent
+racing strategies [5]. Their existence rules out a generic first-AI-strategist claim; their
+inaccessible components must not become a hidden dependency.
+The nearest systems precedent. Santillana's Pitwall preprint describes calibrated Monte
+Carlo strategy evaluation, common random numbers, verified briefings and author-reported
+live deployments [6]. Those deployment claims are attributed to the preprint, not
+independently verified here. A generic grounded, deadline-aware strategy pipeline is not new.
+Quantum methods. QAOA, alternating-operator constructions and warm starts are
+established [7-9]. Graph-based and cross-problem parameter transfer also precede this
+proposal [10-12]. Gupta and Hassan explicitly develop guarded XY moves and collective
+exchanges for rostering [13]. Adapting such moves to pit decisions is not inventing the general
+technique.
+Simulation and decision theory. Learned algorithm selection is established [27]; it is not
+made novel by renaming it an allocator. Common random numbers and metareasoning under
+limited resources have prior theory [14-15]. Galbraith's information-processing perspective
+may motivate organisational relevance [16], but “late computation has no value” is not a new
+general theorem: late results can still support learning or later decisions.
+Candidate contribution
+Test a margin-aware allocation policy that links learned quantum sampling, uncertainty in the
+decision model and the complete decision deadline. Publish the cases in which it declines
+quantum execution, as well as those in which it accepts it. Its originality must be assessed
+against algorithm selection, metareasoning, racing strategy and quantum benchmarking
+together.
+The contribution is provisional until the difference from these methods is implemented, tested
+and shown to matter.
+Research design | Version 3.1 | 18 September 2026
+5 / 33
+
+----- PAGE 5 META: chars=2947 images=0 -----
+
+===== PAGE 6 / 33 =====
+4 Questions and proposed contributions
+Primary question. Does the proposed allocation policy improve the quality of a
+deadline-bounded team decision over the strongest included classical policy selected on tuning
+data, under the same information and end-to-end resource accounting?
+Supporting questions. Does learned parameter selection outperform fixed and
+nearest-neighbour transfer? Does a structured circuit yield more useful feasible candidates per
+unit of execution cost? How much of any apparent optimisation improvement survives
+independent race simulation? Which delays, errors or modelling assumptions prevent useful
+quantum participation?
+Three contributions to attempt
+A decision benchmark. Release generated scenario definitions, causal checkpoint states,
+exact small-instance references, solver interfaces and an auditable deadline protocol. A
+benchmark is valuable only if it tests meaningful failure modes and can be reused; “open
+source” alone is not novelty.
+A bounded allocation method. Combine an incumbent, a resolvable improvement margin, a
+learned estimate of candidate success, and a measured or explicitly modelled latency budget.
+Dispatch only when there is credible room for improvement. Evaluate against always-classical,
+always-quantum and simple threshold allocation.
+A hardware-linked boundary study. Measure how ideal, noisy and physical circuits change
+useful-candidate yield, then identify conditional latency and sample-quality requirements.
+Report these as requirements within a defined benchmark, not universal specifications for a
+future F1 computer.
+Proposed hypotheses to freeze
+H1 estimates the paired difference in simulated team loss at the nominal 30-second deadline,
+shortened where commitment cutoffs require. H2 compares learned and simple parameter
+policies on optimal-sample probability and regret. H3 compares C1 with C0 on raw feasibility
+and optimal-sample probability. H2 and H3 are exploratory mechanism analyses; hardware is
+descriptive validation. The H1 superiority test proceeds only if the pre-freeze headroom gate
+permits it.
+The planned minimum worthwhile H1 effect is 0.02 on the normalised team-rank loss defined in
+section 9. This is a research threshold, not an elicited team preference. Show the
+corresponding unnormalised positions and sensitivity at 0.01 and 0.05. Freeze the threshold
+before test outcomes are viewed.
+Failure remains informative but not automatically publishable
+If AI adds no measurable value, remove the AI-performance claim. If all decision instances have
+zero optimisation headroom, report that fact and restrict quantum claims to sampling and
+integration. If no substantive difference from prior work remains, redesign before spending
+hardware time. A negative result needs a meaningful question and reliable measurement.
+Research design | Version 3.1 | 18 September 2026
+6 / 33
+
+----- PAGE 6 META: chars=2870 images=0 -----
+
+===== PAGE 7 / 33 =====
+5 Decision domain and scope
+The core domain is a dry-weather, two-car team choosing whether to pit now, delay by one or
+two completed laps, or continue with a frozen feasible continuation policy after a safety-car or
+virtual-safety-car checkpoint. The choice includes a tyre compound and an available set. The
+simulator carries the consequences to race end.
+Use a synthetic 20-car field for the core benchmark. This is a declared model setting, not a
+claim about the grid size or rules of every Formula 1 season. Parameterise field size, points
+schedules and sporting rules rather than hard-coding “19 rivals.” Any historical extension pins
+the applicable season and event documents [17].
+State available at the checkpoint
+Record lap, race-clock position and each car's pit-entry commitment cutoff; safety regime and
+information known about its duration; positions and gaps; compound and tyre age; fuel
+estimate and uncertainty; tyre-set inventory; pit-lane status; team service state; completed
+compound obligations; and the remaining horizon.
+Every field carries a source, unit, availability time and known, inferred or assumed status.
+Decisions use the information available at the checkpoint. They do not see the sampled future
+safety-car duration, a rival's eventual pit lap or the current lap's final time.
+Coupling that is worth modelling
+Two team cars may interfere through double stacking, rejoin traffic, service order and position
+trade-offs. Rivals can react under a specified policy. Fuel, tyre wear and traffic affect the
+continuation. These mechanisms create decision relevance; merely adding binary variables
+does not.
+Double stacking is normally a delay mechanism, not a universal prohibition. Model
+the shared crew and the second car's waiting time. A “never double stack” rule is an optional
+declared team policy, not an FIA requirement. Do not invent such a prohibition to create a
+difficult constraint graph.
+Initial exclusions
+Wet transitions, red flags, sprint-specific rules, tyre damage and detailed energy deployment
+are excluded from the primary experiment. A checkpoint requiring an unsupported mechanism
+is rejected with a recorded reason. Later stress tests may add one mechanism at a time, with
+separate results.
+The fallback is a feasible team plan revalidated at commitment, including a legal continuation.
+“Stay out” is an explicit candidate when feasible, not an unconditional substitute for
+compliance with the remaining race rules.
+Research design | Version 3.1 | 18 September 2026
+7 / 33
+
+----- PAGE 7 META: chars=2526 images=0 -----
+
+===== PAGE 8 / 33 =====
+6 Data provenance and real-world validation
+Core data are generated. Use independently specified, fictional drivers, teams and track
+archetypes. Publish the generator and its distributions. Do not present synthetic checkpoints as
+historical races or evidence of deployment.
+Formula 1's published guidelines restrict AI use of its protected rights without an express
+licence [18]. These are the rights holder's stated conditions, not a determination that every
+historical fact or independent dataset is legally unavailable. Document the lawful basis and
+applicable source terms for the intended use. FastF1's MIT software licence does not itself
+license underlying timing records [19].
+Accordingly, no protected timing feed is required for the core study. Before any historical-data
+track, record the source's terms and the permission covering the intended analysis, learning
+and publication. A software licence or a downloadable file alone is insufficient. No paid licence
+is assumed.
+Open software and input files are separate
+The TUM race-simulation repository is a candidate implementation base under LGPL-3.0 [20].
+Audit bundled configurations and data separately before reuse. Preserve applicable notices and
+modifications. If a required input lacks clear provenance, replace it with a documented
+generated input; do not silently treat it as open data.
+Optional historical validation
+Proceed only after suitable permission or a clearly applicable data licence is documented. A
+candidate chronological split is 2018-2021 for training, 2022 for tuning, 2023 for calibration
+and 2024-2025 for testing, subject to actual lawful coverage. This split is proposed, not an
+existing corpus.
+Aim for at least 30 eligible held-out races across at least 10 circuits and both SC and VSC
+conditions. A census must establish whether that coverage exists. Additional checkpoints
+within the same race do not substitute for independent races. If coverage is smaller, narrow the
+claim and calculate precision from the realised design.
+Reconstructed historical availability is not live receipt-time evidence. Finalised lap archives can
+leak later information. Tyre-set inventory and team intentions may be unavailable and must
+remain explicit assumptions.
+The route to actual F1 value
+Synthetic evidence can establish an algorithm's behaviour and expose integration
+requirements. Historical validation can test plausibility and calibration. A team's prospective
+shadow trial would be stronger evidence of operational value. These are distinct levels; only
+the level actually completed may appear in the article's claims.
+This dossier authorises no contact with a team or data owner. The method and evidence
+package can be prepared before any later outreach is requested.
+Research design | Version 3.1 | 18 September 2026
+8 / 33
+
+----- PAGE 8 META: chars=2813 images=0 -----
+
+===== PAGE 9 / 33 =====
+7 Generated corpus and generalisation
+Use eight families from three factors: low or high pit loss; near-linear or nonlinear tyre
+degradation; and sparse or dense traffic. Each independent parameter block generates eight
+separate episodes with causal checkpoints, four conditioned on SC and four on VSC. Advance
+valid states before applying the declared regime at a prescribed checkpoint. This balanced
+design does not estimate natural SC/VSC frequencies.
+Split
+Independent blocks
+Checkpoints
+Training
+120, 15 per family
+960
+Tuning
+16, 2 per family
+128
+Calibration
+24, 3 per family
+192
+Primary test floor
+80, 10 per family
+640
+Separate shift panel
+40
+320
+Training, tuning, calibration and primary test total 1,920 checkpoints at the floor; including the
+shift panel gives 2,240. Section 18 may raise the test count to 160 blocks before test access.
+Round increases to multiples of eight to preserve balance. Worlds and policy seeds do not add
+independent blocks.
+Roles and provenance
+Fit donor models and dispatch models on training blocks only. Select architectures,
+hyperparameters, circuit depth and the included classical comparator on tuning blocks. Freeze
+those choices before opening calibration blocks, which estimate score corrections, variance
+and replication counts. They do not train or retune the models. If calibration causes a model
+redesign, retire those blocks to development and generate a fresh calibration set before test
+access.
+Store block seed, generator version, parameters, family and split. Distinct keyed streams
+control episodes, coefficients, fitting, online scoring and final evaluation. All descendants
+remain in the parent split. Selection by favourable solver outcomes is forbidden.
+Starting ranges are declared assumptions: 20 cars; 12-45 remaining laps; green laps of 75-110
+seconds; green pit loss of 18-28 seconds; and explicit tyre, traffic and restart parameters. Audit
+and freeze the full distributions during the pilot. These ranges are not a calibrated estimate of
+F1 conditions.
+Panels and action menus
+The primary test samples new blocks within the eight families. The shift panel changes
+predeclared ranges or combinations and remains separate. It does not establish generalisation
+to actual circuits or seasons.
+Select 120 small quantum test cases from at least 60 test blocks and 12 hardware cases from
+distinct blocks by a frozen stratified hash. Freeze reduced action menus before solver
+outcomes and use them for all comparators. Report excluded actions. Restricted hardware
+cases do not test the complete menu.
+Research design | Version 3.1 | 18 September 2026
+9 / 33
+
+----- PAGE 9 META: chars=2618 images=0 -----
+
+===== PAGE 10 / 33 =====
+8 Simulator and counterfactual validity
+A changed pit decision changes the continuation. Static historical replay cannot reveal the
+unobserved alternative. The outcome in this study is conditional on a simulator, its policies and
+its uncertainty assumptions.
+The preferred starting point is a pinned adapter around TUM's full race simulator, subject to
+compatibility and checkpoint-resume tests [20]. Its basic free-track variant is useful for
+analytical checks but cannot validate traffic interactions. If the full simulator cannot support the
+required checkpoint semantics, implement a restricted independent model and narrow the
+claims; do not imply that repository reuse supplies missing validation.
+Required mechanism checks
+Check tyre-age and fuel updates, event ordering, pit entry and exit, shared-crew service, rejoin
+ordering, SC bunching, VSC pace control without equivalent bunching, restart transitions,
+compound obligations and end-of-race classification. An SC represented only by multiplying
+every lap time is insufficient for the primary SC claim.
+Resume a saved checkpoint and compare its continuation with an uninterrupted run under
+identical exogenous draws. Verify conservation of race-clock ordering, nonnegative service and
+travel times, legal tyre transitions and a consistent treatment of retirement. Compare simple
+no-traffic cases against an independently coded analytical or DP model.
+Avoid a self-confirming evaluator
+The objective compiler and final evaluator must not be the same function under different
+names. Build coefficients from a restricted model; score decisions with additional traffic and
+stochastic mechanisms. Validate both independently in cases with known answers.
+The final evaluator still shares assumptions with the generator. Address this by predeclared
+sensitivity models: changed degradation curvature, service variability, restart compression and
+rival responsiveness. Agreement between related models is robustness evidence, not empirical
+validation of real races.
+Rival response
+The core rival policy is frozen before test. It may recompute a feasible remaining strategy from
+its own observable state. Use a simpler non-reactive policy and a more responsive policy as
+sensitivity analyses. Do not feed actual future rival actions into an online comparison.
+Monte Carlo confidence intervals describe sampling variation conditional on these choices.
+Model discrepancy is addressed by calibration where lawful observations exist, cross-model
+checks and sensitivity analysis, and remains a limitation where it cannot be measured.
+Research design | Version 3.1 | 18 September 2026
+10 / 33
+
+----- PAGE 10 META: chars=2639 images=0 -----
+
+===== PAGE 11 / 33 =====
+9 Objective and QUBO specification
+For car c, let A(c) be its legal action plans. Each plan contains an immediate pit choice or
+continuation plus a specified downstream policy. Binary x(c,a) selects plan a, with exactly one
+plan selected per car.
+Proxy objective. Minimise the sum of per-plan costs and pairwise interaction costs. Per-plan
+cost covers predicted remaining time under the compiler model. Pair terms represent
+additional shared-crew and traffic effects. Do not add a separate degradation or traffic penalty
+if it is already included in predicted time.
+f(x) = Σ a(c,a)x(c,a) + Σ b(a,b)x(1,a)x(2,b).
+Before setting penalties, subtract each car's minimum unary cost from its unary coefficients
+and retain the offset as a constant. One-hot legality makes this exact on legal plans. It prevents
+a large shared race-time baseline from inflating penalties. Recompute bounds after centring
+and restore constants for physical-unit reporting.
+Any risk term must have explicit units and a linear or quadratic representation, or a separately
+verified reduction with auxiliary variables. Do not assume an arbitrary tail-risk functional is a
+QUBO. Choose weights on tuning data and show sensitivity including zero. Hard legality and
+risk preference are distinct.
+QUBO. Add one-hot penalties M[Σ x(c,a) - 1]² and any genuine additional hard-constraint
+penalties. Remove individually illegal actions before encoding. Document upper-triangular
+coefficient conventions, constants and the mapping x = (1 - Z)/2; verify energies and decoding
+exhaustively on small cases.
+Let B be the sum of absolute unpenalised coefficients, excluding the constant. Their objective
+range over all bit strings is at most B. Require P = 0 on every feasible state, P ≥ v_min > 0
+otherwise, and at least one feasible state. Then M > B/v_min suffices for f + MP: an infeasible
+penalty exceeds any possible unpenalised gain. Choose a strictly positive numerical margin
+and verify the encoded constraints. Version 3.0 used a looser bound but omitted the
+feasible-zero condition.
+Downstream outcome
+For field size F and the two cars' classified ranks r1 and r2, define normalised team-rank loss L
+= (r1 + r2 - 2) / [2(F - 1)]. Lower is better. Retirements follow a frozen classification rule. Report
+expected loss, individual ranks, team points under the chosen schedule, and a downside
+measure separately.
+The primary comparison is classical-policy loss minus proposed-policy loss, so positive values
+favour the proposed policy. This endpoint measures the modelled team objective. It is not
+automatically equivalent to championship utility or a team's actual preferences.
+A smaller f does not guarantee smaller expected L. Report ranking disagreement and decision
+regret between the proxy and the independent evaluator. This distinction is central to
+interpreting any solver result.
+Research design | Version 3.1 | 18 September 2026
+11 / 33
+
+----- PAGE 11 META: chars=2912 images=0 -----
+
+===== PAGE 12 / 33 =====
+10 Exact references and honest scaling
+With K actions for one car and one-hot selection, there are K legal plans. With two cars, there
+are at most K1 × K2 pairs. Six actions per car use 12 qubits but produce only 36 legal pairs.
+Enumerating millions of invalid bit strings would manufacture a classical disadvantage.
+If the compiler computes a complete table of every pair's objective, its minimum can be
+obtained by a cheap scan of that table. In that case quantum execution tests encoding and
+sampling, not a need for optimisation. Include the table construction and minimum search in
+the classical comparison.
+Three distinct references
+Exact proxy optimum. Enumerate all legal choices in the small action set. This certifies the
+minimum of f, not the best real race decision.
+Finite-simulation reference. Evaluate every legal pair using a fixed offline Monte Carlo bank
+on a designated subset. The best estimated action is an offline reference with sampling
+uncertainty, not an omniscient true optimum. Use an independent bank to estimate the
+selected reference's performance.
+Large-instance bound. For extensions, use a free integer solver with valid bounds and
+recorded termination gaps. A DP reference is exact only for the assumptions its state and
+transition structure represent [1-2].
+Implement a linearised binary model independently of the QUBO builder. For a product z = xy,
+enforce z ≤ x, z ≤ y and z ≥ x + y - 1. If an integer solver requires coefficient scaling, quantify
+rounding error and ties. Check both formulations against enumeration before using the solver
+as a reference.
+Conditional scaling extension
+Treat a multi-stop horizon with team interactions as a separate model extension. It needs its
+own variables, transition constraints, QUBO reduction, bounds and frozen protocol after the
+small model passes validation. Publish the mapping from every extra variable to a decision.
+Keep problem semantics matched across solvers; report preprocessing, memory and wall time.
+A conditional stress panel targets 1,200 instances across horizon, action count and interaction
+density; it is not authorised by the current single-choice formulation alone. It is classical-first.
+Small feasible members can also be simulated quantum mechanically; larger members are
+resource estimates or classical benchmarks unless actually executed.
+No crossover is guaranteed. If classical methods solve every meaningful instance well within
+the deadline, the correct result is no observed optimisation headroom. A tiny hardware
+experiment cannot establish how a larger quantum algorithm will scale. Check this on
+development cases before launching a large campaign: do not power a superiority test for an
+improvement that the formulation makes impossible. Before the full test campaign, either
+freeze a meaningful larger model or record H1 as descriptive boundary evidence and omit its
+superiority test. If no nontrivial scientific question survives, stop the campaign and redesign.
+Research design | Version 3.1 | 18 September 2026
+12 / 33
+
+----- PAGE 12 META: chars=3040 images=0 -----
+
+===== PAGE 13 / 33 =====
+11 The AI component
+The runtime learned component selects a QAOA donor from an offline angle bank. A donor
+ranker avoids averaging incompatible periodic angle vectors. It is distinct from the optional
+learned dispatch-benefit model in section 14; both train only on training blocks.
+Features include action count, coefficient statistics, constraint structure, circuit family, depth
+and a cheap incumbent. Exact optima and final evaluation outcomes are offline labels, never
+hidden runtime inputs. A feature requiring a solver must include that computation in online
+latency.
+Scale and fit budget
+For each circuit family, use a deterministic coefficient scale s_Q = max(1, the largest absolute
+nonconstant encoded coefficient), in fixed coefficient units, and optimise H/s_Q. Record
+penalties and s_Q, and use the same transformation at training and inference. Cost angles refer
+to the scaled Hamiltonian. Undo scaling before comparing physical decision margins. Angle
+banks remain separate by family and depth.
+Use 24 training anchors, C0 and C1, p = 1 and p = 2, three seeded starts and at most 80
+optimiser evaluations per start: at most 23,040 expectation evaluations. C2 adds a separately
+recorded budget only if its conditional local study is admitted.
+Select at most eight donors per family-depth pair on training data. Score them on 120 further
+training checkpoints and 80 checkpoints from the tuning blocks. Calibration blocks remain
+untouched until all fitting and tuning choices are fixed. Save bank construction, fit logs, seeds,
+failed fits and CPU time.
+Fit a small inspectable model. Fix optimiser termination and compute budgets; no unrecorded
+restart replaces a failed fit. Impose angle periodicity only when proven for the implemented
+gates and weighted Hamiltonian: arbitrary real-weight cost angles need not have period 2π.
+Comparisons and interpretation
+Compare learned selection with one fixed donor, nearest-neighbour transfer, random donor
+selection and a per-instance best-found variational reference under a fixed offline fit budget.
+The reference is not a certified quantum optimum [10-12].
+Report optimal-sample probability, raw feasibility, best-of-pool regret and inference time.
+Define regret as (f(a) - f*) / (f_max - f*) on legal actions. If the legal range is zero, every feasible
+sample has zero regret; an all-infeasible pool still has regret one. Do not use an approximation
+ratio that becomes unstable under objective shifts.
+The proposed non-inferiority margin against the best-found reference is 0.02 in regret. Report
+an upper one-sided 95% paired block interval for learned-minus-reference regret; crossing 0.02
+fails that criterion. This comparison is exploratory in this study. Benefit over fixed and
+nearest-neighbour transfer needs its own evidence. A null result removes the claimed AI
+benefit.
+Research design | Version 3.1 | 18 September 2026
+13 / 33
+
+----- PAGE 13 META: chars=2899 images=0 -----
+
+===== PAGE 14 / 33 =====
+12 Circuit families and compilation
+Use shallow circuits that can survive the available hardware and budget. More gates are not
+inherently more novel or useful. The core hardware comparison contains two fixed families, C0
+and C1. Select depth on tuning data. C2 belongs to a separate conditional local study and is not
+included in this hardware budget.
+Family
+Construction
+Role
+C0
+Transverse-X mixer with penalty cost
+Hamiltonian
+Standard reference
+C1
+Within-car XY exchanges with one excitation per
+action block
+One-hot-preserving alternative
+C2 conditional
+Guarded single exchanges and necessary paired
+exchanges
+Test only when genuine joint hard
+constraints justify it
+Use p = 1 and p = 2 locally. Nominate one depth per hardware arm before calibration and
+hardware outcomes are visible. Record each arm's parameter count and fitting budget.
+Comparing a carefully optimised structured circuit with an untuned reference is not acceptable.
+For C1, an XY term exchanges occupation between two action qubits and preserves their total
+excitation. A connected ring of exchanges is a sparse baseline. Test any denser schedule
+against its routing and native two-qubit-gate cost. One-hot preservation does not imply
+satisfaction of every joint constraint.
+Initialisation and expressivity
+Count state preparation in both circuit depth and latency. Use a validated feasible
+superposition when affordable. If beginning from a single feasible basis state, ensure the
+schedule first creates an informative superposition: a diagonal cost layer applied to one basis
+state changes only a global phase. Do not report an ineffective first cost parameter as useful
+expressivity.
+Check mixer connectivity over the enumerated feasible graph on every small instance. A
+feasible circuit confined to a poor connected component can be inferior to a less constrained
+sampler. Unitarity, ideal feasibility and connectivity need separate evidence.
+Compilation protocol
+Pin software versions, native gates, layout policy, transpiler seed and optimisation level.
+Record logical variables, ancillas, active physical qubits, two-qubit gates, duration, depth,
+SWAP overhead and calibration timestamps. Include preparation and ancillas in all resource
+bounds. Use a small fixed layout-search budget identically for the two arms.
+Primary hardware data use raw samples, with explicit suppression and twirling settings, no
+unbudgeted extra executions, and no variational fitting on the QPU. If postselection or repair is
+explored, report raw feasibility, rejected shots, repair CPU time and the same repair rule for all
+applicable samplers. A repaired classical output is not a raw hardware success.
+QAOA and constraint-preserving mixers are established methods [7-9]. This experiment tests a
+task-specific use of them.
+Research design | Version 3.1 | 18 September 2026
+14 / 33
+
+----- PAGE 14 META: chars=2843 images=0 -----
+
+===== PAGE 15 / 33 =====
+13 What an advanced circuit must justify
+The optional advanced construction is a pit-constraint adaptation of guarded exchange
+methods, with explicit attribution to prior guarded XY and collective-exchange work [13]. Its
+research question is whether the extra controls improve useful yield enough to offset
+compilation and noise.
+For two actions i and j within a car's one-hot block, use an exchange only when the unchanged
+selections of the other car are compatible with both endpoints. The guard must be independent
+of the occupation being exchanged, so it commutes with that exchange. Verify the
+implemented unitary against the intended transition matrix, including ancilla uncomputation.
+Why connectivity matters
+Consider two cars choosing slots A or B, with a declared policy requiring different slots. The
+legal assignments (A,B) and (B,A) cannot be connected by changing only one car without
+entering a forbidden state. A paired exchange can bridge them.
+This example explains the mechanism; it does not establish that ordinary double stacking is
+illegal. In the primary physical model, stacking usually has a finite cost. If the real model has no
+corresponding joint hard constraint, omit the guards instead of manufacturing one.
+Enumerate the feasible graph, find connected components under single exchanges, and add
+only policy-justified paired moves needed to restore reachability. Publish their action semantics
+and gate decompositions. Do not describe a generic graph bridge as a newly invented quantum
+primitive.
+Admission criteria for C2
+The compiler must represent a genuine constraint; ideal circuit checks must show zero
+infeasible amplitude to numerical tolerance; the feasible graph must have the intended
+connectivity; and the transpiled circuit must fit the registered local resource bounds.
+Development results must then show a useful trade-off against C1 at matched fitting and
+sampling budgets. Candidate measures are useful feasible probability, best-of-pool loss, native
+entangling gates and full execution time. A raw feasibility increase alone is insufficient if useful
+candidates become rarer.
+If C2 fails, retain the failure report and close that local substudy. C0 and C1 remain the
+hardware families. A well-supported conclusion that simpler circuits are preferable is stronger
+than a circuit made elaborate to satisfy a novelty label.
+Any future claim of a new circuit method requires an additional proof or demonstrably distinct
+construction and a renewed prior-art comparison. This dossier does not make that claim.
+Research design | Version 3.1 | 18 September 2026
+15 / 33
+
+----- PAGE 15 META: chars=2610 images=0 -----
+
+===== PAGE 16 / 33 =====
+14 Margin-aware allocation and acceptance
+The allocator starts from a legal state and feasible incumbent. Exact enumeration is mandatory
+when cheap. If that incumbent attains the exact proxy minimum, record zero proxy headroom
+and skip further proxy optimisation. Downstream reranking remains a separate task with
+classical comparators.
+A reproducible proposed rule
+Define z as the observable state features, current incumbent, remaining effective time and
+available resource budget. Freeze the generator set and budget grid on tuning blocks. Include
+a stop action, classical search and the nominated quantum generator. Reject infeasible or
+over-budget options first.
+Using training blocks, fit g(z,m,b), the expected reduction in normalised team loss from
+generator m with budget b under the complete acceptance-and-fallback policy. Labels use
+independent simulation banks and modelled latency regimes; they include failed and late
+outputs. Do not fit this model on tuning or calibration blocks.
+After tuning, calibration blocks estimate overprediction. For each block take the maximum
+positive residual g minus its independently estimated policy benefit over the registered
+checkpoints and options. Let q be the empirical 95th percentile of these block residuals,
+conservatively allowing for their Monte Carlo error. The score is g - q - λu, where u is estimated
+QPU seconds. The primary λ is zero; fixed positive values are sensitivity analyses.
+Dispatch the highest positive score that fits the time and usage budgets; otherwise stop.
+Resolve ties in favour of the classical option with lower cost. All inference, feature and
+incumbent computation consumes decision time. Compare this rule with a fixed threshold and
+always-classical allocation.
+This is an empirical prediction score, not a confidence bound or a proof of conditional
+improvement. With 24 calibration blocks its tail estimate is uncertain. Report held-out
+overprediction, harm and coverage; keep shift-panel results separate.
+Candidate acceptance
+Accept only a timely, current-state-valid candidate that clears the frozen scoring margin under
+a matched online scoring budget. Check its pit-entry cutoff. Otherwise use the fallback. Do not
+consult final-score estimates or hidden future draws. Evaluation replays this frozen validation
+policy causally.
+For the separate mathematical bound, let J and f estimate the same outcome in the same units.
+If |J(a) - f(a)| ≤ ε uniformly over all relevant actions, then J(a) - J(b) ≤ f(a) - f(b) + 2ε. A
+time-error bound cannot certify rank improvement, and an empirical residual quantile is not a
+uniform bound.
+The allocator must demonstrate value beyond established algorithm selection [27]. Hardware
+observations remain too few to fit a general cloud-queue model; scenarios must be labelled as
+assumptions.
+Research design | Version 3.1 | 18 September 2026
+16 / 33
+
+----- PAGE 16 META: chars=2878 images=0 -----
+
+===== PAGE 17 / 33 =====
+15 Deadlines and runtime evidence
+Use nominal budgets of 5, 10, 30, 60 and 120 seconds, with 30 seconds primary. These are
+research settings, not team-supplied requirements. A valid deadline must also respect the
+physical opportunity to act.
+For each checkpoint, record the earliest commitment cutoff for the registered two-car menu
+and a fixed communication margin. The effective deadline is the earlier of the nominal deadline
+and that cutoff minus the margin. If no positive time remains, the decision is already closed. Do
+not move a missed “pit now” instruction to another lap without treating it as a different action.
+Time and state advance
+Run all arms from the same initial information and commitment protocol. Advance the race
+under the current feasible plan while computation occurs. At the common commitment epoch
+validate recommendations against events observed by then; discard stale actions and use the
+current feasible fallback. Future events remain hidden from solvers.
+If the simulator cannot represent this ordering, label the experiment a static checkpoint
+benchmark. It cannot support an operational pit-decision latency claim. Report effective
+deadlines and expiry rates alongside nominal budgets.
+Full runtime accounting
+Record state processing, features, encoding, incumbent search, parameter inference, circuit
+construction, compilation, submission, queueing, execution, retrieval, decoding, online scoring
+and validation. Measure the actual critical path when tasks overlap. Offline training is
+separately reported; state-dependent preprocessing belongs online.
+Use monotonic client clocks for durations and UTC timestamps for cross-system audit. Provider
+clocks require their own origin and uncertainty; do not subtract unrelated clocks without
+alignment.
+At the deadline return the valid incumbent. Late, failed, stale and infeasible outputs remain in
+the denominator. A late job can still consume QPU time; retain its offline result and charge
+rather than counting it as a timely recommendation.
+Distinguish three latency records
+Local measured latency is the executed local system on the recorded machine.
+Physical measured latency includes actual client, network, queue and provider timing.
+Scenario latency inserts declared delays into local experiments. It is not a measured
+service-level guarantee.
+Do not divide paired-job turnaround by two to estimate standalone latency. The isolated jobs
+provide only a small separate sample. Test expiry, late retrieval, changed race state, invalid
+fallback, interrupted persistence and exhausted quota before freezing the protocol.
+Research design | Version 3.1 | 18 September 2026
+17 / 33
+
+----- PAGE 17 META: chars=2663 images=0 -----
+
+===== PAGE 18 / 33 =====
+16 Classical baselines and fairness
+Select the operational classical comparator from the included methods using tuning blocks,
+then freeze it. The test comparison must not use whichever classical method looks weakest or
+whichever test comparator yields the most favourable result.
+Comparator
+Purpose and matching requirement
+Legal enumeration
+Exact small proxy reference; enumerate plans, not invalid bit strings
+Independent integer model
+Validate formulation and larger-instance bounds
+Restricted DP
+Strong reference where its state assumptions match
+Greedy plus local improvement
+Cheap feasible fallback and practical runtime competitor
+Uniform legal sampling
+Test whether circuit sampling exceeds random search
+Simulated annealing or equivalent
+local stochastic search
+Compare classical stochastic candidate generation
+Classical simulation-based reranking
+Test whether extra computation is better spent evaluating legal
+plans
+Fixed and nearest-neighbour QAOA
+donors
+Isolate the value of learning
+Every arm receives the same observable checkpoint, legal action definition and proxy
+coefficients. Candidate pools differ because generation is the treatment. Use equal effective
+deadlines for the operational comparison and equal sample or evaluation budgets for
+mechanism comparisons; report both without conflating them.
+Give classical algorithms adequate implementation quality and development tuning. Report
+thread counts, warm starts, compilation, cache state, hardware and training effort. A Python
+brute-force loop is not an adequate comparison when a vectorised enumeration or established
+solver is available.
+Offline optimum references may spend more computation, but must be labelled references
+rather than deadline-feasible methods. Conversely, a reference that actually finishes before the
+deadline is a legitimate operational competitor.
+Required ablations
+Remove learned donor selection; replace the structured mixer with C0; remove the uncertainty
+margin; use always-quantum dispatch in the local or modelled-latency study; use
+always-classical dispatch; and replace reactive rivals with the frozen non-reactive sensitivity
+policy. Compare the same final outcome and resource accounting.
+Do not remove validation in an operational run to create a “better” unsafe arm. A
+validator-disabled study is a local diagnostic of failure rates, with no claim of admissible
+decisions.
+No LLM is required in the runtime path. AI-assisted development is disclosed separately from
+the evaluated learned model.
+Research design | Version 3.1 | 18 September 2026
+18 / 33
+
+----- PAGE 18 META: chars=2568 images=0 -----
+
+===== PAGE 19 / 33 =====
+17 Planned experiment matrix
+The matrix separates operational decisions, circuit mechanisms and physical validation. The
+hardware budget does not execute the whole decision corpus. No planned count is reported as
+completed.
+Panel
+Proposed target
+Interpretation
+Main local decisions
+640 checkpoints at the 80-block floor; 10
+policy seeds per stochastic arm
+6,400 stochastic decisions per arm
+and nominal budget; blocks remain
+the independent units
+Ideal core circuits
+120 cases × 2 families × 2 depths × 30
+pool seeds
+14,400 pools per parameter policy
+Local noisy core
+40 cases × 2 families × 2 depths × 10
+pool seeds
+1,600 pools per parameter policy
+Conditional scaling
+1,200 generated instances
+Requires a separately validated
+multistop formulation
+Hardware quality
+12 cases × 3 time blocks × 2 arms
+72 pools, with 12 independent
+cases
+Isolated latency
+6 cases × 2 arms
+12 jobs; descriptive only
+Ideal learned, fixed, nearest-neighbour and random-donor policies give 57,600 pools; the
+variational reference adds 14,400, for 72,000 total. Its fitting cap is another 115,200
+expectation evaluations, included in the resource pilot. Noisy learned and tuning-selected
+simple policies give 3,200 pools. Hardware compares complete frozen circuit-policy packages.
+Each mechanism pool targets 1,024 shots. Compute ideal distributions once and resample
+efficiently; these pools are not additional circuit preparations on physical hardware. Report
+exact ideal probabilities as well. C2 has its own admitted-case count and local budget; it is
+absent from these core totals.
+Main decision trials compare selected policies on the complete action menu. The 120-case
+circuit panel may use restricted menus, so it is a separate estimand. Execute deterministic
+policies once and reuse their records. For stochastic arms average ten policy-seed outcomes
+within each checkpoint; save all seeds. Different nominal deadlines may require distinct runs
+because dispatch changes with the budget.
+Resource pilot
+Use at most 60% of RAM, default noisy cases at 10 qubits or fewer, and checkpoint bounded
+run units. Estimate CPU-hours, wall time and storage for all fitting and scoring. The provisional
+24 CPU-hour ceiling is not evidence that this matrix fits.
+Before test access, reduce redundant resampling or amend scope if the campaign cannot fit.
+Stop at the frozen resource cap and report incomplete units; do not change the design after
+viewing test effects to obtain a preferred result.
+Research design | Version 3.1 | 18 September 2026
+19 / 33
+
+----- PAGE 19 META: chars=2527 images=0 -----
+
+===== PAGE 20 / 33 =====
+18 Sample size and inference
+Shots, policy seeds and simulation worlds are not independent race scenarios. The main
+synthetic estimand is the equal-weight mean over the eight declared families, their parameter
+blocks and the balanced SC/VSC checkpoints.
+Primary local analysis
+Within each checkpoint average the ten stochastic policy-seed outcomes. Within each block
+average paired classical-minus-proposed loss differences across checkpoints. Give blocks equal
+weight in the balanced design. Report the mean, a 95% interval, per-block effects and the
+frequency and magnitude of harm.
+Use a stratified block bootstrap, preserving checkpoints, policy seeds and paired-world
+comparisons as complete records. This primary procedure estimates uncertainty for the
+realised finite-simulation experiment. Do not automatically add inner world resampling to an
+outer bootstrap that already includes simulation variation; that can double-count it. Section 19
+requires a separate Monte Carlo error diagnostic.
+For historical data, cluster by race and report cross-race dependence limits. The synthetic
+eight-family design does not represent every circuit or the natural frequency of interruptions.
+Sizing before test access
+Estimate paired block standard deviation s from the reserved calibration blocks after model
+and comparator freeze. The normal approximation for a two-sided 5% test with 80% power is n
+≈ [(1.96 + 0.84)s/δ]². A 95% half-width h suggests n ≈ (1.96s/h)². Targets are δ = 0.02 and h =
+0.01.
+Use the larger count, account for uncertainty in s, and verify coverage and power by simulation
+of the planned block analysis. Round up to a multiple of eight, with floor 80 and maximum 160
+if feasible. If the requirement exceeds that maximum, describe the study as estimation and
+report achievable precision.
+Illustrative raw counts are 49 for power and 97 for precision when s = 0.05; at s = 0.10 they
+are 196 and 385. These are not pilot results. Rounding for family balance follows afterwards.
+If cheap exact optimisation makes strictly positive proxy improvement impossible throughout
+the admitted domain, do not use zero pilot variance to assert that an 80-block superiority study
+is powered. Apply the headroom gate before opening the test set.
+Claims and multiplicity
+Only H1 has a planned confirmatory superiority test, conditional on that gate. A 95% interval
+excluding zero supports a positive average difference; a practically worthwhile gain requires
+comparison with 0.02. Other deadlines, H2, H3, non-inferiority diagnostics and hardware
+intervals are exploratory, with every comparison reported.
+Report exclusions, missing jobs and deviations. A nonsignificant result does not establish
+equivalence. No campaign expands after test access merely to reach significance.
+Research design | Version 3.1 | 18 September 2026
+20 / 33
+
+----- PAGE 20 META: chars=2840 images=0 -----
+
+===== PAGE 21 / 33 =====
+19 Monte Carlo design and stopping
+Use independent random banks for training labels, online decision scoring and final evaluation.
+Final-bank seeds, future draws and outcome scores are hidden from fitting and online scoring.
+During evaluation, frozen policies may observe only events revealed at their simulated time,
+including causal validity checks at commitment. Selecting a plan using its final-evaluation score
+would introduce bias.
+Common random numbers
+Couple comparable exogenous quantities by keys such as block, replication, driver, lap and
+event type. Assign potential draws even when an action changes whether an event occurs.
+Merely resetting a global seed is insufficient when different actions consume different numbers
+of random draws.
+Keep action-dependent causal mechanisms in the simulator; coupling does not mean forcing
+different actions to produce identical traffic or service outcomes. Report the observed
+covariance of paired losses and compare the variance of differences with independent-draw
+controls on development cases [14].
+Replication counts
+On calibration blocks start with 2,048 evaluation worlds per checkpoint. Select a fixed
+production count from 2,048, 8,192 or 32,768 using paired variance. Target a 95% Monte Carlo
+half-width no larger than 0.02 at at least 90% of calibration checkpoints. Independently
+diagnose Monte Carlo error in the primary block-mean effect; the proposed target is half-width
+no larger than 0.002, one fifth of the primary precision target. Account for ten policy seeds and
+shared worlds.
+If that target cannot be met within resources, report the achieved precision and revise the
+endpoint or scope before freezing. Do not silently keep simulation running until a preferred sign
+emerges. Within the test run, use the frozen count and report unresolved comparisons.
+For a difference bounded in [-1,1], the worst-case normal-approximation half-width at 8,192
+independent worlds is about 0.0217; at 2,048 it is about 0.0433. Actual paired variance may be
+much smaller. These calculations do not include model error and are not exact finite-sample
+coverage guarantees.
+Use the same final worlds across arms and policy seeds for a checkpoint and evaluate only
+distinct selected plans when possible. Cache continuations by state, effective commitment
+time, plan, policies, simulator configuration and random-bank hash. This avoids spending
+computation repeatedly on identical decisions.
+Two uncertainty levels
+Show within-checkpoint Monte Carlo error and across-block uncertainty separately. The
+primary block analysis retains finite-simulation variation. Diagnose that component separately
+using paired-world variance, respecting shared streams. If it is material, report the
+finite-simulation estimand or use a pre-frozen variance-components method; do not append
+naive nested resampling. No interval removes structural simulator bias.
+Research design | Version 3.1 | 18 September 2026
+21 / 33
+
+----- PAGE 21 META: chars=2953 images=0 -----
+
+===== PAGE 22 / 33 =====
+20 The 540-second hardware envelope
+Use IBM alone for the core. Let A be the verified free allowance at campaign start. The
+campaign commitment ceiling is min(420, max(0, A - 120)) seconds. With the reported A = 540
+this preserves a 120-second reserve. Recheck availability before each job and never infer paid
+access from a successful login.
+IBM Open Plan uses a rolling 28-day window [21]. Its published 180-minute promotion is
+conditional on eligibility and opt-in [22]; it is not assumed here. A refreshed or larger allowance
+does not automatically enlarge this campaign.
+Stage
+Jobs
+Circuits per
+job
+Shots per circuit
+Reservation per
+job
+Resource pilots
+2
+2
+512
+15 s
+Paired quality
+36
+2
+1,024
+8 s
+Isolated latency
+12
+1
+1,024
+7 s
+Primary schedule
+50
+88 pools
+88,064 shots
+402 s total
+This schedule is provisional: 30 + 288 + 84 = 402 seconds. Its arithmetic is correct, but the
+individual caps need pilot support. Include all executed PUB broadcasts, reset and repetition
+delays, suppression settings and provider overhead. Raw shots and QPU usage are different
+quantities [23-24].
+Pilot-based alternative
+After the two development pilots and before any main-case outcome, use supported runtime
+limits and conservative usage estimates to freeze one complete schedule. First consider 512
+shots for all matched main comparisons. If overhead still exceeds a cap, reducing repetitions
+alone does not fix that job.
+An explicit alternative is 24 quality jobs at up to 12 seconds each, 12 isolated jobs at up to 8
+seconds each and the same 30-second pilot allowance: 414 seconds total. This gives two
+repetitions of all 12 cases, 38 jobs and 64 pools; at 512 main shots it gives 32,768 shots
+including pilots. Use it only if every job estimate and the ledger fit. Otherwise stop or issue a
+pre-main-outcome budget amendment.
+Preserve both arms and all 12 instances. After main data begin, do not switch schedules based
+on observed circuit quality. Budget failure causes a recorded incomplete campaign, not
+selective replacement cases.
+Cases and other providers
+Use six SC and six VSC cases, balanced between 6-8 and 10-12 active physical qubits, three
+per cell, from 12 blocks. Count ancillas and routing qubits; record logical size separately.
+Additional providers require verified free physical access and a distinct scientific question.
+Braket simulator allowances do not provide free QPU jobs [25]; Azure terms require a
+workspace check [26]. Diversification is not part of the required plan.
+Research design | Version 3.1 | 18 September 2026
+22 / 33
+
+----- PAGE 22 META: chars=2551 images=0 -----
+
+===== PAGE 23 / 33 =====
+21 Hardware execution and interpretation
+Proceed only after local correctness, scientific-value and resource gates pass. Freeze the cases,
+C0/C1 families, depths, parameter policies, layout rules, software, job order and analysis. The
+two resource pilots may select the registered schedule before main-case outcomes; they do not
+tune circuit quality.
+Use one backend for the primary comparison. Spread the selected two or three blocks across
+recorded calibration periods where practical. Record actual temporal coverage, rotate
+requested arm order and save the submission seed. A backend change requires a separately
+reported stratum.
+Accounting and recovery
+Use job mode and set a supported maximum execution time on every job. The cap concerns
+QPU usage, not the decision's wall-clock deadline [23-24].
+Let C be charged campaign usage, R unresolved reservations and r the next reservation.
+Require C + R + r ≤ the frozen campaign ceiling. Also require R + r ≤ max(0, A_live - 120),
+where A_live is the currently available free allowance after known charges. This second check
+does not subtract C again. Count failed jobs and stop when usage is uncertain.
+Persist a tagged unique intent and circuit hashes before submission, then the returned job ID
+immediately. If interrupted before the ID is saved, recover by intent tags. An unresolved
+submission is not permission to retry. Save raw results durably before reconciliation; charge
+each provider job once.
+These controls cannot guarantee an exact zero-overrun provider timeout. A cap unsupported
+by the pinned API or inconsistent with estimates blocks submission. A changed allowance never
+silently permits spending the reserve.
+Raw evidence and interpretation
+Save samples, total executed shots, job status, usage, client and provider timestamps, native
+circuits, hashes, backend properties and every decoder result. Preserve late and failed jobs.
+Repairs never overwrite raw counts.
+Compare complete frozen circuit-policy packages. Attribute a difference specifically to the
+mixer only with matched parameter and preparation ablations. Report raw feasibility,
+optimal-sample probability, latency and usage for every case and time block.
+The 12 cases do not establish broad race superiority or reliability. The 12 isolated jobs provide
+only six observations per arm, insufficient for accurate queue-tail guarantees. Calibration drift
+and unfavourable outcomes are reported, not removed. This campaign does not execute the
+entire 640-checkpoint decision panel on hardware.
+Research design | Version 3.1 | 18 September 2026
+23 / 33
+
+----- PAGE 23 META: chars=2584 images=0 -----
+
+===== PAGE 24 / 33 =====
+22 Conditional readiness analysis
+Define pτ as the probability that one raw sample is feasible and beats its stated incumbent by
+a frozen proxy margin τ. Component tests use the frozen greedy incumbent; operational tests
+use the actual classical incumbent. Also report exact-optimum probability within a pre-frozen
+numerical tolerance. Proxy improvement is not necessarily race-outcome improvement.
+Under an independent identical-shot model, the probability of at least one such sample in S
+shots is 1 - (1 - pτ)^S. To reach success probability at least 1 - α, the required sample count is
+the ceiling of log(α) / log(1 - pτ), for 0 < pτ < 1.
+For example, pτ = 0.01 needs 299 shots for 95% success, and pτ = 0.001 needs 2,995. These
+are conditional calculations. For an estimated pτ, propagate a lower interval bound into the
+requirement. Zero observed successes do not prove pτ = 0; a zero lower bound supplies no
+finite certified shot requirement. Only an exact objective argument establishes impossible
+improvement. Drift can invalidate the independent-shot model.
+A full boundary
+The quantum path must fit state processing, encoding, compilation, queueing, execution,
+retrieval and validation inside the decision deadline, while providing enough useful probability
+to justify replacing the incumbent.
+Report a surface over queue delay, circuit duration, shot count and useful yield. Mark
+measured points separately from noise simulations and hypothetical scenarios. A single
+average fidelity is insufficient: error location, connectivity, parameter quality and the feasible
+subspace also matter.
+If the incumbent already attains the exact objective optimum, pτ is zero for any strictly positive
+improvement margin. No finite shot count creates missing headroom. This is an important
+boundary, not a failed plotting case to remove.
+Future hardware claims
+A scenario with a shorter queue or fewer gate errors shows what would be required under its
+assumptions. It does not prove that a provider will deliver those conditions, that the algorithm
+retains its quality at larger size, or that classical methods will remain unchanged.
+Do not translate a small NISQ noise sweep into fault-tolerant logical-qubit requirements without
+a separate algorithm, error-correction and resource-estimation analysis. Do not fit an
+exponential quantum speedup from small problem sizes.
+Practical output
+Produce a rerunnable table stating, for each instance family, the strongest classical result,
+available headroom, acceptable model error, useful-sample requirement and full latency
+allowance. A team can use this to reject unsuitable integrations or identify a narrow future
+shadow-test condition. That is a concrete decision-support output even where quantum is not
+selected.
+Research design | Version 3.1 | 18 September 2026
+24 / 33
+
+----- PAGE 24 META: chars=2821 images=0 -----
+
+===== PAGE 25 / 33 =====
+23 Cursor and the one-command workflow
+Implementation happens after this dossier is finalised. ChatGPT supplies complete prompts
+with scope, files, acceptance checks and expected evidence. Cursor performs the coding and
+local execution. The user should not need to invent commands, edit circuits or repair scientific
+logic manually.
+Project isolation
+Use a new repository where possible. If a shared repository is necessary, create a separate
+top-level research directory and allow writes only there. Record hashes of the closed study's
+protected files before and after a run. A changed protected file is a hard failure; never silently
+“clean up” the earlier project.
+Meaning of do a run
+The command resolves the next authorised unit of the frozen run plan, reports its identity and
+executes it once. Initially, this is local only. Hardware mode is unavailable until the user has
+explicitly authorised an identified IBM block after reviewing its budget and frozen matrix.
+Once that hardware authorisation is recorded, “do a run” may execute the next unit within its
+remaining scope and cap. It never expands authorisation to a paid plan, another provider, a
+larger shot count or a new experiment.
+Suggested internal states are DRAFT, LOCAL_READY, LOCAL_COMPLETE, PROTOCOL_FROZEN,
+HARDWARE_READY, RUNNING, RECONCILE_REQUIRED and COMPLETE. A stale protocol hash,
+missing data permission, unresolved job or inadequate quota prevents transition to hardware.
+Each run must finish with a receipt
+Report run ID, protocol and code hashes, planned and completed units, actual failures, raw
+evidence paths, summary paths, elapsed time, actual QPU usage, reserved usage and the next
+permitted unit. If a process stops midway, resume completed work by manifest rather than
+repeating it.
+GitHub is a separate action
+“Push to GitHub” means review the scoped diff, exclude secrets and restricted data, verify
+tracked manifests and push only the requested project changes. The run command saves
+locally by default. It does not automatically publish or modify the closed paper.
+Do not commit credentials, account tokens, raw protected timing feeds, unverifiable result
+tables or generated claims with no evidence row. Provider credentials remain in an approved
+local secret mechanism.
+The orchestration layer can be deterministic. The runtime AI claim rests on the evaluated
+learned policy. Use “agentic” only if an implemented component actually observes, selects
+actions and manages a bounded goal; do not relabel ordinary helper functions as autonomous
+agents.
+Research design | Version 3.1 | 18 September 2026
+25 / 33
+
+----- PAGE 25 META: chars=2605 images=0 -----
+
+===== PAGE 26 / 33 =====
+24 Evidence schema and research integrity
+Store immutable raw evidence and regenerate derived summaries from it. Every plotted value
+must be traceable to a run, configuration, raw record and analysis version.
+Record
+Minimum required fields
+Protocol
+Version, hypothesis, endpoints, splits, counts, seeds, exclusions, budget and
+hashes
+Checkpoint
+Block, family, split, state, units, availability, commitment cutoff and assumptions
+Instance
+Action dictionary, constraints, coefficients, scale, penalty proof, exact reference
+Learned policy
+Training IDs, features, donor bank, model, fit seeds, validation decisions
+Circuit
+Family, depth, angles, initialisation, layout, native gates, duration, hashes
+Job
+Intent token, provider ID, status, caps, usage, timestamps, backend snapshot
+Decision
+Policy seed, incumbent, candidates, score, validity, expiry and commitment time
+Evaluation
+Independent bank, simulator version, rival policy, outcomes, uncertainty
+Deviation
+What changed, why, when, test exposure and effect on interpretation
+Use one record per failed attempt as well as one per success. A run ledger links requested units
+to completed units; a count in a report is computed from that ledger. Numeric outputs never
+originate in manually written narrative.
+Independent correctness checks
+Check QUBO energies against a direct action-cost function; solver answers against
+enumeration; circuit probabilities against independently computed small matrices; checkpoint
+resumption against uninterrupted simulation; and derived reports against raw counts. These
+tests address concrete risks, not superficial coverage percentages.
+Claims ledger
+For each intended claim record supporting runs, analysis, uncertainty, limits and citation. Mark
+claims unsupported until evidence exists. Distinguish simulated, noisy-simulated and physical
+results in every figure legend and table.
+Generated code and prose require human responsibility and verification. Disclose ChatGPT and
+Cursor assistance accurately, including implementation, analysis or drafting if used. Do not
+claim manual coding or human-only authorship of work actually generated with assistance.
+The previous study may be cited for genuine architectural lineage once its final public
+reference is confirmed. Do not invent a DOI, publication status or peer review. Its observations
+are not independent replications of this new experiment.
+No evidence file may be edited to align with an expected conclusion. Corrections create new
+versions with an explanation and preserve the original record.
+Research design | Version 3.1 | 18 September 2026
+26 / 33
+
+----- PAGE 26 META: chars=2602 images=0 -----
+
+===== PAGE 27 / 33 =====
+25 Implementation sequence
+Each Cursor prompt should implement one reviewable stage and return an evidence receipt.
+The sequence is intentionally ordered so that expensive or irreversible work cannot conceal
+defects discovered earlier.
+Stage
+Work
+Exit evidence
+1
+Isolated project, environment detection,
+dependencies and run ledger
+Clean install, protected-path check, local dry
+run
+2
+Scenario generator and causal checkpoint
+schema
+Reproducible states, provenance, split and
+rejection audits
+3
+Simulator adapter and independent checks
+Resume equivalence, mechanism tests,
+analytical comparisons
+4
+Action model, QUBO and independent classical
+references
+Exact agreement on small legal instances and
+penalty checks
+5
+Parameter bank, learned selector and circuit
+families
+Split integrity, ideal-circuit checks, training
+receipts
+6
+Local pilot, precision and resource estimates
+Frozen counts, machine capacity, novelty
+comparison and deviations
+7
+Full local study and primary analysis
+Complete manifests, intervals, ablations and
+headroom report
+8
+Hardware preflight and explicitly authorised
+block
+Balance, free plan, budgets, pinned matrix and
+resumable intent
+9
+Hardware analysis and conditional boundaries
+Raw job evidence, usage reconciliation and
+bounded conclusions
+10
+Reproducibility release and later article
+Clean-room reproduction, claims ledger and
+reviewed outputs
+The first coding prompt must not request the whole project plus hardware execution in one
+uncontrolled step. It should establish the environment and evidence system, then stop with a
+concrete report for the next prompt.
+At stages 3-6, a defect can trigger redesign before the test split is opened. At stage 7 or later, a
+substantive methodological change creates a protocol amendment and a clearly separated
+exploratory analysis or new test set.
+Local environment choices
+Prefer a supported Python environment with NumPy, SciPy, a free integer solver, a small
+machine-learning library and pinned Qiskit/Aer where compatible. Inspect the actual machine
+before choosing versions or parallelism. A legacy simulator dependency is isolated rather than
+forcing the whole environment onto an unsupported stack.
+Research design | Version 3.1 | 18 September 2026
+27 / 33
+
+----- PAGE 27 META: chars=2237 images=0 -----
+
+===== PAGE 28 / 33 =====
+26 Gates and useful outcomes
+Gate A, provenance. Every required software and data dependency has a recorded licence or
+permission. Generated inputs remain the default. Failure blocks the affected input, not
+unrelated local work.
+Gate B, decision validity. The checkpoint, continuation, SC/VSC behaviour and team
+interaction mechanisms pass independent checks. Failure narrows the domain or requires
+repair before comparisons.
+Gate C, formulation. Direct costs, QUBO energies and independent classical references
+agree on small cases. The legal action count and compiler cost are reported. Failure blocks
+quantum experiments.
+Gate D, learning and circuits. Models respect separate training, tuning and calibration
+blocks. Core C0/C1 circuits pass preparation, transition and compilation checks. C2 is
+separately gated. Held-out claims must use the frozen comparisons.
+Gate E, scientific value. Before the full test campaign, record whether exact classical
+solution removes all proxy headroom. If so, omit an impossible superiority test. Proceed only
+with a separately justified boundary or mechanism question, or validate a larger model before
+freeze. If no substantive contribution survives comparison with prior work, redesign before QPU
+use.
+Gate F, precision and budget. The chosen experiment count follows development-only
+variance and resource evidence. Hardware reservations fit verified free access with the reserve
+intact. Failure leads to a smaller explicitly limited study or a later free allocation, not
+unapproved spending.
+Outcomes that would help a strategy group
+A validated classical-first fallback and causal checkpoint interface can improve reproducibility
+of strategy research. A measured map of proxy error can show where better modelling matters
+more than faster optimisation. A candidate-yield and latency boundary can prevent premature
+quantum integration. A successful learned circuit policy could justify a carefully scoped
+follow-up.
+These are proposed benefits. Demonstrated lap-time, points or operational gains for a real
+team require appropriate real-world evaluation. A synthetic benchmark must not be marketed
+as evidence that an actual race result would have improved.
+Career evidence
+Prepare a concise technical portfolio after results: an executable benchmark, a transparent
+hardware record, a reproducible negative-and-positive findings report, and a short explanation
+of the integration conditions. Explain the author's scientific decisions and ability to audit
+AI-generated code.
+This can provide credible evidence of skill across AI, quantum methods and motorsport
+decision-making. It cannot make the author a guaranteed recruitment target. The strongest
+positioning comes from solving and explaining a specific problem well.
+Research design | Version 3.1 | 18 September 2026
+28 / 33
+
+----- PAGE 28 META: chars=2823 images=0 -----
+
+===== PAGE 29 / 33 =====
+27 Publication and claim discipline
+The later article should follow the completed evidence: motivation, related work, causal
+decision model, algorithm and circuit definitions, protocol, results, robustness, limitations and
+reproducibility. Journal selection follows the demonstrated contribution, available validation
+and verified fee policy.
+Do not assume a particular journal accepts synthetic-only evidence, a negative hardware study
+or a DBA framing. Do not assume an article-processing charge will be waived. The zero
+additional spending requirement applies to publication choices too.
+Allowed only with matching evidence
+“The learned donor selector improved useful probability on the held-out generated panel”
+requires that exact comparison and interval. “The structured circuit reduced invalid raw
+samples on IBM” requires physical paired evidence. “The allocator improved simulated team
+outcomes” requires the independent evaluator and full deadline accounting.
+“The system improved Formula 1 performance,” “quantum advantage,” “first quantum F1
+optimiser,” “guaranteed future superiority,” “real-time team deployment,” and “a new guarded
+mixer” are not supported by this plan.
+Important remaining limitations
+Synthetic parameter blocks are not actual races. Historical counterfactuals remain
+model-based even with lawful data. Model assumptions can favour a solver. Small circuits may
+not represent large problems. The physical sample is small and backend-specific. Queue
+conditions and provider policies change. A locally measured CPU budget is not a team's
+production environment.
+General novelty cannot be established by a finite literature search. A claim of originality must
+identify the precise algorithmic or empirical difference from the closest work and show why
+that difference is useful.
+What would justify proceeding to a manuscript
+The implementation must be reproducible; the main scientific claim, whether positive or
+negative, must be supported by the planned comparisons; uncertainty must match the actual
+sample; and the contribution must remain meaningful after limitations are stated plainly. A
+successful pipeline run by itself does not meet those conditions.
+If the results reveal no useful quantum role, report the boundary and the reasons. If they reveal
+no meaningful novel contribution at all, do not manufacture one with stronger language. Use
+the evidence to define the next research question.
+The aim is a defensible contribution with a credible path toward real motorsport validation, not
+a predetermined positive story about quantum computing.
+Research design | Version 3.1 | 18 September 2026
+29 / 33
+
+----- PAGE 29 META: chars=2642 images=0 -----
+
+===== PAGE 30 / 33 =====
+28 Research references
+These references were checked on 18 September 2026. Preprints are identified as preprints.
+Sources establish prior work or implementation facts; proposed design choices in this dossier
+are not attributed as established results.
+[1] Carrasco Heine, O. F., and Thraves, C. (2023). On the optimization of pit stop strategies via
+dynamic programming. Central European Journal of Operations Research, 31, 239-268.
+Published online 2022. DOI 10.1007/s10100-022-00806-4. A correction is linked on the
+publisher page.
+https://link.springer.com/article/10.1007/s10100-022-00806-4
+[2] Carrasco Heine. F1DP source repository. Check and pin its current commit and licence
+before implementation; no commit was selected in this design review.
+https://github.com/FCarrascoHeine/F1DP
+[3] Kolstee, S. (2026). Optimizing Formula 1 Pit Stop Strategies Using QUBO and
+Annealing-Based Methods. Bachelor's thesis, Leiden University, LIACS, 13 April 2026.
+Supervisors are not coauthors. The downloaded thesis was inspected.
+https://theses.liacs.nl/3680
+https://theses.liacs.nl/pdf/2025-2026-KolsteeSSophie.pdf
+[4] Thomas, D., et al. (2026). Race Strategy Reinforcement Learning: Optimising Pitstop
+Strategy with Emergent Tactics in Formula One. Machine Learning, 115, article 146. DOI
+10.1007/s10994-026-07081-3.
+https://link.springer.com/article/10.1007/s10994-026-07081-3
+[5] Fieni, G., Wüthrich, J., Neumann, M.-P., and Onder, C. H. (2026). Learning-based Multi-agent
+Race Strategies in Formula 1. arXiv:2602.23056v2, revised 2 July 2026. Preprint.
+https://arxiv.org/abs/2602.23056v2
+[6] Santillana, J. S. (2026). Pitwall: Faithful Natural-Language Race-Strategy Briefings from a
+Calibrated Real-Time Monte Carlo Engine. arXiv:2607.06495v1, 7 July 2026. Preprint;
+live-operation statements are author-reported.
+https://arxiv.org/abs/2607.06495v1
+[7] Farhi, E., Goldstone, J., and Gutmann, S. (2014). A Quantum Approximate Optimization
+Algorithm. arXiv:1411.4028.
+https://arxiv.org/abs/1411.4028
+[8] Hadfield, S., Wang, Z., O'Gorman, B., Rieffel, E. G., Venturelli, D., and Biswas, R. (2019).
+From the Quantum Approximate Optimization Algorithm to a Quantum Alternating Operator
+Ansatz. Algorithms, 12(2), 34. DOI 10.3390/a12020034.
+https://arxiv.org/abs/1709.03489
+Research design | Version 3.1 | 18 September 2026
+30 / 33
+
+----- PAGE 30 META: chars=2326 images=0 -----
+
+===== PAGE 31 / 33 =====
+29 Methods and operational sources
+[9] Egger, D. J., Mareček, J., and Woerner, S. (2021). Warm-starting quantum optimization.
+Quantum, 5, 479.
+https://quantum-journal.org/papers/q-2021-06-17-479/
+[10] Falla, J., Langfitt, Q., Alexeev, Y., and Safro, I. (2024). Graph representation learning for
+parameter transferability in quantum approximate optimization algorithm. Quantum Machine
+Intelligence, 6, article 46. DOI 10.1007/s42484-024-00178-9.
+https://link.springer.com/article/10.1007/s42484-024-00178-9
+[11] Nguyen, K. X., Bach, B., and Safro, I. (2025). Cross-Problem Parameter Transfer in
+Quantum Approximate Optimization Algorithm: A Machine Learning Approach.
+arXiv:2504.10733v3. Preprint.
+https://arxiv.org/abs/2504.10733v3
+[12] Montanez-Barrera, J. A., Willsch, D., and Michielsen, K. (2025). Transfer learning of optimal
+QAOA parameters in combinatorial optimization. Quantum Information Processing, 24, article
+129. DOI 10.1007/s11128-025-04743-4. Accessible manuscript arXiv:2402.05549v2.
+https://arxiv.org/abs/2402.05549v2
+[13] Gupta, A., and Hassan, S. R. (2026). Constraint-Preserving QAOA for Personnel Rostering:
+Coverage-Preserving and Guarded-XY Mixer Constructions. arXiv:2607.09145v2, 3 August
+2026. Preprint.
+https://arxiv.org/html/2607.09145v2
+[14] Glasserman, P., and Yao, D. D. (1992). Some guidelines and guarantees for common
+random numbers. Management Science, 38(6), 884-908.
+https://pubsonline.informs.org/doi/10.1287/mnsc.38.6.884
+[15] Horvitz, E. J., and Breese, J. S. (1990). Ideal Partition of Resources for Metareasoning.
+Technical report; subsequently archived as arXiv:2110.09624.
+https://arxiv.org/abs/2110.09624
+[16] Galbraith, J. R. (1974). Organization Design: An Information Processing View. Interfaces,
+4(3), 28-36.
+https://pubsonline.informs.org/doi/10.1287/inte.4.3.28
+[17] Fédération Internationale de l'Automobile. Formula 1 regulations portal. Pin season, issue
+and event-specific documents at implementation.
+https://www.fia.com/regulation/category/110
+[18] Formula 1. Guidelines, especially Results and Timing Data and Artificial Intelligence. Policy
+text checked on the review date; recheck before introducing protected data.
+https://www.formula1.com/en/information/guidelines.4EOKE9RRqevL4niTK9kWyt
+Research design | Version 3.1 | 18 September 2026
+31 / 33
+
+----- PAGE 31 META: chars=2309 images=0 -----
+
+===== PAGE 32 / 33 =====
+29 Methods and operational sources continued
+[19] FastF1 project. Source repository and software licence. Software access does not settle
+rights to source timing data.
+https://github.com/theOehrly/Fast-F1
+[20] TUMFTM. Race simulation source repository. Full race, basic race and strategy
+components; audit licence, inputs, dependencies and checkpoint support before use.
+https://github.com/TUMFTM/race-simulation
+[21] IBM Quantum. Plans overview. Current free-plan terms and access regions.
+https://quantum.cloud.ibm.com/docs/en/guides/plans-overview
+[22] Gil, L., Roberts, J., Deva, S., and Davis, R. (16 March 2026). Doubling down on open-access
+quantum computing. IBM Quantum blog. Describes conditional 180-minute promotion.
+https://www.ibm.com/quantum/blog/open-plan-updates
+[23] IBM Quantum. Maximum execution time. Configure the supported per-job cap and read
+actual usage from the pinned runtime API.
+https://quantum.cloud.ibm.com/docs/en/guides/max-execution-time
+[24] IBM Quantum. Workload usage. Distinguishes usage accounting and workload modes;
+estimates do not replace actual reconciliation.
+https://quantum.cloud.ibm.com/docs/en/guides/estimate-job-run-time
+[25] Amazon Web Services. Amazon Braket pricing. QPU task and shot charges differ from
+simulator allowances.
+https://aws.amazon.com/braket/pricing/
+[26] Microsoft. Azure Quantum pricing. Provider and workspace terms must be checked for any
+optional extension.
+https://learn.microsoft.com/en-us/azure/quantum/pricing
+[27] Kotthoff, L. (2014). Algorithm Selection for Combinatorial Search Problems: A Survey. AI
+Magazine, 35(3), 48-60. DOI 10.1609/aimag.v35i3.2460.
+https://ojs.aaai.org/aimagazine/index.php/aimagazine/article/view/2460
+Search and verification limits
+The review covers race optimisation, QUBO, learned strategies, counterfactuals, parameter
+transfer, mixers, algorithm selection and resource policies. It does not prove absolute novelty.
+Before freeze, compare precise claims with the nearest methods and record unavailable
+content. Recheck bibliographic metadata and interfaces before publication. Unselected
+commits, package versions, account eligibility and simulation parameters remain
+implementation tasks, not verified facts.
+Research design | Version 3.1 | 18 September 2026
+32 / 33
+
+----- PAGE 32 META: chars=2278 images=0 -----
+
+===== PAGE 33 / 33 =====
+30 Protocol freeze record
+This dossier is a design recommendation. The following fields become concrete during the
+implementation and development pilot. No test outcome may be used to choose them.
+Field
+Required freeze evidence
+Scope and rights
+Core generated domain; any permitted historical extension and licence
+Simulator
+Code hash, checkpoint semantics, mechanism tests and parameter distributions
+Corpus
+Family definitions, separate fitting/tuning/calibration/test blocks, counts and
+seeds
+Objective
+Units, risk weights, legality, penalty derivation, normalisation and tie rules
+Algorithms
+Classical comparator, model features, donors, circuits, depths and tuning
+budgets
+Statistics
+Headroom gate, estimand, policy seeds, effect margin, sizing and resampling
+rule
+Simulation
+Random-stream design, production replication count and final-bank isolation
+Deadlines
+Clock origin, action cutoffs, effective budgets, state advance and fallback
+validity
+Hardware
+Verified free access, available balance, reservation ledger and frozen case
+matrix
+Execution
+Authorised run scope, resume rules, protected paths and evidence schema
+Claims
+Prior-art comparison, intended claims, unsupported claims and known limitations
+Completion standard
+Before declaring a local campaign complete, reconcile planned versus actual cases and
+repetitions, check all evidence files, reproduce tables from the raw records and report missing
+units.
+Before declaring hardware complete, reconcile every intent, job status and usage entry,
+preserve all returned data and account for the reserve. A target count does not override the
+budget.
+Before drafting the article, confirm that its central claim survives the strongest fair comparator,
+has adequate stated precision and is supported by the level of domain validation actually
+achieved.
+Recommended next action
+Use this version as the basis for the first scoped Cursor setup prompt. Begin with project
+isolation, environment inspection, the run ledger and generated-data schema. No quantum
+execution is needed for that stage.
+Research design | Version 3.1 | 18 September 2026
+33 / 33
+
+----- PAGE 33 META: chars=2107 images=0 -----

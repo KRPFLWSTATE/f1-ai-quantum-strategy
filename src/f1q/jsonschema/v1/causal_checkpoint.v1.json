@@ -1,0 +1,270 @@
+{
+  "$defs": {
+    "CarDecisionState": {
+      "additionalProperties": false,
+      "properties": {
+        "car_id": {
+          "title": "Car Id",
+          "type": "string"
+        },
+        "compound": {
+          "$ref": "#/$defs/Observation"
+        },
+        "fuel_kg": {
+          "$ref": "#/$defs/Observation"
+        },
+        "gap_ahead_s": {
+          "$ref": "#/$defs/Observation"
+        },
+        "pit_entry_commitment_cutoff": {
+          "$ref": "#/$defs/Observation"
+        },
+        "position": {
+          "$ref": "#/$defs/Observation"
+        },
+        "service_state": {
+          "$ref": "#/$defs/Observation"
+        },
+        "tyre_age_laps": {
+          "$ref": "#/$defs/Observation"
+        }
+      },
+      "required": [
+        "car_id",
+        "position",
+        "gap_ahead_s",
+        "compound",
+        "tyre_age_laps",
+        "fuel_kg",
+        "pit_entry_commitment_cutoff",
+        "service_state"
+      ],
+      "title": "CarDecisionState",
+      "type": "object"
+    },
+    "Observation": {
+      "additionalProperties": false,
+      "properties": {
+        "availability_time": {
+          "title": "Availability Time",
+          "type": "string"
+        },
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "known",
+            "inferred",
+            "assumed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value",
+        "unit",
+        "source",
+        "availability_time",
+        "status"
+      ],
+      "title": "Observation",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "action_commitment_cutoffs": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Observation"
+      },
+      "title": "Action Commitment Cutoffs",
+      "type": "object"
+    },
+    "attempt_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Attempt Id"
+    },
+    "block_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Block Id"
+    },
+    "cars": {
+      "items": {
+        "$ref": "#/$defs/CarDecisionState"
+      },
+      "title": "Cars",
+      "type": "array"
+    },
+    "checkpoint_id": {
+      "title": "Checkpoint Id",
+      "type": "string"
+    },
+    "circuit_sample_pool_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Circuit Sample Pool Id"
+    },
+    "decision_checkpoint_id": {
+      "title": "Decision Checkpoint Id",
+      "type": "string"
+    },
+    "family": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Family"
+    },
+    "field_size": {
+      "$ref": "#/$defs/Observation"
+    },
+    "fixture_kind": {
+      "const": "fictional_setup_fixture",
+      "title": "Fixture Kind",
+      "type": "string"
+    },
+    "inventories": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Observation"
+      },
+      "title": "Inventories",
+      "type": "object"
+    },
+    "lap": {
+      "$ref": "#/$defs/Observation"
+    },
+    "not_a_scientific_observation": {
+      "const": true,
+      "default": true,
+      "title": "Not A Scientific Observation",
+      "type": "boolean"
+    },
+    "policy_repetition_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Policy Repetition Id"
+    },
+    "provenance": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Provenance",
+      "type": "object"
+    },
+    "provider_job_id": {
+      "default": null,
+      "title": "Provider Job Id",
+      "type": "null"
+    },
+    "provider_job_id_reason": {
+      "default": "Not applicable in Stage 1 setup fixture.",
+      "title": "Provider Job Id Reason",
+      "type": "string"
+    },
+    "race_time_s": {
+      "$ref": "#/$defs/Observation"
+    },
+    "regime": {
+      "$ref": "#/$defs/Observation"
+    },
+    "scenario_id": {
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "training",
+        "tuning",
+        "calibration",
+        "test",
+        "shift",
+        "setup_fixture"
+      ],
+      "title": "Split",
+      "type": "string"
+    },
+    "team_service_state": {
+      "$ref": "#/$defs/Observation"
+    },
+    "work_unit_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Work Unit Id"
+    }
+  },
+  "required": [
+    "fixture_kind",
+    "checkpoint_id",
+    "scenario_id",
+    "decision_checkpoint_id",
+    "split",
+    "field_size",
+    "race_time_s",
+    "lap",
+    "regime",
+    "team_service_state",
+    "cars",
+    "inventories",
+    "action_commitment_cutoffs",
+    "provenance"
+  ],
+  "title": "CausalCheckpoint",
+  "type": "object"
+}

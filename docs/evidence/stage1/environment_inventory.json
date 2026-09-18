@@ -1,0 +1,14 @@
+{
+  "kind": "machine_specific_environment_inventory",
+  "not_a_dependency_lock": true,
+  "recorded_utc": "2026-09-19",
+  "os": "macOS-26.5.2-arm64-arm-64bit",
+  "machine": "arm64",
+  "cpu_count": 10,
+  "physical_memory_bytes": 25769803776,
+  "python": "3.12.13",
+  "python_implementation": "CPython",
+  "venv": ".venv (project-local)",
+  "max_workers_default": 1,
+  "source": "python -m f1q doctor"
+}

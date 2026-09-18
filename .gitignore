@@ -1,0 +1,48 @@
+# Local environments and caches
+.venv/
+.venv-fresh/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.DS_Store
+build/
+
+# Mutable local evidence (receipts and sanitized manifests remain tracked)
+evidence/var/
+evidence/**/*.lock
+evidence/**/*.tmp
+evidence/**/*.sqlite
+evidence/**/*.sqlite-*
+
+# Secrets and restricted inputs
+.env
+.env.*
+!.env.example
+secrets/
+restricted_inputs/
+*.pem
+*.key
+id_rsa
+id_ed25519
+credentials.json
+ibm-quantum*.json
+.qiskit/
+
+# Large generated scientific outputs (release packaging is a later stage)
+large_outputs/
+artifacts/raw_qpu/
+*.npz
+*.h5
+*.joblib
+*.pkl
+
+# Editor
+.idea/
+.vscode/
+*.swp

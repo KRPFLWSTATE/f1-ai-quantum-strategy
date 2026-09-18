@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.0.0",
+  "fixture_kind": "fictional_setup_fixture",
+  "not_a_scientific_observation": true,
+  "checkpoint_id": "fixture.synthetic-archipelago.sc-01.cp-00",
+  "scenario_id": "fixture.synthetic-archipelago.sc-01",
+  "decision_checkpoint_id": "fixture.synthetic-archipelago.sc-01.cp-00",
+  "policy_repetition_id": null,
+  "circuit_sample_pool_id": null,
+  "provider_job_id": null,
+  "provider_job_id_reason": "Not applicable in Stage 1 setup fixture.",
+  "work_unit_id": "bootstrap.checkpoint_fixture",
+  "attempt_id": null,
+  "block_id": null,
+  "family": null,
+  "split": "setup_fixture",
+  "field_size": {
+    "value": 20,
+    "unit": "cars",
+    "source": "declared model assumption in dossier section 5",
+    "availability_time": "checkpoint",
+    "status": "assumed"
+  },
+  "race_time_s": {
+    "value": 3120,
+    "unit": "s",
+    "source": "fictional generator placeholder",
+    "availability_time": "checkpoint",
+    "status": "assumed"
+  },
+  "lap": {
+    "value": 28,
+    "unit": "lap",
+    "source": "fictional generator placeholder",
+    "availability_time": "checkpoint",
+    "status": "assumed"
+  },
+  "regime": {
+    "value": "SC",
+    "unit": "safety_regime",
+    "source": "fictional generator placeholder",
+    "availability_time": "checkpoint",
+    "status": "assumed"
+  },
+  "team_service_state": {
+    "value": "crew_available",
+    "unit": "service_state",
+    "source": "fictional generator placeholder",
+    "availability_time": "checkpoint",
+    "status": "assumed"
+  },
+  "cars": [
+    {
+      "car_id": "fixture.car.northshore",
+      "position": {
+        "value": 4,
+        "unit": "classified_position",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "gap_ahead_s": {
+        "value": 1.8,
+        "unit": "s",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "compound": {
+        "value": "medium",
+        "unit": "tyre_compound",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "tyre_age_laps": {
+        "value": 12,
+        "unit": "laps",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "fuel_kg": {
+        "value": 48.0,
+        "unit": "kg",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "inferred"
+      },
+      "pit_entry_commitment_cutoff": {
+        "value": 18.0,
+        "unit": "s",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "service_state": {
+        "value": "on_track",
+        "unit": "service_state",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      }
+    },
+    {
+      "car_id": "fixture.car.harbour",
+      "position": {
+        "value": 7,
+        "unit": "classified_position",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "gap_ahead_s": {
+        "value": 0.6,
+        "unit": "s",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "compound": {
+        "value": "hard",
+        "unit": "tyre_compound",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "tyre_age_laps": {
+        "value": 18,
+        "unit": "laps",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "fuel_kg": {
+        "value": 51.5,
+        "unit": "kg",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "inferred"
+      },
+      "pit_entry_commitment_cutoff": {
+        "value": 22.0,
+        "unit": "s",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      },
+      "service_state": {
+        "value": "on_track",
+        "unit": "service_state",
+        "source": "fictional generator placeholder",
+        "availability_time": "checkpoint",
+        "status": "assumed"
+      }
+    }
+  ],
+  "inventories": {
+    "car_a_tyre_sets": {
+      "value": ["medium_setA", "hard_setB"],
+      "unit": "tyre_set_ids",
+      "source": "fictional generator placeholder",
+      "availability_time": "checkpoint",
+      "status": "assumed"
+    },
+    "car_b_tyre_sets": {
+      "value": ["hard_setB"],
+      "unit": "tyre_set_ids",
+      "source": "fictional generator placeholder",
+      "availability_time": "checkpoint",
+      "status": "assumed"
+    }
+  },
+  "action_commitment_cutoffs": {
+    "car_a_pit_entry": {
+      "value": 18.0,
+      "unit": "s",
+      "source": "fictional generator placeholder",
+      "availability_time": "checkpoint",
+      "status": "assumed"
+    },
+    "car_b_pit_entry": {
+      "value": 22.0,
+      "unit": "s",
+      "source": "fictional generator placeholder",
+      "availability_time": "checkpoint",
+      "status": "assumed"
+    },
+    "communication_margin": {
+      "value": 1.0,
+      "unit": "s",
+      "source": "research setting, not a team requirement",
+      "availability_time": "checkpoint",
+      "status": "assumed"
+    }
+  },
+  "provenance": {
+    "kind": "fictional_setup_fixture",
+    "scientific_use": "forbidden",
+    "stacking_model": "delay_cost_not_prohibition",
+    "note": "This fixture exercises schema validation only. It is not a generated corpus member and must not appear in scientific results tables."
+  }
+}

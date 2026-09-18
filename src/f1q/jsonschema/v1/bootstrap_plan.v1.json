@@ -1,0 +1,125 @@
+{
+  "$defs": {
+    "AuthorizedWorkUnit": {
+      "additionalProperties": false,
+      "properties": {
+        "authorization_scope": {
+          "title": "Authorization Scope",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "evidence_kind": {
+          "enum": [
+            "setup_fixture",
+            "training",
+            "tuning",
+            "calibration",
+            "test",
+            "shift",
+            "development"
+          ],
+          "title": "Evidence Kind",
+          "type": "string"
+        },
+        "plan_id": {
+          "title": "Plan Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seed"
+        },
+        "stage": {
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Stage",
+          "type": "integer"
+        },
+        "unit_id": {
+          "title": "Unit Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "unit_id",
+        "stage",
+        "plan_id",
+        "evidence_kind",
+        "authorization_scope",
+        "description"
+      ],
+      "title": "AuthorizedWorkUnit",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "authorization_scope": {
+      "title": "Authorization Scope",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "evidence_kind": {
+      "const": "setup_fixture",
+      "default": "setup_fixture",
+      "title": "Evidence Kind",
+      "type": "string"
+    },
+    "plan_id": {
+      "const": "bootstrap",
+      "default": "bootstrap",
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed_specification": {
+      "additionalProperties": true,
+      "title": "Seed Specification",
+      "type": "object"
+    },
+    "stage": {
+      "const": 1,
+      "default": 1,
+      "title": "Stage",
+      "type": "integer"
+    },
+    "units": {
+      "items": {
+        "$ref": "#/$defs/AuthorizedWorkUnit"
+      },
+      "title": "Units",
+      "type": "array"
+    }
+  },
+  "required": [
+    "authorization_scope",
+    "description",
+    "units",
+    "seed_specification"
+  ],
+  "title": "BootstrapPlan",
+  "type": "object"
+}

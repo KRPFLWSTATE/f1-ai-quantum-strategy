@@ -1,0 +1,39 @@
+schema_version: "1.0.0"
+plan_id: bootstrap
+stage: 1
+evidence_kind: setup_fixture
+authorization_scope: stage1-local-bootstrap
+description: >
+  Stage 1 software-check plan only. Completing it does not freeze the scientific
+  protocol, authorize experiments, or enable hardware.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    bootstrap.checkpoint_fixture: 20260918
+    bootstrap.artifact_roundtrip: 20260918
+    bootstrap.checksum_verify: 20260918
+units:
+  - schema_version: "1.0.0"
+    unit_id: bootstrap.checkpoint_fixture
+    stage: 1
+    plan_id: bootstrap
+    evidence_kind: setup_fixture
+    authorization_scope: stage1-local-bootstrap
+    description: Validate the labeled fictional checkpoint fixture. Not an experiment.
+    seed: 20260918
+  - schema_version: "1.0.0"
+    unit_id: bootstrap.artifact_roundtrip
+    stage: 1
+    plan_id: bootstrap
+    evidence_kind: setup_fixture
+    authorization_scope: stage1-local-bootstrap
+    description: Write a seed-stable fixture payload artifact.
+    seed: 20260918
+  - schema_version: "1.0.0"
+    unit_id: bootstrap.checksum_verify
+    stage: 1
+    plan_id: bootstrap
+    evidence_kind: setup_fixture
+    authorization_scope: stage1-local-bootstrap
+    description: Re-verify artifact checksums; do not overwrite mismatches.
+    seed: 20260918

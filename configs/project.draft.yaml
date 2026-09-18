@@ -1,0 +1,60 @@
+schema_version: "1.0.0"
+project_name: f1-ai-quantum-strategy
+active_stage: 1
+scientific_protocol_status: DRAFT
+protocol_frozen: false
+hardware_execution_enabled: false
+mode: local
+zero_additional_spending: true
+dossier:
+  version: "3.1"
+  dated: "2026-09-18"
+  relative_path: docs/protocol/F1_AI_Quantum_Research_Dossier_v3_1.pdf
+  sha256: "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76"
+  page_count: 33
+qpu:
+  provider: ibm
+  reported_balance_seconds: 540
+  reported_balance_status: unverified
+  verified_available_seconds: null
+  verified_available_seconds_reason: "Account balance not queried in Stage 1; reported 540 seconds remains unverified."
+  protected_reserve_seconds: 120
+  campaign_ceiling_seconds: null
+  campaign_ceiling_seconds_reason: "Ceiling is min(420, max(0, verified_available_seconds - 120)); verified_available_seconds is null."
+  submission_path_implemented: false
+workers:
+  max_workers: 1
+  reason: "Conservative Stage 1 default after inspecting a 10-core Apple M4 host; no stress benchmark is launched."
+paths:
+  evidence_dir: evidence
+  ledger_relpath: evidence/var/ledger.sqlite
+python:
+  requires: ">=3.12,<3.14"
+  selected: "3.12.13"
+authorization:
+  scope: stage1-local-bootstrap
+  allowed_plans:
+    - bootstrap
+  github_push_authorized: false
+unresolved:
+  - field: ibm_backend
+    value: null
+    reason: "No backend selected; hardware execution is disabled."
+  - field: quota_verification_time_utc
+    value: null
+    reason: "IBM account inspection is not authorized in Stage 1."
+  - field: calibrated_threshold
+    value: null
+    reason: "No calibration has been performed."
+  - field: model_artifact
+    value: null
+    reason: "No learned model has been trained."
+  - field: simulation_distribution
+    value: null
+    reason: "Simulator parameter distributions are a later freeze field."
+  - field: protocol_hash
+    value: null
+    reason: "Scientific protocol is DRAFT; the configuration hash is a draft fingerprint, not a frozen protocol hash."
+  - field: completed_gate
+    value: null
+    reason: "Gates A–F are future acceptance checks; none are completed."
