@@ -25,12 +25,26 @@ def build_receipt(ledger: Ledger, manifest: RunManifest) -> Receipt:
     else:
         notes = ["event counts taken from append-only ledger events and artifact rows"]
     if by_status.get("completed") == len(manifest.planned_unit_ids):
-        next_work = (
-            "Stage 2 awaiting its implementation prompt; research protocol remains DRAFT; hardware disabled"
-        )
+        if manifest.plan_id == "simulator_check":
+            next_work = (
+                "Stage 4 -- action model, QUBO and independent classical references "
+                "(awaiting implementation prompt); protocol DRAFT; hardware disabled"
+            )
+        elif manifest.plan_id == "development_preview":
+            next_work = (
+                "Stage 3 -- simulator adapter and independent mechanism checks "
+                "(awaiting implementation prompt); protocol DRAFT; hardware disabled"
+            )
+        else:
+            next_work = (
+                "Stage 2 awaiting its implementation prompt; research protocol remains DRAFT; hardware disabled"
+            )
     else:
-        next_work = "resume remaining bootstrap setup_fixture units"
-    notes.append("This receipt is setup-fixture evidence, not a scientific observation.")
+        next_work = f"resume remaining {manifest.plan_id} units"
+    if manifest.evidence_kind == "development":
+        notes.append("This receipt is development-preview evidence, not a scientific observation or validated race checkpoint.")
+    else:
+        notes.append("This receipt is setup-fixture evidence, not a scientific observation.")
     return Receipt(
         run_id=manifest.run_id,
         plan_id=manifest.plan_id,
@@ -60,8 +74,14 @@ def build_receipt(ledger: Ledger, manifest: RunManifest) -> Receipt:
 
 def write_receipt(root, receipt: Receipt) -> dict:
     payload = receipt.model_dump(mode="json")
-    json_rel = f"evidence/bootstrap/receipts/{receipt.run_id}.json"
-    md_rel = f"evidence/bootstrap/receipts/{receipt.run_id}.md"
+    if receipt.plan_id == "bootstrap":
+        sub = "bootstrap"
+    elif receipt.plan_id == "simulator_check":
+        sub = "simulator"
+    else:
+        sub = "development"
+    json_rel = f"evidence/{sub}/receipts/{receipt.run_id}.json"
+    md_rel = f"evidence/{sub}/receipts/{receipt.run_id}.md"
     json_path = resolve_within(root, json_rel)
     md_path = resolve_within(root, md_rel)
     atomic_write_text(json_path, canonical_json(payload).decode("utf-8") + "\n")

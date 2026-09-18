@@ -26,3 +26,18 @@ class IntegrityError(F1QError):
 
 class UnsupportedModeError(F1QError):
     exit_code = 2
+
+
+class SimulatorNotImplementedError(F1QError):
+    """Stage 3 simulator is absent; never return placeholder race results."""
+
+    exit_code = 2
+
+
+class RejectionError(F1QError):
+    exit_code = 2
+
+    def __init__(self, code: str, reason: str):
+        self.code = code
+        self.reason = reason
+        super().__init__(f"{code}: {reason}")

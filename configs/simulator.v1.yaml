@@ -1,0 +1,93 @@
+schema_version: "1.0.0"
+simulator_version: "1.0.0"
+kind: restricted_independent_race_model
+not_calibrated_f1_parameters: true
+scientific_protocol_status: DRAFT
+interface_version: "3.0.0"
+upstream_adapter_used: false
+units:
+  race_clock: s
+  race_clock_origin: race_start
+  progress: laps
+  mass: kg
+track:
+  geometry: unit_circle_single_racing_line
+  pit_entry_frac: 0.95
+  pit_exit_frac: 0.02
+  pit_box_frac: 0.0
+  pit_lane_fraction: 0.07
+  note: "Pit path is entry 0.95 -> box at start/finish 0.0 -> exit 0.02. Not a real circuit."
+pit:
+  service_stationary_s: 2.5
+  service_source: "declared Stage 3 decomposition constant; not an F1 measured stop"
+  double_stacking: delay_cost_not_prohibition
+  no_refueling: true
+tyres:
+  time_scale_s: 6.0
+  curve_scale_s: 2.0
+  compound_offset_s:
+    soft: 0.0
+    medium: 0.8
+    hard: 1.6
+  mapping_note: "Stage 2 wear_per_lap is multiplied by time_scale_s to obtain seconds per lap of age. Not F1 calibration."
+fuel:
+  kg_per_lap: 1.8
+  uncertainty_kg: 2.0
+  time_per_kg_s: 0.03
+  estimate_is_spec_fuel_kg: true
+  actual_within_uncertainty_floor: true
+  amendment: development_spec.fuel.v1
+regime:
+  sc_pace_factor: 1.45
+  vsc_pace_factor: 1.40
+  sc_queue_gap_s: 1.0
+  sc_catch_factor: 0.85
+  duration_laps_low: 1.8
+  duration_laps_high: 3.2
+  restart: instantaneous_green_pace_preserve_gaps
+traffic:
+  min_gap_s: 0.12
+  overtake_advantage_s_per_lap: 0.40
+  attack_range_s: 0.18
+  pass_clearance_s: 0.05
+  overtake_regimes: [GREEN]
+integrator:
+  mode: event_driven
+  dt_max_green_s: 1.0
+  dt_max_regime_s: 0.25
+  tie_break: car_id_lexicographic
+  simultaneous_priority:
+    - regime_end
+    - pit_box_arrival
+    - service_complete
+    - pit_exit
+    - lap_complete
+    - catch_or_pass
+    - pit_entry
+deadline:
+  nonpositive_window_is_closed: true
+  boundary_arrival_inclusive: false
+  communication_margin_s: 1.0
+  scenario_latency_maps_one_to_one_onto_race_s: true
+  not_ibm_queue_measurement: true
+classification:
+  order: [progress_desc, finish_time_asc, car_id_asc]
+  race_end: leader_reaches_horizon
+  lapped: lower_progress_at_leader_finish
+  retirement: reject_UNSUPPORTED_RETIREMENT
+  team_loss: "(r1 + r2 - 2) / (2 * (F - 1))"
+exclusions:
+  - wet_transitions
+  - red_flags
+  - sprint_specific_rules
+  - tyre_damage
+  - detailed_energy_deployment
+  - pit_lane_closures
+  - refueling
+  - retirements
+  - unsupported_race_control
+resource:
+  max_workers: 2
+  ram_ceiling_fraction: 0.60
+  stage3_elapsed_cap_s: 1800
+  stage3_cap_note: "Stage 3 engineering limit, not a benchmark result."

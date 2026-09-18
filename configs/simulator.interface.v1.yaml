@@ -1,0 +1,29 @@
+schema_version: "1.0.0"
+interface_version: "3.0.0"
+frozen_separately_from_scientific_protocol: true
+scientific_protocol: DRAFT
+methods:
+  - initialize
+  - advance_to_checkpoint
+  - observe
+  - serialize
+  - restore
+  - advance_to_time
+  - apply_plan
+  - validate_plan
+  - continue_to_finish
+  - clone
+solver_visible: DecisionObservation
+never_solver_visible:
+  - SimulatorState.private
+  - actual_fuel_kg
+  - sampled_future_regime_duration_s
+  - rival_eventual_pit_laps
+  - evaluator_bank_key
+  - engine_state
+  - rng stream draws before revelation
+team_plan_kinds:
+  - pit_now
+  - delay_laps  # 1 or 2 completed laps after the checkpoint
+  - continuation
+note: "Legal-action enumerator, objective compiler and QUBO belong to Stage 4."

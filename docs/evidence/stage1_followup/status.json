@@ -1,0 +1,69 @@
+{
+  "active_stage": 1,
+  "command": "status",
+  "completed_units": [
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.artifact_roundtrip",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checkpoint_fixture",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checksum_verify",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.artifact_roundtrip",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checkpoint_fixture",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checksum_verify"
+  ],
+  "configuration_hash_draft": "b9bd5a15caeb329edc67943e176ce57844637bf6fbd4ba4f89006e4dc1ba3592",
+  "failed_units": [],
+  "hardware_execution_enabled": false,
+  "interrupted_units": [],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "Stage 2 -- scenario generator and causal checkpoint schema (awaiting implementation prompt)",
+  "pending_units": [],
+  "present": true,
+  "project_root": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "protocol_frozen": false,
+  "qpu_account_queried": false,
+  "readiness": "stage1-complete-pending-stage2",
+  "research_experiments_executed": 0,
+  "runs": [
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "77816c72-6248-4ae2-b944-70973975888a",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "a0c7a5d7-4387-40f8-82f7-08b7d3593f85",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    }
+  ],
+  "scientific_protocol": "DRAFT",
+  "unknown_is_not_ready": true
+}

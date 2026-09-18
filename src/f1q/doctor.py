@@ -8,6 +8,7 @@ from pathlib import Path
 
 from f1q import DOSSIER_PAGE_COUNT, DOSSIER_SHA256, DOSSIER_VERSION, __version__
 from f1q.authorization import load_project_config, lock_hash
+from f1q.errors import LedgerLocked
 from f1q.hashing import sha256_file
 from f1q.ledger import Ledger
 from f1q.paths import resolve_project_root, resolve_within
@@ -129,6 +130,20 @@ def _ledger(root: Path, config) -> dict:
         if ok:
             return _ok("ledger", "ledger opened; event chains verified", detail)
         return {"name": "ledger", "ok": False, "message": "event chain verification failed", "detail": detail}
+    except LedgerLocked:
+        return {
+            "name": "ledger",
+            "ok": False,
+            "message": "ledger locked by another writer",
+            "detail": {"present": True, "error_type": "LedgerLocked"},
+        }
+    except Exception as exc:
+        return {
+            "name": "ledger",
+            "ok": False,
+            "message": "ledger initialization failed",
+            "detail": {"present": True, "error_type": type(exc).__name__},
+        }
     finally:
         if ledger is not None:
             ledger.release()

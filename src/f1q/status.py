@@ -64,6 +64,18 @@ def run_status(root: Path | None = None) -> dict:
             elif bootstrap_done:
                 next_work = "Stage 2 -- scenario generator and causal checkpoint schema (awaiting implementation prompt)"
                 readiness = "stage1-complete-pending-stage2"
+                preview_done = any(
+                    r["plan_id"] == "development_preview" and r["status"] == "completed" for r in runs
+                )
+                if preview_done:
+                    next_work = "Stage 3 -- simulator-check plan (python -m f1q run --plan simulator_check)"
+                    readiness = "stage2-complete-pending-stage3"
+                    sim_done = any(
+                        r["plan_id"] == "simulator_check" and r["status"] == "completed" for r in runs
+                    )
+                    if sim_done:
+                        next_work = "Stage 4 -- action model, QUBO and independent classical references (awaiting implementation prompt)"
+                        readiness = "stage3-complete-pending-stage4"
             else:
                 next_work = "run --plan bootstrap"
                 readiness = "unknown"

@@ -1,0 +1,49 @@
+schema_version: "1.0.0"
+plan_id: simulator_check
+stage: 3
+evidence_kind: development
+authorization_scope: stage3-local-simulator-check
+description: >
+  Stage 3 simulator mechanism checks, development-preview validation, diagnostic
+  interventions, and source/private restore. Not a scientific split, not H1/H2/H3,
+  not F1 calibration, not QUBO/Stage 4.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    simulator.mechanism_checks: 2026091903
+    simulator.development_matrix: 2026091903
+    simulator.diagnostic_interventions: 2026091903
+    simulator.source_restore: 2026091903
+units:
+  - schema_version: "1.0.0"
+    unit_id: simulator.mechanism_checks
+    stage: 3
+    plan_id: simulator_check
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-check
+    description: Independent mechanism oracles versus the restricted model.
+    seed: 2026091903
+  - schema_version: "1.0.0"
+    unit_id: simulator.development_matrix
+    stage: 3
+    plan_id: simulator_check
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-check
+    description: Advance, admit, resume-compare the 64 existing development specifications.
+    seed: 2026091903
+  - schema_version: "1.0.0"
+    unit_id: simulator.diagnostic_interventions
+    stage: 3
+    plan_id: simulator_check
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-check
+    description: Eight hash-selected alternative-plan diagnostics; not a performance comparison.
+    seed: 2026091903
+  - schema_version: "1.0.0"
+    unit_id: simulator.source_restore
+    stage: 3
+    plan_id: simulator_check
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-check
+    description: Reconstruct the Stage 3 source package and private replay manifest.
+    seed: 2026091903

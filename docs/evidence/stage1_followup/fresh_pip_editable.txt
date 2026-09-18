@@ -1,0 +1,28 @@
+Obtaining file:///Users/kawinperera/f1-ai-quantum-strategy
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: pydantic<3,>=2.9 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from f1q==0.1.0) (2.13.5)
+Requirement already satisfied: PyYAML<7,>=6.0.2 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from f1q==0.1.0) (6.0.3)
+Requirement already satisfied: pytest<9,>=8.3 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from f1q==0.1.0) (8.4.2)
+Requirement already satisfied: annotated-types>=0.6.0 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (0.8.0)
+Requirement already satisfied: pydantic-core==2.46.5 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (2.46.5)
+Requirement already satisfied: typing-extensions>=4.14.1 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (4.16.0)
+Requirement already satisfied: typing-inspection>=0.4.2 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (0.4.4)
+Requirement already satisfied: iniconfig>=1 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pytest<9,>=8.3->f1q==0.1.0) (2.3.0)
+Requirement already satisfied: packaging>=20 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pytest<9,>=8.3->f1q==0.1.0) (26.3)
+Requirement already satisfied: pluggy<2,>=1.5 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pytest<9,>=8.3->f1q==0.1.0) (1.6.0)
+Requirement already satisfied: pygments>=2.7.2 in /private/tmp/f1q-followup-venv-9pgAe4/venv/lib/python3.12/site-packages (from pytest<9,>=8.3->f1q==0.1.0) (2.21.0)
+Building wheels for collected packages: f1q
+  Building editable for f1q (pyproject.toml): started
+  Building editable for f1q (pyproject.toml): finished with status 'done'
+  Created wheel for f1q: filename=f1q-0.1.0-0.editable-py3-none-any.whl size=3142 sha256=d96e717b1135b213a08553f93658d52762339f3291fbdd4837ea933ed17c0241
+  Stored in directory: /private/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/pip-ephem-wheel-cache-7uxxygic/wheels/b8/61/db/21cb4cf2da5e8171250407405a7e5eda45df5c3c6bf102942a
+Successfully built f1q
+Installing collected packages: f1q
+Successfully installed f1q-0.1.0

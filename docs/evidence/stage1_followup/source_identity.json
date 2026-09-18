@@ -1,0 +1,31 @@
+{
+  "current_file_count": 42,
+  "current_source_snapshot_hash": "10657c897ccf49164e4f4ef82d507f1164ac5e702fb02e805eea37c7b9c38512",
+  "documentation_excluded_from_source_snapshot": true,
+  "files_added": [],
+  "files_changed_vs_snapshot": [
+    {
+      "current": "234c7e4d7fcd7b4bcb8d8a4a0bfbf9e31ebf1c2cca2f80c623e9c96af2d3fca1",
+      "path": "src/f1q/doctor.py",
+      "snapshot": "96eadf13b4c47944e021f2340707a3def608319f96de223dbce4b464836e6bf9"
+    }
+  ],
+  "files_missing": [],
+  "git_commit": "24346827c11c81717e8161a9a5c9414ea4ba9428",
+  "git_dirty": true,
+  "hashing_policy_globs": [
+    "src/**/*.py",
+    "configs/**/*",
+    "pyproject.toml",
+    "requirements.lock",
+    "tests/**/*.py",
+    "docs/protocol/SOURCE_HASH.md"
+  ],
+  "note": "Bootstrap snapshot 320dc0f9 records unrepaired doctor.py. Git commits f0dd49ff and 24346827 contain the repaired doctor.py. Unrepaired bytes are not in git objects. Documentation-only commit 24346827 does not change doctor.py.",
+  "recomputed_from_retained_file_list": "320dc0f9e7457e31d2a05a7d998b2bedb909447559e04acf1866cb6704aaa583",
+  "repaired_doctor_sha256": "234c7e4d7fcd7b4bcb8d8a4a0bfbf9e31ebf1c2cca2f80c623e9c96af2d3fca1",
+  "retained_snapshot_hash_field": "320dc0f9e7457e31d2a05a7d998b2bedb909447559e04acf1866cb6704aaa583",
+  "snapshot_file_count": 42,
+  "unrepaired_doctor_bytes_in_git": false,
+  "unrepaired_doctor_sha256": "96eadf13b4c47944e021f2340707a3def608319f96de223dbce4b464836e6bf9"
+}

@@ -1,0 +1,21 @@
+Processing ./.
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: pydantic<3,>=2.9 in /private/tmp/f1q-followup-wheelvenv-Dcs3Jv/venv/lib/python3.12/site-packages (from f1q==0.1.0) (2.13.5)
+Requirement already satisfied: PyYAML<7,>=6.0.2 in /private/tmp/f1q-followup-wheelvenv-Dcs3Jv/venv/lib/python3.12/site-packages (from f1q==0.1.0) (6.0.3)
+Requirement already satisfied: annotated-types>=0.6.0 in /private/tmp/f1q-followup-wheelvenv-Dcs3Jv/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (0.8.0)
+Requirement already satisfied: pydantic-core==2.46.5 in /private/tmp/f1q-followup-wheelvenv-Dcs3Jv/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (2.46.5)
+Requirement already satisfied: typing-extensions>=4.14.1 in /private/tmp/f1q-followup-wheelvenv-Dcs3Jv/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (4.16.0)
+Requirement already satisfied: typing-inspection>=0.4.2 in /private/tmp/f1q-followup-wheelvenv-Dcs3Jv/venv/lib/python3.12/site-packages (from pydantic<3,>=2.9->f1q==0.1.0) (0.4.4)
+Building wheels for collected packages: f1q
+  Building wheel for f1q (pyproject.toml): started
+  Building wheel for f1q (pyproject.toml): finished with status 'done'
+  Created wheel for f1q: filename=f1q-0.1.0-py3-none-any.whl size=26273 sha256=552dcdacb4fc1891c78ff4962cfb2cb5ad91e295820a1877d140a1d5b754164f
+  Stored in directory: /private/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/pip-ephem-wheel-cache-8syedb9p/wheels/b8/61/db/21cb4cf2da5e8171250407405a7e5eda45df5c3c6bf102942a
+Successfully built f1q
+Installing collected packages: f1q
+Successfully installed f1q-0.1.0

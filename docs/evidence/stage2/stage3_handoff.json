@@ -1,0 +1,9 @@
+{
+  "advance_to_checkpoint": "SimulatorState x ScenarioSpec.checkpoint_request -> SimulatorState",
+  "construct_observation": "allowlist projection to DecisionObservation",
+  "errors": "SimulatorNotImplementedError until Stage 3; RejectionError for impossible observations",
+  "initialize": "ScenarioSpec -> SimulatorState (complete physical/RNG state, never solver-visible)",
+  "preserve_resume_state": "retain SimulatorState for continuation",
+  "reveal_regime": "apply the requested SC/VSC only when causally reached",
+  "validate": "structural checks are necessary but not physical reachability"
+}

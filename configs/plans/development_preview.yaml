@@ -1,0 +1,86 @@
+schema_version: "1.0.0"
+plan_id: development_preview
+stage: 2
+evidence_kind: development
+authorization_scope: stage2-local-development-preview
+description: >
+  Stage 2 development preview only. Eight blocks, one per family, eight episode
+  specifications each (32 SC and 32 VSC requests). Not training, tuning,
+  calibration, test, or shift evidence. Specifications await Stage 3 simulator
+  validation. Not 64 validated race checkpoints.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    development.preview.fam.00: 2026091900
+    development.preview.fam.01: 2026091901
+    development.preview.fam.02: 2026091902
+    development.preview.fam.03: 2026091903
+    development.preview.fam.04: 2026091904
+    development.preview.fam.05: 2026091905
+    development.preview.fam.06: 2026091906
+    development.preview.fam.07: 2026091907
+units:
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.00
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091900
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.01
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091901
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.02
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091902
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.03
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091903
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.04
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091904
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.05
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091905
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.06
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091906
+  - schema_version: "1.0.0"
+    unit_id: development.preview.fam.07
+    stage: 2
+    plan_id: development_preview
+    evidence_kind: development
+    authorization_scope: stage2-local-development-preview
+    description: One development block / eight episode specifications for a factor family.
+    seed: 2026091907

@@ -10,11 +10,16 @@ from f1q.authorization import (
     dossier_hash,
     fingerprints_match,
     load_bootstrap_plan,
+    load_development_preview_plan,
     load_project_config,
+    load_simulator_check_plan,
     lock_hash,
 )
 from f1q.bootstrap import execute_unit
 from f1q.errors import AuthorizationError, IntegrityError
+from f1q.generator.config import load_generator_config
+from f1q.generator.preview import execute_preview_unit
+from f1q.simulator.run_units import execute_simulator_unit
 from f1q.hashing import sha256_file
 from f1q.ledger import Ledger
 from f1q.paths import resolve_within
@@ -83,7 +88,7 @@ def run_bootstrap(root: Path) -> dict:
             {"plan_id": "bootstrap", "plan_hash": plan_hash, "authorization_scope": config.authorization.scope},
         )
         try:
-            _execute_remaining(root, ledger, manifest, seeds, started_mono)
+            _execute_remaining(root, ledger, manifest, seeds, started_mono, execute_fn=execute_unit)
         except KeyboardInterrupt:
             pass
         return _finalize(root, ledger, manifest, started_mono)
@@ -91,8 +96,6 @@ def run_bootstrap(root: Path) -> dict:
 
 def resume_run(root: Path, run_id: str) -> dict:
     config, config_hash, _ = load_project_config(root)
-    authorize_plan(config, "bootstrap")
-    plan, plan_hash, _ = load_bootstrap_plan(root)
     snapshot = take_source_snapshot(root)
     db, lock = ledger_paths(root, config)
     started_mono = time.monotonic()
@@ -101,8 +104,29 @@ def resume_run(root: Path, run_id: str) -> dict:
         if row is None:
             raise AuthorizationError(f"unknown run-id {run_id}")
         manifest = RunManifest.model_validate_json(row["manifest_json"])
-        if manifest.plan_id != "bootstrap":
-            raise AuthorizationError("Stage 1 can only resume the bootstrap plan")
+        if manifest.status in {"completed"}:
+            _verify_completed_checksums(root, ledger, run_id)
+            receipt = build_receipt(ledger, manifest)
+            return write_receipt(root, receipt)
+        if manifest.plan_id == "bootstrap":
+            authorize_plan(config, "bootstrap")
+            plan, plan_hash, _ = load_bootstrap_plan(root)
+            execute_fn = execute_unit
+            extra_expected = {}
+        elif manifest.plan_id == "development_preview":
+            authorize_plan(config, "development_preview")
+            plan, plan_hash, _ = load_development_preview_plan(root)
+            execute_fn = execute_preview_unit
+            _, gen_hash, _ = load_generator_config(root)
+            extra_expected = {"generator_config_hash": gen_hash}
+        elif manifest.plan_id == "simulator_check":
+            authorize_plan(config, "simulator_check")
+            plan, plan_hash, _ = load_simulator_check_plan(root)
+            execute_fn = execute_simulator_unit
+            _, sim_hash = load_simulator_config_safe(root)
+            extra_expected = {"simulator_config_hash": sim_hash}
+        else:
+            raise AuthorizationError(f"cannot resume plan {manifest.plan_id}")
         fingerprints_match(
             expected_config_hash=manifest.configuration_hash,
             actual_config_hash=config_hash,
@@ -111,19 +135,22 @@ def resume_run(root: Path, run_id: str) -> dict:
             expected_plan_hash=manifest.seed_specification.get("plan_hash"),
             actual_plan_hash=plan_hash,
         )
+        expected_gen = manifest.seed_specification.get("generator_config_hash")
+        if expected_gen and expected_gen != extra_expected.get("generator_config_hash"):
+            raise AuthorizationError("generator configuration fingerprint changed; dispatch blocked")
+        expected_sim = manifest.seed_specification.get("simulator_config_hash")
+        if expected_sim and expected_sim != extra_expected.get("simulator_config_hash"):
+            raise AuthorizationError("simulator configuration fingerprint changed; dispatch blocked")
         _verify_completed_checksums(root, ledger, run_id)
         seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
         for unit in ledger.units_for(run_id):
             if unit["status"] == "interrupted":
                 ledger.reset_interrupted_to_pending(run_id, unit["unit_id"])
-        if manifest.status in {"completed"}:
-            receipt = build_receipt(ledger, manifest)
-            return write_receipt(root, receipt)
         manifest.status = "running"
         ledger.update_manifest(manifest.model_dump(mode="json"))
         ledger.append_event(run_id, "run_resumed", {"run_id": run_id})
         try:
-            _execute_remaining(root, ledger, manifest, seeds, started_mono)
+            _execute_remaining(root, ledger, manifest, seeds, started_mono, execute_fn=execute_fn)
         except KeyboardInterrupt:
             pass
         return _finalize(root, ledger, manifest, started_mono)
@@ -150,12 +177,151 @@ def _verify_completed_checksums(root: Path, ledger: Ledger, run_id: str) -> None
             )
 
 
+def run_development_preview(root: Path) -> dict:
+    config, config_hash, _ = load_project_config(root)
+    authorize_plan(config, "development_preview")
+    plan, plan_hash, _ = load_development_preview_plan(root)
+    _, generator_hash, _ = load_generator_config(root)
+    dossier = dossier_hash(root, config)
+    snapshot = take_source_snapshot(root)
+    commit, dirty = git_state(root)
+    run_id = str(uuid4())
+    started_mono = time.monotonic()
+    started = utc_now()
+    unit_ids = [u.unit_id for u in plan.units]
+    seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
+    manifest = RunManifest(
+        run_id=run_id,
+        stage=2,
+        plan_id="development_preview",
+        evidence_kind="development",
+        source_snapshot_hash=snapshot["hash"],
+        git_commit=commit,
+        git_dirty=dirty,
+        dossier_sha256=dossier,
+        configuration_hash=config_hash,
+        configuration_hash_kind="draft",
+        dependency_lock_hash=lock_hash(root),
+        planned_unit_ids=unit_ids,
+        seed_specification={
+            "plan_hash": plan_hash,
+            "unit_seeds": seeds,
+            "generator_config_hash": generator_hash,
+            "generator_version": "2.0.0",
+        },
+        authorization_scope=config.authorization.scope,
+        started_at_utc=started,
+        status="running",
+    )
+    db, lock = ledger_paths(root, config)
+    with Ledger(db, lock, root=root) as ledger:
+        incomplete = [r for r in ledger.incomplete_runs() if r["plan_id"] == "development_preview"]
+        if incomplete:
+            ids = ", ".join(r["run_id"] for r in incomplete)
+            raise AuthorizationError(
+                f"incomplete development_preview run(s) exist; resume instead of starting a new run: {ids}"
+            )
+        write_snapshot(root, run_id, snapshot, evidence_subdir="development")
+        ledger.insert_run(manifest.model_dump(mode="json"))
+        ledger.append_event(
+            run_id,
+            "run_started",
+            {
+                "plan_id": "development_preview",
+                "plan_hash": plan_hash,
+                "generator_config_hash": generator_hash,
+                "authorization_scope": config.authorization.scope,
+            },
+        )
+        try:
+            _execute_remaining(
+                root, ledger, manifest, seeds, started_mono, execute_fn=execute_preview_unit
+            )
+        except KeyboardInterrupt:
+            pass
+        return _finalize(root, ledger, manifest, started_mono)
+
+
+def run_simulator_check(root: Path) -> dict:
+    config, config_hash, _ = load_project_config(root)
+    authorize_plan(config, "simulator_check")
+    plan, plan_hash, _ = load_simulator_check_plan(root)
+    _, sim_hash = load_simulator_config_safe(root)
+    dossier = dossier_hash(root, config)
+    snapshot = take_source_snapshot(root)
+    commit, dirty = git_state(root)
+    run_id = str(uuid4())
+    started_mono = time.monotonic()
+    started = utc_now()
+    unit_ids = [u.unit_id for u in plan.units]
+    seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
+    manifest = RunManifest(
+        run_id=run_id,
+        stage=3,
+        plan_id="simulator_check",
+        evidence_kind="development",
+        source_snapshot_hash=snapshot["hash"],
+        git_commit=commit,
+        git_dirty=dirty,
+        dossier_sha256=dossier,
+        configuration_hash=config_hash,
+        configuration_hash_kind="draft",
+        dependency_lock_hash=lock_hash(root),
+        planned_unit_ids=unit_ids,
+        seed_specification={
+            "plan_hash": plan_hash,
+            "unit_seeds": seeds,
+            "simulator_config_hash": sim_hash,
+            "simulator_version": "1.0.0",
+            "interface_version": "3.0.0",
+        },
+        authorization_scope=config.authorization.scope,
+        started_at_utc=started,
+        status="running",
+    )
+    db, lock = ledger_paths(root, config)
+    with Ledger(db, lock, root=root) as ledger:
+        incomplete = [r for r in ledger.incomplete_runs() if r["plan_id"] == "simulator_check"]
+        if incomplete:
+            ids = ", ".join(r["run_id"] for r in incomplete)
+            raise AuthorizationError(
+                f"incomplete simulator_check run(s) exist; resume instead of starting a new run: {ids}"
+            )
+        write_snapshot(root, run_id, snapshot, evidence_subdir="simulator")
+        ledger.insert_run(manifest.model_dump(mode="json"))
+        ledger.append_event(
+            run_id,
+            "run_started",
+            {
+                "plan_id": "simulator_check",
+                "plan_hash": plan_hash,
+                "simulator_config_hash": sim_hash,
+                "authorization_scope": config.authorization.scope,
+            },
+        )
+        try:
+            _execute_remaining(
+                root, ledger, manifest, seeds, started_mono, execute_fn=execute_simulator_unit
+            )
+        except KeyboardInterrupt:
+            pass
+        return _finalize(root, ledger, manifest, started_mono)
+
+
+def load_simulator_config_safe(root: Path):
+    from f1q.simulator.config import load_simulator_config
+
+    return load_simulator_config(root)
+
+
 def _execute_remaining(
     root: Path,
     ledger: Ledger,
     manifest: RunManifest,
     seeds: dict[str, int],
     started_mono: float,
+    *,
+    execute_fn,
 ) -> None:
     interrupt_after = os.environ.get("F1Q_TEST_INTERRUPT_AFTER")
     hold_s = float(os.environ.get("F1Q_TEST_HOLD_LOCK_SECONDS") or "0")
@@ -178,7 +344,7 @@ def _execute_remaining(
             time.sleep(hold_s)
         t0 = time.monotonic()
         try:
-            result = execute_unit(
+            result = execute_fn(
                 root=root,
                 run_id=manifest.run_id,
                 unit_id=unit_id,
@@ -194,6 +360,8 @@ def _execute_remaining(
             )
             raise
         ledger.add_artifact(result["artifact"])
+        for extra in result.get("extra_artifacts") or []:
+            ledger.add_artifact(extra)
         ledger.finish_attempt(
             attempt_id,
             status="completed",

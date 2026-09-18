@@ -19,6 +19,8 @@ evidence/**/*.lock
 evidence/**/*.tmp
 evidence/**/*.sqlite
 evidence/**/*.sqlite-*
+evidence/development/private/
+evidence/simulator/private/
 
 # Secrets and restricted inputs
 .env

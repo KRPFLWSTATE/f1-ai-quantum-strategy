@@ -1,6 +1,6 @@
 schema_version: "1.0.0"
 project_name: f1-ai-quantum-strategy
-active_stage: 1
+active_stage: 3
 scientific_protocol_status: DRAFT
 protocol_frozen: false
 hardware_execution_enabled: false
@@ -23,8 +23,8 @@ qpu:
   campaign_ceiling_seconds_reason: "Ceiling is min(420, max(0, verified_available_seconds - 120)); verified_available_seconds is null."
   submission_path_implemented: false
 workers:
-  max_workers: 1
-  reason: "Conservative Stage 1 default after inspecting a 10-core Apple M4 host; no stress benchmark is launched."
+  max_workers: 2
+  reason: "Stage 3 permits at most two workers and 60% RAM; default remains conservative."
 paths:
   evidence_dir: evidence
   ledger_relpath: evidence/var/ledger.sqlite
@@ -32,9 +32,11 @@ python:
   requires: ">=3.12,<3.14"
   selected: "3.12.13"
 authorization:
-  scope: stage1-local-bootstrap
+  scope: stage3-local-simulator-check
   allowed_plans:
     - bootstrap
+    - development_preview
+    - simulator_check
   github_push_authorized: false
 unresolved:
   - field: ibm_backend

@@ -171,7 +171,7 @@ class AuthorizationConfig(StrictModel):
 class ProjectConfig(StrictModel):
     schema_version: str = SCHEMA_VERSION
     project_name: Literal["f1-ai-quantum-strategy"] = "f1-ai-quantum-strategy"
-    active_stage: Literal[1] = 1
+    active_stage: Literal[1, 2, 3] = 3
     scientific_protocol_status: Literal["DRAFT"] = "DRAFT"
     protocol_frozen: Literal[False] = False
     hardware_execution_enabled: Literal[False] = False
@@ -223,6 +223,50 @@ class BootstrapPlan(StrictModel):
                 raise SchemaError(f"bootstrap unit {unit.unit_id} is not a Stage 1 bootstrap unit")
             if unit.evidence_kind != "setup_fixture":
                 raise SchemaError("bootstrap units must be setup_fixture evidence")
+        return self
+
+
+class DevelopmentPreviewPlan(StrictModel):
+    schema_version: str = SCHEMA_VERSION
+    plan_id: Literal["development_preview"] = "development_preview"
+    stage: Literal[2] = 2
+    evidence_kind: Literal["development"] = "development"
+    authorization_scope: str
+    description: str
+    units: list[AuthorizedWorkUnit]
+    seed_specification: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _stage2_units(self) -> DevelopmentPreviewPlan:
+        if len(self.units) != 8:
+            raise SchemaError("development preview plan must contain eight family units")
+        for unit in self.units:
+            if unit.plan_id != "development_preview" or unit.stage != 2:
+                raise SchemaError(f"unit {unit.unit_id} is not a Stage 2 development preview unit")
+            if unit.evidence_kind != "development":
+                raise SchemaError("development preview units must be development evidence")
+        return self
+
+
+class SimulatorCheckPlan(StrictModel):
+    schema_version: str = SCHEMA_VERSION
+    plan_id: Literal["simulator_check"] = "simulator_check"
+    stage: Literal[3] = 3
+    evidence_kind: Literal["development"] = "development"
+    authorization_scope: str
+    description: str
+    units: list[AuthorizedWorkUnit]
+    seed_specification: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _stage3_units(self) -> SimulatorCheckPlan:
+        if not self.units:
+            raise SchemaError("simulator_check plan must contain units")
+        for unit in self.units:
+            if unit.plan_id != "simulator_check" or unit.stage != 3:
+                raise SchemaError(f"unit {unit.unit_id} is not a Stage 3 simulator_check unit")
+            if unit.evidence_kind != "development":
+                raise SchemaError("simulator_check units remain development evidence")
         return self
 
 
@@ -392,18 +436,44 @@ def parse_bootstrap_plan(data: dict[str, Any]) -> BootstrapPlan:
         raise SchemaError(str(exc)) from exc
 
 
+def parse_development_preview_plan(data: dict[str, Any]) -> DevelopmentPreviewPlan:
+    try:
+        return DevelopmentPreviewPlan.model_validate(data)
+    except Exception as exc:
+        raise SchemaError(str(exc)) from exc
+
+
+def parse_simulator_check_plan(data: dict[str, Any]) -> SimulatorCheckPlan:
+    try:
+        return SimulatorCheckPlan.model_validate(data)
+    except Exception as exc:
+        raise SchemaError(str(exc)) from exc
+
+
 def write_json_schemas(directory: Path) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     mapping = {
         "project_config.schema.json": ProjectConfig,
         "authorized_work_unit.schema.json": AuthorizedWorkUnit,
         "bootstrap_plan.schema.json": BootstrapPlan,
+        "development_preview_plan.schema.json": DevelopmentPreviewPlan,
+        "simulator_check_plan.schema.json": SimulatorCheckPlan,
         "run_manifest.schema.json": RunManifest,
         "unit_attempt.schema.json": UnitAttempt,
         "artifact_record.schema.json": ArtifactRecord,
         "receipt.schema.json": Receipt,
         "causal_checkpoint.schema.json": CausalCheckpoint,
     }
+    from f1q.causal import CheckpointEnvelope, DecisionObservation, ScenarioSpec, SimulatorState
+
+    mapping.update(
+        {
+            "scenario_spec.schema.json": ScenarioSpec,
+            "simulator_state.schema.json": SimulatorState,
+            "decision_observation.schema.json": DecisionObservation,
+            "checkpoint_envelope.schema.json": CheckpointEnvelope,
+        }
+    )
     from f1q.hashing import atomic_write_text, canonical_json
 
     for name, model in mapping.items():

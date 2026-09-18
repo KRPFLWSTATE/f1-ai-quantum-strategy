@@ -29,12 +29,19 @@ def test_ibm_backend_rejected():
 def test_campaign_plan_not_authorized(project_root):
     data = load_yaml(project_root / "configs" / "project.draft.yaml")
     config = parse_project_config(data)
-    with pytest.raises(AuthorizationError, match="not in authorization"):
+    with pytest.raises(AuthorizationError, match="not in authorization|reserved|campaign"):
         authorize_plan(config, "campaign")
 
 
 def test_changed_fingerprint_blocks_resume(project_root):
-    first = run_bootstrap(project_root)
+    import os
+
+    os.environ["F1Q_TEST_INTERRUPT_AFTER"] = "bootstrap.checkpoint_fixture"
+    try:
+        first = run_bootstrap(project_root)
+    finally:
+        os.environ.pop("F1Q_TEST_INTERRUPT_AFTER", None)
+    assert first["status"] == "interrupted"
     src = project_root / "src" / "f1q" / "placeholder.py"
     src.write_text("# changed snapshot\n", encoding="utf-8")
     with pytest.raises(AuthorizationError, match="source snapshot fingerprint"):

@@ -1,0 +1,30 @@
+{
+  "documentation_hash": "d3d7f6e8111fafe28725790df11990dc7092d637626a59f2118f421b0bf13662",
+  "file_count": 70,
+  "generator_config_hash": "ffd3f2e5ac5660ef19bb532c099334028aa8e4012340474ad08dacaf774e353c",
+  "git_commit": "24346827c11c81717e8161a9a5c9414ea4ba9428",
+  "git_dirty": true,
+  "hash": "c836750413a4afcecc567707fd94de516500af76fdb3895b97379cd22258475a",
+  "identity_policy": {
+    "documentation_does_not_invalidate_primary_hash": true,
+    "documentation_globs": [
+      "AGENTS.md",
+      "PROJECT_STATUS.md",
+      "README.md",
+      "NOTICE",
+      "docs/**/*.md",
+      "docs/**/*.txt"
+    ],
+    "note": "snapshot['hash'] is the code/config/tests/lock/SOURCE_HASH identity. Narrative documentation uses documentation_hash. Git HEAD is recorded separately and does not identify a dirty tree by itself.",
+    "primary_hash_globs": [
+      "src/**/*.py",
+      "configs/**/*",
+      "pyproject.toml",
+      "requirements.lock",
+      "tests/**/*.py",
+      "docs/protocol/SOURCE_HASH.md"
+    ],
+    "version": "1.1.0"
+  },
+  "project_draft_hash": "7387d47c910e08827bd166e0b8166fb9309330e2196c89d8bf7fb83eb3274597"
+}

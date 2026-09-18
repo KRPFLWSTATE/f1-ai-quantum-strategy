@@ -1,12 +1,12 @@
 # Implementation plan (dossier section 25)
 
-Only Stage 1 is active. Exit evidence is quoted from the dossier. Completing an earlier stage does not authorize the next stage; that requires a scoped implementation prompt.
+Only Stage 3 is complete as software. Stage 4 is not authorized by this file. Exit evidence is quoted from the dossier. Completing an earlier stage does not authorize the next stage; that requires a scoped implementation prompt.
 
 | Stage | Work | Exit evidence | Prerequisites | Status |
 | --- | --- | --- | --- | --- |
-| 1 | Isolated project, environment detection, dependencies and run ledger | Clean install, protected-path check, local dry run | Dossier v3.1 + Stage 1 prompt | **active** |
-| 2 | Scenario generator and causal checkpoint schema | Reproducible states, provenance, split and rejection audits | Stage 1 complete | pending |
-| 3 | Simulator adapter and independent checks | Resume equivalence, mechanism tests, analytical comparisons | Stage 2 | pending |
+| 1 | Isolated project, environment detection, dependencies and run ledger | Clean install, protected-path check, local dry run | Dossier v3.1 + Stage 1 prompt | **complete** (software) |
+| 2 | Scenario generator and causal checkpoint schema | Reproducible states, provenance, split and rejection audits | Stage 1 complete | **complete** (software; original preview has 0 validated race checkpoints) |
+| 3 | Simulator adapter and independent checks | Resume equivalence, mechanism tests, analytical comparisons | Stage 2 | **complete** (software; 64 development checkpoints admitted by `simulator.v1`; not F1-calibrated) |
 | 4 | Action model, QUBO and independent classical references | Exact agreement on small legal instances and penalty checks | Stage 3 | pending |
 | 5 | Parameter bank, learned selector and circuit families | Split integrity, ideal-circuit checks, training receipts | Stage 4 | pending |
 | 6 | Local pilot, precision and resource estimates | Frozen counts, machine capacity, novelty comparison and deviations | Stage 5 | pending |

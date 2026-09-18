@@ -1,0 +1,243 @@
+schema_version: "2.0.0"
+generator_version: "2.0.0"
+kind: development_generator_config
+not_calibrated_f1_parameters: true
+scientific_protocol_status: DRAFT
+dossier:
+  version: "3.1"
+  sections: ["5", "6", "7"]
+  note: "Starting ranges are declared assumptions, not measured F1 calibration."
+identity:
+  scheme: f1q.id.v2
+  stream_scheme: f1q.stream.v1
+  uses_python_builtin_hash: false
+  documentation_does_not_invalidate_code_identity: true
+pit_loss_definition:
+  quantity: green_pit_loss_s
+  unit: s
+  includes_stationary_service_time: true
+  includes_pit_lane_transit: true
+  compared_to: green_flying_lap
+  double_count_warning: >
+    Stage 3 physics must not add a second service-time term on top of this
+    combined quantity unless it first decomposes transit versus service.
+  decomposition_status: pending_stage3
+clock:
+  race_clock_unit: s
+  race_clock_origin: race_start
+  monotonic_client_clock: separate_from_race_clock
+  communication_margin_s: 1.0
+  communication_margin_source: "research setting in dossier section 15, not a team requirement"
+nominal_decision_budgets_s: [5, 10, 30, 60, 120]
+primary_nominal_budget_s: 30
+domain:
+  field_size: 20
+  teams: 10
+  cars_per_team: 2
+  weather: dry
+  remaining_laps: {distribution: uniform_int, low: 12, high: 45, unit: laps}
+  completed_laps_at_init: {distribution: uniform_int, low: 10, high: 35, unit: laps}
+  green_lap_s: {distribution: uniform, low: 75.0, high: 110.0, unit: s}
+  green_pit_loss_s: {low: 18.0, high: 28.0, unit: s}
+  exclusions:
+    - wet_transitions
+    - red_flags
+    - sprint_specific_rules
+    - tyre_damage
+    - detailed_energy_deployment
+factors:
+  green_pit_loss:
+    low:
+      distribution: uniform
+      low: 18.0
+      high: 21.5
+      unit: s
+      includes_service_time: true
+    high:
+      distribution: uniform
+      low: 24.5
+      high: 28.0
+      unit: s
+      includes_service_time: true
+  tyre_degradation:
+    near_linear:
+      form: near_linear
+      wear_per_lap:
+        distribution: uniform
+        low: 0.02
+        high: 0.08
+        unit: lap_fraction
+        pending_stage3_physics: true
+    nonlinear:
+      form: nonlinear
+      wear_per_lap:
+        distribution: uniform
+        low: 0.02
+        high: 0.08
+        unit: lap_fraction
+        pending_stage3_physics: true
+      curvature:
+        distribution: uniform
+        low: 0.001
+        high: 0.01
+        unit: lap_fraction_per_lap
+        pending_stage3_physics: true
+  traffic:
+    sparse:
+      mean_gap_ahead_s:
+        distribution: uniform
+        low: 1.2
+        high: 3.5
+        unit: s
+    dense:
+      mean_gap_ahead_s:
+        distribution: uniform
+        low: 0.15
+        high: 0.90
+        unit: s
+families:
+  - id: fam.green_pit_high.tyre_near_linear.traffic_dense
+    green_pit_loss: high
+    tyre_degradation: near_linear
+    traffic: dense
+  - id: fam.green_pit_high.tyre_near_linear.traffic_sparse
+    green_pit_loss: high
+    tyre_degradation: near_linear
+    traffic: sparse
+  - id: fam.green_pit_high.tyre_nonlinear.traffic_dense
+    green_pit_loss: high
+    tyre_degradation: nonlinear
+    traffic: dense
+  - id: fam.green_pit_high.tyre_nonlinear.traffic_sparse
+    green_pit_loss: high
+    tyre_degradation: nonlinear
+    traffic: sparse
+  - id: fam.green_pit_low.tyre_near_linear.traffic_dense
+    green_pit_loss: low
+    tyre_degradation: near_linear
+    traffic: dense
+  - id: fam.green_pit_low.tyre_near_linear.traffic_sparse
+    green_pit_loss: low
+    tyre_degradation: near_linear
+    traffic: sparse
+  - id: fam.green_pit_low.tyre_nonlinear.traffic_dense
+    green_pit_loss: low
+    tyre_degradation: nonlinear
+    traffic: dense
+  - id: fam.green_pit_low.tyre_nonlinear.traffic_sparse
+    green_pit_loss: low
+    tyre_degradation: nonlinear
+    traffic: sparse
+provisional_quantities:
+  - field: compounds
+    value: [soft, medium, hard]
+    reason: "Fictional dry set sufficient for mechanism tests. Not a 2026 FIA allocation."
+    validate_at: pilot
+  - field: sets_per_car
+    value: {soft: 2, medium: 3, hard: 3}
+    reason: "Enough unused sets to test compound choice without claiming a real parc fermé sheet."
+    validate_at: pilot
+  - field: compound_obligation_distinct
+    value: 2
+    reason: "Explicit model configuration, not an invented FIA sporting regulation."
+    validate_at: pilot
+  - field: fuel_kg_per_remaining_lap
+    value: 1.8
+    reason: "Places fuel uncertainty on a usable scale for later Stage 3 tests."
+    validate_at: stage3
+  - field: fuel_uncertainty_kg
+    value: 2.0
+    reason: "Declared inference noise, not a measured consumption model."
+    validate_at: stage3
+  - field: communication_margin_s
+    value: 1.0
+    reason: "Research setting from dossier section 15."
+    validate_at: pilot
+  - field: laps_until_checkpoint
+    value: [1, 2, 3]
+    reason: "Gives Stage 3 a short green run before the prescribed SC/VSC reveal."
+    validate_at: stage3
+  - field: track_archetypes
+    value: [archipelago-coast, ridge-park, river-island, plateau-circuit]
+    reason: "Independent fictional circuits; not real venues."
+    validate_at: none
+pending_stage3_interfaces:
+  - pit_lane_length_and_speed
+  - safety_car_and_vsc_speed_profiles
+  - tyre_laptime_mapping
+  - rival_decision_policy_execution
+  - realized_regime_duration
+  - race_clock_at_checkpoint
+  - effective_deadline_numeric_value
+fictional_teams:
+  - {id: team.fictional.northshore, name: Northshore Racing}
+  - {id: team.fictional.harbour, name: Harbour GP}
+  - {id: team.fictional.cedarline, name: Cedarline Motors}
+  - {id: team.fictional.ironbridge, name: Ironbridge Racing}
+  - {id: team.fictional.silverfen, name: Silverfen Team}
+  - {id: team.fictional.redcliff, name: Redcliff Racing}
+  - {id: team.fictional.bluehaven, name: Bluehaven GP}
+  - {id: team.fictional.stoneford, name: Stoneford Racing}
+  - {id: team.fictional.lakemere, name: Lakemere F1}
+  - {id: team.fictional.windrow, name: Windrow Racing}
+rival_policy_ref:
+  id: rival.policy.frozen_nonreactive.v1
+  status: reference_only_not_implemented
+  note: "Stage 2 records the reference. Stage 3 executes or replaces it."
+splits:
+  training: {blocks: 120, per_family: 15, episodes_per_block: 8, checkpoints_planned: 960}
+  tuning: {blocks: 16, per_family: 2, episodes_per_block: 8, checkpoints_planned: 128}
+  calibration: {blocks: 24, per_family: 3, episodes_per_block: 8, checkpoints_planned: 192}
+  test:
+    floor_blocks: 80
+    floor_per_family: 10
+    floor_checkpoints_planned: 640
+    maximum_blocks: 160
+    maximum_per_family: 20
+    maximum_checkpoints_planned: 1280
+    increase_multiple: 8
+  shift:
+    blocks: 40
+    checkpoints_planned: 320
+    draft_per_family: 5
+    allocation_status: draft_unfrozen
+    not_a_finalized_shift_study: true
+    predeclared_shift_schema:
+      - id: pit_loss_outside_nominal_range
+        description: "Green pit loss sampled outside 18-28 s (still combined transit+service)."
+      - id: remaining_laps_above_45
+        description: "Horizon longer than the declared core range."
+      - id: mean_gap_below_dense_floor
+        description: "Pack gaps tighter than the dense-family floor."
+development_preview:
+  namespace: development
+  blocks: 8
+  episodes_per_block: 8
+  sc_per_block: 4
+  vsc_per_block: 4
+  scientific_split: false
+  awaiting_simulator_validation: true
+  not_training_or_test_evidence: true
+retry_policy:
+  max_attempts_per_episode: 3
+  retain_rejected: true
+  distinct_attempt_ids: true
+stream_domains:
+  - block_params
+  - episode
+  - fitting
+  - online_scoring
+  - evaluation
+private_state_retention:
+  relative_dir: evidence/development/private
+  gitignored: true
+  solver_visible: false
+  note: >
+    Interface isolation only. Anyone with repository and local evidence access
+    can read these files. This is not cryptographic protection.
+observation_exclusions:
+  - private stream seeds
+  - realized future regime duration
+  - future rival decisions
+  - evaluator-only fields
+  - quantities whose availability_time exceeds the decision time unless labeled forecast

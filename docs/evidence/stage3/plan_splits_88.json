@@ -1,0 +1,92 @@
+{
+  "floor_counts": {
+    "calibration_blocks": 24,
+    "calibration_checkpoints_planned": 192,
+    "completed_counts": null,
+    "completed_counts_reason": "Stage 2 stores planned counts only; reserved partitions are not materialized.",
+    "main_blocks_without_shift": 240,
+    "main_checkpoints_without_shift": 1920,
+    "materialized": false,
+    "shift_blocks": 40,
+    "shift_checkpoints_planned": 320,
+    "test_blocks": 80,
+    "test_checkpoints_planned": 640,
+    "total_blocks_including_shift": 280,
+    "total_checkpoints_including_shift": 2240,
+    "training_blocks": 120,
+    "training_checkpoints_planned": 960,
+    "tuning_blocks": 16,
+    "tuning_checkpoints_planned": 128
+  },
+  "generator_config_hash": "ffd3f2e5ac5660ef19bb532c099334028aa8e4012340474ad08dacaf774e353c",
+  "materialized": false,
+  "maximum_test_counts": {
+    "calibration_blocks": 24,
+    "calibration_checkpoints_planned": 192,
+    "completed_counts": null,
+    "completed_counts_reason": "Stage 2 stores planned counts only; reserved partitions are not materialized.",
+    "main_blocks_without_shift": 320,
+    "main_checkpoints_without_shift": 2560,
+    "materialized": false,
+    "shift_blocks": 40,
+    "shift_checkpoints_planned": 320,
+    "test_blocks": 160,
+    "test_checkpoints_planned": 1280,
+    "total_blocks_including_shift": 360,
+    "total_checkpoints_including_shift": 2880,
+    "training_blocks": 120,
+    "training_checkpoints_planned": 960,
+    "tuning_blocks": 16,
+    "tuning_checkpoints_planned": 128
+  },
+  "ok": true,
+  "per_family": {
+    "calibration": 3,
+    "shift": 5,
+    "test": 11,
+    "training": 15,
+    "tuning": 2
+  },
+  "planned_counts": {
+    "calibration_blocks": 24,
+    "calibration_checkpoints_planned": 192,
+    "completed_counts": null,
+    "completed_counts_reason": "Stage 2 stores planned counts only; reserved partitions are not materialized.",
+    "main_blocks_without_shift": 248,
+    "main_checkpoints_without_shift": 1984,
+    "materialized": false,
+    "shift_blocks": 40,
+    "shift_checkpoints_planned": 320,
+    "test_blocks": 88,
+    "test_checkpoints_planned": 704,
+    "total_blocks_including_shift": 288,
+    "total_checkpoints_including_shift": 2304,
+    "training_blocks": 120,
+    "training_checkpoints_planned": 960,
+    "tuning_blocks": 16,
+    "tuning_checkpoints_planned": 128
+  },
+  "record_count": 288,
+  "shift_panel": {
+    "draft_per_family": 5,
+    "must_freeze_before_use": true,
+    "not_a_finalized_shift_study": true,
+    "planned_blocks": 40,
+    "predeclared_shift_schema": [
+      {
+        "description": "Green pit loss sampled outside 18-28 s (still combined transit+service).",
+        "id": "pit_loss_outside_nominal_range"
+      },
+      {
+        "description": "Horizon longer than the declared core range.",
+        "id": "remaining_laps_above_45"
+      },
+      {
+        "description": "Pack gaps tighter than the dense-family floor.",
+        "id": "mean_gap_below_dense_floor"
+      }
+    ],
+    "status": "draft_unfrozen"
+  },
+  "test_blocks": 88
+}

@@ -5,7 +5,8 @@ Software licensing is separate from data rights. Unselected dependencies remain 
 | Item | Source | Version / commit when selected | License status | Permitted use in this project |
 | --- | --- | --- | --- | --- |
 | Dossier PDF v3.1 | Local file supplied by Kawin Rehan Perera | SHA-256 `2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76` | Author's research specification | Design reference; preserved unchanged |
-| Stage 1 master prompt | Local file | as copied into `docs/prompts/` | Author's implementation authorization | Stage 1 only |
+| Stage 3 implementation prompt | Local file | as copied into `docs/prompts/F1_Cursor_Stage_3_Prompt.md` | Author's implementation authorization | Stage 3 only |
+| TUMFTM race-simulation (inspected, unused) | https://github.com/TUMFTM/race-simulation | commit `96ef2c2021982217be008fe458df47c1a72da071` | LGPL-3.0 | Inspection only; not a runtime dependency; historical parameter files not used |
 | CPython | https://www.python.org / Homebrew `python@3.12` | 3.12.13 | PSF | Runtime |
 | pydantic | https://pypi.org/project/pydantic/ | pinned in `requirements.lock` | MIT | Schema validation |
 | PyYAML | https://pypi.org/project/PyYAML/ | pinned in `requirements.lock` | MIT | Config parsing |
@@ -16,7 +17,7 @@ Software licensing is separate from data rights. Unselected dependencies remain 
 
 ## Explicitly unselected (later stages, not installed)
 
-Qiskit, Qiskit Aer, SciPy, NumPy as a forced Stage 1 dependency, scikit-learn or other ML libraries, HiGHS/CBC/other integer solvers, FastF1, TUM race-simulation, F1DP. No commit of those projects is pinned.
+Qiskit, Qiskit Aer, SciPy, NumPy as a forced runtime dependency, scikit-learn or other ML libraries, HiGHS/CBC/other integer solvers, FastF1, TUM race-simulation as an adapter, F1DP. TUMFTM was inspected and rejected as an adapter; it is not installed in `.venv`.
 
 ## Data rights
 

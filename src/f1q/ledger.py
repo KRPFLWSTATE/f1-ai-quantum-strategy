@@ -61,7 +61,27 @@ CREATE TABLE IF NOT EXISTS artifacts (
     kind TEXT NOT NULL,
     created_at_utc TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS ledger_meta (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS rejections (
+    rejection_id TEXT PRIMARY KEY,
+    run_id TEXT NOT NULL,
+    unit_id TEXT,
+    attempt_id TEXT,
+    code TEXT NOT NULL,
+    reason TEXT NOT NULL,
+    payload_json TEXT NOT NULL,
+    created_at_utc TEXT NOT NULL
+);
 """
+
+PLAN_EVIDENCE_DIR = {
+    "bootstrap": "bootstrap",
+    "development_preview": "development",
+    "simulator_check": "simulator",
+}
 
 
 class Ledger:
@@ -73,7 +93,24 @@ class Ledger:
         self.conn: sqlite3.Connection | None = None
 
     def _run_dir(self, run_id: str) -> Path:
-        return self.root / "evidence" / "bootstrap" / "runs" / run_id
+        plan_id = "bootstrap"
+        if self.conn is not None:
+            row = self.conn.execute("SELECT plan_id FROM runs WHERE run_id=?", (run_id,)).fetchone()
+            if row is not None:
+                plan_id = row["plan_id"]
+        folder = PLAN_EVIDENCE_DIR.get(plan_id, "other")
+        return self.root / "evidence" / folder / "runs" / run_id
+
+    def _ensure_schema_version(self) -> None:
+        from f1q import LEDGER_SCHEMA_VERSION
+
+        conn = self._require()
+        row = conn.execute("SELECT value FROM ledger_meta WHERE key='schema_version'").fetchone()
+        if row is None:
+            conn.execute(
+                "INSERT INTO ledger_meta(key, value) VALUES('schema_version', ?)",
+                (str(LEDGER_SCHEMA_VERSION),),
+            )
 
     def __enter__(self) -> Ledger:
         self.acquire()
@@ -98,6 +135,7 @@ class Ledger:
         self.conn.execute("PRAGMA foreign_keys=ON")
         self.conn.execute("PRAGMA journal_mode=WAL")
         self.conn.executescript(SCHEMA_SQL)
+        self._ensure_schema_version()
 
     def release(self) -> None:
         if self.conn is not None:
@@ -373,6 +411,38 @@ class Ledger:
         except FileExistsError as exc:
             raise IntegrityError(f"refusing to overwrite event record {event_path}") from exc
         return event_hash
+
+    def add_rejection(self, record: dict[str, Any]) -> None:
+        conn = self._require()
+        conn.execute(
+            """
+            INSERT INTO rejections(rejection_id, run_id, unit_id, attempt_id, code, reason, payload_json, created_at_utc)
+            VALUES(?,?,?,?,?,?,?,?)
+            """,
+            (
+                record["rejection_id"],
+                record["run_id"],
+                record.get("unit_id"),
+                record.get("attempt_id"),
+                record["code"],
+                record["reason"],
+                json.dumps(record.get("payload") or {}, sort_keys=True),
+                record.get("created_at_utc") or utc_now(),
+            ),
+        )
+        self.append_event(
+            record["run_id"],
+            "rejection_recorded",
+            {"rejection_id": record["rejection_id"], "code": record["code"], "unit_id": record.get("unit_id")},
+        )
+
+    def rejections_for(self, run_id: str) -> list[dict[str, Any]]:
+        rows = (
+            self._require()
+            .execute("SELECT * FROM rejections WHERE run_id=? ORDER BY created_at_utc", (run_id,))
+            .fetchall()
+        )
+        return [dict(r) for r in rows]
 
     def event_chain_ok(self, run_id: str) -> bool:
         prev = None

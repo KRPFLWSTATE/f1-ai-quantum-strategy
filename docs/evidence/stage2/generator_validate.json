@@ -1,0 +1,28 @@
+{
+  "development_preview": {
+    "awaiting_simulator_validation": true,
+    "blocks": 8,
+    "episodes_per_block": 8,
+    "namespace": "development",
+    "not_training_or_test_evidence": true,
+    "sc_per_block": 4,
+    "scientific_split": false,
+    "vsc_per_block": 4
+  },
+  "families": [
+    "fam.green_pit_high.tyre_near_linear.traffic_dense",
+    "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+    "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+    "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+    "fam.green_pit_low.tyre_near_linear.traffic_dense",
+    "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+    "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+    "fam.green_pit_low.tyre_nonlinear.traffic_sparse"
+  ],
+  "generator_config_hash": "ffd3f2e5ac5660ef19bb532c099334028aa8e4012340474ad08dacaf774e353c",
+  "generator_version": "2.0.0",
+  "hardware_execution_enabled": false,
+  "ok": true,
+  "pit_loss_includes_service_and_transit": true,
+  "scientific_protocol_status": "DRAFT"
+}
