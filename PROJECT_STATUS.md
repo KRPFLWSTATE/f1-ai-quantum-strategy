@@ -15,7 +15,7 @@ Stage 1 complete as software infrastructure. Stage 2 is **not authorised**.
 - pytest 24 passed; fresh-venv import passed
 - Named checks recorded in `docs/STAGE_1_REPORT.md`
 
-The setup commit, if present, **records** this implementation. It is **not** the source snapshot used by the bootstrap runs (`source_snapshot_hash=320dc0f9e7457e31d2a05a7d998b2bedb909447559e04acf1866cb6704aaa583`, `git_commit=null`, dirty tree).
+The setup commit `f0dd49ff63dac6d098d0685d92c2f8dae02fbc79` **records** this implementation. It is **not** the source snapshot used by the bootstrap runs (`source_snapshot_hash=320dc0f9e7457e31d2a05a7d998b2bedb909447559e04acf1866cb6704aaa583`, `git_commit=null`, dirty tree).
 
 ## Protocol state
 

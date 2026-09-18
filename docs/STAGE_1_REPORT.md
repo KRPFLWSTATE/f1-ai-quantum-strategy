@@ -22,7 +22,7 @@ NEW_PHYSICAL_QPU_JOBS_SUBMITTED: 0
 QPU_USAGE_FROM_THIS_STAGE: 0 seconds; account balance not queried
 HARDWARE_EXECUTION_ENABLED: false
 BLOCKERS_OR_DEVIATIONS: see docs/DEVIATIONS.md; none block Stage 1 completion
-NEXT_STAGE: 2 — scenario generator and causal checkpoint schema
+NEXT_STAGE: 2 -- scenario generator and causal checkpoint schema
 ```
 
 Draft configuration hash (not a frozen protocol hash): `b9bd5a15caeb329edc67943e176ce57844637bf6fbd4ba4f89006e4dc1ba3592`.
