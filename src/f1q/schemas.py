@@ -171,7 +171,7 @@ class AuthorizationConfig(StrictModel):
 class ProjectConfig(StrictModel):
     schema_version: str = SCHEMA_VERSION
     project_name: Literal["f1-ai-quantum-strategy"] = "f1-ai-quantum-strategy"
-    active_stage: Literal[1, 2, 3] = 3
+    active_stage: Literal[1, 2, 3, 4] = 4
     scientific_protocol_status: Literal["DRAFT"] = "DRAFT"
     protocol_frozen: Literal[False] = False
     hardware_execution_enabled: Literal[False] = False
@@ -311,6 +311,28 @@ class SimulatorRepairPlan(StrictModel):
                 raise SchemaError(f"unit {unit.unit_id} is not a Stage 3 simulator_repair unit")
             if unit.evidence_kind != "development":
                 raise SchemaError("simulator_repair units remain development evidence")
+        return self
+
+
+class FormulationCheckPlan(StrictModel):
+    schema_version: str = SCHEMA_VERSION
+    plan_id: Literal["formulation_check"] = "formulation_check"
+    stage: Literal[4] = 4
+    evidence_kind: Literal["development"] = "development"
+    authorization_scope: str
+    description: str
+    units: list[AuthorizedWorkUnit]
+    seed_specification: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _stage4_units(self) -> FormulationCheckPlan:
+        if not self.units:
+            raise SchemaError("formulation_check plan must contain units")
+        for unit in self.units:
+            if unit.plan_id != "formulation_check" or unit.stage != 4:
+                raise SchemaError(f"unit {unit.unit_id} is not a Stage 4 formulation_check unit")
+            if unit.evidence_kind != "development":
+                raise SchemaError("formulation_check units remain development evidence")
         return self
 
 
@@ -508,6 +530,13 @@ def parse_simulator_repair_plan(data: dict[str, Any]) -> SimulatorRepairPlan:
         raise SchemaError(str(exc)) from exc
 
 
+def parse_formulation_check_plan(data: dict[str, Any]) -> FormulationCheckPlan:
+    try:
+        return FormulationCheckPlan.model_validate(data)
+    except Exception as exc:
+        raise SchemaError(str(exc)) from exc
+
+
 def write_json_schemas(directory: Path) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     mapping = {
@@ -518,6 +547,7 @@ def write_json_schemas(directory: Path) -> None:
         "simulator_check_plan.schema.json": SimulatorCheckPlan,
         "simulator_followup_plan.schema.json": SimulatorFollowupPlan,
         "simulator_repair_plan.schema.json": SimulatorRepairPlan,
+        "formulation_check_plan.schema.json": FormulationCheckPlan,
         "run_manifest.schema.json": RunManifest,
         "unit_attempt.schema.json": UnitAttempt,
         "artifact_record.schema.json": ArtifactRecord,

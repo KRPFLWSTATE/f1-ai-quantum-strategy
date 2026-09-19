@@ -1,0 +1,76 @@
+schema_version: "1.0.0"
+plan_id: formulation_check
+stage: 4
+evidence_kind: development
+authorization_scope: stage4-local-formulation
+description: >
+  Stage 4 Gate C formulation check: action model, proxy compiler, QUBO/Ising,
+  independent classical references, 64-case development matrix, and bounded
+  evaluator separation panel. Not Stage 5, not QPU, not reserved splits.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    formulation.action_model: 20260919040
+    formulation.compiler_direct_costs: 20260919040
+    formulation.qubo_ising_gate: 20260919040
+    formulation.independent_references: 20260919040
+    formulation.development_matrix: 20260919040
+    formulation.evaluator_separation_panel: 20260919040
+    formulation.source_restore: 20260919040
+units:
+  - schema_version: "1.0.0"
+    unit_id: formulation.action_model
+    stage: 4
+    plan_id: formulation_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation
+    description: Deterministic full/reduced two-car action dictionaries on 64 development checkpoints.
+    seed: 20260919040
+  - schema_version: "1.0.0"
+    unit_id: formulation.compiler_direct_costs
+    stage: 4
+    plan_id: formulation_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation
+    description: Restricted proxy compiler uncentred/centred direct costs.
+    seed: 20260919040
+  - schema_version: "1.0.0"
+    unit_id: formulation.qubo_ising_gate
+    stage: 4
+    plan_id: formulation_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation
+    description: QUBO penalty proof, Ising mapping, and simulator legality cross-check sample.
+    seed: 20260919040
+  - schema_version: "1.0.0"
+    unit_id: formulation.independent_references
+    stage: 4
+    plan_id: formulation_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation
+    description: Enumeration, independent MILP, zero-interaction DP, and heuristics agreement.
+    seed: 20260919040
+  - schema_version: "1.0.0"
+    unit_id: formulation.development_matrix
+    stage: 4
+    plan_id: formulation_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation
+    description: Full 64-episode formulation records with headroom and timing (not a powered comparison).
+    seed: 20260919040
+  - schema_version: "1.0.0"
+    unit_id: formulation.evaluator_separation_panel
+    stage: 4
+    plan_id: formulation_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation
+    description: Bounded eight-family evaluator separation panel selected before outcomes.
+    seed: 20260919040
+  - schema_version: "1.0.0"
+    unit_id: formulation.source_restore
+    stage: 4
+    plan_id: formulation_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation
+    description: Source snapshot package for this formulation run.
+    seed: 20260919040

@@ -1,11 +1,12 @@
 """Local research infrastructure for the F1 AI/quantum strategy project."""
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 SCHEMA_VERSION = "1.0.0"
 CAUSAL_SCHEMA_VERSION = "2.0.0"
 GENERATOR_VERSION = "2.0.0"
 SIMULATOR_VERSION = "1.0.2"
 INTERFACE_VERSION = "3.0.0"
+FORMULATION_VERSION = "1.0.0"
 LEDGER_SCHEMA_VERSION = 2
 DOSSIER_VERSION = "3.1"
 DOSSIER_SHA256 = "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76"

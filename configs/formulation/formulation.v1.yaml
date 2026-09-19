@@ -1,0 +1,22 @@
+schema_version: "1.0.0"
+formulation_version: "1.0.0"
+action_model_version: "1.0.0"
+compiler_version: "1.0.0"
+qubo_spec_version: "1.0.0"
+classical_ref_version: "1.0.0"
+coefficient_units: seconds
+risk_weight: 0.0
+reduction_policy: kind_delay_compound_lex_set
+menu_policy: reduced_for_stage4_fixtures
+evidence_class: development
+not_experimental: true
+not_calibrated_f1: true
+not_physical_qpu: true
+resource:
+  max_workers: 1
+  ram_ceiling_fraction: 0.60
+  stage4_elapsed_cap_s: 1800
+  notes: "Start with one worker; at most two after memory measurement. 30-minute cumulative cap."
+gate_c: formulation_direct_qubo_classical_agreement
+gate_e_note: headroom_reported_not_a_quantum_claim
+hardware_execution_enabled: false

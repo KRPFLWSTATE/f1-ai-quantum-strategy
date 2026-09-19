@@ -1,6 +1,6 @@
 schema_version: "1.0.0"
 project_name: f1-ai-quantum-strategy
-active_stage: 3
+active_stage: 4
 scientific_protocol_status: DRAFT
 protocol_frozen: false
 hardware_execution_enabled: false
@@ -24,7 +24,7 @@ qpu:
   submission_path_implemented: false
 workers:
   max_workers: 2
-  reason: "Stage 3 permits at most two workers and 60% RAM; default remains conservative."
+  reason: "Stage 4 permits at most two workers and 60% RAM; default remains one worker for formulation_check."
 paths:
   evidence_dir: evidence
   ledger_relpath: evidence/var/ledger.sqlite
@@ -32,13 +32,14 @@ python:
   requires: ">=3.12,<3.14"
   selected: "3.12.13"
 authorization:
-  scope: stage3-local-simulator-repair
+  scope: stage4-local-formulation
   allowed_plans:
     - bootstrap
     - development_preview
     - simulator_check
     - simulator_followup
     - simulator_repair
+    - formulation_check
   github_push_authorized: false
 unresolved:
   - field: ibm_backend
@@ -61,4 +62,4 @@ unresolved:
     reason: "Scientific protocol is DRAFT; the configuration hash is a draft fingerprint, not a frozen protocol hash."
   - field: completed_gate
     value: null
-    reason: "Gates A–F are future acceptance checks; none are completed."
+    reason: "Gate C is under Stage 4 verification; Gates D–F remain future acceptance checks."

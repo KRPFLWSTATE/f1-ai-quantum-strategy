@@ -1,6 +1,6 @@
 # Project instructions (always load)
 
-Active stage: **3.3 -- evidence correction** (closed). Stage 4 (QUBO / action model / classical references) is pending and is not authorized by this file.
+Active stage: **4 -- formulation** (Gate C closed as software/evidence). Stage 5 (QAOA / learned selectors / hardware path) is pending and is not authorized by this file.
 
 ## Authority
 
@@ -14,7 +14,7 @@ Permitted root: the directory containing `configs/project.draft.yaml` (intended 
 
 ## Evidence rules
 
-Label claims as: proposed, implemented, verified by a named check, simulated, physically measured, unsupported. A test fixture is not an experimental observation. Successful setup, a development preview, and simulator checks do not establish scientific novelty, F1 calibration, or hardware readiness.
+Label claims as: proposed, implemented, verified by a named check, simulated, physically measured, unsupported. A test fixture is not an experimental observation. Successful setup, a development preview, simulator checks, and Gate C formulation agreement do not establish scientific novelty, F1 calibration, quantum advantage, or hardware readiness.
 
 ## Limits in force
 
@@ -23,7 +23,7 @@ Label claims as: proposed, implemented, verified by a named check, simulated, ph
 - No scheduled tasks, GitHub Actions, autonomous campaigns, or automatic publishing.
 - Do not scrape timing data. Do not train research models. Do not open held-out test outcomes.
 - Do not materialize training, tuning, calibration, test, or shift partitions.
-- Do not implement Stage 4 QUBO, action-model enumeration, or classical comparators unless a later prompt authorizes it.
+- Do not implement Stage 5 QAOA circuits, mixers, angle banks, learned selectors, or dispatch models unless a later prompt authorizes it.
 
 ## Commands
 
@@ -35,6 +35,7 @@ python -m f1q run --plan development_preview
 python -m f1q run --plan simulator_check
 python -m f1q run --plan simulator_followup
 python -m f1q run --plan simulator_repair
+python -m f1q run --plan formulation_check
 python -m f1q resume --run-id <id>
 python -m f1q receipt --run-id <id>
 python -m f1q generator validate
@@ -48,14 +49,14 @@ python -m f1q simulator diagnostic-stage3-3 [--write|--verify]
 
 Natural language later:
 
-- **do a run** -- execute the next authorized unit in the recorded plan once. It must not expand into the reserved corpus or start Stage 4+.
+- **do a run** -- execute the next authorized unit in the recorded plan once. It must not expand into the reserved corpus or start Stage 5+.
 - **resume** -- recover the identified incomplete run. If several exist, list IDs; do not guess.
 - **show status** -- read the ledger and integrity checks.
 - **push to GitHub** -- separate publication instruction only.
 
 ## Run / resume semantics
 
-A `run` is an execution container, not automatically one scientific observation. Setup fixtures, development previews, and simulator checks are none of training/tuning/calibration/test/shift. Interrupted attempts are retained. Checksums are verified before skipping completed work. Corrupted evidence is not recomputed under the original identifier.
+A `run` is an execution container, not automatically one scientific observation. Setup fixtures, development previews, simulator checks, and formulation checks are none of training/tuning/calibration/test/shift. Interrupted attempts are retained. Checksums are verified before skipping completed work. Corrupted evidence is not recomputed under the original identifier.
 
 ## GitHub
 

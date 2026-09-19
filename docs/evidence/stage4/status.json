@@ -1,0 +1,309 @@
+{
+  "active_stage": 4,
+  "command": "status",
+  "completed_units": [
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.artifact_roundtrip",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checkpoint_fixture",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checksum_verify",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.artifact_roundtrip",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checkpoint_fixture",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checksum_verify",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.00",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.01",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.02",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.03",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.04",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.05",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.06",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.07",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.development_matrix",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.diagnostic_interventions",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.mechanism_checks",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.source_restore",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.behavioral",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.commitment",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.criteria",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.fuel",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.memory",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.resolution",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.sc_vsc_traffic",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.development_matrix",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.diagnostic_interventions",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.mechanism_checks",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.repair.resolution",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.source_restore",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.action_model",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.compiler_direct_costs",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.action_model",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.compiler_direct_costs",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.development_matrix",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.evaluator_separation_panel",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.independent_references",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.qubo_ising_gate",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.source_restore"
+  ],
+  "configuration_hash_draft": "e713a0cdbb4420d37e7ae717dcb35e4de6ec37add801f8363131571b23586906",
+  "failed_units": [
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.qubo_ising_gate"
+  ],
+  "hardware_execution_enabled": false,
+  "interrupted_units": [],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "Stage 4 formulation_check complete; Stage 5 (QAOA / learned selectors) awaits its implementation prompt",
+  "pending_units": [
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.development_matrix",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.evaluator_separation_panel",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.independent_references",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.source_restore"
+  ],
+  "present": true,
+  "project_root": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "protocol_frozen": false,
+  "qpu_account_queried": false,
+  "readiness": "stage4-complete-pending-stage5",
+  "research_experiments_executed": 0,
+  "runs": [
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "77816c72-6248-4ae2-b944-70973975888a",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "a0c7a5d7-4387-40f8-82f7-08b7d3593f85",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "development_preview",
+      "run_id": "8f292588-a328-4232-b425-c36c610a29f5",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.00"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.01"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.02"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.03"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.04"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.05"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.06"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.07"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_check",
+      "run_id": "e2258740-1d08-4427-8305-b149ed504a73",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.diagnostic_interventions"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.mechanism_checks"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_followup",
+      "run_id": "4388ad68-6bd3-4a43-9099-32e52f56eb28",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.behavioral"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.commitment"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.criteria"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.fuel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.memory"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.resolution"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.sc_vsc_traffic"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_repair",
+      "run_id": "62b1e5ee-3f13-44be-98e0-8af018eb286b",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.diagnostic_interventions"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.mechanism_checks"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.repair.resolution"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_check",
+      "run_id": "1c5b0748-5406-4933-8e41-4f943f4296c7",
+      "status": "failed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "failed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_check",
+      "run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.source_restore"
+        }
+      ]
+    }
+  ],
+  "scientific_protocol": "DRAFT",
+  "unknown_is_not_ready": true
+}

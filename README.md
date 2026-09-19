@@ -4,11 +4,11 @@ Independent research infrastructure for a **deadline-constrained two-car pit-str
 
 This repository is **not** affiliated with a Formula 1 team. It reports **no experimental results**. Completing software setup, a development preview, or simulator checks does not establish scientific novelty, F1 calibration, or hardware readiness.
 
-## Current scope -- Stage 3.3 closed
+## Current scope -- Stage 4 closed (Gate C)
 
-Restricted independent race simulator (`simulator.v1` **1.0.2** / interface `3.0.0`), independent mechanism oracles, Stage 3.2 defect repairs, and Stage 3.3 evidence correction. Admission is **not** F1 reconstruction, H1/H2/H3 evidence, or a claim that SC/VSC/tyre physics match real racing.
+Restricted independent race simulator (`simulator.v1` **1.0.2** / interface `3.0.0`), Stage 3.x validation/repair/evidence correction, and Stage 4 local formulation (action model, proxy compiler, QUBO/Ising, independent classical references). Gate C PASS does **not** establish quantum advantage, F1 calibration, H1/H2/H3 evidence, or hardware readiness. Gate E: zero proxy headroom on the 64 admitted development checkpoints.
 
-Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. Stage 4 is not authorized by this file.
+Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. Stage 5 is not authorized by this file.
 
 ## Supported local environment
 
@@ -36,6 +36,7 @@ python -m f1q generator validate
 python -m f1q generator plan-splits [--test-blocks 80|88|...|160]
 python -m f1q run --plan development_preview
 python -m f1q run --plan simulator_check
+python -m f1q run --plan formulation_check
 python -m f1q resume --run-id <id>    # only if a run was interrupted
 python -m f1q receipt --run-id <id>
 python -m f1q generator audit --run-id <id>
@@ -52,12 +53,14 @@ There is no `submit`, hardware, or IBM command. Reserved scientific partitions c
 - Ledger (mutable, gitignored): `evidence/var/ledger.sqlite`
 - Bootstrap artifacts: `evidence/bootstrap/`
 - Development preview specs/receipts: `evidence/development/`
+- Formulation Stage 4 artifacts/receipts: `evidence/formulation/`
 - Private simulator-state seeds (gitignored, not solver-visible): `evidence/development/private/`
 - Dossier and extraction: `docs/protocol/`
 - Stage 1 follow-up: `docs/STAGE_1_FOLLOWUP.md`
 - Stage 2 report: `docs/STAGE_2_REPORT.md`
 - Stage 3 report: `docs/STAGE_3_REPORT.md`
 - Stage 3.1 / 3.2 / 3.3 reports: `docs/STAGE_3_1_REPORT.md`, `docs/STAGE_3_2_REPORT.md`, `docs/STAGE_3_3_REPORT.md`
+- Stage 4 report and specs: `docs/STAGE_4_REPORT.md`, `docs/ACTION_MODEL.md`, `docs/OBJECTIVE_COMPILER.md`, `docs/QUBO_SPECIFICATION.md`, `docs/CLASSICAL_REFERENCES.md`
 - Simulator selection / model / validation: `docs/SIMULATOR_SELECTION.md`, `docs/SIMULATOR_MODEL.md`, `docs/SIMULATOR_VALIDATION.md`
 - Simulator receipts (engineering): `evidence/simulator/receipts/`
 - Private simulator checkpoint state (gitignored, hashed not printed): `evidence/simulator/private/`

@@ -1,0 +1,23 @@
+{
+  "zip_sha256": "732606bc2b1e496c14c6c1e30b709442f12bcb06ba911d0abfe0610d605ecc05",
+  "members_verified": 547,
+  "aggregate_ok": true,
+  "targeted_pytest_exit": 0,
+  "targeted_pytest_summary": [
+    "....................s                                                    [100%]"
+  ],
+  "formulation_record_spotcheck": {
+    "path": "evidence/formulation/artifacts/e8b87881-74a6-46c7-b48e-6b2496a5d586/formulation.development_matrix/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__07__VSC.record.json",
+    "record_hash": "bb4dee0b054df05ba6a0572c5ba8211b9c1b2a71ddbdad923f26c169da8dc60e"
+  },
+  "omitted_inputs": [
+    ".git",
+    ".venv",
+    "evidence/var/ledger.sqlite",
+    "evidence/development/private",
+    "evidence/simulator/private",
+    "reserved scientific partitions (none materialized)",
+    "IBM credentials (none present)",
+    "mutable local caches"
+  ]
+}

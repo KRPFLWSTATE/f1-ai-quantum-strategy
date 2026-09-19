@@ -1,5 +1,5 @@
 ---
-description: Route every Agent turn through the F1 AI/quantum strategy project rules
+description: Project boundary and evidence rules for f1-ai-quantum-strategy
 alwaysApply: true
 ---
 
@@ -7,6 +7,6 @@ Read `AGENTS.md` and `PROJECT_STATUS.md` before acting. Inspect the local eviden
 
 Authoritative scientific protocol: `docs/protocol/` (dossier PDF, extracted text, SOURCE_HASH, traceability, protocol record). The dossier is not to be silently rewritten.
 
-Stage 2 complete as software. Stage 3 complete as software (simulator checks). Stage 3.1 follow-up complete as software with a PARTIAL resolution-rank gate. Stage 3.2 repairs the reproduced simulator defects. Stage 3.3 evidence correction is closed. Do not implement QUBO, learned policy, or any provider/QPU submission path unless a later stage prompt authorizes it. Hardware execution stays disabled. Zero additional spending. Do not materialize reserved scientific partitions.
+Stage 2 complete as software. Stage 3 complete as software (simulator checks). Stage 3.1 follow-up complete as software with a PARTIAL resolution-rank gate. Stage 3.2 repairs the reproduced simulator defects. Stage 3.3 evidence correction is closed. Stage 4 formulation (Gate C) is closed as software/evidence with a Gate E zero-headroom warning. Do not implement QAOA, learned selectors, or any provider/QPU submission path unless a later stage prompt authorizes it. Hardware execution stays disabled. Zero additional spending. Do not materialize reserved scientific partitions.
 
-Command contract: `python -m f1q doctor|status|run --plan bootstrap|run --plan development_preview|run --plan simulator_check|run --plan simulator_followup|run --plan simulator_repair|resume --run-id|receipt --run-id|generator validate|plan-splits|audit|simulator validate|inspect-checkpoint|interface|diagnostic-stage3-3`. Pushing to GitHub is a separate user instruction.
+Command contract: `python -m f1q doctor|status|run --plan bootstrap|run --plan development_preview|run --plan simulator_check|run --plan simulator_followup|run --plan simulator_repair|run --plan formulation_check|resume --run-id|receipt --run-id|generator validate|plan-splits|audit|simulator validate|inspect-checkpoint|interface|diagnostic-stage3-3`. Pushing to GitHub is a separate user instruction.

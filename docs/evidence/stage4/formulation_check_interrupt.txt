@@ -1,0 +1,48 @@
+{
+  "artifact_count": 2,
+  "attempt_count": 2,
+  "completed_unit_ids": [
+    "formulation.action_model"
+  ],
+  "configuration_hash": "e713a0cdbb4420d37e7ae717dcb35e4de6ec37add801f8363131571b23586906",
+  "configuration_hash_kind": "draft",
+  "dossier_sha256": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+  "duration_monotonic_s": 2.4640685829799622,
+  "ended_at_utc": "2026-09-19T12:38:17Z",
+  "event_count": 9,
+  "evidence_kind": "development",
+  "failed_unit_ids": [],
+  "git_commit": "6e504f9c8b9c8517ebfbe542ff1a7d0dc6a8f348",
+  "git_dirty": true,
+  "hardware_execution_enabled": false,
+  "injected_failure_count": 1,
+  "interrupted_unit_ids": [
+    "formulation.compiler_direct_costs"
+  ],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "resume remaining formulation_check units",
+  "notes": [
+    "event counts taken from append-only ledger events and artifact rows",
+    "This receipt is development-preview evidence, not a scientific observation or validated race checkpoint."
+  ],
+  "plan_id": "formulation_check",
+  "planned_unit_ids": [
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references",
+    "formulation.development_matrix",
+    "formulation.evaluator_separation_panel",
+    "formulation.source_restore"
+  ],
+  "qpu_usage_seconds": 0,
+  "receipt_json": "evidence/formulation/receipts/e8b87881-74a6-46c7-b48e-6b2496a5d586.json",
+  "receipt_md": "evidence/formulation/receipts/e8b87881-74a6-46c7-b48e-6b2496a5d586.md",
+  "run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+  "schema_version": "1.0.0",
+  "scientific_protocol": "DRAFT",
+  "source_snapshot_hash": "16cec08dce6ef126713664c53785b9daeda89d4f0fecf90157670a59007a71c4",
+  "stage": 4,
+  "started_at_utc": "2026-09-19T12:38:14Z",
+  "status": "interrupted"
+}

@@ -81,11 +81,22 @@ def run_status(root: Path | None = None) -> dict:
                             r["plan_id"] == "simulator_repair" and r["status"] == "completed" for r in runs
                         )
                         if repair_done:
-                            next_work = (
-                                "Stage 3.3 evidence correction closed; Stage 4 "
-                                "(action model, QUBO) awaits its implementation prompt"
+                            form_done = any(
+                                r["plan_id"] == "formulation_check" and r["status"] == "completed"
+                                for r in runs
                             )
-                            readiness = "stage3_3-complete-pending-stage4"
+                            if form_done:
+                                next_work = (
+                                    "Stage 4 formulation_check complete; Stage 5 "
+                                    "(QAOA / learned selectors) awaits its implementation prompt"
+                                )
+                                readiness = "stage4-complete-pending-stage5"
+                            else:
+                                next_work = (
+                                    "Stage 4 -- formulation_check plan "
+                                    "(python -m f1q run --plan formulation_check)"
+                                )
+                                readiness = "stage3_3-complete-pending-stage4"
                         elif follow_done:
                             next_work = "Stage 3.2 -- simulator-repair plan (python -m f1q run --plan simulator_repair)"
                             readiness = "stage3_1-complete-pending-stage3_2"

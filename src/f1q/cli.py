@@ -12,7 +12,7 @@ from f1q.generator.config import load_generator_config, sorted_families
 from f1q.generator.splits import build_split_plan, planned_counts
 from f1q.generator.stage3 import stage3_handoff_contract
 from f1q.paths import resolve_project_root
-from f1q.runner import regenerate_receipt, resume_run, run_bootstrap, run_development_preview, run_simulator_check, run_simulator_followup, run_simulator_repair
+from f1q.runner import regenerate_receipt, resume_run, run_bootstrap, run_development_preview, run_formulation_check, run_simulator_check, run_simulator_followup, run_simulator_repair
 from f1q.snapshot import take_source_snapshot
 from f1q.status import run_status
 
@@ -101,6 +101,8 @@ def main(argv: list[str] | None = None) -> int:
                 result = run_simulator_followup(root)
             elif args.plan == "simulator_repair":
                 result = run_simulator_repair(root)
+            elif args.plan == "formulation_check":
+                result = run_formulation_check(root)
             else:
                 from f1q.authorization import authorize_plan, load_project_config
 

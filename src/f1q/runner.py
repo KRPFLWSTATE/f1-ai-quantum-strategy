@@ -11,6 +11,7 @@ from f1q.authorization import (
     fingerprints_match,
     load_bootstrap_plan,
     load_development_preview_plan,
+    load_formulation_check_plan,
     load_project_config,
     load_simulator_check_plan,
     load_simulator_followup_plan,
@@ -22,6 +23,7 @@ from f1q.errors import AuthorizationError, IntegrityError
 from f1q.generator.config import load_generator_config
 from f1q.generator.preview import execute_preview_unit
 from f1q.simulator.run_units import execute_followup_unit, execute_repair_unit, execute_simulator_unit
+from f1q.formulation.run_units import execute_formulation_unit
 from f1q.hashing import sha256_file
 from f1q.ledger import Ledger
 from f1q.paths import resolve_within
@@ -139,6 +141,15 @@ def resume_run(root: Path, run_id: str) -> dict:
             execute_fn = execute_repair_unit
             _, sim_hash = load_simulator_config_safe(root)
             extra_expected = {"simulator_config_hash": sim_hash}
+        elif manifest.plan_id == "formulation_check":
+            authorize_plan(config, "formulation_check")
+            plan, plan_hash, _ = load_formulation_check_plan(root)
+            execute_fn = execute_formulation_unit
+            _, sim_hash = load_simulator_config_safe(root)
+            from f1q.formulation.config import load_formulation_config
+
+            _, form_hash = load_formulation_config(root)
+            extra_expected = {"simulator_config_hash": sim_hash, "formulation_config_hash": form_hash}
         else:
             raise AuthorizationError(f"cannot resume plan {manifest.plan_id}")
         fingerprints_match(
@@ -155,6 +166,9 @@ def resume_run(root: Path, run_id: str) -> dict:
         expected_sim = manifest.seed_specification.get("simulator_config_hash")
         if expected_sim and expected_sim != extra_expected.get("simulator_config_hash"):
             raise AuthorizationError("simulator configuration fingerprint changed; dispatch blocked")
+        expected_form = manifest.seed_specification.get("formulation_config_hash")
+        if expected_form and expected_form != extra_expected.get("formulation_config_hash"):
+            raise AuthorizationError("formulation configuration fingerprint changed; dispatch blocked")
         _verify_completed_checksums(root, ledger, run_id)
         seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
         for unit in ledger.units_for(run_id):
@@ -472,6 +486,86 @@ def run_simulator_repair(root: Path) -> dict:
         try:
             _execute_remaining(
                 root, ledger, manifest, seeds, started_mono, execute_fn=execute_repair_unit
+            )
+        except KeyboardInterrupt:
+            pass
+        return _finalize(root, ledger, manifest, started_mono)
+
+
+def run_formulation_check(root: Path) -> dict:
+    config, config_hash, _ = load_project_config(root)
+    authorize_plan(config, "formulation_check")
+    plan, plan_hash, _ = load_formulation_check_plan(root)
+    _, sim_hash = load_simulator_config_safe(root)
+    from f1q.formulation.config import load_formulation_config
+
+    form_cfg, form_hash = load_formulation_config(root)
+    dossier = dossier_hash(root, config)
+    snapshot = take_source_snapshot(root)
+    commit, dirty = git_state(root)
+    run_id = str(uuid4())
+    started_mono = time.monotonic()
+    started = utc_now()
+    unit_ids = [u.unit_id for u in plan.units]
+    seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
+    cap = float(form_cfg.get("resource", {}).get("stage4_elapsed_cap_s") or 1800.0)
+    manifest = RunManifest(
+        run_id=run_id,
+        stage=4,
+        plan_id="formulation_check",
+        evidence_kind="development",
+        source_snapshot_hash=snapshot["hash"],
+        git_commit=commit,
+        git_dirty=dirty,
+        dossier_sha256=dossier,
+        configuration_hash=config_hash,
+        configuration_hash_kind="draft",
+        dependency_lock_hash=lock_hash(root),
+        planned_unit_ids=unit_ids,
+        seed_specification={
+            "plan_hash": plan_hash,
+            "unit_seeds": seeds,
+            "simulator_config_hash": sim_hash,
+            "formulation_config_hash": form_hash,
+            "formulation_version": form_cfg.get("formulation_version"),
+            "simulator_version": "1.0.2",
+            "interface_version": "3.0.0",
+            "elapsed_cap_s": cap,
+            "max_workers": 1,
+            "qpu_usage_seconds": 0,
+            "stage": "4_formulation",
+        },
+        authorization_scope=config.authorization.scope,
+        started_at_utc=started,
+        status="running",
+    )
+    db, lock = ledger_paths(root, config)
+    with Ledger(db, lock, root=root) as ledger:
+        incomplete = [r for r in ledger.incomplete_runs() if r["plan_id"] == "formulation_check"]
+        if incomplete:
+            ids = ", ".join(r["run_id"] for r in incomplete)
+            raise AuthorizationError(
+                f"incomplete formulation_check run(s) exist; resume instead of starting a new run: {ids}"
+            )
+        write_snapshot(root, run_id, snapshot, evidence_subdir="formulation")
+        ledger.insert_run(manifest.model_dump(mode="json"))
+        ledger.append_event(
+            run_id,
+            "run_started",
+            {
+                "plan_id": "formulation_check",
+                "plan_hash": plan_hash,
+                "formulation_config_hash": form_hash,
+                "simulator_config_hash": sim_hash,
+                "authorization_scope": config.authorization.scope,
+                "max_workers": 1,
+                "qpu_usage_seconds": 0,
+                "preserves_prior_stage_run_ids": True,
+            },
+        )
+        try:
+            _execute_remaining(
+                root, ledger, manifest, seeds, started_mono, execute_fn=execute_formulation_unit
             )
         except KeyboardInterrupt:
             pass

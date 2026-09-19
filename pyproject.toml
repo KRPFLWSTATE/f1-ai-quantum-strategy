@@ -4,14 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "f1q"
-version = "0.3.0"
-description = "Stage 3 local infrastructure for deadline-constrained Formula 1 AI and quantum strategy research"
+version = "0.4.0"
+description = "Stage 4 local formulation infrastructure for deadline-constrained Formula 1 AI and quantum strategy research"
 readme = "README.md"
 requires-python = ">=3.12,<3.14"
 authors = [{ name = "Kawin Rehan Perera" }]
 dependencies = [
     "pydantic>=2.9,<3",
     "PyYAML>=6.0.2,<7",
+    "numpy>=2.0,<3",
+    "scipy>=1.14,<2",
 ]
 
 [project.optional-dependencies]

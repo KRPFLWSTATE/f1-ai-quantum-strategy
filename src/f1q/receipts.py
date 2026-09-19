@@ -88,6 +88,8 @@ def write_receipt(root, receipt: Receipt) -> dict:
         sub = "bootstrap"
     elif receipt.plan_id in {"simulator_check", "simulator_followup", "simulator_repair"}:
         sub = "simulator"
+    elif receipt.plan_id == "formulation_check":
+        sub = "formulation"
     else:
         sub = "development"
     json_rel = f"evidence/{sub}/receipts/{receipt.run_id}.json"
