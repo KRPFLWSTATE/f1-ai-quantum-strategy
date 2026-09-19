@@ -270,6 +270,50 @@ class SimulatorCheckPlan(StrictModel):
         return self
 
 
+class SimulatorFollowupPlan(StrictModel):
+    schema_version: str = SCHEMA_VERSION
+    plan_id: Literal["simulator_followup"] = "simulator_followup"
+    stage: Literal[3] = 3
+    evidence_kind: Literal["development"] = "development"
+    authorization_scope: str
+    description: str
+    units: list[AuthorizedWorkUnit]
+    seed_specification: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _stage31_units(self) -> SimulatorFollowupPlan:
+        if not self.units:
+            raise SchemaError("simulator_followup plan must contain units")
+        for unit in self.units:
+            if unit.plan_id != "simulator_followup" or unit.stage != 3:
+                raise SchemaError(f"unit {unit.unit_id} is not a Stage 3 simulator_followup unit")
+            if unit.evidence_kind != "development":
+                raise SchemaError("simulator_followup units remain development evidence")
+        return self
+
+
+class SimulatorRepairPlan(StrictModel):
+    schema_version: str = SCHEMA_VERSION
+    plan_id: Literal["simulator_repair"] = "simulator_repair"
+    stage: Literal[3] = 3
+    evidence_kind: Literal["development"] = "development"
+    authorization_scope: str
+    description: str
+    units: list[AuthorizedWorkUnit]
+    seed_specification: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _stage32_units(self) -> SimulatorRepairPlan:
+        if not self.units:
+            raise SchemaError("simulator_repair plan must contain units")
+        for unit in self.units:
+            if unit.plan_id != "simulator_repair" or unit.stage != 3:
+                raise SchemaError(f"unit {unit.unit_id} is not a Stage 3 simulator_repair unit")
+            if unit.evidence_kind != "development":
+                raise SchemaError("simulator_repair units remain development evidence")
+        return self
+
+
 class ArtifactRecord(StrictModel):
     schema_version: str = SCHEMA_VERSION
     artifact_id: str
@@ -450,6 +494,20 @@ def parse_simulator_check_plan(data: dict[str, Any]) -> SimulatorCheckPlan:
         raise SchemaError(str(exc)) from exc
 
 
+def parse_simulator_followup_plan(data: dict[str, Any]) -> SimulatorFollowupPlan:
+    try:
+        return SimulatorFollowupPlan.model_validate(data)
+    except Exception as exc:
+        raise SchemaError(str(exc)) from exc
+
+
+def parse_simulator_repair_plan(data: dict[str, Any]) -> SimulatorRepairPlan:
+    try:
+        return SimulatorRepairPlan.model_validate(data)
+    except Exception as exc:
+        raise SchemaError(str(exc)) from exc
+
+
 def write_json_schemas(directory: Path) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     mapping = {
@@ -458,6 +516,8 @@ def write_json_schemas(directory: Path) -> None:
         "bootstrap_plan.schema.json": BootstrapPlan,
         "development_preview_plan.schema.json": DevelopmentPreviewPlan,
         "simulator_check_plan.schema.json": SimulatorCheckPlan,
+        "simulator_followup_plan.schema.json": SimulatorFollowupPlan,
+        "simulator_repair_plan.schema.json": SimulatorRepairPlan,
         "run_manifest.schema.json": RunManifest,
         "unit_attempt.schema.json": UnitAttempt,
         "artifact_record.schema.json": ArtifactRecord,

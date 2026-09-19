@@ -1,6 +1,6 @@
 # Project instructions (always load)
 
-Active stage: **3 -- race simulator, independent mechanism checks, development-preview validation**. Stage 4 (QUBO / action model / classical references) is pending and is not authorized by this file.
+Active stage: **3.3 -- evidence correction** (closed). Stage 4 (QUBO / action model / classical references) is pending and is not authorized by this file.
 
 ## Authority
 
@@ -19,7 +19,7 @@ Label claims as: proposed, implemented, verified by a named check, simulated, ph
 ## Limits in force
 
 - Zero additional spending. Never fall through to a paid account or paid service.
-- No QPU default: `hardware_execution_enabled` is false. Do not submit jobs, inspect IBM balances, or implement a provider submission path in Stage 3.
+- No QPU default: `hardware_execution_enabled` is false. Do not submit jobs, inspect IBM balances, or implement a provider submission path unless a later stage prompt authorizes it.
 - No scheduled tasks, GitHub Actions, autonomous campaigns, or automatic publishing.
 - Do not scrape timing data. Do not train research models. Do not open held-out test outcomes.
 - Do not materialize training, tuning, calibration, test, or shift partitions.
@@ -33,6 +33,8 @@ python -m f1q status
 python -m f1q run --plan bootstrap
 python -m f1q run --plan development_preview
 python -m f1q run --plan simulator_check
+python -m f1q run --plan simulator_followup
+python -m f1q run --plan simulator_repair
 python -m f1q resume --run-id <id>
 python -m f1q receipt --run-id <id>
 python -m f1q generator validate
@@ -41,6 +43,7 @@ python -m f1q generator audit --run-id <id>
 python -m f1q simulator validate
 python -m f1q simulator inspect-checkpoint --run-id <id> --episode-id <id>
 python -m f1q simulator interface
+python -m f1q simulator diagnostic-stage3-3 [--write|--verify]
 ```
 
 Natural language later:

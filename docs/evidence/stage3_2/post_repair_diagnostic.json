@@ -1,0 +1,58 @@
+{
+  "pit_trace": [
+    [
+      "transit_in",
+      900.0,
+      10.95
+    ],
+    [
+      "service",
+      917.0,
+      11.0
+    ],
+    [
+      "transit_out",
+      919.5,
+      11.0
+    ],
+    [
+      null,
+      926.3,
+      11.02
+    ]
+  ],
+  "pass_deltas": [
+    0.00010000000099985584,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "mismatched_set": {
+    "ok": false,
+    "code": "ILLEGAL_PLAN",
+    "reason": "car.fictional.northshore.a: compound/set mismatch ('hard' vs set compound 'medium')"
+  },
+  "rival_control": {
+    "ok": false,
+    "code": "ILLEGAL_PLAN",
+    "reason": "car.fictional.harbour.b: outside selected_car_ids; external recommendation API is team-scoped only"
+  },
+  "commitments": [
+    {
+      "timely": true,
+      "selected_plan": "recommendation",
+      "registered_commitment_epoch_race_s": 1015.8846993435944,
+      "commitment_race_s": 1015.8846993435944,
+      "late_vs_registered_epoch": false,
+      "fallback_reason": null
+    },
+    {
+      "timely": false,
+      "selected_plan": "fallback_continuation",
+      "registered_commitment_epoch_race_s": 1015.8846993435944,
+      "commitment_race_s": 1015.8846993435944,
+      "late_vs_registered_epoch": true,
+      "fallback_reason": "LATE_VS_REGISTERED_COMMITMENT_EPOCH"
+    }
+  ]
+}

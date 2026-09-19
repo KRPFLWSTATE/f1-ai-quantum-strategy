@@ -8,11 +8,16 @@ from f1q.errors import RejectionError
 from f1q.generator.sampling import StreamRNG
 from f1q.generator.streams import stream_seed
 from f1q.simulator.classification import classify, team_rank_loss
+from f1q.simulator.fuel import AMENDMENT_ID as FUEL_AMENDMENT_ID
+from f1q.simulator.fuel import horizon_need_kg, realize_initial_fuel
 from f1q.simulator.physics import compound_offset_s, decompose_green_pit, free_lap_time_s, verify_pit_identity
-from f1q.simulator.policies import continuation_intent, delay_to_pit_now, select_obligation_set
+from f1q.simulator.policies import continuation_intent, delay_to_pit_now, public_car_view, select_obligation_set
 
 EPS = 1e-12
 BIG = 1e12
+# Ordering-only snap after a genuine crossing. Not the configured pass_clearance_s
+# (clearance is a post-pass traffic target enforced by speed caps, not free distance).
+OVERTAKE_ORDER_SNAP_LAPS = 1e-12
 
 
 def draw_uniform(
@@ -33,9 +38,39 @@ def draw_uniform(
 
 
 def distance(car: dict[str, Any]) -> float:
-    if car["in_pit"]:
-        return float(car["completed_laps"]) + float(car.get("frozen_frac") or 0.0)
-    return float(car["completed_laps"]) + float(car["frac"])
+    """Racing-line progress in laps.
+
+    On track: completed_laps + frac.
+    In pit (declared coordinate convention):
+      - transit_in: project from entry (ℓ + e) toward the next start/finish (ℓ + 1)
+        using phase timing when available; never report box as ℓ + e after the S/F cross.
+      - waiting / service / transit_out: hold at the box integer ℓ_box = pit_entry_completed + 1
+        (box fraction 0.0). Elapsed pit time is not longitudinal progress.
+      - pit exit: resume on-track at completed_laps + exit_frac.
+    """
+    if not car["in_pit"]:
+        return float(car["completed_laps"]) + float(car["frac"])
+    phase = car.get("pit_phase")
+    entry_completed = int(car.get("pit_entry_completed_laps", car["completed_laps"]))
+    entry_frac = float(car.get("pit_entry_frac", car.get("frozen_frac") or 0.0))
+    entry_progress = float(entry_completed) + entry_frac
+    box_progress = float(entry_completed) + 1.0
+    if phase == "transit_in":
+        start_t = car.get("pit_phase_start_t")
+        end_t = car.get("pit_phase_end")
+        now_t = car.get("pit_clock_t")
+        if start_t is not None and end_t is not None and now_t is not None and float(end_t) > float(start_t) + EPS:
+            alpha = (float(now_t) - float(start_t)) / (float(end_t) - float(start_t))
+            alpha = min(1.0, max(0.0, alpha))
+            return entry_progress + alpha * (box_progress - entry_progress)
+        return float(car["completed_laps"]) + float(car.get("frozen_frac") or entry_frac)
+    # waiting / service / transit_out / unknown: hold at box (integer laps, frac 0)
+    return float(car["completed_laps"]) + float(car.get("frozen_frac") or 0.0)
+
+
+def _set_progress_from_distance(car: dict[str, Any], new_d: float) -> None:
+    car["completed_laps"] = int(math.floor(new_d + 1e-15))
+    car["frac"] = new_d - car["completed_laps"]
 
 
 def clone_state(state: dict[str, Any]) -> dict[str, Any]:
@@ -74,11 +109,9 @@ class RaceEngine:
         cars: dict[str, Any] = {}
         prev_d: float | None = None
         fuel_floors: dict[str, bool] = {}
-        need = remaining_init * float(cfg["fuel"]["kg_per_lap"])
+        need = horizon_need_kg(remaining_init, float(cfg["fuel"]["kg_per_lap"]))
         for row in field:
             est = float(row["fuel_kg"])
-            if est < 0:
-                raise RejectionError("IMPOSSIBLE_INITIAL_FUEL", f"{row['car_id']} has negative fuel")
             u = float(row["fuel_uncertainty_kg"])
             offset = draw_uniform(
                 spec,
@@ -88,17 +121,15 @@ class RaceEngine:
                 low=-u,
                 high=u,
             )
-            actual = est + offset
-            floor_applied = False
-            if actual < need - 1e-9:
-                if est + u + 1e-9 >= need:
-                    actual = need
-                    floor_applied = True
-                else:
-                    raise RejectionError(
-                        "IMPOSSIBLE_INITIAL_FUEL",
-                        f"{row['car_id']} cannot cover {need} kg within the uncertainty band",
-                    )
+            realized = realize_initial_fuel(
+                estimate_kg=est,
+                uncertainty_kg=u,
+                offset_kg=offset,
+                need_kg=need,
+                car_id=row["car_id"],
+            )
+            actual = realized.actual_kg
+            floor_applied = realized.floor_applied
             fuel_floors[row["car_id"]] = floor_applied
             deficit = int(row["lap_deficit"])
             if int(row["classified_position"]) == 1:
@@ -140,6 +171,10 @@ class RaceEngine:
                 "service_wait_s": 0.0,
                 "speed": 0.0,
                 "want_pass": None,
+                "pit_entry_completed_laps": None,
+                "pit_entry_frac": None,
+                "pit_phase_start_t": None,
+                "pit_clock_t": None,
             }
         dur_laps = draw_uniform(
             spec,
@@ -153,7 +188,11 @@ class RaceEngine:
         factor = float(cfg["regime"]["sc_pace_factor"] if req_reg == "SC" else cfg["regime"]["vsc_pace_factor"])
         required = int(spec.get("compound_obligation", {}).get("distinct_compounds_required") or 2)
         policies = {
-            car["car_id"]: continuation_intent(car, required_compounds=required, remaining_laps=float(remaining_init))
+            car["car_id"]: continuation_intent(
+                public_car_view(car, spy=True),
+                required_compounds=required,
+                remaining_laps=float(remaining_init),
+            )
             for car in cars.values()
         }
         self.state = {
@@ -180,16 +219,20 @@ class RaceEngine:
             "pit_parts": pit_parts,
             "events": [],
             "policies": policies,
-            "amendments": ["development_spec.fuel.v1", "checkpoint.cutoff.v1"],
+            "amendments": [FUEL_AMENDMENT_ID, "checkpoint.cutoff.v1"],
             "fuel_floor_applied": fuel_floors,
             "stream_key_ids": dict(spec.get("stream_key_ids") or {}),
             "episode_id": spec["episode_id"],
             "spec_id": spec["spec_id"],
             "finished": False,
             "finish_t": None,
+            "leader_finished": False,
+            "leader_finish_t": None,
+            "leader_finish_car_id": None,
+            "rank_at_leader_finish": None,
             "stacking_policy": spec.get("team_service", {}).get("stacking_policy", "delay_cost_not_prohibition"),
             "interface_version": "3.0.0",
-            "simulator_version": "1.0.0",
+            "simulator_version": "1.0.2",
             "init_is_fictional_pre_checkpoint": True,
         }
         self._log("initialized", None, {"t": t0})
@@ -336,6 +379,8 @@ class RaceEngine:
     def next_events(self, speeds: dict[str, float]) -> tuple[float, list[tuple[str, str, dict[str, Any]]]]:
         t = float(self.state["t"])
         entry = float(self.cfg["track"]["pit_entry_frac"])
+        regime = self.state["regime"]
+        tg = float(self.state["green_lap_s"])
         prio = {name: i for i, name in enumerate(self.cfg["integrator"]["simultaneous_priority"])}
         bucket: list[tuple[float, int, str, str, dict[str, Any]]] = []
 
@@ -379,6 +424,40 @@ class RaceEngine:
                     else:
                         ds_entry = 1.0 - frac + entry
                     add(ds_entry / v if ds_entry > 1e-9 else 0.0, "pit_entry", cid, {})
+        ordered = sorted(
+            (
+                car
+                for car in self.state["cars"].values()
+                if not car["in_pit"] and car["finish_time"] is None and not car.get("retired")
+            ),
+            key=lambda car: (-distance(car), car["car_id"]),
+        )
+        if regime == "SC" and len(ordered) >= 2:
+            t_sc = float(self.cfg["regime"]["sc_pace_factor"]) * tg
+            target_sc_laps = float(self.cfg["regime"]["sc_queue_gap_s"]) / t_sc
+            for index, car in enumerate(ordered[1:], start=1):
+                ahead = ordered[index - 1]
+                gap = distance(ahead) - distance(car)
+                vf = speeds.get(car["car_id"], 0.0)
+                va = speeds.get(ahead["car_id"], 0.0)
+                if gap > target_sc_laps + EPS and vf > va + EPS:
+                    add((gap - target_sc_laps) / (vf - va), "sc_gap_meet", car["car_id"], {"ahead": ahead["car_id"]})
+        if regime == "GREEN":
+            for car in ordered[1:]:
+                ahead_id = car.get("want_pass")
+                if not ahead_id:
+                    continue
+                ahead = self.state["cars"].get(ahead_id)
+                if ahead is None or ahead["in_pit"] or ahead.get("retired") or ahead["finish_time"] is not None:
+                    continue
+                vf = speeds.get(car["car_id"], 0.0)
+                va = speeds.get(ahead_id, 0.0)
+                gap = distance(ahead) - distance(car)
+                # Schedule a genuine crossing (gap -> 0). Clearance is not free distance.
+                if vf > va + EPS and gap > EPS:
+                    add(gap / (vf - va), "catch_or_pass", car["car_id"], {"ahead": ahead_id})
+                elif vf > va + EPS and gap <= EPS:
+                    add(0.0, "catch_or_pass", car["car_id"], {"ahead": ahead_id})
         if not bucket:
             return self._dt_max(), []
         bucket.sort()
@@ -405,15 +484,22 @@ class RaceEngine:
         if dt <= EPS:
             self.state["t"] = t + max(dt, 0.0)
             for car in self.state["cars"].values():
-                if car["in_pit"] or car["retired"] or car["finish_time"] is not None:
+                if car["in_pit"]:
+                    car["pit_clock_t"] = self.state["t"]
+                    continue
+                if car["retired"] or car["finish_time"] is not None:
                     continue
                 if distance(car) + EPS >= horizon:
                     car["completed_laps"] = int(self.state["horizon"])
                     car["frac"] = 0.0
                     car["finish_time"] = self.state["t"]
+                    self._log("car_finish", car["car_id"], {"progress": horizon, "individual": True})
             return
         for cid, car in self.state["cars"].items():
-            if car["in_pit"] or car["retired"] or car["finish_time"] is not None:
+            if car["in_pit"]:
+                car["pit_clock_t"] = t + dt
+                continue
+            if car["retired"] or car["finish_time"] is not None:
                 continue
             v = speeds.get(cid, 0.0)
             old = distance(car)
@@ -431,6 +517,7 @@ class RaceEngine:
                 car["completed_laps"] = int(self.state["horizon"])
                 car["frac"] = 0.0
                 car["finish_time"] = t + used_dt
+                self._log("car_finish", cid, {"progress": horizon, "individual": True})
                 continue
             self._consume(car, ds)
             total = old + ds
@@ -440,8 +527,16 @@ class RaceEngine:
             car["completed_laps"] = new_completed
             car["frac"] = total - car["completed_laps"]
         self.state["t"] = t + dt
+        for car in self.state["cars"].values():
+            if car["in_pit"]:
+                car["pit_clock_t"] = self.state["t"]
 
     def mount(self, car: dict[str, Any], compound: str, set_id: str) -> None:
+        if set_id == car.get("mounted_set_id"):
+            raise RejectionError(
+                "ILLEGAL_PLAN",
+                f"cannot remount currently fitted set {set_id}; would refresh tyre age for free",
+            )
         found = False
         for item in car["inventory"]:
             if item["set_id"] != set_id:
@@ -466,12 +561,19 @@ class RaceEngine:
         if compound not in car["used_compounds"]:
             car["used_compounds"].append(compound)
 
+    def _missed_pit_entry_this_lap(self, car: dict[str, Any]) -> bool:
+        if car["in_pit"] or car.get("retired") or car["finish_time"] is not None:
+            return False
+        entry = float(self.cfg["track"]["pit_entry_frac"])
+        return float(car["frac"]) > entry + EPS
+
     def update_intents(self) -> None:
         required = int(self.state["required_compounds"])
         horizon = int(self.state["horizon"])
         for car in self.state["cars"].values():
             remaining = horizon - car["completed_laps"]
-            base = continuation_intent(car, required_compounds=required, remaining_laps=remaining)
+            view = public_car_view(car, spy=True)
+            base = continuation_intent(view, required_compounds=required, remaining_laps=remaining)
             planned = self.state["policies"].get(car["car_id"]) or base
             if planned.get("kind") == "delay_laps" and planned.get("reference_completed") is None:
                 planned = dict(planned)
@@ -479,11 +581,21 @@ class RaceEngine:
                 self.state["policies"][car["car_id"]] = planned
             intent = delay_to_pit_now(planned, completed_laps=int(car["completed_laps"]))
             if intent.get("kind") == "pit_now":
+                if self._missed_pit_entry_this_lap(car):
+                    car["pit_this_lap"] = False
+                    car["pending_compound"] = None
+                    car["pending_set_id"] = None
+                    self.state["policies"][car["car_id"]] = {
+                        "kind": "continuation",
+                        "reason": "expired_pit_now_missed_entry",
+                    }
+                    self._log("pit_now_expired", car["car_id"], {"frac": car["frac"], "not_relabelled_next_lap": True})
+                    continue
                 car["pit_this_lap"] = True
                 compound = intent.get("compound")
                 set_id = intent.get("set_id")
                 if not compound or not set_id:
-                    compound, set_id = select_obligation_set(car)
+                    compound, set_id = select_obligation_set(view)
                 car["pending_compound"] = compound
                 car["pending_set_id"] = set_id
             elif planned.get("kind") != "pit_now":
@@ -497,15 +609,22 @@ class RaceEngine:
                 self.state["regime_end_s"] = None
                 self._log("regime_end", None, {"restart": "instantaneous_green_pace_preserve_gaps"})
                 continue
+            if kind == "sc_gap_meet":
+                self._log("sc_gap_meet", cid, detail)
+                continue
             car = self.state["cars"][cid]
             if kind == "lap_complete" and not car["in_pit"]:
                 self._log("lap_complete", cid, {"completed_laps": car["completed_laps"]})
             elif kind == "pit_entry" and not car["in_pit"] and car["pit_this_lap"]:
                 car["in_pit"] = True
+                car["pit_entry_completed_laps"] = int(car["completed_laps"])
+                car["pit_entry_frac"] = entry
                 car["frozen_frac"] = entry
                 car["frac"] = entry
                 car["pit_phase"] = "transit_in"
+                car["pit_phase_start_t"] = float(self.state["t"])
                 car["pit_phase_end"] = float(self.state["t"]) + float(self.state["pit_parts"]["t_in_s"])
+                car["pit_clock_t"] = float(self.state["t"])
                 car["pit_this_lap"] = False
                 planned = self.state["policies"].get(cid) or {}
                 if planned.get("kind") in {"pit_now", "delay_laps"}:
@@ -524,25 +643,45 @@ class RaceEngine:
                 if self.free_T(ahead) - self.free_T(car) < float(self.cfg["traffic"]["overtake_advantage_s_per_lap"]) - 1e-9:
                     car["want_pass"] = None
                     continue
-                clearance = float(self.cfg["traffic"]["pass_clearance_s"]) / max(self.free_T(car), EPS)
-                new_d = distance(ahead) + clearance
-                car["completed_laps"] = int(math.floor(new_d + 1e-15))
-                car["frac"] = new_d - car["completed_laps"]
+                gap = distance(ahead) - distance(car)
+                # Genuine crossing only. Closing a finite gap here would be free distance.
+                if gap > max(OVERTAKE_ORDER_SNAP_LAPS * 10, 1e-9):
+                    car["want_pass"] = ahead_id
+                    continue
+                new_d = distance(ahead) + OVERTAKE_ORDER_SNAP_LAPS
+                _set_progress_from_distance(car, new_d)
                 car["want_pass"] = None
-                self._log("overtake", cid, {"passed": ahead_id})
+                self._log(
+                    "overtake",
+                    cid,
+                    {
+                        "passed": ahead_id,
+                        "order_snap_laps": OVERTAKE_ORDER_SNAP_LAPS,
+                        "pre_pass_gap_laps": gap,
+                        "not_pass_clearance_teleport": True,
+                        "fuel_tyre_time_unchanged": True,
+                    },
+                )
             elif kind == "race_finish":
-                if car["finish_time"] is None:
+                if car["finish_time"] is None and distance(car) + EPS >= float(self.state["horizon"]):
                     car["completed_laps"] = int(self.state["horizon"])
                     car["frac"] = 0.0
                     car["finish_time"] = float(self.state["t"])
+                    self._log("car_finish", cid, {"progress": self.state["horizon"], "individual": True})
 
     def _advance_pit(self, car: dict[str, Any]) -> None:
         parts = self.state["pit_parts"]
         t = float(self.state["t"])
         team = car["team_id"]
         phase = car["pit_phase"]
+        box_frac = float(self.cfg["track"].get("pit_box_frac", 0.0))
         if phase == "transit_in":
-            car["completed_laps"] += 1
+            # Cross start/finish exactly once into the box. Box progress is integer laps.
+            entry_completed = int(car.get("pit_entry_completed_laps", car["completed_laps"]))
+            car["completed_laps"] = entry_completed + 1
+            car["frozen_frac"] = box_frac
+            car["frac"] = box_frac
+            car["pit_clock_t"] = t
             arrival = t
             crew = float(self.state["crew_free_at"][team])
             if self.state["stacking_policy"] == "forbidden" and crew > arrival + EPS:
@@ -553,17 +692,21 @@ class RaceEngine:
             self.state["crew_free_at"][team] = start + float(parts["t_service_s"])
             if wait > EPS:
                 car["pit_phase"] = "waiting"
+                car["pit_phase_start_t"] = t
                 car["pit_phase_end"] = start
-                self._log("pit_wait", car["car_id"], {"wait_s": wait})
+                self._log("pit_wait", car["car_id"], {"wait_s": wait, "box_progress": distance(car)})
             else:
                 car["pit_phase"] = "service"
+                car["pit_phase_start_t"] = t
                 car["pit_phase_end"] = start + float(parts["t_service_s"])
-                self._log("service_start", car["car_id"], {"wait_s": 0.0})
+                self._log("service_start", car["car_id"], {"wait_s": 0.0, "box_progress": distance(car)})
             return
         if phase == "waiting":
             car["pit_phase"] = "service"
+            car["pit_phase_start_t"] = t
             car["pit_phase_end"] = t + float(parts["t_service_s"])
-            self._log("service_start", car["car_id"], {"after_wait": True})
+            car["frozen_frac"] = box_frac
+            self._log("service_start", car["car_id"], {"after_wait": True, "box_progress": distance(car)})
             return
         if phase == "service":
             compound = car.get("pending_compound")
@@ -574,7 +717,9 @@ class RaceEngine:
             car["pending_compound"] = None
             car["pending_set_id"] = None
             car["pit_phase"] = "transit_out"
+            car["pit_phase_start_t"] = t
             car["pit_phase_end"] = t + float(parts["t_out_s"])
+            car["frozen_frac"] = box_frac
             self._log("service_complete", car["car_id"], {"compound": compound, "set_id": set_id})
             return
         if phase == "transit_out":
@@ -582,9 +727,12 @@ class RaceEngine:
             car["in_pit"] = False
             car["pit_phase"] = None
             car["pit_phase_end"] = None
+            car["pit_phase_start_t"] = None
+            car["pit_clock_t"] = None
             car["frac"] = exit_f
             car["frozen_frac"] = None
-            self._log("pit_exit", car["car_id"], {"frac": exit_f})
+            # completed_laps already at box integer; exit is on the same lap fraction
+            self._log("pit_exit", car["car_id"], {"frac": exit_f, "progress": distance(car)})
 
     def maybe_checkpoint(self) -> None:
         if self.state["checkpoint_reached"]:
@@ -603,24 +751,45 @@ class RaceEngine:
     def maybe_finish(self) -> None:
         horizon = float(self.state["horizon"])
         for car in self.state["cars"].values():
-            if car["finish_time"] is None and (car["retired"] or distance(car) + EPS >= horizon):
-                if not car["retired"]:
-                    car["completed_laps"] = int(self.state["horizon"])
-                    car["frac"] = 0.0
+            if car["finish_time"] is None and car.get("retired"):
                 car["finish_time"] = float(self.state["t"])
+            if car["finish_time"] is None and not car.get("retired") and distance(car) + EPS >= horizon:
+                car["completed_laps"] = int(self.state["horizon"])
+                car["frac"] = 0.0
+                car["finish_time"] = float(self.state["t"])
+                self._log("car_finish", car["car_id"], {"progress": horizon, "individual": True})
         leader = self.leader()
-        if leader["finish_time"] is not None or distance(leader) + EPS >= horizon:
-            self.state["finished"] = True
-            self.state["finish_t"] = self.state["t"]
-            for car in self.state["cars"].values():
-                if car["finish_time"] is None:
-                    car["finish_time"] = self.state["t"]
+        leader_done = leader["finish_time"] is not None or distance(leader) + EPS >= horizon
+        if not leader_done:
+            return
+        if not self.state.get("leader_finished"):
+            if leader["finish_time"] is None:
+                leader["completed_laps"] = int(self.state["horizon"])
+                leader["frac"] = 0.0
+                leader["finish_time"] = float(self.state["t"])
+            progress = {cid: distance(car) for cid, car in self.state["cars"].items()}
+            finish = {cid: car["finish_time"] for cid, car in self.state["cars"].items()}
+            self.state["rank_at_leader_finish"] = classify(progress, finish)
+            self.state["leader_finished"] = True
+            self.state["leader_finish_t"] = float(leader["finish_time"])
+            self.state["leader_finish_car_id"] = leader["car_id"]
+            self._log(
+                "leader_finish",
+                leader["car_id"],
+                {
+                    "t": self.state["leader_finish_t"],
+                    "note": "Race end is leader-triggered; other cars keep individual finish_time only if they crossed",
+                },
+            )
+        # Leader-triggered completion: stop the race. Do NOT stamp unfinished cars
+        # with the leader's time — that is not an individual finishing measurement.
+        self.state["finished"] = True
+        self.state["finish_t"] = self.state["t"]
 
     def _apply_green_overtakes(self, speeds: dict[str, float], dt: float) -> None:
         if self.state["regime"] != "GREEN" or dt < 0:
             return
         adv_need = float(self.cfg["traffic"]["overtake_advantage_s_per_lap"])
-        clearance_s = float(self.cfg["traffic"]["pass_clearance_s"])
         for _ in range(len(self.state["cars"])):
             ordered = sorted(
                 (
@@ -641,14 +810,21 @@ class RaceEngine:
                 if v <= va + EPS:
                     continue
                 gap = distance(ahead) - distance(car)
-                clearance = clearance_s / max(self.free_T(car), EPS)
-                if gap > clearance + EPS:
+                if gap > OVERTAKE_ORDER_SNAP_LAPS + EPS:
                     continue
-                new_d = distance(ahead) + clearance
-                car["completed_laps"] = int(math.floor(new_d + 1e-15))
-                car["frac"] = new_d - car["completed_laps"]
+                new_d = distance(ahead) + OVERTAKE_ORDER_SNAP_LAPS
+                _set_progress_from_distance(car, new_d)
                 car["want_pass"] = None
-                self._log("overtake", cid, {"passed": aid, "resolver": "tick_resolution"})
+                self._log(
+                    "overtake",
+                    cid,
+                    {
+                        "passed": aid,
+                        "resolver": "tick_resolution",
+                        "order_snap_laps": OVERTAKE_ORDER_SNAP_LAPS,
+                        "not_pass_clearance_teleport": True,
+                    },
+                )
                 moved = True
                 break
             if not moved:
@@ -720,16 +896,22 @@ class RaceEngine:
 
     def outcome(self) -> dict[str, Any]:
         progress = {cid: distance(car) for cid, car in self.state["cars"].items()}
-        finish = {cid: float(car["finish_time"] or self.state["t"]) for cid, car in self.state["cars"].items()}
+        # Individual finish times only; absent means the car had not crossed when the leader finished.
+        finish = {cid: car["finish_time"] for cid, car in self.state["cars"].items()}
         ranking = classify(progress, finish)
         loss = team_rank_loss(ranking["ranks"], self.state["selected_car_ids"], ranking["field_size"])
         return {
             "progress": progress,
             "finish_time": finish,
+            "finish_time_note": "null means car had not crossed the finish line; not filled with leader time",
             "ranking": ranking,
+            "rank_at_leader_finish": self.state.get("rank_at_leader_finish"),
+            "leader_finish_t": self.state.get("leader_finish_t"),
+            "leader_finish_car_id": self.state.get("leader_finish_car_id"),
             "team_loss": loss,
             "t": self.state["t"],
             "event_count": len(self.state["events"]),
+            "classification_model": "leader_triggered_end_progress_primary_individual_finish_when_crossed",
         }
 
     def operational_cutoffs(self) -> dict[str, float]:

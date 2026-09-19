@@ -13,7 +13,7 @@ This is the dossier §8 permitted fallback when a pinned full-simulator adapter 
 Repository: https://github.com/TUMFTM/race-simulation  
 Inspected revision: **`96ef2c2021982217be008fe458df47c1a72da071`** (master at clone time 2026-09-19; commit date 2021-09-18, message "Updated readme").  
 License: **LGPL-3.0** (`LICENSE` in the inspected tree).  
-Declared environment: Python 3.8; pinned `requirements.txt` includes `numpy==1.18.4`, `tensorflow==2.2.0`, `cvxpy==1.1.7`, `tf-agents==0.5.0`. These pins are **not** installable as a drop-in stack on this project's CPython 3.12.13 runtime without a separate unsupported environment.
+These pins are **not** this project's working stack (CPython 3.12.13, `requirements.lock`). They describe the upstream repository's declared 2020-era environment. **No modernized minimal adapter was executed.** Not selecting TUMFTM was an engineering choice relative to the dossier §8 fallback, not a demonstration that every supported modern port or adapter is impossible. This follow-up does not require rebuilding the project on TUM.
 
 README (consulted, not a compatibility proof): lap-wise discretisation; full `racesim` plus free-track `racesim_basic`; Virtual Strategy Engineer with `basestrategy`, `realstrategy`, `supervised`, and `reinforcement` options; 2014–2019 parameter files automatically created from a timing database; pretrained RL VSE artifacts.
 
@@ -34,7 +34,7 @@ Input provenance (software licence ≠ data licence): bundled `racesim/input/par
 
 1. Lap-wise discretisation does not by itself provide pit-entry cutoffs and service arrivals at sub-lap decision times required for the operational deadline gate.
 2. Bundled historical configurations and pretrained policies would have to be disabled and replaced; the remaining engine still expects that parameter shape.
-3. Installing the 2020-era TensorFlow/NumPy/cvxpy pins would downgrade or fork the project interpreter. A separate compatible environment was judged impractical relative to the restricted model authorised by the dossier.
+3. The inspected 2020-era TensorFlow/NumPy/cvxpy pins are not this project's working stack. A modernized minimal adapter was **not executed**. Choosing not to build one was an engineering decision, not a proof that all modern TUM ports/adapters are impossible.
 4. No executed mechanism check of TUMFTM SC bunching versus VSC was performed. Lack of an executed check is **unassessed runtime behaviour**, not proof that the upstream SC model is invalid.
 
 Rejected alternative: wrapping TUMFTM `racesim_basic` only. The README states that the free-track variant cannot validate traffic interactions (dossier §8 agrees).

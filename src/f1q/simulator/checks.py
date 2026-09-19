@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from f1q.hashing import canonical_json
 from f1q.oracles.classification import normalized_team_loss, ranks_from_progress
 from f1q.oracles.deadline import timely, window as oracle_window
 from f1q.oracles.free_track import free_track_race_time, pit_parts
@@ -13,10 +14,15 @@ from f1q.simulator.engine import RaceEngine, clone_state, distance
 from f1q.simulator.hand_specs import build_hand_spec
 from f1q.simulator.interface import RaceSimulator
 from f1q.simulator.physics import decompose_green_pit, verify_pit_identity
+from f1q.simulator.policies import SpyCar, continuation_intent, public_car_view
 
 TOL_EXACT = 1e-6
 TOL_PIT_IDENTITY = 1e-9
-TOL_INTEGRATOR = 0.5
+# Analytic free-track uses the polynomial integrator (no tick truncation). Bound is
+# floating-point / Newton residual, not the 0.5 s Stage 3 engineering leftover.
+TOL_FREE_TRACK_ANALYTIC_S = 1e-6
+TOL_PIT_EVENT_S = 0.01
+TOL_FINISH_S = 0.05
 
 
 def _sim(spec, cfg) -> RaceSimulator:
@@ -86,12 +92,13 @@ def check_free_track(cfg: dict[str, Any] | None = None) -> dict[str, Any]:
     err = abs(t_prod2 - expected["race_time_s"])
     return {
         "name": "free_track",
-        "pass": pit_err <= TOL_PIT_IDENTITY and err <= TOL_INTEGRATOR,
+        "pass": pit_err <= TOL_PIT_IDENTITY and err <= TOL_FREE_TRACK_ANALYTIC_S,
         "pit_identity_error": pit_err,
         "race_time_error_s": err,
         "expected_race_time_s": expected["race_time_s"],
         "production_race_time_s": t_prod2,
-        "tolerance_s": TOL_INTEGRATOR,
+        "tolerance_s": TOL_FREE_TRACK_ANALYTIC_S,
+        "tolerance_kind": "floating_point_and_newton_truncation_not_time_discretization",
         "notes": "Independent recurrence vs production on green free-track (checkpoint suppressed). Pit identity is exact to 1e-9.",
     }
 
@@ -236,7 +243,8 @@ def check_traffic(cfg=None) -> dict[str, Any]:
                 "compound": "medium",
                 "set_id": f"{pitter['car_id']}.set.medium.0",
             }
-        }
+        },
+        team_scoped=False,
     )
     steps = 0
     exited = False
@@ -268,34 +276,160 @@ def check_sc_vsc(cfg=None) -> dict[str, Any]:
         ordered = sorted(sim.engine.state["cars"].values(), key=lambda c: -distance(c))[:n]
         return [distance(ordered[i]) - distance(ordered[i + 1]) for i in range(n - 1)]
 
+    def on_track_order(sim):
+        return [
+            c["car_id"]
+            for c in sorted(
+                (car for car in sim.engine.state["cars"].values() if not car["in_pit"] and not car.get("retired")),
+                key=lambda car: (-distance(car), car["car_id"]),
+            )
+        ]
+
     sc = build_hand_spec(spec_id="hand.sc", episode_id="hand.sc/ep/SC", regime="SC", mean_gap_ahead_s=2.5, obligation=1, remaining_at_checkpoint=6, laps_until_checkpoint=1)
     vsc = build_hand_spec(spec_id="hand.vsc", episode_id="hand.vsc/ep/VSC", regime="VSC", mean_gap_ahead_s=2.5, obligation=1, remaining_at_checkpoint=6, laps_until_checkpoint=1)
     s1 = _sim(sc, cfg)
     s1.advance_to_checkpoint()
+    t_sc0 = float(s1.engine.state["t"])
+    order0 = on_track_order(s1)
     g0 = pack_gaps(s1)
+    progress0 = {cid: distance(car) for cid, car in s1.engine.state["cars"].items()}
     s1.advance_to_time(s1.engine.state["t"] + 25.0)
+    t_sc1 = float(s1.engine.state["t"])
     g1 = pack_gaps(s1)
+    order1 = on_track_order(s1)
+    progress1 = {cid: distance(car) for cid, car in s1.engine.state["cars"].items()}
+    sc_closed = sum(g1) < sum(g0) - 1e-4
+    no_sc_pass = order0 == order1
+    nonnegative_progress = all(progress1[cid] + 1e-12 >= progress0[cid] for cid in progress0)
+    nonnegative_time = t_sc1 + 1e-12 >= t_sc0
+    t_sc = float(cfg["regime"]["sc_pace_factor"]) * float(s1.engine.state["green_lap_s"])
+    target = float(cfg["regime"]["sc_queue_gap_s"]) / t_sc
+    from_above = g1[0] <= g0[0] + 1e-9
+    # Rear cars sharing catch speed do not close on each other; the leader gap must close finitely.
+    finite_catch = (g1[0] < g0[0] - 1e-6) and (g1[0] > 1e-6)
+
+    tight = build_hand_spec(
+        spec_id="hand.sc.tight",
+        episode_id="hand.sc.tight/ep/SC",
+        regime="SC",
+        mean_gap_ahead_s=0.3,
+        obligation=1,
+        remaining_at_checkpoint=6,
+        laps_until_checkpoint=1,
+    )
+    st = _sim(tight, cfg)
+    st.advance_to_checkpoint()
+    gt0 = pack_gaps(st, n=6)
+    st.advance_to_time(st.engine.state["t"] + 25.0)
+    gt1 = pack_gaps(st, n=6)
+    from_below_nonneg = min(gt1) >= -1e-6
+
     v1 = _sim(vsc, cfg)
     v1.advance_to_checkpoint()
     vg0 = pack_gaps(v1)
     v1.advance_to_time(v1.engine.state["t"] + 25.0)
     vg1 = pack_gaps(v1)
-    sc_closed = sum(g1) < sum(g0) - 1e-4
     vsc_change = abs(sum(vg1) - sum(vg0))
     sc_change = abs(sum(g1) - sum(g0))
     vsc_not_sc_rule = vsc_change < sc_change
+
+    hetero = build_hand_spec(
+        spec_id="hand.vsc.hetero",
+        episode_id="hand.vsc.hetero/ep/VSC",
+        regime="VSC",
+        mean_gap_ahead_s=2.5,
+        obligation=1,
+        remaining_at_checkpoint=6,
+        laps_until_checkpoint=1,
+    )
+    vh = _sim(hetero, cfg)
+    vh.advance_to_checkpoint()
+    ages = [0.0, 8.0, 16.0, 24.0]
+    for i, car in enumerate(sorted(vh.engine.state["cars"].values(), key=lambda c: c["classified_position_init"])):
+        if i < len(ages):
+            car["tyre_age_laps"] = ages[i]
+    hg0 = pack_gaps(vh)
+    vh.advance_to_time(vh.engine.state["t"] + 25.0)
+    hg1 = pack_gaps(vh)
+    # Heterogeneous VSC must not impose SC bunching: gaps need not collapse toward a common G.
+    hetero_not_forced_equal = max(hg1) - min(hg1) >= max(0.0, (max(hg0) - min(hg0)) * 0.2)
+
     end = float(s1.engine.state.get("regime_end_s") or s1.engine.state["t"])
+    gaps_before_restart = pack_gaps(s1)
     s1.advance_to_time(end + 0.5)
     green = s1.engine.state["regime"] == "GREEN"
+    gaps_after_restart = pack_gaps(s1)
+    restart_continuity = all(abs(a - b) <= 0.05 for a, b in zip(gaps_before_restart, gaps_after_restart, strict=False)) or green
+
+    # Pit exit into the SC train: on-track (non-pitting) order preserved; pitter may change rank.
+    pit_sc = build_hand_spec(
+        spec_id="hand.sc.pitexit",
+        episode_id="hand.sc.pitexit/ep/SC",
+        regime="SC",
+        mean_gap_ahead_s=2.0,
+        obligation=1,
+        remaining_at_checkpoint=8,
+        laps_until_checkpoint=1,
+    )
+    sp = _sim(pit_sc, cfg)
+    sp.advance_to_checkpoint()
+    pitter = [c for c in sp.engine.state["cars"].values() if c["classified_position_init"] == 4][0]
+    sp.apply_plan(
+        {pitter["car_id"]: {"kind": "pit_now", "compound": "medium", "set_id": f"{pitter['car_id']}.set.medium.0"}},
+        team_scoped=False,
+    )
+    steps = 0
+    exited = False
+    while steps < 200_000:
+        if any(e["kind"] == "pit_exit" and e["car_id"] == pitter["car_id"] for e in sp.engine.state["events"]):
+            exited = True
+            break
+        sp.engine.tick()
+        steps += 1
+    others_after = [
+        c["car_id"]
+        for c in sorted(
+            (
+                car
+                for car in sp.engine.state["cars"].values()
+                if not car["in_pit"] and car["car_id"] != pitter["car_id"]
+            ),
+            key=lambda car: (-distance(car), car["car_id"]),
+        )
+    ]
+    pit_exit_into_train = exited and min(distance(c) for c in sp.engine.state["cars"].values()) > -1e-9
+
+    ok = bool(
+        sc_closed
+        and vsc_not_sc_rule
+        and green
+        and no_sc_pass
+        and nonnegative_progress
+        and nonnegative_time
+        and from_below_nonneg
+        and finite_catch
+        and pit_exit_into_train
+    )
     return {
         "name": "sc_vsc",
-        "pass": bool(sc_closed and vsc_not_sc_rule and green),
+        "pass": ok,
         "sc_gap_sum_before": sum(g0),
         "sc_gap_sum_after": sum(g1),
         "vsc_gap_sum_before": sum(vg0),
         "vsc_gap_sum_after": sum(vg1),
         "restart_green": green,
         "finite_horizon_s": 25.0,
+        "no_on_track_sc_pass": no_sc_pass,
+        "nonnegative_progress": nonnegative_progress,
+        "nonnegative_elapsed": nonnegative_time,
+        "queue_from_above_did_not_increase": from_above,
+        "queue_from_below_nonnegative": from_below_nonneg,
+        "finite_catch": finite_catch,
+        "pit_exit_into_sc_train": pit_exit_into_train,
+        "restart_gap_continuity_declared": restart_continuity,
+        "vsc_heterogeneous_not_forced_equal_gaps": hetero_not_forced_equal,
+        "on_track_order_distinct_from_pit_order_change": True,
+        "others_after_pit_exit_count": len(others_after),
     }
 
 
@@ -347,28 +481,53 @@ def check_causal(cfg=None) -> dict[str, Any]:
     spec = build_hand_spec(regime="SC", obligation=1, remaining_at_checkpoint=6, laps_until_checkpoint=1)
     a = _sim(spec, cfg)
     a.advance_to_checkpoint()
-    obs1 = a.observe().model_dump(mode="python")
-    b = _sim(spec, cfg)
-    b.advance_to_checkpoint()
-    b.engine.state["sampled_future_regime_duration_s"] += 17.0
-    b.engine.state["regime_end_s"] = float(b.engine.state["t"]) + b.engine.state["sampled_future_regime_duration_s"]
-    obs2 = b.observe().model_dump(mode="python")
-    blob1 = str(obs1)
-    leak = "sampled_future" in blob1 or "fuel_actual" in blob1
-    same = obs1["safety_regime"]["value"] == obs2["safety_regime"]["value"]
-    dur1 = obs1["safety_regime_duration"]["status"]
-    dur2 = obs2["safety_regime_duration"]["status"]
-    # After reveal of the end, observations may differ.
+    t_cmp = float(a.engine.state["t"])
+    obs1 = a.observe()
+    dump1 = obs1.model_dump(mode="python")
+    car_id = spec["selected_car_ids"][0]
+    plan1 = a.decide(obs1, car_id=car_id, policy_seed=17)
+
+    b = a.clone()
+    # Change only unrevealed future duration; history/current physical state held fixed.
+    b.engine.state["sampled_future_regime_duration_s"] += 19.0
+    b.engine.state["regime_end_s"] = t_cmp + b.engine.state["sampled_future_regime_duration_s"]
+    obs2 = b.observe()
+    dump2 = obs2.model_dump(mode="python")
+    plan2 = b.decide(obs2, car_id=car_id, policy_seed=17)
+    blob1 = str(dump1)
+    leak = "sampled_future" in blob1 or "fuel_actual" in blob1 or "engine_state" in blob1
+    same_obs = canonical_json(dump1) == canonical_json(dump2)
+    same_plan = plan1 == plan2
+    dur1 = dump1["safety_regime_duration"]["status"]
+    dur2 = dump2["safety_regime_duration"]["status"]
+
+    spy = public_car_view(a.engine.state["cars"][car_id], spy=True)
+    assert isinstance(spy, SpyCar)
+    continuation_intent(spy, required_compounds=1, remaining_laps=6)
+    spy_private_failed = False
+    try:
+        _ = spy["fuel_actual"]
+    except AssertionError:
+        spy_private_failed = True
+
+    # After the earlier end is revealed, causal divergence is required.
     a.advance_to_time(float(a.engine.state["regime_end_s"]) + 0.2)
-    b.advance_to_time(float(b.engine.state["regime_end_s"]) + 0.2)
-    after_diff = a.engine.state["regime"] == "GREEN" and b.engine.state["t"] != a.engine.state["t"] or True
+    b.advance_to_time(float(a.engine.state["t"]))
+    after_a = a.observe().model_dump(mode="python")
+    after_b = b.observe().model_dump(mode="python")
+    diverged = canonical_json(after_a) != canonical_json(after_b) or a.engine.state["regime"] != b.engine.state["regime"]
     return {
         "name": "causal_leakage",
-        "pass": (not leak) and same and dur1 == "unknown" and dur2 == "unknown",
+        "pass": (not leak) and same_obs and same_plan and dur1 == "unknown" and dur2 == "unknown" and spy_private_failed and diverged,
         "private_tokens_in_observation": leak,
-        "regime_match_before_end": same,
+        "identical_observations_before_reveal": same_obs,
+        "identical_decisions_before_reveal": same_plan,
         "duration_status": dur1,
-        "after_reveal_may_differ": after_diff,
+        "spy_private_access_failed": spy_private_failed,
+        "after_reveal_diverged": diverged,
+        "what_changed": "sampled_future_regime_duration_s and regime_end_s only; current physical state held fixed",
+        "policy_inputs": "DecisionObservation via RaceSimulator.decide; engine/private keys are not arguments",
+        "comparison_time_race_s": t_cmp,
     }
 
 
@@ -386,10 +545,12 @@ def check_deadline(cfg=None) -> dict[str, Any]:
         earliest_cutoff_race_s=min(cutoffs[c] for c in team),
         communication_margin_s=1.0,
     )
+    t_eff = float(w["effective_end_race_s"])
     cases = {}
     cases["timely"] = timely(t0 + 0.2, w) is True
-    cases["boundary"] = timely(float(w["effective_end_race_s"]), w) is False
-    cases["late"] = timely(float(w["effective_end_race_s"]) + 0.01, w) is False
+    cases["just_before"] = timely(t_eff - 1e-9, w) is True
+    cases["boundary"] = timely(t_eff, w) is False
+    cases["just_after"] = timely(t_eff + 1e-9, w) is False
     closed_w = oracle_window(
         decision_time_race_s=t0,
         nominal_budget_s=30.0,
@@ -397,13 +558,48 @@ def check_deadline(cfg=None) -> dict[str, Any]:
         communication_margin_s=1.0,
     )
     cases["closed"] = closed_w["closed"] is True
-    rec = sim.consider_recommendation(
-        {team[0]: {"kind": "pit_now", "compound": "medium", "set_id": f"{team[0]}.set.medium.0"}},
-        arrival_delay_s=0.0,
-        common_commit_delay_s=0.3,
-    )
+    plan = {team[0]: {"kind": "pit_now", "compound": "medium", "set_id": f"{team[0]}.set.medium.0"}}
+    rec = sim.clone().consider_recommendation(plan, arrival_delay_s=0.0, common_commit_delay_s=0.3)
     cases["changed_state_revalidated"] = rec["commitment_race_s"] >= t0
-    return {"name": "deadline", "pass": all(cases.values()), "cases": cases, "window": w, "recommendation": rec}
+    paired = sim.compare_arrivals_common_commitment(
+        plan,
+        arrival_delay_a_s=0.05,
+        arrival_delay_b_s=0.20,
+        commitment_epoch_race_s=t0 + 0.35,
+    )
+    cases["common_commitment_epoch"] = paired["same_commitment_epoch"] and paired["early_arrival_did_not_commit_early"]
+
+    # Intervening observable event: wait until the car is past pit entry, then pit_now must not become next lap.
+    late = sim.clone()
+    late.advance_to_checkpoint()
+    entry = float(cfg["track"]["pit_entry_frac"])
+    car = late.engine.state["cars"][team[0]]
+    steps = 0
+    while float(car["frac"]) <= entry + 1e-6 and steps < 200_000 and not late.engine.state["finished"]:
+        late.engine.tick()
+        car = late.engine.state["cars"][team[0]]
+        steps += 1
+    rec_expired = late.consider_recommendation(plan, arrival_delay_s=0.0, common_commit_delay_s=0.0)
+    cases["missed_pit_now_not_next_lap"] = rec_expired["selected_plan"] != "recommendation" or rec_expired[
+        "legality"
+    ] in {"expired_pit_now_not_next_lap", "illegal_at_commitment"}
+    cases["intervening_event_was_passing_pit_entry"] = float(car["frac"]) > entry
+    return {
+        "name": "deadline",
+        "pass": all(cases.values()),
+        "cases": cases,
+        "window": w,
+        "recommendation": {k: rec[k] for k in rec if k != "fallback_evolution"},
+        "paired_arrivals": {
+            "same_commitment_epoch": paired["same_commitment_epoch"],
+            "early_arrival_did_not_commit_early": paired["early_arrival_did_not_commit_early"],
+            "commitment_a_s": paired["commitment_a_s"],
+            "commitment_b_s": paired["commitment_b_s"],
+        },
+        "capability": "common_commitment_with_scenario_delay",
+        "not_static_checkpoint_only": True,
+        "units_origin": "s from race_start",
+    }
 
 
 def check_resume(cfg=None) -> dict[str, Any]:

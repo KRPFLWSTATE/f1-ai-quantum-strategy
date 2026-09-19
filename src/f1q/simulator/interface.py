@@ -21,7 +21,7 @@ from f1q.simulator.classification import classify, team_rank_loss
 from f1q.simulator.config import INTERFACE_VERSION, SIMULATOR_VERSION, load_simulator_config
 from f1q.simulator.deadline import effective_deadline, is_timely
 from f1q.simulator.engine import RaceEngine, clone_state, distance
-from f1q.simulator.policies import select_obligation_set
+from f1q.simulator.policies import decide_from_observation, select_obligation_set
 
 INTERFACE_FROZEN = INTERFACE_VERSION
 
@@ -211,45 +211,113 @@ class RaceSimulator:
         eng.advance_to_time(float(t_target))
         return self._wrap_state()
 
-    def validate_plan(self, plan: dict[str, Any], state: SimulatorState | None = None) -> dict[str, Any]:
+    def validate_plan(
+        self, plan: dict[str, Any], state: SimulatorState | None = None, *, team_scoped: bool = True
+    ) -> dict[str, Any]:
+        """Validate an external two-car team recommendation before any mutation.
+
+        Separate from internal rival-policy APIs. Missing/inconsistent fields are
+        rejected rather than reinterpreted as a different action.
+        team_scoped=True (default): only selected_car_ids may appear (external API).
+        team_scoped=False: any known car (internal field policy helpers / mechanism fixtures).
+        """
         eng = self._eng(state)
         errors: list[str] = []
+        selected = set(eng.state["selected_car_ids"])
+        if not plan:
+            raise RejectionError("ILLEGAL_PLAN", "empty plan")
         for cid, item in plan.items():
             if cid not in eng.state["cars"]:
                 errors.append(f"unknown car {cid}")
                 continue
+            if team_scoped and cid not in selected:
+                errors.append(
+                    f"{cid}: outside selected_car_ids; external recommendation API is team-scoped only"
+                )
+                continue
             car = eng.state["cars"][cid]
+            if not isinstance(item, dict):
+                errors.append(f"{cid}: plan item must be an object")
+                continue
             kind = item.get("kind")
             if kind not in {"pit_now", "delay_laps", "continuation"}:
-                errors.append(f"{cid}: unsupported kind {kind}")
-            if kind == "delay_laps" and int(item.get("delay_laps") or 0) not in {1, 2}:
-                errors.append(f"{cid}: delay_laps must be 1 or 2")
-            if kind in {"pit_now", "delay_laps"} and item.get("compound"):
+                errors.append(f"{cid}: unsupported kind {kind!r}")
+                continue
+            if car.get("retired") or car.get("finish_time") is not None:
+                errors.append(f"{cid}: car already finished or retired")
+            if car["in_pit"] and kind in {"pit_now", "delay_laps"}:
+                errors.append(f"{cid}: already in pit; cannot apply {kind}")
+            if kind == "delay_laps":
+                delay = item.get("delay_laps")
                 try:
-                    if item.get("set_id"):
-                        sets = {s["set_id"]: s for s in car["inventory"]}
-                        chosen = sets.get(item["set_id"])
-                        if chosen is None:
-                            raise RejectionError("ILLEGAL_PLAN", "unknown set")
-                        if chosen["used"] and chosen["set_id"] != car["mounted_set_id"]:
-                            raise RejectionError("ILLEGAL_PLAN", "set already used")
+                    delay_i = int(delay)
+                except (TypeError, ValueError):
+                    errors.append(f"{cid}: delay_laps must be 1 or 2")
+                    delay_i = None
+                if delay_i is not None and delay_i not in {1, 2}:
+                    errors.append(f"{cid}: delay_laps must be 1 or 2")
+            if kind in {"pit_now", "delay_laps"}:
+                compound = item.get("compound")
+                set_id = item.get("set_id")
+                if compound is None or set_id is None:
+                    errors.append(f"{cid}: {kind} requires explicit compound and set_id")
+                else:
+                    sets = {s["set_id"]: s for s in car["inventory"]}
+                    chosen = sets.get(set_id)
+                    if chosen is None:
+                        errors.append(f"{cid}: unknown set {set_id}")
                     else:
-                        select_obligation_set(car)
-                except RejectionError as exc:
-                    errors.append(str(exc))
+                        if chosen["compound"] != compound:
+                            errors.append(
+                                f"{cid}: compound/set mismatch ({compound!r} vs set compound {chosen['compound']!r})"
+                            )
+                        if set_id == car.get("mounted_set_id"):
+                            errors.append(
+                                f"{cid}: cannot remount currently fitted set {set_id} (no free tyre-age refresh)"
+                            )
+                        elif chosen["used"]:
+                            errors.append(f"{cid}: set {set_id} already used")
+                        if compound not in {"soft", "medium", "hard"}:
+                            errors.append(f"{cid}: unsupported compound {compound!r}")
+            if kind == "pit_now" and eng._missed_pit_entry_this_lap(car):
+                errors.append(
+                    f"{cid}: EXPIRED_PIT_NOW missed pit entry this lap; not relabelled as next lap"
+                )
+            if kind == "continuation":
+                for key in ("compound", "set_id", "delay_laps"):
+                    if key in item and item[key] is not None:
+                        errors.append(f"{cid}: continuation must not carry {key}")
         if errors:
             raise RejectionError("ILLEGAL_PLAN", "; ".join(errors))
-        return {"ok": True, "plan": plan}
+        return {"ok": True, "plan": plan, "scope": "selected_car_ids" if team_scoped else "field"}
 
-    def apply_plan(self, plan: dict[str, Any], state: SimulatorState | None = None) -> SimulatorState:
+    def apply_plan(
+        self, plan: dict[str, Any], state: SimulatorState | None = None, *, team_scoped: bool = True
+    ) -> SimulatorState:
+        """Apply a validated plan atomically. On failure, restore prior policies."""
         eng = self._eng(state)
-        self.validate_plan(plan, state)
-        for cid, item in plan.items():
-            stored = dict(item)
-            if stored.get("kind") == "delay_laps" and stored.get("reference_completed") is None:
-                stored["reference_completed"] = int(eng.state["cars"][cid]["completed_laps"])
-            eng.state["policies"][cid] = stored
-        eng.update_intents()
+        self.validate_plan(plan, state, team_scoped=team_scoped)
+        prior_policies = copy.deepcopy(eng.state["policies"])
+        prior_cars = {
+            cid: {
+                "pit_this_lap": eng.state["cars"][cid]["pit_this_lap"],
+                "pending_compound": eng.state["cars"][cid]["pending_compound"],
+                "pending_set_id": eng.state["cars"][cid]["pending_set_id"],
+            }
+            for cid in plan
+        }
+        try:
+            for cid, item in plan.items():
+                stored = dict(item)
+                if stored.get("kind") == "delay_laps" and stored.get("reference_completed") is None:
+                    stored["reference_completed"] = int(eng.state["cars"][cid]["completed_laps"])
+                eng.state["policies"][cid] = stored
+            eng.update_intents()
+        except Exception:
+            eng.state["policies"] = prior_policies
+            for cid, snap in prior_cars.items():
+                eng.state["cars"][cid].update(snap)
+            raise
         return self._wrap_state()
 
     def continue_to_finish(self, state: SimulatorState | None = None) -> tuple[SimulatorState, dict[str, Any]]:
@@ -265,62 +333,209 @@ class RaceSimulator:
             other.engine.load_state(self.engine.state)
         return other
 
+    def decide(self, observation, *, car_id: str, policy_seed: int = 0) -> dict[str, Any]:
+        """Policy call path: DecisionObservation only. Does not read engine/private state."""
+        required = 2
+        if hasattr(observation, "compound_obligations") and observation.compound_obligations:
+            required = int(observation.compound_obligations.get("distinct_compounds_required") or 2)
+        return decide_from_observation(
+            observation, car_id=car_id, required_compounds=required, policy_seed=policy_seed
+        )
+
     def consider_recommendation(
         self,
         plan: dict[str, Any],
         *,
         arrival_delay_s: float,
         common_commit_delay_s: float | None = None,
+        commitment_epoch_race_s: float | None = None,
     ) -> dict[str, Any]:
-        """Advance under fallback, then commit at a common epoch. Scenario latency, not IBM queue time."""
+        """Advance under fallback, then commit at a registered common epoch.
+
+        Scenario latency is injected 1:1 onto the race clock; not an IBM queue time.
+        Registered commitment epoch must lie in [t0, effective_end]. Arrival is timely
+        for the commitment iff arrival_t <= registered_epoch (exact boundary accepted)
+        and arrival_t < effective_end. A result arriving after the registered epoch
+        does not move that epoch: fallback is applied at the registered time and the
+        arrival is recorded as late for that commitment.
+        """
         eng = self._require()
         if not eng.state["checkpoint_reached"]:
             eng.advance_to_checkpoint()
         t0 = float(eng.state["t"])
         obs = self.observe()
-        window = eng.state  # placeholder
         cutoffs = eng.operational_cutoffs()
         spec = self.spec or {}
+
+        def _finite_nonneg(name: str, value: float) -> float:
+            import math
+
+            if value is None or isinstance(value, bool):
+                raise RejectionError("INVALID_COMMITMENT_PROTOCOL", f"{name} must be a finite number")
+            try:
+                v = float(value)
+            except (TypeError, ValueError) as exc:
+                raise RejectionError("INVALID_COMMITMENT_PROTOCOL", f"{name} must be a finite number") from exc
+            if not math.isfinite(v):
+                raise RejectionError("INVALID_COMMITMENT_PROTOCOL", f"{name} must be finite (got {value!r})")
+            if v < 0.0:
+                raise RejectionError("INVALID_COMMITMENT_PROTOCOL", f"{name} must be >= 0 (got {v})")
+            return v
+
+        arrival_delay = _finite_nonneg("arrival_delay_s", arrival_delay_s)
         window = effective_deadline(
             decision_time_race_s=t0,
             nominal_budget_s=float(spec.get("deadline_interface", {}).get("primary_nominal_budget_s") or 30),
             team_pit_entry_cutoffs_race_s=[cutoffs[c] for c in eng.state["selected_car_ids"]],
             communication_margin_s=float(spec.get("clock", {}).get("communication_margin_s") or 1.0),
         )
-        commit_delay = float(common_commit_delay_s) if common_commit_delay_s is not None else float(arrival_delay_s)
-        # Early recommendations wait until the common epoch; they do not commit early.
-        arrival_t = t0 + max(0.0, float(arrival_delay_s))
-        commit_t = t0 + max(float(arrival_delay_s), commit_delay)
+        arrival_t = t0 + arrival_delay
+        if commitment_epoch_race_s is not None:
+            import math
+
+            try:
+                registered_epoch = float(commitment_epoch_race_s)
+            except (TypeError, ValueError) as exc:
+                raise RejectionError(
+                    "INVALID_COMMITMENT_PROTOCOL", "commitment_epoch_race_s must be finite"
+                ) from exc
+            if not math.isfinite(registered_epoch):
+                raise RejectionError("INVALID_COMMITMENT_PROTOCOL", "commitment_epoch_race_s must be finite")
+        elif common_commit_delay_s is not None:
+            registered_epoch = t0 + _finite_nonneg("common_commit_delay_s", common_commit_delay_s)
+        else:
+            registered_epoch = float(window["effective_end_race_s"])
+
+        eff_end = float(window["effective_end_race_s"])
+        if not window["closed"]:
+            if registered_epoch < t0 - 1e-12 or registered_epoch > eff_end + 1e-12:
+                raise RejectionError(
+                    "INVALID_COMMITMENT_PROTOCOL",
+                    f"registered epoch {registered_epoch} outside [t0={t0}, effective_end={eff_end}]",
+                )
+        elif commitment_epoch_race_s is not None or common_commit_delay_s is not None:
+            # Closed window: custom epochs are rejected rather than clamped into a valid observation.
+            if registered_epoch > t0 + 1e-12:
+                raise RejectionError(
+                    "INVALID_COMMITMENT_PROTOCOL",
+                    f"window closed (effective_end={eff_end} <= t0={t0}); cannot register future commitment epoch",
+                )
+
+        # Exclusive vs effective_end; inclusive vs registered epoch (exact boundary accepted).
+        late_vs_effective = window["closed"] or not is_timely(arrival_t, window)
+        late_vs_registered = arrival_t > registered_epoch + 1e-12
+        expired = late_vs_effective or late_vs_registered
         fallback_reason = None
         selected = "fallback_continuation"
         legality = "not_evaluated"
-        expired = window["closed"] or not is_timely(arrival_t, window)
+        fallback_evolution: list[dict[str, Any]] = []
+        # Never move the registered epoch to a later arrival.
+        target = registered_epoch
+        if late_vs_effective and not late_vs_registered:
+            target = min(registered_epoch, eff_end)
+        while float(eng.state["t"]) < target - 1e-12 and not eng.state["finished"]:
+            eng.tick(t_limit=target)
+            fallback_evolution.append(
+                {
+                    "t": float(eng.state["t"]),
+                    "regime": eng.state["regime"],
+                    "leader_progress": distance(eng.leader()),
+                    "any_selected_in_pit": any(
+                        eng.state["cars"][cid]["in_pit"] for cid in eng.state["selected_car_ids"]
+                    ),
+                }
+            )
+            if len(fallback_evolution) > 50_000:
+                break
+        validation_t = float(eng.state["t"])
         if expired:
-            fallback_reason = "PIT_WINDOW_CLOSED" if window["closed"] else "LATE_OR_BOUNDARY"
-            eng.advance_to_time(min(commit_t, window["effective_end_race_s"]))
+            if late_vs_registered and not late_vs_effective:
+                fallback_reason = "LATE_VS_REGISTERED_COMMITMENT_EPOCH"
+            elif window["closed"]:
+                fallback_reason = "PIT_WINDOW_CLOSED"
+            else:
+                fallback_reason = "LATE_OR_BOUNDARY"
         else:
-            eng.advance_to_time(commit_t)
             try:
                 self.validate_plan(plan)
-                # Revalidate against information revealed by commitment.
                 self.apply_plan(plan)
                 selected = "recommendation"
                 legality = "legal_at_commitment"
+                for cid, item in plan.items():
+                    if item.get("kind") == "pit_now":
+                        policy = eng.state["policies"].get(cid) or {}
+                        if policy.get("reason") == "expired_pit_now_missed_entry":
+                            selected = "fallback_continuation"
+                            legality = "expired_pit_now_not_next_lap"
+                            fallback_reason = "EXPIRED_PIT_NOW"
+                            break
             except RejectionError as exc:
                 fallback_reason = str(exc)
                 legality = "illegal_at_commitment"
         return {
+            "checkpoint_time_race_s": t0,
+            "nominal_budget_s": float(spec.get("deadline_interface", {}).get("primary_nominal_budget_s") or 30),
+            "absolute_cutoffs_race_s": {cid: cutoffs[cid] for cid in eng.state["selected_car_ids"]},
+            "communication_margin_s": float(spec.get("clock", {}).get("communication_margin_s") or 1.0),
+            "effective_end_race_s": window["effective_end_race_s"],
+            "registered_commitment_epoch_race_s": registered_epoch,
+            "result_arrival_race_s": arrival_t,
+            "validation_time_race_s": validation_t,
+            "action_application_time_race_s": float(eng.state["t"]),
             "arrival_race_s": arrival_t,
             "expiry_race_s": window["effective_end_race_s"],
             "commitment_race_s": float(eng.state["t"]),
             "closed": window["closed"],
             "timely": (not expired),
+            "late_vs_registered_epoch": late_vs_registered,
+            "late_vs_effective_end": late_vs_effective,
             "legality": legality,
             "selected_plan": selected,
             "fallback_reason": fallback_reason,
-            "scenario_latency_s": float(arrival_delay_s),
+            "fallback_evolution": fallback_evolution[:20],
+            "fallback_evolution_samples": len(fallback_evolution),
+            "units": "s",
+            "origin": "race_start",
+            "scenario_latency_s": float(arrival_delay),
             "not_ibm_queue_measurement": True,
+            "exclusive_arrival_boundary": True,
+            "registered_epoch_inclusive_boundary": True,
             "observation_at_decision_epoch_keys": sorted(obs.model_dump().keys()),
+        }
+
+    def compare_arrivals_common_commitment(
+        self,
+        plan: dict[str, Any],
+        *,
+        arrival_delay_a_s: float,
+        arrival_delay_b_s: float,
+        commitment_epoch_race_s: float,
+    ) -> dict[str, Any]:
+        """Two timely arrivals under the same registered menu must share one commitment epoch."""
+        left = self.clone()
+        right = self.clone()
+        rec_a = left.consider_recommendation(
+            plan, arrival_delay_s=arrival_delay_a_s, commitment_epoch_race_s=commitment_epoch_race_s
+        )
+        rec_b = right.consider_recommendation(
+            plan, arrival_delay_s=arrival_delay_b_s, commitment_epoch_race_s=commitment_epoch_race_s
+        )
+        same_epoch = abs(rec_a["commitment_race_s"] - rec_b["commitment_race_s"]) <= 1e-9
+        early_a = min(arrival_delay_a_s, arrival_delay_b_s)
+        early_commit_advantage = rec_a["commitment_race_s"] < commitment_epoch_race_s - 1e-9 or rec_b[
+            "commitment_race_s"
+        ] < commitment_epoch_race_s - 1e-9
+        return {
+            "arrival_a_s": rec_a["result_arrival_race_s"],
+            "arrival_b_s": rec_b["result_arrival_race_s"],
+            "commitment_a_s": rec_a["commitment_race_s"],
+            "commitment_b_s": rec_b["commitment_race_s"],
+            "registered_epoch_s": commitment_epoch_race_s,
+            "same_commitment_epoch": same_epoch,
+            "early_arrival_did_not_commit_early": not early_commit_advantage,
+            "early_arrival_delay_s": early_a,
+            "record_a": rec_a,
+            "record_b": rec_b,
         }
 
     def envelope(self, *, validation_status: str, observation_ref: str | None, state_ref: str | None) -> CheckpointEnvelope:

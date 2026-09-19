@@ -14,7 +14,77 @@ from f1q.schemas import utc_now
 from f1q.simulator.checks import run_all_mechanism_checks
 from f1q.simulator.config import load_simulator_config
 from f1q.simulator.matrix import PREVIEW_RUN, run_development_matrix, run_interventions
+from f1q.simulator.resources import MemoryGuard
 from f1q.snapshot import take_source_snapshot
+
+_FOLLOWUP_GUARDS: dict[str, MemoryGuard] = {}
+
+
+def execute_followup_unit(
+    *,
+    root: Path,
+    run_id: str,
+    unit_id: str,
+    seed: int,
+    attempt_id: str,
+) -> dict[str, Any]:
+    from f1q.simulator.config import load_simulator_config
+    from f1q.simulator.followup import execute_followup_unit as _run
+
+    rel_dir = f"evidence/simulator/artifacts/{run_id}/{unit_id}"
+    dest = resolve_within(root, rel_dir)
+    dest.mkdir(parents=True, exist_ok=True)
+    cfg, _ = load_simulator_config(root)
+    guard = _FOLLOWUP_GUARDS.setdefault(
+        run_id,
+        MemoryGuard(
+            ceiling_fraction=float(cfg["resource"]["ram_ceiling_fraction"]),
+            interval_s=float(cfg["resource"].get("ram_sampling_interval_s") or 1.0),
+        ),
+    )
+    payload = _run(
+        root=root,
+        run_id=run_id,
+        unit_id=unit_id,
+        seed=seed,
+        attempt_id=attempt_id,
+        dest=dest,
+        guard=guard,
+    )
+    payload["memory_sample"] = guard.observe()
+    unit_rel = f"{rel_dir}/unit.json"
+    digest = atomic_write_bytes(resolve_within(root, unit_rel), canonical_json(_public_payload(payload)) + b"\n")
+    extra = [
+        {
+            "schema_version": "1.0.0",
+            "artifact_id": str(uuid4()),
+            "run_id": run_id,
+            "unit_id": unit_id,
+            "relative_path": unit_rel,
+            "sha256": digest,
+            "kind": "simulator_followup",
+            "created_at_utc": utc_now(),
+        }
+    ]
+    priv = dest / "fuel_private_audit.json"
+    if priv.is_file():
+        extra.append(
+            {
+                "schema_version": "1.0.0",
+                "artifact_id": str(uuid4()),
+                "run_id": run_id,
+                "unit_id": unit_id,
+                "relative_path": f"{rel_dir}/fuel_private_audit.json",
+                "sha256": sha256_file(priv),
+                "kind": "private_fuel_audit",
+                "created_at_utc": utc_now(),
+            }
+        )
+    return {
+        "artifact": extra[0],
+        "extra_artifacts": extra[1:],
+        "substantive_payload_sha256": sha256_json(_public_payload(payload)),
+    }
 
 
 def execute_simulator_unit(
@@ -48,6 +118,19 @@ def execute_simulator_unit(
     elif unit_id == "simulator.source_restore":
         payload = _source_and_private_restore(root, dest, run_id)
         kind = "source_restore"
+    elif unit_id == "simulator.repair.resolution":
+        from f1q.simulator.followup import run_resolution_panel, select_resolution_panel
+        from f1q.simulator.matrix import load_preview_specs
+
+        specs = load_preview_specs(root)
+        selected = select_resolution_panel(specs)
+        report = run_resolution_panel(root, selected, cfg)
+        report["ok"] = report["status"] in {"PASS", "PARTIAL"}
+        report["panel_episode_ids"] = [s["episode_id"] for s in selected]
+        report["simulator_config_hash"] = cfg_hash
+        report["stage"] = "3.2_repair"
+        payload = report
+        kind = "resolution_panel"
     else:
         raise ValueError(f"unknown simulator unit {unit_id}")
     unit_rel = f"{rel_dir}/unit.json"
@@ -69,6 +152,20 @@ def execute_simulator_unit(
         "extra_artifacts": extra[1:],
         "substantive_payload_sha256": sha256_json(_public_payload(payload)),
     }
+
+
+def execute_repair_unit(
+    *,
+    root: Path,
+    run_id: str,
+    unit_id: str,
+    seed: int,
+    attempt_id: str,
+) -> dict[str, Any]:
+    """Stage 3.2 repair validation units (matrix + resolution under one new run)."""
+    return execute_simulator_unit(
+        root=root, run_id=run_id, unit_id=unit_id, seed=seed, attempt_id=attempt_id
+    )
 
 
 def _public_payload(payload: Any) -> Any:

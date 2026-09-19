@@ -1,0 +1,19 @@
+{
+  "archive": "review/STAGE_3_2_REVIEW.zip",
+  "archive_sha256": "b60ad0f186aaf3846e02ae60ebf71d48cdfee5fcf9036cc30d53a8ccb60d3f57",
+  "member_count_including_manifest": 196,
+  "inner_manifest_path": "MANIFEST.sha256.json",
+  "inner_aggregate_content_sha256": "7f15e697a0af61756f60f0f3e1e8ef18155ff9a896141e1ba8069077b687cc48",
+  "run_id": "62b1e5ee-3f13-44be-98e0-8af018eb286b",
+  "simulator_version": "1.0.2",
+  "secret_scan": {
+    "note": "paths only; no secret values printed"
+  },
+  "clean_extract": {
+    "tmpdir_prefix": "f1q-stage32-review-",
+    "manifest_members_verified": true,
+    "targeted_pytest": "tests/test_stage3_2_repair.py",
+    "targeted_pytest_exit": 0,
+    "targeted_pytest_summary": ".........                                                                [100%]"
+  }
+}

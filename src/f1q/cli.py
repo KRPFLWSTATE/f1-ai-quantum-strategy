@@ -12,7 +12,7 @@ from f1q.generator.config import load_generator_config, sorted_families
 from f1q.generator.splits import build_split_plan, planned_counts
 from f1q.generator.stage3 import stage3_handoff_contract
 from f1q.paths import resolve_project_root
-from f1q.runner import regenerate_receipt, resume_run, run_bootstrap, run_development_preview, run_simulator_check
+from f1q.runner import regenerate_receipt, resume_run, run_bootstrap, run_development_preview, run_simulator_check, run_simulator_followup, run_simulator_repair
 from f1q.snapshot import take_source_snapshot
 from f1q.status import run_status
 
@@ -63,6 +63,20 @@ def main(argv: list[str] | None = None) -> int:
     insp.add_argument("--run-id", required=True)
     insp.add_argument("--episode-id", required=True)
     sim_sub.add_parser("interface", help="print frozen Stage 3 interface version")
+    diag = sim_sub.add_parser(
+        "diagnostic-stage3-3",
+        help="generate or verify the Stage 3.3 corrected post-repair diagnostic from live code",
+    )
+    diag.add_argument(
+        "--write",
+        action="store_true",
+        help="write docs/evidence/stage3_3/post_repair_diagnostic.corrected.json",
+    )
+    diag.add_argument(
+        "--verify",
+        action="store_true",
+        help="compare the checked-in corrected JSON scientific_payload to a live regeneration",
+    )
 
     args = parser.parse_args(argv)
     try:
@@ -83,6 +97,10 @@ def main(argv: list[str] | None = None) -> int:
                 result = run_development_preview(root)
             elif args.plan == "simulator_check":
                 result = run_simulator_check(root)
+            elif args.plan == "simulator_followup":
+                result = run_simulator_followup(root)
+            elif args.plan == "simulator_repair":
+                result = run_simulator_repair(root)
             else:
                 from f1q.authorization import authorize_plan, load_project_config
 
@@ -227,6 +245,35 @@ def _simulator_command(root, args) -> int:
                 sort_keys=True,
             )
         )
+        return 0
+    if args.simulator_command == "diagnostic-stage3-3":
+        from f1q.simulator.stage3_3_diagnostic import (
+            build_diagnostic_document,
+            scientific_payload_matches_live,
+            write_corrected_diagnostic,
+        )
+
+        if args.verify:
+            match, detail = scientific_payload_matches_live(root)
+            print(json.dumps({"ok": match, **detail}, indent=2, sort_keys=True))
+            return 0 if match else 1
+        if args.write:
+            result = write_corrected_diagnostic(root)
+            print(
+                json.dumps(
+                    {
+                        "ok": True,
+                        "path": result["path"],
+                        "sha256": result["sha256"],
+                        "scientific_payload_sha256": result["scientific_payload_sha256"],
+                    },
+                    indent=2,
+                    sort_keys=True,
+                )
+            )
+            return 0
+        doc = build_diagnostic_document(root)
+        print(json.dumps(doc, indent=2, sort_keys=True))
         return 0
     raise UnsupportedModeError(f"unknown simulator command {args.simulator_command}")
 

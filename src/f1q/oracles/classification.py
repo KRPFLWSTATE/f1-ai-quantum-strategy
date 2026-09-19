@@ -2,9 +2,17 @@
 
 from __future__ import annotations
 
+import math
 
-def ranks_from_progress(progress: dict[str, float], finish_time: dict[str, float]) -> dict[str, int]:
-    cars = sorted(progress, key=lambda cid: (-float(progress[cid]), float(finish_time.get(cid, 0.0)), cid))
+
+def ranks_from_progress(progress: dict[str, float], finish_time: dict[str, float | None]) -> dict[str, int]:
+    def finish_key(cid: str) -> float:
+        value = finish_time.get(cid)
+        if value is None:
+            return math.inf
+        return float(value)
+
+    cars = sorted(progress, key=lambda cid: (-float(progress[cid]), finish_key(cid), cid))
     return {cid: i + 1 for i, cid in enumerate(cars)}
 
 

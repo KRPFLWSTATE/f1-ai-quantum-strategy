@@ -1,0 +1,774 @@
+{
+  "checked_source_snapshot": "2b56232734cc38be22a0aab9a5e16f3c0a7afbff731382b204a60c2d797dbf00",
+  "followup_run_id": "4388ad68-6bd3-4a43-9099-32e52f56eb28",
+  "git_dirty_at_run": true,
+  "git_head_at_run": "358a17b1a03d53248c5dd81305c24db384691f9b",
+  "kind": "stage3_1_review_bundle",
+  "member_count": 151,
+  "members": [
+    {
+      "bytes": 4985,
+      "path": "src/f1q/bootstrap.py",
+      "sha256": "fc7de6f5c39a05f0694db984b19bedf2232ce8bb22f55c6dad2ead424ae95ee7"
+    },
+    {
+      "bytes": 21186,
+      "path": "src/f1q/runner.py",
+      "sha256": "71817d675ff889ac49814d7cd86cd0a07b3fc2cfcea91b567f40635e5f63d3e6"
+    },
+    {
+      "bytes": 6073,
+      "path": "src/f1q/receipts.py",
+      "sha256": "8b7f194c6ea8d38b9eec46c194b24a9d57555a16e7751bae789f365708fcdbea"
+    },
+    {
+      "bytes": 3602,
+      "path": "src/f1q/paths.py",
+      "sha256": "b0353667d612f9893f3b72705788ba7111e340cf22c44b2bc2782d7e1b86d53d"
+    },
+    {
+      "bytes": 16807,
+      "path": "src/f1q/ledger.py",
+      "sha256": "2fca7b2c3a614f59629931c35407ec1e0244b01f1b582c8b13adc2b76f9864d2"
+    },
+    {
+      "bytes": 398,
+      "path": "src/f1q/__init__.py",
+      "sha256": "da2ad6ffb681e1b3d70fc9ff2e0f22a2ccb93eb7032a968cc835fed4a7d1d0d8"
+    },
+    {
+      "bytes": 6041,
+      "path": "src/f1q/authorization.py",
+      "sha256": "c70ee8f0d9b212d971e5c4a853dfa17eb2cc8f8a3c3face5a66c21e74c8cfdff"
+    },
+    {
+      "bytes": 17574,
+      "path": "src/f1q/schemas.py",
+      "sha256": "31aa15273e43289a890e1ea7e66cb645cb98c749a276846989dc31a9d5b68ccf"
+    },
+    {
+      "bytes": 10705,
+      "path": "src/f1q/cli.py",
+      "sha256": "17685445c6184030d4b63f74e4582ebba94dbcfd16c8f7d1515bb0e6e1099c60"
+    },
+    {
+      "bytes": 10017,
+      "path": "src/f1q/causal.py",
+      "sha256": "184c10ea8ea55e25887cb264bed2a0d533ecf79ad4082ba5cc91f8917daeb1c9"
+    },
+    {
+      "bytes": 923,
+      "path": "src/f1q/errors.py",
+      "sha256": "28611c2a39d0c2ffef2857a3db1e7f941d0a15b85d6de86c021d182b45f295dd"
+    },
+    {
+      "bytes": 5619,
+      "path": "src/f1q/doctor.py",
+      "sha256": "43bdfce43114261e36fc03a34febf43664b494498bf39ac2bdee1f68d7c47bd0"
+    },
+    {
+      "bytes": 1498,
+      "path": "src/f1q/hashing.py",
+      "sha256": "7fe544f85e6267fb3b85f64d656ac2cd6553de3768eb2c452ea14865ed2ec36e"
+    },
+    {
+      "bytes": 82,
+      "path": "src/f1q/__main__.py",
+      "sha256": "d03cd2099de7543ad123e62de243159eb284375ce658b7d4b645d6b51a50daa2"
+    },
+    {
+      "bytes": 3633,
+      "path": "src/f1q/snapshot.py",
+      "sha256": "a4c50b5c340637f0ac91ddcdad72f7df09fe16674ca6f3a866ce0ebe83b03ab5"
+    },
+    {
+      "bytes": 5233,
+      "path": "src/f1q/status.py",
+      "sha256": "62d7e736408116076aeccf094f0ddf1837a2d196b96c546a01a8893df3c10384"
+    },
+    {
+      "bytes": 975,
+      "path": "src/f1q/oracles/shared_service.py",
+      "sha256": "60dc802c7464e0c11dfa9aa49ded2aaae2b6321244a5fe0be3a5ff688f055f5f"
+    },
+    {
+      "bytes": 518,
+      "path": "src/f1q/oracles/classification.py",
+      "sha256": "4be66409b94ca09f11a9e6d3748d21f3320d7c78ca389cf244e82fd992646737"
+    },
+    {
+      "bytes": 419,
+      "path": "src/f1q/oracles/__init__.py",
+      "sha256": "7f2894c0d4e97f9ffe901a0543f014618bed130c6eecac11de21bcb34751a14b"
+    },
+    {
+      "bytes": 878,
+      "path": "src/f1q/oracles/deadline.py",
+      "sha256": "e859fcc30d4ba87e0ef3d557922813776ccc05de8f2037203b9a760a3fca28c2"
+    },
+    {
+      "bytes": 5466,
+      "path": "src/f1q/oracles/free_track.py",
+      "sha256": "c811dda24af427f7abc8a08857d873c691ec503643f3119519c7e3d81bb6c553"
+    },
+    {
+      "bytes": 7960,
+      "path": "src/f1q/generator/preview.py",
+      "sha256": "d9c9d913d92676c99bfb4cd9913afe666e6591ef37a59b3b140d7073d1b40bf9"
+    },
+    {
+      "bytes": 9188,
+      "path": "src/f1q/generator/observation.py",
+      "sha256": "13c31e6e17aa1ea3ef5253af039a18f87d71fc7c8b9f7fa5635f4d59cc20059b"
+    },
+    {
+      "bytes": 2094,
+      "path": "src/f1q/generator/streams.py",
+      "sha256": "ced88b666f5b35f5b41c0d3965cd0974ca63e6d567e68cd664f0013fe914e6a7"
+    },
+    {
+      "bytes": 4849,
+      "path": "src/f1q/generator/config.py",
+      "sha256": "0e61b6cebeb99fdd8dfa9f4458145d7526da1ca9bce94513416af75df3af9588"
+    },
+    {
+      "bytes": 5657,
+      "path": "src/f1q/generator/audit.py",
+      "sha256": "524248151cffcebc7c8a12dfc36e8b1a4b266999fadbf39e6081a460b42888e0"
+    },
+    {
+      "bytes": 351,
+      "path": "src/f1q/generator/__init__.py",
+      "sha256": "9869f8718b253ef3fe470b4e5e5649f81a4368ae0df8306a08914f771f7272a7"
+    },
+    {
+      "bytes": 16965,
+      "path": "src/f1q/generator/spec.py",
+      "sha256": "0b562e129c8a0e847e3e638bb81a22c24265b2c3c17da08e85a7f49a61f289a5"
+    },
+    {
+      "bytes": 5712,
+      "path": "src/f1q/generator/validate.py",
+      "sha256": "06a96b3ef3d183075914fef6ef4bcf949aa493b5a9437e564a9cd7d0c8b64196"
+    },
+    {
+      "bytes": 1336,
+      "path": "src/f1q/generator/sampling.py",
+      "sha256": "71fefd7576d0b2cc6cfd07d64273efdb987ba72427179d5f93454c53a950f7a1"
+    },
+    {
+      "bytes": 5384,
+      "path": "src/f1q/generator/splits.py",
+      "sha256": "84a1f63cc85fda6812d3d136f75c78330c32ebdcdcb90e87c63c52542730ca7b"
+    },
+    {
+      "bytes": 920,
+      "path": "src/f1q/generator/stage3.py",
+      "sha256": "35c393fa12502dfa362fe4ece94624ae76acd8a03dfd9fbe1ab47f5185505435"
+    },
+    {
+      "bytes": 8307,
+      "path": "src/f1q/simulator/matrix.py",
+      "sha256": "6f8a70b6a435bd7a229f540e05e5e96691d0b2b29ea57362602f6ecfcdef579e"
+    },
+    {
+      "bytes": 1149,
+      "path": "src/f1q/simulator/config.py",
+      "sha256": "10fa114322859f17549588ce16c40b87f70ec984ac18bcacf396cf3fd2cd33b7"
+    },
+    {
+      "bytes": 906,
+      "path": "src/f1q/simulator/classification.py",
+      "sha256": "af8111562675fbc1898d9751cdbac659353db203d04ffaf19f3684170e9797d4"
+    },
+    {
+      "bytes": 4088,
+      "path": "src/f1q/simulator/fuel.py",
+      "sha256": "d6d341290d7d07e7378d3e4e95784aa6d352e923adeb2e4dc38ddccbcab4fba6"
+    },
+    {
+      "bytes": 29538,
+      "path": "src/f1q/simulator/checks.py",
+      "sha256": "68866e481422f862bdb582635be79e6b4dc4797380f498bfec502dc1f4801f23"
+    },
+    {
+      "bytes": 24697,
+      "path": "src/f1q/simulator/interface.py",
+      "sha256": "77b293a4c20cfbfb1859009cc3db47b651fee5505b058868a2988b8953a9cf35"
+    },
+    {
+      "bytes": 7842,
+      "path": "src/f1q/simulator/hand_specs.py",
+      "sha256": "774f642122dd05edd83529a88a5e3407adc98f76b172f6060fba8066c914e1a0"
+    },
+    {
+      "bytes": 300,
+      "path": "src/f1q/simulator/__init__.py",
+      "sha256": "0663d4ea0187c26e8563bef05840c6aac946315d925c78945c2365624469fa4d"
+    },
+    {
+      "bytes": 2494,
+      "path": "src/f1q/simulator/physics.py",
+      "sha256": "a60ad352ab77770ac8795506aca1729a6fa218ae1ba56697faf1648c1e828e28"
+    },
+    {
+      "bytes": 37364,
+      "path": "src/f1q/simulator/engine.py",
+      "sha256": "cbaa23b9bdda3b618bceeea12e8d03c3501cafbef662394231f5f246c2339aa9"
+    },
+    {
+      "bytes": 20454,
+      "path": "src/f1q/simulator/followup.py",
+      "sha256": "3a71860bee7530b49fc14a44e209b7db36483422d642df40d9022c9cfacddd68"
+    },
+    {
+      "bytes": 4210,
+      "path": "src/f1q/simulator/resources.py",
+      "sha256": "f4452d26c18e651893ead02ee145fa2ab14ce7146b332c1ee5f1099f8d42fafa"
+    },
+    {
+      "bytes": 1543,
+      "path": "src/f1q/simulator/deadline.py",
+      "sha256": "6f968b9f3a52a7202f6c4983402c3cd0a70192e3a0f1c85fba9c53a2bc74132e"
+    },
+    {
+      "bytes": 7775,
+      "path": "src/f1q/simulator/run_units.py",
+      "sha256": "3f0dee94a5409beb18e27b4d25b4586bbcfac261ac823fc99b1d8c0a3bcee23b"
+    },
+    {
+      "bytes": 5979,
+      "path": "src/f1q/simulator/policies.py",
+      "sha256": "352a8cbd486af5ddea37502403ec8e751e0bc8d5c9ff1718e69a381af0376c92"
+    },
+    {
+      "bytes": 3337,
+      "path": "tests/test_stage3_1_followup.py",
+      "sha256": "10dc8d1958a18987664155fc17ba663ef095ba4946fded9706ec34e18a79bdbf"
+    },
+    {
+      "bytes": 3148,
+      "path": "tests/test_simulator_mechanisms.py",
+      "sha256": "7969ae43a434fccca82feec07832b81d392680df88d4795bebeb3885f946ce98"
+    },
+    {
+      "bytes": 7264,
+      "path": "tests/test_observation_projection.py",
+      "sha256": "a99cee6c7e738552e7c150cb6a5766bb3a6668cde158eb9dac584fe7730c92d3"
+    },
+    {
+      "bytes": 1464,
+      "path": "tests/conftest.py",
+      "sha256": "a63cfdf5467e5c4832093be1451ac44dd94035a337ff99b7909165dad5f80451"
+    },
+    {
+      "bytes": 637,
+      "path": "pyproject.toml",
+      "sha256": "11f407e9f6a6c419e2b140bbc32537c4ca8895ae0b1f7e70635c97b4235d2251"
+    },
+    {
+      "bytes": 508,
+      "path": "requirements.lock",
+      "sha256": "fe7a80a5424ff1ff5d9340a4080c7ab5d963ff1c19fafeee56fa85aad70972e0"
+    },
+    {
+      "bytes": 2683,
+      "path": "configs/simulator.v1.yaml",
+      "sha256": "9db5cfeadd8725a98e181b7f9c55802b64fb3953fa91a23d264fca2045858685"
+    },
+    {
+      "bytes": 736,
+      "path": "configs/simulator.interface.v1.yaml",
+      "sha256": "8d24f561ad53f1889c6554e3cf36bb50556e0a321438a37c2a90691cbda9908a"
+    },
+    {
+      "bytes": 8019,
+      "path": "configs/generator.v1.yaml",
+      "sha256": "ffd3f2e5ac5660ef19bb532c099334028aa8e4012340474ad08dacaf774e353c"
+    },
+    {
+      "bytes": 2182,
+      "path": "configs/project.draft.yaml",
+      "sha256": "2677dd884fbedefda92fee580844ea1995656651f723ef71a1f00795bec7e49d"
+    },
+    {
+      "bytes": 3017,
+      "path": "configs/plans/simulator_followup.yaml",
+      "sha256": "8020ac3ccc64b4b008059c3c66afa88246e91f182222b59b4c95d33c7769c9df"
+    },
+    {
+      "bytes": 1840,
+      "path": "configs/plans/simulator_check.yaml",
+      "sha256": "c2d02d45cefcbd3f59cd228c1818a244496a1a3c53ac4c73aae2f54c9f126718"
+    },
+    {
+      "bytes": 3324,
+      "path": "docs/amendments/development_spec.fuel.v1.md",
+      "sha256": "d4d3fd20474bc9d23100a38b38941f81cd74e115469056d76221dda9a7084965"
+    },
+    {
+      "bytes": 985,
+      "path": "docs/amendments/checkpoint.cutoff.v1.md",
+      "sha256": "0ecbfe06bd4611a1101fa7efdcc6ef078c350c3f1447ececd8a11e90ca2a7424"
+    },
+    {
+      "bytes": 12250,
+      "path": "docs/SIMULATOR_MODEL.md",
+      "sha256": "bb9a5539316a37f927cd2762e468850c60532d718d3063ab19f6528a222bd625"
+    },
+    {
+      "bytes": 4312,
+      "path": "docs/SIMULATOR_SELECTION.md",
+      "sha256": "9c51c0cbd41b91ea97a5c96f4124b898f894d3e5a6a73fc13cbc96d16f20aad2"
+    },
+    {
+      "bytes": 6402,
+      "path": "docs/SIMULATOR_VALIDATION.md",
+      "sha256": "3c66199d12fd5076e4ab5cb1abbd4059a80eb624854abe8e947cdc1e9a8988d4"
+    },
+    {
+      "bytes": 9417,
+      "path": "docs/STAGE_3_REPORT.md",
+      "sha256": "396abc92a8e3fd0984c9a005ea2041341e8dcdc296c9f1adc1f7908b1ca5310d"
+    },
+    {
+      "bytes": 11320,
+      "path": "docs/STAGE_3_1_REPORT.md",
+      "sha256": "6e2f84aee895f772e08ac5370fa378f66894c7779b6fd3bcbb586c12209f5333"
+    },
+    {
+      "bytes": 5992,
+      "path": "docs/STAGE_2_REPORT.md",
+      "sha256": "60296f038a67d577c018082852332e0e9cf575eb4c2a41bdeb94ed8daec1e68b"
+    },
+    {
+      "bytes": 3287,
+      "path": "docs/DEVIATIONS.md",
+      "sha256": "f5014ba580ea35fca5ed47e2d7f54aa23970828be028df81c9a4c1435cf78dd4"
+    },
+    {
+      "bytes": 2240,
+      "path": "docs/protocol/SOURCE_HASH.md",
+      "sha256": "7b740c6cba9a74d86bfef64663e1a655b93d13cd862247099e1ccd103ec64620"
+    },
+    {
+      "bytes": 15487,
+      "path": "docs/prompts/F1_Cursor_Stage_3_1_Validation_Prompt.md",
+      "sha256": "ee32f8bf15ee465393ca72ad7e08f444bad1240094d5e6d7d1883ccf82463a0f"
+    },
+    {
+      "bytes": 2485,
+      "path": "PROJECT_STATUS.md",
+      "sha256": "15347e7608cc5c6395b6c61b10f619002a506a4bc7971684b3294900063ffea2"
+    },
+    {
+      "bytes": 3252,
+      "path": "AGENTS.md",
+      "sha256": "5aeedac22ee5f28853fd9570265381209e0d33cfcdfacadab10e5ad03b0ff66d"
+    },
+    {
+      "bytes": 1714,
+      "path": "evidence/simulator/receipts/4388ad68-6bd3-4a43-9099-32e52f56eb28.json",
+      "sha256": "d2a6bd4c99b9cf603b563b253eaa158af47060f3e465f45466755a8fbd8405b6"
+    },
+    {
+      "bytes": 1650,
+      "path": "evidence/simulator/receipts/4388ad68-6bd3-4a43-9099-32e52f56eb28.md",
+      "sha256": "2c6cd8bd67ed544d2fb0c69e88e4354ded567073a41be5d8f9a9d94cc70ed5f8"
+    },
+    {
+      "bytes": 22042,
+      "path": "evidence/simulator/snapshots/4388ad68-6bd3-4a43-9099-32e52f56eb28.json",
+      "sha256": "046a370839a0eb9120fc464e5277a99fa31b7497b8a26d6062aab402c0c228b0"
+    },
+    {
+      "bytes": 180,
+      "path": "docs/evidence/stage3_1/pytest.txt",
+      "sha256": "ad3664d844357c91b3895e4dd9edb202cca70dca67051b731c607ec6c689bdb4"
+    },
+    {
+      "bytes": 3242,
+      "path": "docs/evidence/stage3_1/doctor.json",
+      "sha256": "e625ff68360a91873990b7a6d4ec8977d81f3ee4dc5da9b84168cb60c53d607e"
+    },
+    {
+      "bytes": 6180,
+      "path": "docs/evidence/stage3_1/status.json",
+      "sha256": "67f427e35d7ef08b947b79d5f24599ff877dbaa38aeeba9ba5adb27b035b8723"
+    },
+    {
+      "bytes": 3185,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.criteria/unit.json",
+      "sha256": "64e4902ed4fc1f3e8c2109bdb87a18d776e58b9583e4535998f03df1d295fa56"
+    },
+    {
+      "bytes": 8670,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.resolution/unit.json",
+      "sha256": "54c1a4e0c58dab66b76413a3fd4ebdf2729effc4ece8909fec600ac88476a9c1"
+    },
+    {
+      "bytes": 2756,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.commitment/unit.json",
+      "sha256": "b8481009abaa3b308ef313e6ee11137d8d64bb93c586194cd11cb473c2e6a392"
+    },
+    {
+      "bytes": 1693,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.memory/unit.json",
+      "sha256": "bd682092966b582acddf0b2efb955df374212f0618bd9f7b909a8c25494238cf"
+    },
+    {
+      "bytes": 17541,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.fuel/unit.json",
+      "sha256": "16c9fcf4e3bae1e5fdf27c72d33c70f5ee771e3efb02a0bdd46121fa52735073"
+    },
+    {
+      "bytes": 306350,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.fuel/fuel_private_audit.json",
+      "sha256": "3914de4464400c9fafd9b84d455b04e1742b8facfa472d0c2e9bf45fb84ea667"
+    },
+    {
+      "bytes": 3580,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.sc_vsc_traffic/unit.json",
+      "sha256": "47b7be0dd1699335feacc444125ea8c0b953354ebb4c55dd10dbc89fe063744b"
+    },
+    {
+      "bytes": 1622,
+      "path": "evidence/simulator/artifacts/4388ad68-6bd3-4a43-9099-32e52f56eb28/simulator.followup.behavioral/unit.json",
+      "sha256": "c74176bb1d6ad5a4e28ab968ccdcf9a4bad5d357368e51e1b9a805ba4d1b7888"
+    },
+    {
+      "bytes": 27638,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__07__VSC.spec.json",
+      "sha256": "2810eb441a94df2742bd86417381b03795a3fa96c3e3e59dfd94af2678b10357"
+    },
+    {
+      "bytes": 27645,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__06__VSC.spec.json",
+      "sha256": "b1f6fb0c84194058f0e710d6451d1da5364312462a2ae3ad4461710996cf5d01"
+    },
+    {
+      "bytes": 27639,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__01__SC.spec.json",
+      "sha256": "7e6fd4592d56ea0525064ee23b3b76b57da03afc7357537af161b084e4d40bb4"
+    },
+    {
+      "bytes": 27641,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__04__VSC.spec.json",
+      "sha256": "a0567760e64517cc5c22ea13bc4c201f28ba73914856b54eba229027235b3ddc"
+    },
+    {
+      "bytes": 27636,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__05__VSC.spec.json",
+      "sha256": "849f2c7a470f7efc895c6e7d5048fc9fb1d7ccffff87eab68feb4b181848039f"
+    },
+    {
+      "bytes": 27646,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__02__SC.spec.json",
+      "sha256": "2140a93e0dd29408fdc461ff0c1095f068a966379130ce6af6c329fca51d47b5"
+    },
+    {
+      "bytes": 27647,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__03__SC.spec.json",
+      "sha256": "ebb84c7ae00a51236d013179ba1f7d18e9416912dbbf3cc40d6f97375f8871b7"
+    },
+    {
+      "bytes": 27631,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.03/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__00__SC.spec.json",
+      "sha256": "80dfe4d7a52e0b93c8f0be26c8b8f6392b0b012433f0aa114a9e2ee7ad501bf8"
+    },
+    {
+      "bytes": 27634,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__01__SC.spec.json",
+      "sha256": "2848d30da523e4ed480e509757a0393f6ecee3250a3dd47cc1ac181729b1ab5f"
+    },
+    {
+      "bytes": 27644,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__02__SC.spec.json",
+      "sha256": "fbcb8f568d5ecbe5d7522d0bb99baa59827db5211948d5c8489d09cabcafeb31"
+    },
+    {
+      "bytes": 27649,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__03__SC.spec.json",
+      "sha256": "9a207ae392df69bf9b09210e2732ded49c908eb89574585434e6a52d63e6d50c"
+    },
+    {
+      "bytes": 27654,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__04__VSC.spec.json",
+      "sha256": "882e774107e8aa536d0ee1c2e21deac8165c95f627dba9e55ccf28eb870be84e"
+    },
+    {
+      "bytes": 27637,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__05__VSC.spec.json",
+      "sha256": "6f1622deafb8dded393f655fdb56039d924be1b391965c7bed1fbf6ad827c72f"
+    },
+    {
+      "bytes": 27628,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__00__SC.spec.json",
+      "sha256": "dbf2c80eb2c19a5cd3206fe072f0540e68b71a6dc660e7f566a819d82b3068ec"
+    },
+    {
+      "bytes": 27631,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__07__VSC.spec.json",
+      "sha256": "27421c7cd354ac8ed6ea701601bf7d382af47ed26a4ea1f9b99085b59066a701"
+    },
+    {
+      "bytes": 27633,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.04/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_dense__0004__episode__06__VSC.spec.json",
+      "sha256": "bcf5c4e0e62f72d5a3d9ea5c5f23f7af16a9c093296b5805d75c78227a59bc92"
+    },
+    {
+      "bytes": 27653,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__06__VSC.spec.json",
+      "sha256": "29b5dba832771498b5e379165fa10c297aabe6ddf3e328dda61e8a420d90e2f4"
+    },
+    {
+      "bytes": 27649,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__03__SC.spec.json",
+      "sha256": "293ccc4b6731ece0e6f0ea5ed1c719d202c6a0431e7f8314cb2d087f77788346"
+    },
+    {
+      "bytes": 27648,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__00__SC.spec.json",
+      "sha256": "54bd2a09a1cf3848041780f49d7f913ce20775413cec4e19e0a4104f2ccf47d2"
+    },
+    {
+      "bytes": 27670,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__07__VSC.spec.json",
+      "sha256": "58fe49fb6453f863b611549f003058967b91a40201d183d80b2d7772b2ad1f4b"
+    },
+    {
+      "bytes": 27640,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__05__VSC.spec.json",
+      "sha256": "07f8ca5b0896761099627ccb1389915ef78658be71b5bede0c1baa8d81be81e1"
+    },
+    {
+      "bytes": 27656,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__04__VSC.spec.json",
+      "sha256": "401be871421e6799b22b74b56201c07738baf6ec5d194ffedb3e1d1ded91a743"
+    },
+    {
+      "bytes": 27661,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__01__SC.spec.json",
+      "sha256": "e4358ee11d2bba7ba046f1330c6087f773b15995e4450e52973a7c8928c61de2"
+    },
+    {
+      "bytes": 27634,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.05/f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__02__SC.spec.json",
+      "sha256": "e3b327f745016df0eb9f853c9fe47d8ac3a488384a1325f7964a6e0db8d24306"
+    },
+    {
+      "bytes": 27633,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__02__SC.spec.json",
+      "sha256": "a7ad9e155659af7ff320aad4727ed3fee2935b49fb94806a9e1baa16f5bdd6f7"
+    },
+    {
+      "bytes": 27641,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__01__SC.spec.json",
+      "sha256": "d8ab956f916cb6960a932b68784f071d0188bf4acbc0e5377739b8f64760cade"
+    },
+    {
+      "bytes": 27641,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__05__VSC.spec.json",
+      "sha256": "31197e28756cd23387de9b7b37869a266b6238fa12642cb673857e57d2916c79"
+    },
+    {
+      "bytes": 27643,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__04__VSC.spec.json",
+      "sha256": "bb946eb9ca3dc2eff85a74c82cde73b69eee6bb105d7b85d5315df6c3610635a"
+    },
+    {
+      "bytes": 27640,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__00__SC.spec.json",
+      "sha256": "82bf01cb014e7a255ce9650420570eb601bbfc00d5121494bf4b14a6149601f0"
+    },
+    {
+      "bytes": 27626,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__06__VSC.spec.json",
+      "sha256": "507ddd6addd916adec4a45f11d4b39a6b4b9ebd5bc8536705f92cd65cbd5b457"
+    },
+    {
+      "bytes": 27628,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__07__VSC.spec.json",
+      "sha256": "0f6c972f75f9e4adae9d759be15fe30903de4408e523fa1219bf58e4e1f3ceab"
+    },
+    {
+      "bytes": 27625,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.02/f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_dense__0002__episode__03__SC.spec.json",
+      "sha256": "938509ff2878ad3c416a71fd7ba4157e5bf9f5ea715d63254bc4b43788f88c4f"
+    },
+    {
+      "bytes": 27633,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__03__SC.spec.json",
+      "sha256": "cfc0d34d305ca95ec9327cd9eb303c08793d7787de9090db8a8fd18672a81be9"
+    },
+    {
+      "bytes": 27633,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__05__VSC.spec.json",
+      "sha256": "54e60e1cfad07b6ae2fad8cafe09c4ed8d9e91c329b00c752aa6cd12d4b27c3f"
+    },
+    {
+      "bytes": 27641,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__04__VSC.spec.json",
+      "sha256": "606d62c7fdef1fc484380ed2ee938d8a838ef187a699f55cc8c15be2a2331362"
+    },
+    {
+      "bytes": 27637,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__00__SC.spec.json",
+      "sha256": "b256f5325ee6e8ce0c6fe1762afc448d531da6377ac381e25de1846b18204a81"
+    },
+    {
+      "bytes": 27606,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__06__VSC.spec.json",
+      "sha256": "2e81234dd05683aa6a46e2837095c376566b8105c8641f9553426694db14fbd0"
+    },
+    {
+      "bytes": 27624,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__07__VSC.spec.json",
+      "sha256": "b685a47742d7d53a5f1452fb02a4621d6e588f51df0b8b647e060607b9e116c7"
+    },
+    {
+      "bytes": 27628,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__01__SC.spec.json",
+      "sha256": "a855cfdc3f829436a4ea4b5260334f352188f7932954e0f3fbda781b327bbc17"
+    },
+    {
+      "bytes": 27628,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.07/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__02__SC.spec.json",
+      "sha256": "58476ffff7dce1ded056a6a7b0a4d5756024b7be312dc3205a8a09c83e8103a3"
+    },
+    {
+      "bytes": 27654,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__00__SC.spec.json",
+      "sha256": "782e3f47b191aed9be56c8c3a59d5b99a7973f33b39dcff98a7dd3eb579effd0"
+    },
+    {
+      "bytes": 27634,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__03__SC.spec.json",
+      "sha256": "99f6d462b42a77aa2504851b216a2dc130b3e8e0df8ea61159ac385cde495313"
+    },
+    {
+      "bytes": 27627,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__07__VSC.spec.json",
+      "sha256": "351926d7e0ffc678b714a50d2562c69c77416bc971f1028704c1409daf2adf25"
+    },
+    {
+      "bytes": 27642,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__06__VSC.spec.json",
+      "sha256": "f142b7a096a53015b592a5255ce81f6a1413fce5fc1f683b045fa7b904143f91"
+    },
+    {
+      "bytes": 27642,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__02__SC.spec.json",
+      "sha256": "5aa4a5802b08cf38a2f9d43f60cf9519fccfa4340891448cef23a071e1c16401"
+    },
+    {
+      "bytes": 27633,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__04__VSC.spec.json",
+      "sha256": "b6c833fe793d8125ac992d487c725d38ee43449411c0e4995ddc28eea52c55b4"
+    },
+    {
+      "bytes": 27643,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__05__VSC.spec.json",
+      "sha256": "41f6cbb0595005e6b8dc7547b9f650aef10d11c16e24e4a2ef0afbd876f17883"
+    },
+    {
+      "bytes": 27647,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.00/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__01__SC.spec.json",
+      "sha256": "aafca487beaf7073bfaca784fd1b86533e8fea3b83a8b4d0de62d76875a7d939"
+    },
+    {
+      "bytes": 27642,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__01__SC.spec.json",
+      "sha256": "9c2ceb0d06c0e1a3e410841d254bec49d70c80dde41865724f8fe542b35d4d4d"
+    },
+    {
+      "bytes": 27632,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__02__SC.spec.json",
+      "sha256": "20522f975cc4b187e9be0abcf4c3dfd065c53e0d3f6c9104124b5cc8aad13cff"
+    },
+    {
+      "bytes": 27650,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__03__SC.spec.json",
+      "sha256": "933a47434ff43af494b45804fd4cac5107886edc6df04bbbb16481ddbd742f3f"
+    },
+    {
+      "bytes": 27626,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__05__VSC.spec.json",
+      "sha256": "29ba23122e23bb753817b1911243152bc4f1e696fbb42e87ea91b2baba3319a1"
+    },
+    {
+      "bytes": 27658,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__04__VSC.spec.json",
+      "sha256": "8bf29cb4262c00148c304ad831df0c1354f29039a622b043b2d7673014de39ff"
+    },
+    {
+      "bytes": 27656,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__00__SC.spec.json",
+      "sha256": "2e30685e8610dd5b6a776a6b49a9d2560d329d2bbaa6a1a3b5df7fc66f0fd068"
+    },
+    {
+      "bytes": 27634,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__06__VSC.spec.json",
+      "sha256": "a72f91b0f9838814c1da45ed127c2b0c44fc87ed9602c7d7fcc3622a65e4c0fa"
+    },
+    {
+      "bytes": 27658,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.01/f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_sparse__0001__episode__07__VSC.spec.json",
+      "sha256": "30e184a057d4ad8ec5d54e06fad28e75974124b0f3980fe9f2b66d8a8f8eecab"
+    },
+    {
+      "bytes": 27621,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__02__SC.spec.json",
+      "sha256": "6e5126980cf844fd5c9867e6e3e65cff6dbb7ae9771d919b51ab40ed81af78b9"
+    },
+    {
+      "bytes": 27629,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__01__SC.spec.json",
+      "sha256": "3b52543d8203d27f71d98abd74bd41725e5f0abafffe230f5a5d411375e5a64f"
+    },
+    {
+      "bytes": 27620,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__06__VSC.spec.json",
+      "sha256": "54227967b2f12c5f654de0b2fb0813238923a3baeea8b21231186292a07dfc4e"
+    },
+    {
+      "bytes": 27627,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__07__VSC.spec.json",
+      "sha256": "62f5757c5ea34aa6abf467295cad54a15b8300df1791e2ed8a67afe7a012f0a0"
+    },
+    {
+      "bytes": 27639,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__00__SC.spec.json",
+      "sha256": "c447aaea9126b35ac3729053ce636513c80074618fdfc7ad269aa044f7a3420c"
+    },
+    {
+      "bytes": 27624,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__05__VSC.spec.json",
+      "sha256": "702bade2f21d29e93d99786ecfed26e758c54cf8c1d059d154e3d8ddc54c4639"
+    },
+    {
+      "bytes": 27632,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__04__VSC.spec.json",
+      "sha256": "15542067968c70cf83604a243bdbd124e50c65d0896a7fc41e2f2d0467d80398"
+    },
+    {
+      "bytes": 27614,
+      "path": "evidence/development/artifacts/8f292588-a328-4232-b425-c36c610a29f5/development.preview.fam.06/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_dense__0006__episode__03__SC.spec.json",
+      "sha256": "63a07999852f065f43d1bbb1229af049b3045140ec487e2d5bc94222604eb627"
+    },
+    {
+      "bytes": 1114,
+      "path": "REVIEW_INSTRUCTIONS.txt",
+      "sha256": "55740836a8569153edef7433d8ce23dfd878ff5a796b95461c632e22f5db6b40"
+    }
+  ],
+  "not_pushed": true,
+  "not_uploaded": true,
+  "secret_scan": {
+    "files_scanned": 151,
+    "files_with_pattern_hits": 0,
+    "hits_printed": false
+  },
+  "zip": "review/STAGE_3_1_REVIEW.zip",
+  "zip_sha256": "4133b42762c8ab3077488476373759f35f375592d54dfe981d324b61ed3bda73"
+}

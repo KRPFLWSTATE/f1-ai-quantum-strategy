@@ -1,0 +1,36 @@
+{
+  "cause": {
+    "established_from_evidence": true,
+    "explanation": "The Stage 3.2 post_repair_diagnostic.json was captured from an intermediate diagnostic script state that still exhibited the pre-repair finite-gap progress teleport (pass_deltas[0] \u2248 1e-4). Production R3 repairs and the independent pytest later yielded exact zero deltas; the named JSON was not regenerated after that repair, so the checked-in post-repair file remained stale while the Stage 3.2 report and unit tests reflected the fixed behavior."
+  },
+  "defect": {
+    "id": "E1",
+    "required_pass_deltas": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "stale_pass_deltas": [
+      0.00010000000099985584,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "summary": "Saved post-repair R3 diagnostic still records a finite-gap progress jump inconsistent with repaired production code and test_r3_overtake_no_free_distance_on_finite_gap."
+  },
+  "kind": "stage3_3_erratum",
+  "preservation_policy": "Original bytes preserved; do not overwrite under the Stage 3.2 path.",
+  "production_behavior_changed_in_stage3_3": false,
+  "related_stage3_2_run_id": "62b1e5ee-3f13-44be-98e0-8af018eb286b",
+  "stale_artifact_bytes": 1258,
+  "stale_artifact_path": "docs/evidence/stage3_2/post_repair_diagnostic.json",
+  "stale_artifact_sha256": "d5d63fc2d5f832485ada3318c34d38acc832df8fe7c9b06e1a1bd0e85fa4472c",
+  "status": "stale_superseded",
+  "superseded_by": {
+    "generation_command": "python -m f1q simulator diagnostic-stage3-3 --write",
+    "path": "docs/evidence/stage3_3/post_repair_diagnostic.corrected.json",
+    "sha256": "10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35",
+    "verification_command": "python -m f1q simulator diagnostic-stage3-3 --verify"
+  }
+}

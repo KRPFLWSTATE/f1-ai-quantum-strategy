@@ -74,8 +74,24 @@ def run_status(root: Path | None = None) -> dict:
                         r["plan_id"] == "simulator_check" and r["status"] == "completed" for r in runs
                     )
                     if sim_done:
-                        next_work = "Stage 4 -- action model, QUBO and independent classical references (awaiting implementation prompt)"
-                        readiness = "stage3-complete-pending-stage4"
+                        follow_done = any(
+                            r["plan_id"] == "simulator_followup" and r["status"] == "completed" for r in runs
+                        )
+                        repair_done = any(
+                            r["plan_id"] == "simulator_repair" and r["status"] == "completed" for r in runs
+                        )
+                        if repair_done:
+                            next_work = (
+                                "Stage 3.3 evidence correction closed; Stage 4 "
+                                "(action model, QUBO) awaits its implementation prompt"
+                            )
+                            readiness = "stage3_3-complete-pending-stage4"
+                        elif follow_done:
+                            next_work = "Stage 3.2 -- simulator-repair plan (python -m f1q run --plan simulator_repair)"
+                            readiness = "stage3_1-complete-pending-stage3_2"
+                        else:
+                            next_work = "Stage 3.1 -- simulator-followup plan (python -m f1q run --plan simulator_followup)"
+                            readiness = "stage3-complete-pending-stage3_1"
             else:
                 next_work = "run --plan bootstrap"
                 readiness = "unknown"

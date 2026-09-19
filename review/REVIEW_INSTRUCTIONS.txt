@@ -1,0 +1,12 @@
+Stage 3.2 review bundle
+=======================
+
+Archive: STAGE_3_2_REVIEW.zip
+Sidecar (outside zip): STAGE_3_2_REVIEW.manifest.json (contains archive SHA-256)
+Inside zip: MANIFEST.sha256.json covers every other member.
+
+Targeted check after clean extract (example):
+  PYTHONPATH=<extract>/src python -m pytest <extract>/tests/test_stage3_2_repair.py -q
+
+Full development preview specs and the mutable ledger are not shipped; see omitted_note in the inner manifest.
+Do not print secrets. Local packaging only; no automatic push/upload.

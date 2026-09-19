@@ -41,3 +41,9 @@ class RejectionError(F1QError):
         self.code = code
         self.reason = reason
         super().__init__(f"{code}: {reason}")
+
+
+class ResourceCeilingError(F1QError):
+    """Periodic RSS sample exceeded the configured RAM ceiling. Not a hard instantaneous guarantee."""
+
+    exit_code = 2

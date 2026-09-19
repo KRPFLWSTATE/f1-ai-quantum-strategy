@@ -4,9 +4,9 @@ Independent research infrastructure for a **deadline-constrained two-car pit-str
 
 This repository is **not** affiliated with a Formula 1 team. It reports **no experimental results**. Completing software setup, a development preview, or simulator checks does not establish scientific novelty, F1 calibration, or hardware readiness.
 
-## Current scope -- Stage 3
+## Current scope -- Stage 3.3 closed
 
-Restricted independent race simulator (`simulator.v1` / interface `3.0.0`), independent mechanism oracles, and engineering validation of the Stage 2 development preview (64 admitted checkpoints). Admission is **not** F1 reconstruction, H1/H2/H3 evidence, or a claim that SC/VSC/tyre physics match real racing.
+Restricted independent race simulator (`simulator.v1` **1.0.2** / interface `3.0.0`), independent mechanism oracles, Stage 3.2 defect repairs, and Stage 3.3 evidence correction. Admission is **not** F1 reconstruction, H1/H2/H3 evidence, or a claim that SC/VSC/tyre physics match real racing.
 
 Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. Stage 4 is not authorized by this file.
 
@@ -42,6 +42,7 @@ python -m f1q generator audit --run-id <id>
 python -m f1q simulator validate
 python -m f1q simulator inspect-checkpoint --run-id <id> --episode-id <id>
 python -m f1q simulator interface
+python -m f1q simulator diagnostic-stage3-3 [--write|--verify]
 ```
 
 There is no `submit`, hardware, or IBM command. Reserved scientific partitions cannot be materialized. Those modes exit nonzero before any work or network access.
@@ -56,9 +57,11 @@ There is no `submit`, hardware, or IBM command. Reserved scientific partitions c
 - Stage 1 follow-up: `docs/STAGE_1_FOLLOWUP.md`
 - Stage 2 report: `docs/STAGE_2_REPORT.md`
 - Stage 3 report: `docs/STAGE_3_REPORT.md`
+- Stage 3.1 / 3.2 / 3.3 reports: `docs/STAGE_3_1_REPORT.md`, `docs/STAGE_3_2_REPORT.md`, `docs/STAGE_3_3_REPORT.md`
 - Simulator selection / model / validation: `docs/SIMULATOR_SELECTION.md`, `docs/SIMULATOR_MODEL.md`, `docs/SIMULATOR_VALIDATION.md`
 - Simulator receipts (engineering): `evidence/simulator/receipts/`
 - Private simulator checkpoint state (gitignored, hashed not printed): `evidence/simulator/private/`
+- Stage 3.3 corrected diagnostic: `docs/evidence/stage3_3/`
 - Generator specification: `docs/GENERATOR_SPEC.md`
 
 Development outputs and simulator-check admissions are **not** scientific observations. Do not place them in a results table.

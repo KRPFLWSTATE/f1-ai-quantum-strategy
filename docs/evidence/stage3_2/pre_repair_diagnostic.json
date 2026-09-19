@@ -1,0 +1,64 @@
+{
+  "pit_trace": [
+    [
+      "transit_in",
+      900.0,
+      10.95
+    ],
+    [
+      "service",
+      917.0,
+      11.95
+    ],
+    [
+      "transit_out",
+      919.5,
+      11.95
+    ],
+    [
+      null,
+      926.3,
+      11.02
+    ]
+  ],
+  "pass_deltas": [
+    0.0006507139377429638,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "mismatched_set": {
+    "ok": true,
+    "plan": {
+      "car.fictional.northshore.a": {
+        "kind": "pit_now",
+        "compound": "hard",
+        "set_id": "car.fictional.northshore.a.set.medium.0"
+      }
+    }
+  },
+  "rival_control": {
+    "ok": true,
+    "plan": {
+      "car.fictional.harbour.b": {
+        "kind": "continuation"
+      }
+    }
+  },
+  "commitments": [
+    {
+      "delay": 0.05,
+      "timely": true,
+      "selected_plan": "recommendation",
+      "registered_commitment_epoch_race_s": 1015.8846993435944,
+      "commitment_race_s": 1015.8846993435944
+    },
+    {
+      "delay": 0.2,
+      "timely": true,
+      "selected_plan": "recommendation",
+      "registered_commitment_epoch_race_s": 1015.8846993435944,
+      "commitment_race_s": 1015.9846993435945
+    }
+  ]
+}

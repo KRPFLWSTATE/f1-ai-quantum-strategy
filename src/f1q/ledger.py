@@ -81,6 +81,8 @@ PLAN_EVIDENCE_DIR = {
     "bootstrap": "bootstrap",
     "development_preview": "development",
     "simulator_check": "simulator",
+    "simulator_followup": "simulator",
+    "simulator_repair": "simulator",
 }
 
 

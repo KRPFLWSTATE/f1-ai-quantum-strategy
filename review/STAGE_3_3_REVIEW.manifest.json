@@ -1,0 +1,27 @@
+{
+  "archive": "review/STAGE_3_3_REVIEW.zip",
+  "archive_sha256": "71a25e50278e2b3666e066e37f6e325a9e81dfa269766eb2e9669b97ac3bc277",
+  "clean_extract": {
+    "aggregate_verified": true,
+    "diagnostic_verify_exit": 0,
+    "diagnostic_verify_stdout": "True",
+    "extract_command": "unzip -d <tmpdir> review/STAGE_3_3_REVIEW.zip && PYTHONPATH=<tmpdir>/src python -m pytest tests/test_stage3_2_repair.py tests/test_stage3_3_evidence.py -q",
+    "manifest_members_verified": true,
+    "members_verified": 209,
+    "targeted_pytest": "tests/test_stage3_2_repair.py tests/test_stage3_3_evidence.py",
+    "targeted_pytest_exit": 0,
+    "targeted_pytest_summary": ".............                                                            [100%]",
+    "tmpdir_prefix": "f1q-stage33-review-"
+  },
+  "corrected_diagnostic_sha256": "10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35",
+  "inner_aggregate_content_sha256": "6a5e8170821a8b68583c00f5b8f3ab0c4d23b86a7b7cfad1635b688767fef46f",
+  "inner_manifest_path": "MANIFEST.sha256.json",
+  "inner_member_count_excluding_manifest": 209,
+  "member_count_including_manifest": 210,
+  "secret_scan": {
+    "note": "paths only; no secret values printed"
+  },
+  "simulator_version": "1.0.2",
+  "stage3_2_run_id": "62b1e5ee-3f13-44be-98e0-8af018eb286b",
+  "stale_diagnostic_sha256": "d5d63fc2d5f832485ada3318c34d38acc832df8fe7c9b06e1a1bd0e85fa4472c"
+}

@@ -32,11 +32,13 @@ python:
   requires: ">=3.12,<3.14"
   selected: "3.12.13"
 authorization:
-  scope: stage3-local-simulator-check
+  scope: stage3-local-simulator-repair
   allowed_plans:
     - bootstrap
     - development_preview
     - simulator_check
+    - simulator_followup
+    - simulator_repair
   github_push_authorized: false
 unresolved:
   - field: ibm_backend

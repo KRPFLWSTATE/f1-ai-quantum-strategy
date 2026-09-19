@@ -39,6 +39,11 @@ PRIVATE_SOLVER_EXCLUSIONS = frozenset(
         "simulation_seed",
         "private_rng_state",
         "private",
+        "fuel_actual",
+        "actual_fuel_kg",
+        "engine_state",
+        "regime_end_race_s",
+        "fuel_floor_applied",
     }
 )
 

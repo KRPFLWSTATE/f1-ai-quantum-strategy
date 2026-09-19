@@ -1,0 +1,221 @@
+{
+  "active_stage": 3,
+  "command": "status",
+  "completed_units": [
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.artifact_roundtrip",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checkpoint_fixture",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checksum_verify",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.artifact_roundtrip",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checkpoint_fixture",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checksum_verify",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.00",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.01",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.02",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.03",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.04",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.05",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.06",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.07",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.development_matrix",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.diagnostic_interventions",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.mechanism_checks",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.source_restore",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.behavioral",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.commitment",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.criteria",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.fuel",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.memory",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.resolution",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.sc_vsc_traffic",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.development_matrix",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.diagnostic_interventions",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.mechanism_checks",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.repair.resolution",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.source_restore"
+  ],
+  "configuration_hash_draft": "874352ee21d5ed3b9072ed65770c83fb4dcc1431ff215c6101d8d7ce11eea3a9",
+  "failed_units": [],
+  "hardware_execution_enabled": false,
+  "interrupted_units": [],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "Stage 3.3 evidence correction closed; Stage 4 (action model, QUBO) awaits its implementation prompt",
+  "pending_units": [],
+  "present": true,
+  "project_root": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "protocol_frozen": false,
+  "qpu_account_queried": false,
+  "readiness": "stage3_3-complete-pending-stage4",
+  "research_experiments_executed": 0,
+  "runs": [
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "77816c72-6248-4ae2-b944-70973975888a",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "a0c7a5d7-4387-40f8-82f7-08b7d3593f85",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "development_preview",
+      "run_id": "8f292588-a328-4232-b425-c36c610a29f5",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.00"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.01"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.02"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.03"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.04"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.05"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.06"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.07"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_check",
+      "run_id": "e2258740-1d08-4427-8305-b149ed504a73",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.diagnostic_interventions"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.mechanism_checks"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_followup",
+      "run_id": "4388ad68-6bd3-4a43-9099-32e52f56eb28",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.behavioral"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.commitment"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.criteria"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.fuel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.memory"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.resolution"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.sc_vsc_traffic"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_repair",
+      "run_id": "62b1e5ee-3f13-44be-98e0-8af018eb286b",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.diagnostic_interventions"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.mechanism_checks"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.repair.resolution"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.source_restore"
+        }
+      ]
+    }
+  ],
+  "scientific_protocol": "DRAFT",
+  "unknown_is_not_ready": true
+}

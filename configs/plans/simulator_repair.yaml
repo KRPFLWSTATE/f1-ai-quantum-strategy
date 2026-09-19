@@ -1,0 +1,58 @@
+schema_version: "1.0.0"
+plan_id: simulator_repair
+stage: 3
+evidence_kind: development
+authorization_scope: stage3-local-simulator-repair
+description: >
+  Stage 3.2 repair validation: mechanism regressions, 64-episode matrix,
+  eight interventions, and corrected h/h2/h4 resolution panel under a NEW run.
+  Preserves Stage 2/3/3.1 identifiers. Not Stage 4, not F1 calibration.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    simulator.mechanism_checks: 20260919032
+    simulator.development_matrix: 20260919032
+    simulator.diagnostic_interventions: 20260919032
+    simulator.repair.resolution: 20260919032
+    simulator.source_restore: 20260919032
+units:
+  - schema_version: "1.0.0"
+    unit_id: simulator.mechanism_checks
+    stage: 3
+    plan_id: simulator_repair
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-repair
+    description: Named mechanism oracles after Stage 3.2 repairs.
+    seed: 20260919032
+  - schema_version: "1.0.0"
+    unit_id: simulator.development_matrix
+    stage: 3
+    plan_id: simulator_repair
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-repair
+    description: Re-run 64 development episodes checkpoint/continue/resume under repaired engine.
+    seed: 20260919032
+  - schema_version: "1.0.0"
+    unit_id: simulator.diagnostic_interventions
+    stage: 3
+    plan_id: simulator_repair
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-repair
+    description: Eight hash-selected alternative-plan diagnostics on repaired engine.
+    seed: 20260919032
+  - schema_version: "1.0.0"
+    unit_id: simulator.repair.resolution
+    stage: 3
+    plan_id: simulator_repair
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-repair
+    description: Corrected h/h2/h4 resolution panel with rebuilt gate predicates.
+    seed: 20260919032
+  - schema_version: "1.0.0"
+    unit_id: simulator.source_restore
+    stage: 3
+    plan_id: simulator_repair
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-repair
+    description: Source snapshot and private replay package for this repair run.
+    seed: 20260919032

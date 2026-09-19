@@ -25,7 +25,17 @@ def build_receipt(ledger: Ledger, manifest: RunManifest) -> Receipt:
     else:
         notes = ["event counts taken from append-only ledger events and artifact rows"]
     if by_status.get("completed") == len(manifest.planned_unit_ids):
-        if manifest.plan_id == "simulator_check":
+        if manifest.plan_id == "simulator_repair":
+            next_work = (
+                "Stage 3.2 review of repair findings; Stage 4 (action model, QUBO) is not authorised; "
+                "protocol DRAFT; hardware disabled"
+            )
+        elif manifest.plan_id == "simulator_followup":
+            next_work = (
+                "Stage 3.1 review of targeted findings; Stage 4 (action model, QUBO) is not authorised; "
+                "protocol DRAFT; hardware disabled"
+            )
+        elif manifest.plan_id == "simulator_check":
             next_work = (
                 "Stage 4 -- action model, QUBO and independent classical references "
                 "(awaiting implementation prompt); protocol DRAFT; hardware disabled"
@@ -76,7 +86,7 @@ def write_receipt(root, receipt: Receipt) -> dict:
     payload = receipt.model_dump(mode="json")
     if receipt.plan_id == "bootstrap":
         sub = "bootstrap"
-    elif receipt.plan_id == "simulator_check":
+    elif receipt.plan_id in {"simulator_check", "simulator_followup", "simulator_repair"}:
         sub = "simulator"
     else:
         sub = "development"

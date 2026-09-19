@@ -7,7 +7,7 @@ from f1q.authorization import load_yaml
 from f1q.hashing import sha256_file
 from f1q.paths import resolve_within
 
-SIMULATOR_VERSION = "1.0.0"
+SIMULATOR_VERSION = "1.0.2"
 INTERFACE_VERSION = "3.0.0"
 
 

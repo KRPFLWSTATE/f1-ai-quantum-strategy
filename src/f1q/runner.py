@@ -13,13 +13,15 @@ from f1q.authorization import (
     load_development_preview_plan,
     load_project_config,
     load_simulator_check_plan,
+    load_simulator_followup_plan,
+    load_simulator_repair_plan,
     lock_hash,
 )
 from f1q.bootstrap import execute_unit
 from f1q.errors import AuthorizationError, IntegrityError
 from f1q.generator.config import load_generator_config
 from f1q.generator.preview import execute_preview_unit
-from f1q.simulator.run_units import execute_simulator_unit
+from f1q.simulator.run_units import execute_followup_unit, execute_repair_unit, execute_simulator_unit
 from f1q.hashing import sha256_file
 from f1q.ledger import Ledger
 from f1q.paths import resolve_within
@@ -123,6 +125,18 @@ def resume_run(root: Path, run_id: str) -> dict:
             authorize_plan(config, "simulator_check")
             plan, plan_hash, _ = load_simulator_check_plan(root)
             execute_fn = execute_simulator_unit
+            _, sim_hash = load_simulator_config_safe(root)
+            extra_expected = {"simulator_config_hash": sim_hash}
+        elif manifest.plan_id == "simulator_followup":
+            authorize_plan(config, "simulator_followup")
+            plan, plan_hash, _ = load_simulator_followup_plan(root)
+            execute_fn = execute_followup_unit
+            _, sim_hash = load_simulator_config_safe(root)
+            extra_expected = {"simulator_config_hash": sim_hash}
+        elif manifest.plan_id == "simulator_repair":
+            authorize_plan(config, "simulator_repair")
+            plan, plan_hash, _ = load_simulator_repair_plan(root)
+            execute_fn = execute_repair_unit
             _, sim_hash = load_simulator_config_safe(root)
             extra_expected = {"simulator_config_hash": sim_hash}
         else:
@@ -302,6 +316,162 @@ def run_simulator_check(root: Path) -> dict:
         try:
             _execute_remaining(
                 root, ledger, manifest, seeds, started_mono, execute_fn=execute_simulator_unit
+            )
+        except KeyboardInterrupt:
+            pass
+        return _finalize(root, ledger, manifest, started_mono)
+
+
+def run_simulator_followup(root: Path) -> dict:
+    config, config_hash, _ = load_project_config(root)
+    authorize_plan(config, "simulator_followup")
+    plan, plan_hash, _ = load_simulator_followup_plan(root)
+    _, sim_hash = load_simulator_config_safe(root)
+    dossier = dossier_hash(root, config)
+    snapshot = take_source_snapshot(root)
+    commit, dirty = git_state(root)
+    run_id = str(uuid4())
+    started_mono = time.monotonic()
+    started = utc_now()
+    unit_ids = [u.unit_id for u in plan.units]
+    seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
+    cap = 1800.0
+    try:
+        from f1q.simulator.config import load_simulator_config
+
+        cfg, _ = load_simulator_config(root)
+        cap = float(cfg["resource"]["stage3_elapsed_cap_s"])
+    except Exception:
+        cap = 1800.0
+    manifest = RunManifest(
+        run_id=run_id,
+        stage=3,
+        plan_id="simulator_followup",
+        evidence_kind="development",
+        source_snapshot_hash=snapshot["hash"],
+        git_commit=commit,
+        git_dirty=dirty,
+        dossier_sha256=dossier,
+        configuration_hash=config_hash,
+        configuration_hash_kind="draft",
+        dependency_lock_hash=lock_hash(root),
+        planned_unit_ids=unit_ids,
+        seed_specification={
+            "plan_hash": plan_hash,
+            "unit_seeds": seeds,
+            "simulator_config_hash": sim_hash,
+            "simulator_version": "1.0.1",
+            "interface_version": "3.0.0",
+            "elapsed_cap_s": cap,
+            "max_workers": 1,
+        },
+        authorization_scope=config.authorization.scope,
+        started_at_utc=started,
+        status="running",
+    )
+    db, lock = ledger_paths(root, config)
+    with Ledger(db, lock, root=root) as ledger:
+        incomplete = [r for r in ledger.incomplete_runs() if r["plan_id"] == "simulator_followup"]
+        if incomplete:
+            ids = ", ".join(r["run_id"] for r in incomplete)
+            raise AuthorizationError(
+                f"incomplete simulator_followup run(s) exist; resume instead of starting a new run: {ids}"
+            )
+        write_snapshot(root, run_id, snapshot, evidence_subdir="simulator")
+        ledger.insert_run(manifest.model_dump(mode="json"))
+        ledger.append_event(
+            run_id,
+            "run_started",
+            {
+                "plan_id": "simulator_followup",
+                "plan_hash": plan_hash,
+                "simulator_config_hash": sim_hash,
+                "authorization_scope": config.authorization.scope,
+                "max_workers": 1,
+            },
+        )
+        try:
+            _execute_remaining(
+                root, ledger, manifest, seeds, started_mono, execute_fn=execute_followup_unit
+            )
+        except KeyboardInterrupt:
+            pass
+        return _finalize(root, ledger, manifest, started_mono)
+
+
+def run_simulator_repair(root: Path) -> dict:
+    config, config_hash, _ = load_project_config(root)
+    authorize_plan(config, "simulator_repair")
+    plan, plan_hash, _ = load_simulator_repair_plan(root)
+    _, sim_hash = load_simulator_config_safe(root)
+    dossier = dossier_hash(root, config)
+    snapshot = take_source_snapshot(root)
+    commit, dirty = git_state(root)
+    run_id = str(uuid4())
+    started_mono = time.monotonic()
+    started = utc_now()
+    unit_ids = [u.unit_id for u in plan.units]
+    seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
+    cap = 1800.0
+    try:
+        from f1q.simulator.config import load_simulator_config
+
+        cfg, _ = load_simulator_config(root)
+        cap = float(cfg["resource"]["stage3_elapsed_cap_s"])
+    except Exception:
+        cap = 1800.0
+    manifest = RunManifest(
+        run_id=run_id,
+        stage=3,
+        plan_id="simulator_repair",
+        evidence_kind="development",
+        source_snapshot_hash=snapshot["hash"],
+        git_commit=commit,
+        git_dirty=dirty,
+        dossier_sha256=dossier,
+        configuration_hash=config_hash,
+        configuration_hash_kind="draft",
+        dependency_lock_hash=lock_hash(root),
+        planned_unit_ids=unit_ids,
+        seed_specification={
+            "plan_hash": plan_hash,
+            "unit_seeds": seeds,
+            "simulator_config_hash": sim_hash,
+            "simulator_version": "1.0.2",
+            "interface_version": "3.0.0",
+            "elapsed_cap_s": cap,
+            "max_workers": 1,
+            "stage": "3.2_repair",
+        },
+        authorization_scope=config.authorization.scope,
+        started_at_utc=started,
+        status="running",
+    )
+    db, lock = ledger_paths(root, config)
+    with Ledger(db, lock, root=root) as ledger:
+        incomplete = [r for r in ledger.incomplete_runs() if r["plan_id"] == "simulator_repair"]
+        if incomplete:
+            ids = ", ".join(r["run_id"] for r in incomplete)
+            raise AuthorizationError(
+                f"incomplete simulator_repair run(s) exist; resume instead of starting a new run: {ids}"
+            )
+        write_snapshot(root, run_id, snapshot, evidence_subdir="simulator")
+        ledger.insert_run(manifest.model_dump(mode="json"))
+        ledger.append_event(
+            run_id,
+            "run_started",
+            {
+                "plan_id": "simulator_repair",
+                "plan_hash": plan_hash,
+                "simulator_config_hash": sim_hash,
+                "authorization_scope": config.authorization.scope,
+                "max_workers": 1,
+                "preserves_prior_stage_run_ids": True,
+            },
+        )
+        try:
+            _execute_remaining(
+                root, ledger, manifest, seeds, started_mono, execute_fn=execute_repair_unit
             )
         except KeyboardInterrupt:
             pass

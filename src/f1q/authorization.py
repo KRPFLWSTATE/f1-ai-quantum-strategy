@@ -6,7 +6,7 @@ from typing import Any
 from f1q.errors import AuthorizationError, UnsupportedModeError
 from f1q.hashing import sha256_file, sha256_json
 from f1q.paths import resolve_within
-from f1q.schemas import ProjectConfig, parse_bootstrap_plan, parse_development_preview_plan, parse_project_config, parse_simulator_check_plan
+from f1q.schemas import ProjectConfig, parse_bootstrap_plan, parse_development_preview_plan, parse_project_config, parse_simulator_check_plan, parse_simulator_followup_plan, parse_simulator_repair_plan
 
 
 HARDWARE_TOKENS = frozenset(
@@ -78,6 +78,20 @@ def load_simulator_check_plan(root: Path):
     return plan, sha256_file(path), data
 
 
+def load_simulator_followup_plan(root: Path):
+    path = resolve_within(root, "configs/plans/simulator_followup.yaml", must_exist=True)
+    data = load_yaml(path)
+    plan = parse_simulator_followup_plan(data)
+    return plan, sha256_file(path), data
+
+
+def load_simulator_repair_plan(root: Path):
+    path = resolve_within(root, "configs/plans/simulator_repair.yaml", must_exist=True)
+    data = load_yaml(path)
+    plan = parse_simulator_repair_plan(data)
+    return plan, sha256_file(path), data
+
+
 def lock_hash(root: Path) -> str | None:
     lock = root / "requirements.lock"
     if not lock.is_file():
@@ -125,6 +139,12 @@ def authorize_plan(config: ProjectConfig, plan_id: str) -> None:
     elif plan_id == "simulator_check":
         if config.active_stage < 3:
             raise AuthorizationError("simulator_check requires active_stage >= 3")
+    elif plan_id == "simulator_followup":
+        if config.active_stage < 3:
+            raise AuthorizationError("simulator_followup requires active_stage >= 3")
+    elif plan_id == "simulator_repair":
+        if config.active_stage < 3:
+            raise AuthorizationError("simulator_repair requires active_stage >= 3")
     else:
         raise AuthorizationError(f"plan {plan_id!r} is not implemented")
     if config.mode != "local":

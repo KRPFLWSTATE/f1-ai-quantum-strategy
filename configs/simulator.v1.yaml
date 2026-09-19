@@ -1,5 +1,5 @@
 schema_version: "1.0.0"
-simulator_version: "1.0.0"
+simulator_version: "1.0.2"
 kind: restricted_independent_race_model
 not_calibrated_f1_parameters: true
 scientific_protocol_status: DRAFT
@@ -36,7 +36,9 @@ fuel:
   time_per_kg_s: 0.03
   estimate_is_spec_fuel_kg: true
   actual_within_uncertainty_floor: true
-  amendment: development_spec.fuel.v1
+  amendment: development_spec.fuel.v1.1
+  error_is_not_unbiased_uniform: true
+  conditioned_no_refueling_domain: true
 regime:
   sc_pace_factor: 1.45
   vsc_pace_factor: 1.40
@@ -63,6 +65,7 @@ integrator:
     - pit_exit
     - lap_complete
     - catch_or_pass
+    - sc_gap_meet
     - pit_entry
 deadline:
   nonpositive_window_is_closed: true
@@ -71,11 +74,29 @@ deadline:
   scenario_latency_maps_one_to_one_onto_race_s: true
   not_ibm_queue_measurement: true
 classification:
-  order: [progress_desc, finish_time_asc, car_id_asc]
+  order: [progress_desc, finish_time_asc_or_absent_last, car_id_asc]
   race_end: leader_reaches_horizon
   lapped: lower_progress_at_leader_finish
+  individual_finish_time: only_when_car_crosses_horizon
+  unfinished_finish_time: absent_not_leader_time
+  rank_at_leader_finish: separate_diagnostic_snapshot
   retirement: reject_UNSUPPORTED_RETIREMENT
   team_loss: "(r1 + r2 - 2) / (2 * (F - 1))"
+traffic_overtake:
+  pass_clearance_s_is_post_pass_traffic_target: true
+  overtake_order_snap_laps: 1.0e-12
+  overtake_does_not_grant_free_fuel_tyre_or_time: true
+commitment:
+  registered_epoch_window: "[t0, effective_end]"
+  arrival_vs_registered: inclusive_at_epoch_late_after
+  arrival_vs_effective_end: exclusive
+  late_vs_registered_does_not_move_epoch: true
+plan_validation:
+  external_api_scope: selected_car_ids
+  require_explicit_compound_and_set_for_pit_actions: true
+  reject_compound_set_mismatch_before_apply: true
+  atomic_apply: true
+  remount_fitted_set: rejected_no_free_age_refresh
 exclusions:
   - wet_transitions
   - red_flags
@@ -90,4 +111,5 @@ resource:
   max_workers: 2
   ram_ceiling_fraction: 0.60
   stage3_elapsed_cap_s: 1800
-  stage3_cap_note: "Stage 3 engineering limit, not a benchmark result."
+  ram_sampling_interval_s: 1.0
+  ram_measurement_note: "Periodic RSS sampling is not a hard instantaneous guarantee."

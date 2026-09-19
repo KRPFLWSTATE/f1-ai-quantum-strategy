@@ -1,0 +1,76 @@
+schema_version: "1.0.0"
+plan_id: simulator_followup
+stage: 3
+evidence_kind: development
+authorization_scope: stage3-local-simulator-followup
+description: >
+  Stage 3.1 targeted simulator validation: fuel generation audit, resolution
+  panel, behavioral isolation, common commitment, SC/VSC/traffic, and memory
+  observation. Not Stage 4, not a scientific split, not F1 calibration.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    simulator.followup.criteria: 20260919031
+    simulator.followup.fuel: 20260919031
+    simulator.followup.resolution: 20260919031
+    simulator.followup.behavioral: 20260919031
+    simulator.followup.commitment: 20260919031
+    simulator.followup.sc_vsc_traffic: 20260919031
+    simulator.followup.memory: 20260919031
+units:
+  - schema_version: "1.0.0"
+    unit_id: simulator.followup.criteria
+    stage: 3
+    plan_id: simulator_followup
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-followup
+    description: Record numerical criteria and hash-selected resolution panel before execution.
+    seed: 20260919031
+  - schema_version: "1.0.0"
+    unit_id: simulator.followup.fuel
+    stage: 3
+    plan_id: simulator_followup
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-followup
+    description: Conditioned fuel-generation audit of the existing 64 development specifications.
+    seed: 20260919031
+  - schema_version: "1.0.0"
+    unit_id: simulator.followup.resolution
+    stage: 3
+    plan_id: simulator_followup
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-followup
+    description: Tick refinement h, h/2, h/4 on the pre-registered eight-episode panel.
+    seed: 20260919031
+  - schema_version: "1.0.0"
+    unit_id: simulator.followup.behavioral
+    stage: 3
+    plan_id: simulator_followup
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-followup
+    description: Paired future-isolation, observation-only policy path, and spy fixture.
+    seed: 20260919031
+  - schema_version: "1.0.0"
+    unit_id: simulator.followup.commitment
+    stage: 3
+    plan_id: simulator_followup
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-followup
+    description: Common commitment epoch, exclusive arrival boundary, missed pit-now expiry.
+    seed: 20260919031
+  - schema_version: "1.0.0"
+    unit_id: simulator.followup.sc_vsc_traffic
+    stage: 3
+    plan_id: simulator_followup
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-followup
+    description: Targeted SC/VSC, traffic, and shared-crew end-to-end time propagation.
+    seed: 20260919031
+  - schema_version: "1.0.0"
+    unit_id: simulator.followup.memory
+    stage: 3
+    plan_id: simulator_followup
+    evidence_kind: development
+    authorization_scope: stage3-local-simulator-followup
+    description: Mechanism regressions plus parent-process RSS sampling against the 60 percent ceiling.
+    seed: 20260919031

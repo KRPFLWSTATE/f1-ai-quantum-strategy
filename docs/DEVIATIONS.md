@@ -14,4 +14,11 @@ No invented deviations. Record only genuine discrepancies.
 | 2026-09-19 | Cutoff vs gap packing | development-spec amendment | `docs/amendments/checkpoint.cutoff.v1.md`. Original Stage 2 spec bytes unchanged. |
 | 2026-09-19 | Split-planner CLI endpoints | software | Advertised `--test-blocks 80\|160` under-specified the dossier range. Planner now accepts every multiple of eight from 80 through 160. Not a scientific amendment. |
 
+| 2026-09-19 | Fuel floor as Uniform/unbiased | documentation / modelling | `development_spec.fuel.v1.1` records the existing conditioned atom-at-need rule. Generation not changed. |
+| 2026-09-19 | 0.5 s free-track tolerance | software acceptance | Unjustified for the analytic oracle; replaced by \(10^{-6}\) s FP/Newton bound. |
+| 2026-09-19 | Commit-on-arrival vs common epoch | software | Production default commitment epoch is the registered/effective end so early arrival cannot pit earlier. |
+| 2026-09-19 | Missed pit-now as next lap | software | Expired/rejected; not relabelled. |
+| 2026-09-19 | TUM pin wording | report | Selection text no longer infers that all modern adapters are impossible. |
+| 2026-09-19 | Resolution rank flip | limitation | One development episode flipped rank under h/h2/h4 with finish error \(\sim 5\times 10^{-7}\) s. Gate PARTIAL. |
+
 No protocol amendments. `frozen: false`.
