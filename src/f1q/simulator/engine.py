@@ -231,8 +231,8 @@ class RaceEngine:
             "leader_finish_car_id": None,
             "rank_at_leader_finish": None,
             "stacking_policy": spec.get("team_service", {}).get("stacking_policy", "delay_cost_not_prohibition"),
-            "interface_version": "3.0.0",
-            "simulator_version": "1.0.2",
+            "interface_version": "3.0.1",
+            "simulator_version": "1.0.3",
             "init_is_fictional_pre_checkpoint": True,
         }
         self._log("initialized", None, {"t": t0})
@@ -574,20 +574,40 @@ class RaceEngine:
             remaining = horizon - car["completed_laps"]
             view = public_car_view(car, spy=True)
             base = continuation_intent(view, required_compounds=required, remaining_laps=remaining)
-            planned = self.state["policies"].get(car["car_id"]) or base
-            if planned.get("kind") == "delay_laps" and planned.get("reference_completed") is None:
-                planned = dict(planned)
-                planned["reference_completed"] = int(car["completed_laps"])
-                self.state["policies"][car["car_id"]] = planned
-            intent = delay_to_pit_now(planned, completed_laps=int(car["completed_laps"]))
+            planned = self.state["policies"].get(car["car_id"])
+            # Stage 4.1: continuation always re-invokes compound_obligation.v1 (not inert stay-out).
+            # In-pit cars preserve the committed service target already on pending_* fields.
+            if planned is None or planned.get("kind") == "continuation":
+                if car.get("in_pit") and (car.get("pending_compound") or car.get("pending_set_id")):
+                    intent = {"kind": "continuation", "reason": "in_pit_preserve_commitment"}
+                    planned = {"kind": "continuation", "reason": planned.get("reason") if planned else "in_pit"}
+                    self.state["policies"][car["car_id"]] = planned
+                else:
+                    planned = {
+                        "kind": "continuation",
+                        "downstream_policy_id": "compound_obligation.v1",
+                        "downstream_policy_version": "1.1.0",
+                        "reason": (planned or {}).get("reason") or "downstream_policy",
+                    }
+                    self.state["policies"][car["car_id"]] = planned
+                    intent = base
+            else:
+                if planned.get("kind") == "delay_laps" and planned.get("reference_completed") is None:
+                    planned = dict(planned)
+                    planned["reference_completed"] = int(car["completed_laps"])
+                    self.state["policies"][car["car_id"]] = planned
+                intent = delay_to_pit_now(planned, completed_laps=int(car["completed_laps"]))
             if intent.get("kind") == "pit_now":
                 if self._missed_pit_entry_this_lap(car):
                     car["pit_this_lap"] = False
-                    car["pending_compound"] = None
-                    car["pending_set_id"] = None
+                    if not car.get("in_pit"):
+                        car["pending_compound"] = None
+                        car["pending_set_id"] = None
                     self.state["policies"][car["car_id"]] = {
                         "kind": "continuation",
                         "reason": "expired_pit_now_missed_entry",
+                        "downstream_policy_id": "compound_obligation.v1",
+                        "downstream_policy_version": "1.1.0",
                     }
                     self._log("pit_now_expired", car["car_id"], {"frac": car["frac"], "not_relabelled_next_lap": True})
                     continue
@@ -598,7 +618,7 @@ class RaceEngine:
                     compound, set_id = select_obligation_set(view)
                 car["pending_compound"] = compound
                 car["pending_set_id"] = set_id
-            elif planned.get("kind") != "pit_now":
+            elif intent.get("kind") != "pit_now" and not car.get("in_pit"):
                 car["pit_this_lap"] = False
 
     def fire(self, fired: list[tuple[str, str, dict[str, Any]]]) -> None:
@@ -628,7 +648,13 @@ class RaceEngine:
                 car["pit_this_lap"] = False
                 planned = self.state["policies"].get(cid) or {}
                 if planned.get("kind") in {"pit_now", "delay_laps"}:
-                    self.state["policies"][cid] = {"kind": "continuation", "reason": "one_shot_plan_consumed"}
+                    # Resume downstream policy after one-shot consumption (not inert stay-out).
+                    self.state["policies"][cid] = {
+                        "kind": "continuation",
+                        "reason": "one_shot_plan_consumed",
+                        "downstream_policy_id": "compound_obligation.v1",
+                        "downstream_policy_version": "1.1.0",
+                    }
                 self._log("pit_entry", cid, {"t_in_s": self.state["pit_parts"]["t_in_s"]})
             elif kind == "pit_timer":
                 self._advance_pit(car)

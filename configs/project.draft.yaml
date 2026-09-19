@@ -40,6 +40,7 @@ authorization:
     - simulator_followup
     - simulator_repair
     - formulation_check
+    - formulation_repair_check
   github_push_authorized: false
 unresolved:
   - field: ibm_backend
@@ -62,4 +63,4 @@ unresolved:
     reason: "Scientific protocol is DRAFT; the configuration hash is a draft fingerprint, not a frozen protocol hash."
   - field: completed_gate
     value: null
-    reason: "Gate C is under Stage 4 verification; Gates D–F remain future acceptance checks."
+    reason: "Gate C is under Stage 4.1 repair verification; Gates D–F remain future acceptance checks."

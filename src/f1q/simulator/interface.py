@@ -294,7 +294,7 @@ class RaceSimulator:
     def apply_plan(
         self, plan: dict[str, Any], state: SimulatorState | None = None, *, team_scoped: bool = True
     ) -> SimulatorState:
-        """Apply a validated plan atomically. On failure, restore prior policies."""
+        """Apply a validated plan atomically. On failure, restore prior policies and car intent fields."""
         eng = self._eng(state)
         self.validate_plan(plan, state, team_scoped=team_scoped)
         prior_policies = copy.deepcopy(eng.state["policies"])
@@ -308,9 +308,22 @@ class RaceSimulator:
         }
         try:
             for cid, item in plan.items():
+                car = eng.state["cars"][cid]
                 stored = dict(item)
                 if stored.get("kind") == "delay_laps" and stored.get("reference_completed") is None:
-                    stored["reference_completed"] = int(eng.state["cars"][cid]["completed_laps"])
+                    stored["reference_completed"] = int(car["completed_laps"])
+                if car.get("in_pit"):
+                    # Continuing an in-progress service preserves the active commitment.
+                    if stored.get("kind") != "continuation":
+                        raise RejectionError(
+                            "ILLEGAL_PLAN",
+                            f"{cid}: in-pit cars admit continuation only; cannot replace active service",
+                        )
+                else:
+                    # Applying a new on-track plan clears stale pending intent atomically.
+                    car["pit_this_lap"] = False
+                    car["pending_compound"] = None
+                    car["pending_set_id"] = None
                 eng.state["policies"][cid] = stored
             eng.update_intents()
         except Exception:

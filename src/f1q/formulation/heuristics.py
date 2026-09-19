@@ -23,14 +23,17 @@ def greedy_plus_local(costs: dict[str, Any], *, eval_budget: int = 10_000) -> di
             "classical_ref_version": CLASSICAL_REF_VERSION,
             "incumbent": None,
             "evaluations": 0,
+            "direct_scorer_calls": 0,
             "eval_budget": eval_budget,
             "legal_incumbent": False,
             "failure_code": "EMPTY_MENU",
         }
     evaluations = 0
+    # Preselection: score all unary-min car1 against each car2 action.
     i0 = min(range(k1), key=lambda i: costs["u1"][i])
+    # The min over u1 does not call the joint scorer; joint calls follow.
     j0 = min(range(k2), key=lambda j: _score(costs, i0, j))
-    evaluations += k1 + k2
+    evaluations += k2
     best_i, best_j = i0, j0
     best = _score(costs, best_i, best_j)
     evaluations += 1
@@ -65,8 +68,10 @@ def greedy_plus_local(costs: dict[str, Any], *, eval_budget: int = 10_000) -> di
             "value": best,
         },
         "evaluations": evaluations,
+        "direct_scorer_calls": evaluations,
         "eval_budget": eval_budget,
         "legal_incumbent": True,
+        "note": "evaluations counts every score_joint_direct call including repeated calls",
     }
 
 
@@ -87,16 +92,19 @@ def uniform_legal_sample(
             "incumbent": None,
             "legal_incumbent": False,
             "evaluations": 0,
+            "direct_scorer_calls": 0,
             "failure_code": "EMPTY_MENU",
         }
     car1, car2 = costs["selected_car_ids"]
     best_i = rng.randrange(k1)
     best_j = rng.randrange(k2)
     best = _score(costs, best_i, best_j)
+    evaluations = 1  # initial state
     for _ in range(n_samples):
         i = rng.randrange(k1)
         j = rng.randrange(k2)
         val = _score(costs, i, j)
+        evaluations += 1
         if val < best:
             best, best_i, best_j = val, i, j
     return {
@@ -111,7 +119,9 @@ def uniform_legal_sample(
             "value": best,
         },
         "legal_incumbent": True,
-        "evaluations": n_samples,
+        "evaluations": evaluations,
+        "direct_scorer_calls": evaluations,
+        "accounting": "1 initial + n_samples loop evaluations",
     }
 
 
@@ -133,11 +143,13 @@ def simulated_annealing_legal(
             "incumbent": None,
             "legal_incumbent": False,
             "evaluations": 0,
+            "direct_scorer_calls": 0,
             "failure_code": "EMPTY_MENU",
         }
     car1, car2 = costs["selected_car_ids"]
     i, j = rng.randrange(k1), rng.randrange(k2)
     cur = _score(costs, i, j)
+    evaluations = 1  # initial state
     best_i, best_j, best = i, j, cur
     for step in range(steps):
         temp = t0 * (1.0 - step / max(1, steps))
@@ -148,6 +160,7 @@ def simulated_annealing_legal(
             ni = i
             nj = rng.randrange(k2)
         nxt = _score(costs, ni, nj)
+        evaluations += 1
         delta = nxt - cur
         if delta <= 0 or rng.random() < math.exp(-delta / max(temp, 1e-9)):
             i, j, cur = ni, nj, nxt
@@ -165,7 +178,9 @@ def simulated_annealing_legal(
             "value": best,
         },
         "legal_incumbent": True,
-        "evaluations": steps,
+        "evaluations": evaluations,
+        "direct_scorer_calls": evaluations,
+        "accounting": "1 initial + steps proposal evaluations",
     }
 
 

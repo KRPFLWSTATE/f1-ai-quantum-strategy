@@ -59,6 +59,7 @@ def _public(**over) -> PublicPhysicsConfig:
         kg_per_lap=1.8,
         time_per_kg_s=0.03,
         service_stationary_s=2.5,
+        pit_entry_frac=0.95,
         sc_pace_factor=1.45,
         vsc_pace_factor=1.40,
         distinct_compounds_required=2,

@@ -1,0 +1,96 @@
+schema_version: "1.0.0"
+plan_id: formulation_repair_check
+stage: 4
+evidence_kind: development
+authorization_scope: stage4-local-formulation-repair
+description: >
+  Stage 4.1 formulation repair check: pre-repair erratum, downstream-policy
+  semantics, compiler/pair timing, QUBO/Ising revalidation, classical references,
+  64-case development matrix with uncapped pair cross-check, tie-aware panel,
+  Stage 3.3 diagnostic restore, and source snapshot. Preserves Stage 4 run
+  e8b87881-... as historical evidence. Not Stage 5, not QPU, not reserved splits.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    formulation.pre_repair_erratum: 20260919041
+    formulation.action_model: 20260919041
+    formulation.compiler_direct_costs: 20260919041
+    formulation.qubo_ising_gate: 20260919041
+    formulation.independent_references: 20260919041
+    formulation.development_matrix: 20260919041
+    formulation.evaluator_separation_panel: 20260919041
+    formulation.stage3_3_diagnostic_restore: 20260919041
+    formulation.source_restore: 20260919041
+units:
+  - schema_version: "1.0.0"
+    unit_id: formulation.pre_repair_erratum
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Register pre-repair reproduction and Stage 4 receipt erratum without mutating prior evidence.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.action_model
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Stage 4.1 action dictionaries under one-stop downstream-policy semantics.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.compiler_direct_costs
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Compiler direct costs and derived pair service-interval overlap.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.qubo_ising_gate
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: QUBO/Ising/penalty revalidation on repaired coefficients.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.independent_references
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Enumeration, MILP minimizer-set agreement, DP, heuristics accounting.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.development_matrix
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Full 64-episode repaired formulation records with uncapped pair cross-check.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.evaluator_separation_panel
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Tie-aware eight-family evaluator panel with deduplicated joint plans.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.stage3_3_diagnostic_restore
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Rewrite Stage 3.3 corrected diagnostic after simulator 1.0.3 / interface 3.0.1 and verify.
+    seed: 20260919041
+  - schema_version: "1.0.0"
+    unit_id: formulation.source_restore
+    stage: 4
+    plan_id: formulation_repair_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-repair
+    description: Source snapshot for the Stage 4.1 repair run.
+    seed: 20260919041

@@ -1,3 +1,5 @@
+> Stage 4.1 repair supersedes Stage 4 Gate C software/evidence claims for action semantics, pair timing, evaluator legality, accounting, and packaging. QUBO algebra conventions remain; numerical coefficients regenerate under repaired costs.
+
 # QUBO / Ising specification (Stage 4)
 
 Version: **1.0.0**. Gate C only. No QAOA circuits, mixers, angle fitting, or provider submission.

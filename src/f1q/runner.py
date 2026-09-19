@@ -12,6 +12,7 @@ from f1q.authorization import (
     load_bootstrap_plan,
     load_development_preview_plan,
     load_formulation_check_plan,
+    load_formulation_repair_check_plan,
     load_project_config,
     load_simulator_check_plan,
     load_simulator_followup_plan,
@@ -144,6 +145,15 @@ def resume_run(root: Path, run_id: str) -> dict:
         elif manifest.plan_id == "formulation_check":
             authorize_plan(config, "formulation_check")
             plan, plan_hash, _ = load_formulation_check_plan(root)
+            execute_fn = execute_formulation_unit
+            _, sim_hash = load_simulator_config_safe(root)
+            from f1q.formulation.config import load_formulation_config
+
+            _, form_hash = load_formulation_config(root)
+            extra_expected = {"simulator_config_hash": sim_hash, "formulation_config_hash": form_hash}
+        elif manifest.plan_id == "formulation_repair_check":
+            authorize_plan(config, "formulation_repair_check")
+            plan, plan_hash, _ = load_formulation_repair_check_plan(root)
             execute_fn = execute_formulation_unit
             _, sim_hash = load_simulator_config_safe(root)
             from f1q.formulation.config import load_formulation_config
@@ -561,6 +571,88 @@ def run_formulation_check(root: Path) -> dict:
                 "max_workers": 1,
                 "qpu_usage_seconds": 0,
                 "preserves_prior_stage_run_ids": True,
+            },
+        )
+        try:
+            _execute_remaining(
+                root, ledger, manifest, seeds, started_mono, execute_fn=execute_formulation_unit
+            )
+        except KeyboardInterrupt:
+            pass
+        return _finalize(root, ledger, manifest, started_mono)
+
+
+def run_formulation_repair_check(root: Path) -> dict:
+    config, config_hash, _ = load_project_config(root)
+    authorize_plan(config, "formulation_repair_check")
+    plan, plan_hash, _ = load_formulation_repair_check_plan(root)
+    _, sim_hash = load_simulator_config_safe(root)
+    from f1q.formulation.config import load_formulation_config
+
+    form_cfg, form_hash = load_formulation_config(root)
+    dossier = dossier_hash(root, config)
+    snapshot = take_source_snapshot(root)
+    commit, dirty = git_state(root)
+    run_id = str(uuid4())
+    started_mono = time.monotonic()
+    started = utc_now()
+    unit_ids = [u.unit_id for u in plan.units]
+    seeds = {u.unit_id: int(plan.seed_specification["unit_seeds"][u.unit_id]) for u in plan.units}
+    cap = float(form_cfg.get("resource", {}).get("stage4_elapsed_cap_s") or 1800.0)
+    manifest = RunManifest(
+        run_id=run_id,
+        stage=4,
+        plan_id="formulation_repair_check",
+        evidence_kind="development",
+        source_snapshot_hash=snapshot["hash"],
+        git_commit=commit,
+        git_dirty=dirty,
+        dossier_sha256=dossier,
+        configuration_hash=config_hash,
+        configuration_hash_kind="draft",
+        dependency_lock_hash=lock_hash(root),
+        planned_unit_ids=unit_ids,
+        seed_specification={
+            "plan_hash": plan_hash,
+            "unit_seeds": seeds,
+            "simulator_config_hash": sim_hash,
+            "formulation_config_hash": form_hash,
+            "formulation_version": form_cfg.get("formulation_version"),
+            "simulator_version": "1.0.3",
+            "interface_version": "3.0.1",
+            "elapsed_cap_s": cap,
+            "max_workers": 1,
+            "qpu_usage_seconds": 0,
+            "stage": "4_1_formulation_repair",
+            "preserves_prior_stage4_run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+        },
+        authorization_scope=config.authorization.scope,
+        started_at_utc=started,
+        status="running",
+    )
+    db, lock = ledger_paths(root, config)
+    with Ledger(db, lock, root=root) as ledger:
+        incomplete = [r for r in ledger.incomplete_runs() if r["plan_id"] == "formulation_repair_check"]
+        if incomplete:
+            ids = ", ".join(r["run_id"] for r in incomplete)
+            raise AuthorizationError(
+                f"incomplete formulation_repair_check run(s) exist; resume instead of starting a new run: {ids}"
+            )
+        write_snapshot(root, run_id, snapshot, evidence_subdir="formulation")
+        ledger.insert_run(manifest.model_dump(mode="json"))
+        ledger.append_event(
+            run_id,
+            "run_started",
+            {
+                "plan_id": "formulation_repair_check",
+                "plan_hash": plan_hash,
+                "formulation_config_hash": form_hash,
+                "simulator_config_hash": sim_hash,
+                "authorization_scope": config.authorization.scope,
+                "max_workers": 1,
+                "qpu_usage_seconds": 0,
+                "preserves_prior_stage_run_ids": True,
+                "prior_stage4_run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
             },
         )
         try:

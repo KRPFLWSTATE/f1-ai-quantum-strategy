@@ -25,6 +25,7 @@ class PublicPhysicsConfig(StrictModel):
     kg_per_lap: float = Field(gt=0)
     time_per_kg_s: float = Field(ge=0)
     service_stationary_s: float = Field(gt=0)
+    pit_entry_frac: float = Field(gt=0, lt=1)
     sc_pace_factor: float = Field(gt=1)
     vsc_pace_factor: float = Field(gt=1)
     distinct_compounds_required: int = Field(ge=1, le=3)
@@ -69,6 +70,7 @@ def public_physics_from_sources(
         "kg_per_lap": float(fuel["kg_per_lap"]),
         "time_per_kg_s": float(fuel["time_per_kg_s"]),
         "service_stationary_s": float(pit["service_stationary_s"]),
+        "pit_entry_frac": float(simulator_cfg["track"]["pit_entry_frac"]),
         "sc_pace_factor": float(regime["sc_pace_factor"]),
         "vsc_pace_factor": float(regime["vsc_pace_factor"]),
         "distinct_compounds_required": required,

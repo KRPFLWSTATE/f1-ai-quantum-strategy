@@ -1,3 +1,5 @@
+> Stage 4.1 repair supersedes Stage 4 Gate C software/evidence claims for action semantics, pair timing, evaluator legality, accounting, and packaging. QUBO algebra conventions remain; numerical coefficients regenerate under repaired costs.
+
 # Classical references (Stage 4)
 
 Version: **1.0.0**. Independent of the QUBO optimiser as their core. Free/open-source only (NumPy, SciPy/HiGHS).

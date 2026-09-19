@@ -1,3 +1,5 @@
+> Stage 4.1 repair supersedes Stage 4 Gate C software/evidence claims for action semantics, pair timing, evaluator legality, accounting, and packaging. QUBO algebra conventions remain; numerical coefficients regenerate under repaired costs.
+
 # Restricted proxy objective compiler (Stage 4)
 
 Version: **1.0.0**. Primary coefficient unit: **seconds**. Stage 4 risk weight: **exactly 0** (weights have not been selected on tuning data).

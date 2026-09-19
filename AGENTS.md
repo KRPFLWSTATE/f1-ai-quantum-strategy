@@ -1,6 +1,6 @@
 # Project instructions (always load)
 
-Active stage: **4 -- formulation** (Gate C closed as software/evidence). Stage 5 (QAOA / learned selectors / hardware path) is pending and is not authorized by this file.
+Active stage: **4.1 -- formulation repair** (Stage 4 Gate C superseded; awaiting independent review). Stage 5 (QAOA / learned selectors / hardware path) is blocked and is not authorized by this file.
 
 ## Authority
 
@@ -36,6 +36,7 @@ python -m f1q run --plan simulator_check
 python -m f1q run --plan simulator_followup
 python -m f1q run --plan simulator_repair
 python -m f1q run --plan formulation_check
+python -m f1q run --plan formulation_repair_check
 python -m f1q resume --run-id <id>
 python -m f1q receipt --run-id <id>
 python -m f1q generator validate

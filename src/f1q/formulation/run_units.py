@@ -50,7 +50,9 @@ def execute_formulation_unit(
     specs = load_preview_specs(root)
     extra: list[dict[str, Any]] = []
 
-    if unit_id == "formulation.action_model":
+    if unit_id == "formulation.pre_repair_erratum":
+        payload = _unit_pre_repair_erratum(root, dest, seed=seed)
+    elif unit_id == "formulation.action_model":
         payload = _unit_action_model(cfg, specs, dest, seed=seed)
     elif unit_id == "formulation.compiler_direct_costs":
         payload = _unit_compiler(cfg, specs, dest, seed=seed)
@@ -62,6 +64,8 @@ def execute_formulation_unit(
         payload = _unit_matrix(cfg, specs, dest, seed=seed, started=started, cap=cap, guard=guard)
     elif unit_id == "formulation.evaluator_separation_panel":
         payload = _unit_panel(root, cfg, specs, dest, seed=seed)
+    elif unit_id == "formulation.stage3_3_diagnostic_restore":
+        payload = _unit_stage3_3_restore(root, dest, seed=seed)
     elif unit_id == "formulation.source_restore":
         payload = _unit_source(root, dest, run_id)
     else:
@@ -121,6 +125,69 @@ def _public(payload: dict[str, Any]) -> dict[str, Any]:
 
 def _write(dest: Path, name: str, obj: Any) -> str:
     return atomic_write_bytes(dest / name, canonical_json(obj) + b"\n")
+
+
+def _unit_pre_repair_erratum(root: Path, dest: Path, *, seed: int) -> dict[str, Any]:
+    """Copy/register pre-repair diagnostic and Stage 4 receipt erratum; do not mutate prior IDs."""
+    import shutil
+
+    src = resolve_within(root, "docs/evidence/stage4_1/pre_repair_reproduction.json")
+    if not src.is_file():
+        raise FileNotFoundError("missing docs/evidence/stage4_1/pre_repair_reproduction.json")
+    shutil.copy2(src, dest / "pre_repair_reproduction.json")
+    prior_receipt = resolve_within(
+        root, "evidence/formulation/receipts/e8b87881-74a6-46c7-b48e-6b2496a5d586.json"
+    )
+    prior = json.loads(prior_receipt.read_text(encoding="utf-8"))
+    erratum = {
+        "kind": "stage4_receipt_erratum",
+        "prior_run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+        "prior_receipt_preserved": True,
+        "prior_next_permitted_work": prior.get("next_permitted_work"),
+        "erratum": (
+            "The Stage 4 receipt incorrectly stated next_permitted_work as Stage 2 awaiting "
+            "its implementation prompt. That text was a stale default for unrecognised plan_ids. "
+            "Stage 4 Gate C conclusions are superseded by Stage 4.1; Stage 5 remains blocked."
+        ),
+        "corrected_interpretation": (
+            "independent review of Stage 4.1; Stage 5 blocked pending that review and Gate E decision"
+        ),
+        "seed": seed,
+        "qpu_usage_seconds": 0,
+        "new_physical_qpu_jobs_submitted": 0,
+    }
+    _write(dest, "stage4_receipt_erratum.json", erratum)
+    return {
+        "ok": True,
+        "unit": "formulation.pre_repair_erratum",
+        "prior_stage4_run_preserved": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+        "prior_failed_run_preserved": "1c5b0748-5406-4933-8e41-4f943f4296c7",
+        "erratum_path": f"{dest.name}/stage4_receipt_erratum.json",
+        "seed": seed,
+    }
+
+
+def _unit_stage3_3_restore(root: Path, dest: Path, *, seed: int) -> dict[str, Any]:
+    from f1q.simulator.stage3_3_diagnostic import (
+        scientific_payload_matches_live,
+        write_corrected_diagnostic,
+    )
+
+    written = write_corrected_diagnostic(root)
+    match, detail = scientific_payload_matches_live(root)
+    report = {
+        "ok": bool(match),
+        "unit": "formulation.stage3_3_diagnostic_restore",
+        "write": written,
+        "verify": detail,
+        "match": match,
+        "simulator_version": "1.0.3",
+        "interface_version": "3.0.1",
+        "seed": seed,
+        "note": "Prior Stage 3.3 evidence identifiers preserved; corrected live diagnostic rewritten for 1.0.3",
+    }
+    _write(dest, "stage3_3_restore.json", report)
+    return report
 
 
 def _unit_action_model(cfg, specs, dest, *, seed: int) -> dict[str, Any]:
@@ -283,7 +350,11 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
                     "exact": rec["enumeration"]["exact_proxy_minimum"],
                     "headroom": rec["proxy_headroom"]["heuristic_proxy_headroom"],
                     "scan_s": rec["timing"]["scan_s"],
+                    "cross_expected": rec["simulator_cross_check"]["expected"],
+                    "cross_checked": rec["simulator_cross_check"]["checked"],
+                    "cross_failed": rec["simulator_cross_check"]["failed"],
                     "cross_disagreements": len(rec["simulator_cross_check"]["disagreements"]),
+                    "semantic_failures": len(rec["simulator_cross_check"].get("semantic_failures") or []),
                     "failure_code": None,
                 }
             )
@@ -311,6 +382,12 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
         "zero_count": sum(1 for h in headrooms if abs(h) <= 1e-12),
         "n_with_headroom": len(headrooms),
         "gate_e_warning": bool(headrooms) and all(abs(h) <= 1e-9 for h in headrooms),
+    }
+    summary["pair_cross_check_totals"] = {
+        "expected": sum(int(r.get("cross_expected") or 0) for r in records_meta),
+        "checked": sum(int(r.get("cross_checked") or 0) for r in records_meta),
+        "failed": sum(int(r.get("cross_failed") or 0) for r in records_meta),
+        "hidden_cap": False,
     }
     _write(dest, "development_matrix_summary.json", summary)
     return summary

@@ -86,11 +86,23 @@ def run_status(root: Path | None = None) -> dict:
                                 for r in runs
                             )
                             if form_done:
-                                next_work = (
-                                    "Stage 4 formulation_check complete; Stage 5 "
-                                    "(QAOA / learned selectors) awaits its implementation prompt"
+                                repair_done = any(
+                                    r["plan_id"] == "formulation_repair_check" and r["status"] == "completed"
+                                    for r in runs
                                 )
-                                readiness = "stage4-complete-pending-stage5"
+                                if repair_done:
+                                    next_work = (
+                                        "independent review of Stage 4.1; Stage 5 blocked pending that "
+                                        "review and Gate E decision; protocol DRAFT; hardware disabled"
+                                    )
+                                    readiness = "stage4_1-complete-pending-independent-review"
+                                else:
+                                    next_work = (
+                                        "Stage 4.1 -- formulation_repair_check plan "
+                                        "(python -m f1q run --plan formulation_repair_check); "
+                                        "Stage 5 blocked"
+                                    )
+                                    readiness = "stage4-superseded-pending-stage4_1"
                             else:
                                 next_work = (
                                     "Stage 4 -- formulation_check plan "

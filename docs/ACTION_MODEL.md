@@ -1,6 +1,15 @@
 # Action model (Stage 4)
 
-Version: **1.0.0**. Evidence class: **development**. Not F1 calibration, not a research replication sample, not a hardware menu freeze.
+## Stage 4.1 semantics
+
+- One solver-visible future stop.
+- Same-compound while obligation unmet is rejected at admission.
+- Continuation invokes `compound_obligation.v1@1.1.0`.
+- Public `pit_entry_frac` drives expiry.
+
+
+
+Version: **1.1.0** (Stage 4.1). Evidence class: **development**. Not F1 calibration, not a research replication sample, not a hardware menu freeze.
 
 ## Scope
 
@@ -20,9 +29,9 @@ Cars already in the pit lane admit **continuation only** (service in progress); 
 
 ## Equivalence reduction
 
-Policy `kind_delay_compound_lex_set` (Stage 4 formulation fixture, **not** the later frozen hardware menu):
+Policy `kind_delay_compound_age_lex_set.v1` (Stage 4 formulation fixture, **not** the later frozen hardware menu):
 
-- Group by `(kind, delay_laps, compound)`
+- Group by `(kind, delay_laps, compound, set_age_laps)`
 - Retain the lexicographically smallest `set_id` as representative
 - Publish the full member→representative map and degeneracy counts
 - Report both full and reduced menu sizes

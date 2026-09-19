@@ -72,4 +72,4 @@ def test_live_diagnostic_build_has_required_fields():
         assert key in sci
     assert "source_snapshot_hash" in doc["generation_metadata"]
     assert len(sci["r1_pit_trace"]) >= 3
-    assert sci["simulator_version"] == "1.0.2"
+    assert sci["simulator_version"] == "1.0.3"

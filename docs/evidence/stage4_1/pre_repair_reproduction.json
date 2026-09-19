@@ -1,0 +1,182 @@
+{
+  "all_stated_reproductions_matched": true,
+  "created_at_utc": "2026-09-19T13:16:59.478769+00:00",
+  "findings": {
+    "R1": {
+      "expected": {
+        "cars": 56,
+        "episodes": 28,
+        "on_track_10": 13
+      },
+      "invalid_optima": [
+        {
+          "defect": "same_compound_stop_while_obligation_unmet_finishes_illegal_but_evaluator_legal_true",
+          "episode": "03",
+          "evaluator_legal_flag_pre_repair": true,
+          "family": "0003",
+          "proxy_optimum_pair": [
+            "car.fictional.windrow.a|delay_laps|2|soft|car.fictional.windrow.a.set.soft.1",
+            "car.fictional.windrow.b|delay_laps|2|soft|car.fictional.windrow.b.set.soft.0"
+          ],
+          "proxy_value": 11702.888633484237,
+          "record": "f1q.dev.block.v2__fam.green_pit_high.tyre_nonlinear.traffic_sparse__0003__episode__03__SC.record.json",
+          "regime": "SC",
+          "target_action_id": "car.fictional.windrow.a|delay_laps|2|soft|car.fictional.windrow.a.set.soft.1",
+          "terminal": {
+            "car.fictional.windrow.a": {
+              "compound": "soft",
+              "in_pit_events": [],
+              "obligation_met": false,
+              "used_compounds": [
+                "soft"
+              ]
+            },
+            "car.fictional.windrow.b": {
+              "compound": "soft",
+              "in_pit_events": [],
+              "obligation_met": true,
+              "used_compounds": [
+                "medium",
+                "soft"
+              ]
+            }
+          }
+        },
+        {
+          "defect": "same_compound_stop_while_obligation_unmet_finishes_illegal_but_evaluator_legal_true",
+          "episode": "07",
+          "evaluator_legal_flag_pre_repair": true,
+          "family": "0005",
+          "proxy_optimum_pair": [
+            "car.fictional.lakemere.a|delay_laps|2|soft|car.fictional.lakemere.a.set.soft.0",
+            "car.fictional.lakemere.b|delay_laps|2|soft|car.fictional.lakemere.b.set.soft.1"
+          ],
+          "proxy_value": 12392.447927044874,
+          "record": "f1q.dev.block.v2__fam.green_pit_low.tyre_near_linear.traffic_sparse__0005__episode__07__VSC.record.json",
+          "regime": "VSC",
+          "target_action_id": "car.fictional.lakemere.b|delay_laps|2|soft|car.fictional.lakemere.b.set.soft.1",
+          "terminal": {
+            "car.fictional.lakemere.a": {
+              "compound": "soft",
+              "in_pit_events": [],
+              "obligation_met": true,
+              "used_compounds": [
+                "medium",
+                "soft"
+              ]
+            },
+            "car.fictional.lakemere.b": {
+              "compound": "soft",
+              "in_pit_events": [],
+              "obligation_met": false,
+              "used_compounds": [
+                "soft"
+              ]
+            }
+          }
+        },
+        {
+          "defect": "same_compound_stop_while_obligation_unmet_finishes_illegal_but_evaluator_legal_true",
+          "episode": "06",
+          "evaluator_legal_flag_pre_repair": true,
+          "family": "0007",
+          "proxy_optimum_pair": [
+            "car.fictional.redcliff.a|delay_laps|2|soft|car.fictional.redcliff.a.set.soft.1",
+            "car.fictional.redcliff.b|delay_laps|2|soft|car.fictional.redcliff.b.set.soft.0"
+          ],
+          "proxy_value": 8002.318789690631,
+          "record": "f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__06__VSC.record.json",
+          "regime": "VSC",
+          "target_action_id": "car.fictional.redcliff.a|delay_laps|2|soft|car.fictional.redcliff.a.set.soft.1",
+          "terminal": {
+            "car.fictional.redcliff.a": {
+              "compound": "soft",
+              "in_pit_events": [],
+              "obligation_met": false,
+              "used_compounds": [
+                "soft"
+              ]
+            },
+            "car.fictional.redcliff.b": {
+              "compound": "soft",
+              "in_pit_events": [],
+              "obligation_met": true,
+              "used_compounds": [
+                "hard",
+                "soft"
+              ]
+            }
+          }
+        }
+      ],
+      "match_expected": true,
+      "on_track_10_action_cars": 13,
+      "reproduced": true,
+      "unmet_obligation_cars": 56,
+      "unmet_obligation_episodes": 28
+    },
+    "R10": {
+      "clean_extract_zip_sha256": "732606bc2b1e496c14c6c1e30b709442f12bcb06ba911d0abfe0610d605ecc05",
+      "final_zip_sha256": "30fbcf9e166c0c767817ea9608020dd66bf51bc9846834f6310d3ad18c5a446b",
+      "mismatch": true,
+      "reproduced": true
+    },
+    "R2": {
+      "engine_one_shot_line_present": true,
+      "notes": "continuation docs say compound_obligation.v1; policies continuation_intent pits immediately when unmet; compiler pits near horizon for continuation only; engine replaces one-shot with inert continuation",
+      "reproduced": true
+    },
+    "R3": {
+      "cap_in_source": true,
+      "checked": 1492,
+      "expected": {
+        "checked": 1492,
+        "reduced": 3535,
+        "unchecked": 2043
+      },
+      "match_expected": true,
+      "reduced_pairs": 3535,
+      "reproduced": true,
+      "unchecked": 2043
+    },
+    "R4": {
+      "hardcoded_0_95": true,
+      "reproduced": true
+    },
+    "R5": {
+      "equivalence_key": "(kind, delay_laps, compound)",
+      "ignores_set_age": true,
+      "reproduced": true
+    },
+    "R6": {
+      "adjacent_half_service": true,
+      "reproduced": true
+    },
+    "R7": {
+      "evaluator_sets_legal_true_without_terminal_check": true,
+      "invalid_cases_evaluator_legal": [
+        true,
+        true,
+        true
+      ],
+      "panel_sorts_by_value_label": true,
+      "reproduced": true
+    },
+    "R8": {
+      "annealing_reports_steps_not_steps_plus_1": true,
+      "milp_agree_value_only": true,
+      "reproduced": true,
+      "uniform_reports_n_samples_not_n_plus_1": true
+    },
+    "R9": {
+      "receipt_next_permitted_work": "Stage 2 awaiting its implementation prompt; research protocol remains DRAFT; hardware disabled",
+      "reproduced": true,
+      "stale_stage2_text": true
+    }
+  },
+  "kind": "pre_repair_reproduction",
+  "prior_failed_run_id": "1c5b0748-5406-4933-8e41-4f943f4296c7",
+  "prior_stage4_run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+  "stage": "4.1",
+  "starting_head": "0b69a415f230a8ccca4b82ecb74faef74908f3b0"
+}

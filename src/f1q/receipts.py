@@ -25,7 +25,17 @@ def build_receipt(ledger: Ledger, manifest: RunManifest) -> Receipt:
     else:
         notes = ["event counts taken from append-only ledger events and artifact rows"]
     if by_status.get("completed") == len(manifest.planned_unit_ids):
-        if manifest.plan_id == "simulator_repair":
+        if manifest.plan_id == "formulation_repair_check":
+            next_work = (
+                "independent review of Stage 4.1; Stage 5 blocked pending that review and Gate E decision; "
+                "protocol DRAFT; hardware disabled; no credentials requested"
+            )
+        elif manifest.plan_id == "formulation_check":
+            next_work = (
+                "Stage 4 formulation_check complete but Gate C was superseded by Stage 4.1 repair authorization; "
+                "Stage 5 blocked; protocol DRAFT; hardware disabled"
+            )
+        elif manifest.plan_id == "simulator_repair":
             next_work = (
                 "Stage 3.2 review of repair findings; Stage 4 (action model, QUBO) is not authorised; "
                 "protocol DRAFT; hardware disabled"
@@ -45,9 +55,15 @@ def build_receipt(ledger: Ledger, manifest: RunManifest) -> Receipt:
                 "Stage 3 -- simulator adapter and independent mechanism checks "
                 "(awaiting implementation prompt); protocol DRAFT; hardware disabled"
             )
+        elif manifest.plan_id == "bootstrap":
+            next_work = (
+                "Stage 2 -- scenario generator and causal checkpoint schema "
+                "(awaiting implementation prompt); protocol DRAFT; hardware disabled"
+            )
         else:
             next_work = (
-                "Stage 2 awaiting its implementation prompt; research protocol remains DRAFT; hardware disabled"
+                f"plan {manifest.plan_id} complete; consult PROJECT_STATUS.md for next authorised unit; "
+                "protocol DRAFT; hardware disabled"
             )
     else:
         next_work = f"resume remaining {manifest.plan_id} units"
@@ -88,7 +104,7 @@ def write_receipt(root, receipt: Receipt) -> dict:
         sub = "bootstrap"
     elif receipt.plan_id in {"simulator_check", "simulator_followup", "simulator_repair"}:
         sub = "simulator"
-    elif receipt.plan_id == "formulation_check":
+    elif receipt.plan_id in {"formulation_check", "formulation_repair_check"}:
         sub = "formulation"
     else:
         sub = "development"

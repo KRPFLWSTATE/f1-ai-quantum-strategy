@@ -120,6 +120,17 @@ def solve_milp_independent(costs: dict[str, Any], *, tol: float = TOLERANCE_S) -
             "value": value,
         }
 
+    mip_gap = None
+    primal_bound = None
+    dual_bound = None
+    if hasattr(res, "mip_gap") and res.mip_gap is not None:
+        try:
+            mip_gap = float(res.mip_gap)
+        except (TypeError, ValueError):
+            mip_gap = None
+    if success and res.fun is not None:
+        primal_bound = float(res.fun)
+    # SciPy milp/HiGHS may expose dual via unused fields; record honestly when absent.
     return {
         "classical_ref_version": CLASSICAL_REF_VERSION,
         "method": "scipy.optimize.milp",
@@ -131,7 +142,15 @@ def solve_milp_independent(costs: dict[str, Any], *, tol: float = TOLERANCE_S) -
         "value_with_constant": value,
         "selected": selected,
         "solve_s": solve_s,
-        "tolerances": {"primal": None, "comparison_tol_s": tol},
+        "timing_note": "solve_s is online MILP wall time only; excludes compilation/table construction",
+        "tolerances": {"primal": None, "comparison_tol_s": tol, "solver_default": True},
+        "mip_gap": mip_gap,
+        "primal_bound": primal_bound,
+        "dual_bound": dual_bound,
+        "threads": None,
+        "preprocessing": None,
+        "warm_start": False,
+        "cache_policy": "none",
         "coefficient_scaling": {"applied": False, "max_error": 0.0},
         "n_vars": n,
         "result_hash": sha256_json({"success": success, "selected": selected, "value": value}),

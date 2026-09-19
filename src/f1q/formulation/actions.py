@@ -6,11 +6,13 @@ from typing import Any, Literal
 
 from f1q.errors import SchemaError
 from f1q.formulation.boundaries import SpyMapping, reject_private_payload
+from f1q.formulation.downstream_policy import compounds_after_mount
 from f1q.formulation.public_config import PublicPhysicsConfig
 from f1q.formulation.versions import (
     ACTION_MODEL_VERSION,
     DOWNSTREAM_POLICY_ID,
     DOWNSTREAM_POLICY_VERSION,
+    REDUCTION_POLICY_ID,
 )
 from f1q.hashing import sha256_json
 from f1q.schemas import StrictModel, reject_non_finite
@@ -54,11 +56,9 @@ def _selected_car_ids(obs: dict[str, Any], public: PublicPhysicsConfig) -> list[
     del public  # physics not needed for selection
     team = obs["selected_team_id"]
     cars = [c for c in obs["cars"] if c.get("team_id") == team]
-    # Prefer provenance / ordered team cars as they appear in observation.
     ordered = sorted(cars, key=lambda c: str(c["car_id"]))
     if len(ordered) < 2:
         raise SchemaError("observation must contain exactly two selected-team cars")
-    # Development fixtures use two selected cars; take the two team cars with lowest classified_position then id.
     ordered.sort(key=lambda c: (c.get("classified_position") is None, c.get("classified_position") or 999, c["car_id"]))
     return [ordered[0]["car_id"], ordered[1]["car_id"]]
 
@@ -79,49 +79,18 @@ def _inventory(obs: dict[str, Any], car_id: str) -> list[dict[str, Any]]:
 
 
 def _compounds_used(car: dict[str, Any], inventory: list[dict[str, Any]]) -> set[str]:
-    used = {car["compound"]}
-    used.update(car.get("used_compounds") or [])
-    for item in inventory:
-        if item.get("used"):
-            used.add(item["compound"])
-    return set(used)
+    return compounds_after_mount(car, inventory, None)
 
 
-def _obligation_feasible_after(
-    *,
-    car: dict[str, Any],
-    inventory: list[dict[str, Any]],
-    after_compound: str | None,
-    remaining_laps: float,
-    required: int,
-    delay: int = 0,
-) -> bool:
-    used = _compounds_used(car, inventory)
-    if after_compound is not None:
-        used = set(used)
-        used.add(after_compound)
-    if len(used) >= required:
-        return True
-    # Remaining unused sets after consuming the planned mount.
-    unused = [s for s in inventory if not s.get("used") and s.get("set_id") != car.get("mounted_set_id")]
-    if after_compound is not None:
-        # One set is consumed by the planned stop; remove one matching unused of that compound.
-        removed = False
-        kept = []
-        for s in unused:
-            if not removed and s["compound"] == after_compound:
-                removed = True
-                continue
-            kept.append(s)
-        unused = kept
-    # Downstream policy can schedule one further obligation stop within remaining horizon after delay.
-    horizon_after = float(remaining_laps) - float(delay)
-    if horizon_after < 1.0 - 1e-12:
-        return False
-    for s in unused:
-        if s["compound"] not in used:
-            return True
-    return False
+def _obligation_met(car: dict[str, Any], inventory: list[dict[str, Any]], required: int) -> bool:
+    return len(_compounds_used(car, inventory)) >= int(required)
+
+
+def _set_age(item: dict[str, Any]) -> float:
+    age = item.get("age_laps")
+    if age is None:
+        age = item.get("tyre_age_laps")
+    return float(age or 0.0)
 
 
 def _candidate_pit_sets(car: dict[str, Any], inventory: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -135,20 +104,18 @@ def _candidate_pit_sets(car: dict[str, Any], inventory: list[dict[str, Any]]) ->
         if item.get("compound") not in {"soft", "medium", "hard"}:
             continue
         out.append(item)
-    out.sort(key=lambda s: (s["compound"], s["set_id"]))
+    out.sort(key=lambda s: (_set_age(s), s["compound"], s["set_id"]))
     return out
 
 
-def _missed_pit_entry(car: dict[str, Any], obs: dict[str, Any]) -> bool:
+def _missed_pit_entry(car: dict[str, Any], obs: dict[str, Any], *, pit_entry_frac: float) -> bool:
     for exp in obs.get("expired_actions") or []:
         if exp.get("car_id") == car["car_id"] and exp.get("action") == "pit_now":
             return True
-    # Observable frac past pit entry without being in pit: use service_state / frac when available.
     if car.get("in_pit_lane"):
         return False
     frac = car.get("frac")
-    # Pit entry is configured at 0.95 in public track geometry; frac past entry and still on track.
-    if frac is not None and float(frac) >= 0.95 - 1e-12:
+    if frac is not None and float(frac) >= float(pit_entry_frac) - 1e-12:
         return True
     return False
 
@@ -165,6 +132,8 @@ def generate_car_actions(
     inventory = _inventory(obs, car_id)
     remaining = float(_qty_value(obs["remaining_laps"]))
     required = int(public.distinct_compounds_required)
+    pit_entry_frac = float(public.pit_entry_frac)
+    obligation_already = _obligation_met(car, inventory, required)
     actions: list[CarAction] = []
     rejected: list[CarAction] = []
 
@@ -177,51 +146,47 @@ def generate_car_actions(
         if include_rejected:
             rejected.append(action)
 
-    # Finished / in-pit cars: only continuation if already done, otherwise reject pits.
     finished = car.get("classified_position") is not None and remaining <= 0
     in_pit = bool(car.get("in_pit_lane"))
 
-    # continuation
     cont_id = f"{car_id}|continuation|{DOWNSTREAM_POLICY_ID}@{DOWNSTREAM_POLICY_VERSION}"
-    cont_ok = _obligation_feasible_after(
-        car=car,
-        inventory=inventory,
-        after_compound=None,
-        remaining_laps=remaining,
-        required=required,
-        delay=0,
-    )
-    # Same-compound continuation is legal only if obligation already met OR downstream can still stop.
+    # Continuation is always admitted when the car is live: the downstream policy itself
+    # decides whether an obligation stop is still feasible; empty inventory surfaces later.
     cont = CarAction(
         action_id=cont_id,
         car_id=car_id,
         kind="continuation",
         commitment={"expires": "decision_window", "kind": "soft_continuation"},
-        description=f"{car_id} continuation under {DOWNSTREAM_POLICY_ID}",
+        description=f"{car_id} continuation under {DOWNSTREAM_POLICY_ID}@{DOWNSTREAM_POLICY_VERSION}",
         observable_admission_facts={
             "compound": car["compound"],
             "tyre_age_laps": car["tyre_age_laps"],
             "remaining_laps": remaining,
             "used_compounds": sorted(_compounds_used(car, inventory)),
             "obligation_required": required,
+            "obligation_met": obligation_already,
             "in_pit_lane": in_pit,
+            "pit_entry_frac": pit_entry_frac,
+            "one_solver_visible_stop": True,
         },
     )
     if finished:
         reject(cont, "car_finished")
     elif in_pit:
-        # Already in pit service: continuation is the only legal external plan (no new pit instruction).
         admit(cont)
-    elif not cont_ok:
-        reject(cont, "downstream_obligation_infeasible")
+    elif remaining < 0.0 - 1e-12:
+        reject(cont, "insufficient_horizon")
     else:
         admit(cont)
 
-    missed = _missed_pit_entry(car, obs)
+    missed = _missed_pit_entry(car, obs, pit_entry_frac=pit_entry_frac)
     for item in _candidate_pit_sets(car, inventory):
         compound = item["compound"]
         set_id = item["set_id"]
-        # pit_now
+        set_age = _set_age(item)
+        after_used = compounds_after_mount(car, inventory, compound)
+        same_compound_while_unmet = (not obligation_already) and (compound in _compounds_used(car, inventory))
+
         pit_id = f"{car_id}|pit_now|{compound}|{set_id}"
         pit = CarAction(
             action_id=pit_id,
@@ -234,9 +199,13 @@ def generate_car_actions(
             observable_admission_facts={
                 "compound": compound,
                 "set_id": set_id,
+                "set_age_laps": set_age,
                 "set_used": False,
                 "mounted_set_id": car.get("mounted_set_id"),
                 "missed_pit_entry": missed,
+                "pit_entry_frac": pit_entry_frac,
+                "obligation_met_after": len(after_used) >= required,
+                "one_solver_visible_stop": True,
             },
         )
         if in_pit:
@@ -245,15 +214,9 @@ def generate_car_actions(
             reject(pit, "expired_pit_now_missed_entry")
         elif remaining < 1.0 - 1e-12:
             reject(pit, "insufficient_horizon")
-        elif not _obligation_feasible_after(
-            car=car,
-            inventory=inventory,
-            after_compound=compound,
-            remaining_laps=remaining,
-            required=required,
-            delay=0,
-        ):
-            reject(pit, "downstream_obligation_infeasible")
+        elif same_compound_while_unmet:
+            # Stage 4.1 one-stop language: cannot promise a second alternate stop.
+            reject(pit, "same_compound_while_obligation_unmet_one_stop_language")
         else:
             admit(pit)
 
@@ -272,22 +235,19 @@ def generate_car_actions(
                     "delay_laps": delay,
                     "compound": compound,
                     "set_id": set_id,
+                    "set_age_laps": set_age,
                     "remaining_laps": remaining,
+                    "pit_entry_frac": pit_entry_frac,
+                    "obligation_met_after": len(after_used) >= required,
+                    "one_solver_visible_stop": True,
                 },
             )
             if in_pit:
                 reject(delayed, "already_in_pit_lane")
             elif remaining < float(delay) + 1.0 - 1e-12:
                 reject(delayed, "insufficient_horizon_for_delay")
-            elif not _obligation_feasible_after(
-                car=car,
-                inventory=inventory,
-                after_compound=compound,
-                remaining_laps=remaining,
-                required=required,
-                delay=delay,
-            ):
-                reject(delayed, "downstream_obligation_infeasible")
+            elif same_compound_while_unmet:
+                reject(delayed, "same_compound_while_obligation_unmet_one_stop_language")
             else:
                 admit(delayed)
 
@@ -296,41 +256,66 @@ def generate_car_actions(
     return actions + rejected
 
 
-def equivalence_key(action: CarAction) -> tuple[Any, ...]:
-    """Semantic reduction key independent of objective values."""
-    return (action.kind, action.delay_laps, action.compound)
+def equivalence_signature(action: CarAction) -> tuple[Any, ...]:
+    """Versioned cost/semantic signature. Different ages must not merge."""
+    facts = action.observable_admission_facts or {}
+    age = facts.get("set_age_laps")
+    if age is None:
+        age = 0.0 if action.kind == "continuation" else None
+    return (
+        action.kind,
+        action.delay_laps,
+        action.compound,
+        None if age is None else round(float(age), 9),
+    )
 
 
 def reduce_action_menu(
     actions: list[CarAction],
     *,
-    policy: str = "kind_delay_compound_lex_set",
+    policy: str = REDUCTION_POLICY_ID,
 ) -> dict[str, Any]:
     admitted = [a for a in actions if a.admitted]
-    if policy != "kind_delay_compound_lex_set":
-        raise SchemaError(f"unsupported reduction policy {policy}")
+    if policy not in {REDUCTION_POLICY_ID, "kind_delay_compound_lex_set"}:
+        # Legacy alias maps to the Stage 4.1 signature policy.
+        if policy != "kind_delay_compound_age_lex_set.v1":
+            raise SchemaError(f"unsupported reduction policy {policy}")
     groups: dict[tuple[Any, ...], list[CarAction]] = {}
     for action in admitted:
-        groups.setdefault(equivalence_key(action), []).append(action)
+        groups.setdefault(equivalence_signature(action), []).append(action)
     retained: list[CarAction] = []
     member_map: dict[str, str] = {}
     degeneracy: dict[str, int] = {}
+    equivalence_ok: list[dict[str, Any]] = []
     for key, members in sorted(groups.items(), key=lambda kv: kv[0]):
+        # Before reduction, assert all members share the signature attributes.
+        ages = {equivalence_signature(m) for m in members}
+        if len(ages) != 1:
+            raise AssertionError("reduction group is not signature-equivalent")
         members_sorted = sorted(members, key=lambda a: (a.set_id or "", a.action_id))
         rep = members_sorted[0]
         retained.append(rep)
         degeneracy[rep.action_id] = len(members_sorted)
         for m in members_sorted:
             member_map[m.action_id] = rep.action_id
+        equivalence_ok.append(
+            {
+                "signature": list(key),
+                "representative": rep.action_id,
+                "members": [m.action_id for m in members_sorted],
+                "cost_semantic_equivalent": True,
+            }
+        )
     retained.sort(key=lambda a: a.action_id)
     return {
-        "policy": policy,
+        "policy": REDUCTION_POLICY_ID,
         "full_count": len(admitted),
         "reduced_count": len(retained),
         "member_to_representative": member_map,
         "degeneracy": degeneracy,
         "retained_action_ids": [a.action_id for a in retained],
         "retained_actions": retained,
+        "equivalence_groups": equivalence_ok,
     }
 
 
@@ -344,7 +329,11 @@ def build_joint_plan(action_a: CarAction, action_b: CarAction, selected_car_ids:
 
     def to_sim(action: CarAction) -> dict[str, Any]:
         if action.kind == "continuation":
-            return {"kind": "continuation"}
+            return {
+                "kind": "continuation",
+                "downstream_policy_id": DOWNSTREAM_POLICY_ID,
+                "downstream_policy_version": DOWNSTREAM_POLICY_VERSION,
+            }
         if action.kind == "pit_now":
             return {"kind": "pit_now", "compound": action.compound, "set_id": action.set_id}
         return {
@@ -361,6 +350,8 @@ def build_joint_plan(action_a: CarAction, action_b: CarAction, selected_car_ids:
             "complete_joint": True,
             "action_ids": {action_a.car_id: action_a.action_id, action_b.car_id: action_b.action_id},
             "selected_car_ids": list(selected_car_ids),
+            "downstream_policy_id": DOWNSTREAM_POLICY_ID,
+            "downstream_policy_version": DOWNSTREAM_POLICY_VERSION,
         },
     }
 
@@ -378,7 +369,6 @@ def generate_action_model(
 ) -> dict[str, Any]:
     obs = _obs_dict(observation)
     if selected_car_ids is None:
-        # Prefer explicit two-car team ordering from observation cars of selected team.
         selected_car_ids = _selected_car_ids(obs, public)
     if len(selected_car_ids) != 2:
         raise SchemaError("Stage 4 requires exactly two selected_car_ids")
@@ -400,19 +390,27 @@ def generate_action_model(
     reductions = {}
     menus = {}
     for cid, actions in per_car.items():
-        red = reduce_action_menu(actions) if reduce else {
-            "policy": "none_full_menu",
-            "full_count": len(actions),
-            "reduced_count": len(actions),
-            "member_to_representative": {a.action_id: a.action_id for a in actions},
-            "degeneracy": {a.action_id: 1 for a in actions},
-            "retained_action_ids": [a.action_id for a in actions],
-            "retained_actions": actions,
-        }
+        red = (
+            reduce_action_menu(actions)
+            if reduce
+            else {
+                "policy": "none_full_menu",
+                "full_count": len(actions),
+                "reduced_count": len(actions),
+                "member_to_representative": {a.action_id: a.action_id for a in actions},
+                "degeneracy": {a.action_id: 1 for a in actions},
+                "retained_action_ids": [a.action_id for a in actions],
+                "retained_actions": actions,
+                "equivalence_groups": [],
+            }
+        )
         reductions[cid] = {k: v for k, v in red.items() if k != "retained_actions"}
         menus[cid] = [a.model_dump(mode="python") for a in red["retained_actions"]]
     payload = {
         "action_model_version": ACTION_MODEL_VERSION,
+        "downstream_policy_id": DOWNSTREAM_POLICY_ID,
+        "downstream_policy_version": DOWNSTREAM_POLICY_VERSION,
+        "reduction_policy": REDUCTION_POLICY_ID,
         "selected_car_ids": list(selected_car_ids),
         "menus": menus,
         "full_counts": {cid: reductions[cid]["full_count"] for cid in selected_car_ids},

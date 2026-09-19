@@ -336,6 +336,28 @@ class FormulationCheckPlan(StrictModel):
         return self
 
 
+class FormulationRepairCheckPlan(StrictModel):
+    schema_version: str = SCHEMA_VERSION
+    plan_id: Literal["formulation_repair_check"] = "formulation_repair_check"
+    stage: Literal[4] = 4
+    evidence_kind: Literal["development"] = "development"
+    authorization_scope: str
+    description: str
+    units: list[AuthorizedWorkUnit]
+    seed_specification: dict[str, Any]
+
+    @model_validator(mode="after")
+    def _stage41_units(self) -> FormulationRepairCheckPlan:
+        if not self.units:
+            raise SchemaError("formulation_repair_check plan must contain units")
+        for unit in self.units:
+            if unit.plan_id != "formulation_repair_check" or unit.stage != 4:
+                raise SchemaError(f"unit {unit.unit_id} is not a Stage 4.1 formulation_repair_check unit")
+            if unit.evidence_kind != "development":
+                raise SchemaError("formulation_repair_check units remain development evidence")
+        return self
+
+
 class ArtifactRecord(StrictModel):
     schema_version: str = SCHEMA_VERSION
     artifact_id: str
@@ -537,6 +559,13 @@ def parse_formulation_check_plan(data: dict[str, Any]) -> FormulationCheckPlan:
         raise SchemaError(str(exc)) from exc
 
 
+def parse_formulation_repair_check_plan(data: dict[str, Any]) -> FormulationRepairCheckPlan:
+    try:
+        return FormulationRepairCheckPlan.model_validate(data)
+    except Exception as exc:
+        raise SchemaError(str(exc)) from exc
+
+
 def write_json_schemas(directory: Path) -> None:
     directory.mkdir(parents=True, exist_ok=True)
     mapping = {
@@ -548,6 +577,7 @@ def write_json_schemas(directory: Path) -> None:
         "simulator_followup_plan.schema.json": SimulatorFollowupPlan,
         "simulator_repair_plan.schema.json": SimulatorRepairPlan,
         "formulation_check_plan.schema.json": FormulationCheckPlan,
+        "formulation_repair_check_plan.schema.json": FormulationRepairCheckPlan,
         "run_manifest.schema.json": RunManifest,
         "unit_attempt.schema.json": UnitAttempt,
         "artifact_record.schema.json": ArtifactRecord,
