@@ -11,7 +11,7 @@ Starting HEAD discrepancy vs Stage 3.3 report: Stage 3.3 text cited ending commi
 ```text
 STAGE_4_STATUS: COMPLETE
 STARTING_HEAD_AND_TREE: HEAD 6e504f9c8b9c8517ebfbe542ff1a7d0dc6a8f348 dirty=false; doctor ok; diagnostic-stage3-3 --verify match=true; pytest baseline 88 passed; hardware_execution_enabled false; scientific_protocol DRAFT
-ENDING_HEAD_LOCAL_COMMIT_AND_TREE: recorded after local Stage 4 commit; not pushed
+ENDING_HEAD_LOCAL_COMMIT_AND_TREE: HEAD 5c949769d96079b1db9aad310a04fcc08c81c29f dirty=false; local commit "Close Stage 4 Gate C formulation with action model, QUBO, and classical references."; not pushed
 ENVIRONMENT_AND_NEW_FREE_DEPENDENCIES: CPython 3.12.13 macOS arm64; added numpy==2.5.3 and scipy==1.18.1 (free/open-source; SciPy milp/HiGHS); pins in requirements.lock
 ACTION_MODEL_VERSION: 1.0.0
 FULL_AND_REDUCED_ACTION_COUNTS: across 64 episodes, per-car full menus min/max 1–22 (sum 1601); reduced menus min/max 1–10 (sum 845); reduction policy kind_delay_compound_lex_set
