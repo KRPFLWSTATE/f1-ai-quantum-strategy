@@ -69,4 +69,4 @@ No `git push`. No IBM/QPU/provider call. No Stage 5 QAOA / learned selectors. No
 
 ## Closing git note
 
-Local Stage 4 commit records the authorized formulation software, evidence, documentation, and review bundle. Push was not performed.
+Local commit `5c949769d96079b1db9aad310a04fcc08c81c29f` records the authorized Stage 4 formulation software and evidence stack. Push was not performed.
