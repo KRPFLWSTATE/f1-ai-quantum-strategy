@@ -9,7 +9,7 @@ Prior runs preserved (identifiers not reused): Stage 3 `e2258740-1d08-4427-8305-
 ```text
 STAGE_3_3_STATUS: COMPLETE
 STARTING_GIT_STATE: HEAD 358a17b1a03d53248c5dd81305c24db384691f9b dirty=true (uncommitted Stage 3.1/3.2 stack present); doctor ok; hardware_execution_enabled false; scientific_protocol DRAFT; ledger runs include 62b1e5ee-… simulator_repair completed
-ENDING_GIT_STATE_AND_LOCAL_COMMIT: see report closing section after packaging
+ENDING_GIT_STATE_AND_LOCAL_COMMIT: HEAD 0dbbf0b9afcfbc80e72bfb6f4beee9d8ab59cbbd clean; local commit "Close Stage 3.2 repairs and Stage 3.3 evidence correction."; not pushed
 PRODUCTION_BEHAVIOR_CHANGED: false — Stage 3.3 changed diagnostic tooling, tests, evidence erratum/corrected artifact, and documentation/status only; simulator.v1 remains 1.0.2; no new simulator_repair run
 STALE_ARTIFACT_PRESERVED: docs/evidence/stage3_2/post_repair_diagnostic.json SHA-256 d5d63fc2d5f832485ada3318c34d38acc832df8fe7c9b06e1a1bd0e85fa4472c; erratum docs/evidence/stage3_3/stage3_2_post_repair_diagnostic_erratum.json
 CORRECTED_DIAGNOSTIC: docs/evidence/stage3_3/post_repair_diagnostic.corrected.json SHA-256 10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35; generation `python -m f1q simulator diagnostic-stage3-3 --write`; verify `python -m f1q simulator diagnostic-stage3-3 --verify` (match=true); scientific_payload_sha256 0d5ef101a6da5f2d133c8d6b06a0916fd4a3c779fd9441981da1aba0c680a115
@@ -58,4 +58,4 @@ No `git push`. No IBM/QPU/provider call. No Stage 4 QUBO/action-model work.
 
 ## Closing git note
 
-Local commit created for the authorized Stage 3.1/3.2/3.3 software and evidence stack that was sitting uncommitted on HEAD `358a17b…`. Push was not performed.
+Local commit `0dbbf0b9afcfbc80e72bfb6f4beee9d8ab59cbbd` records the authorized Stage 3.1/3.2/3.3 software and evidence stack. Push was not performed.
