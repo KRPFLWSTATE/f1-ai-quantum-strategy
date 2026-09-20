@@ -20,8 +20,7 @@ def _action_lookup(instance: A2Instance, car_id: str, action_id: str) -> Action:
 
 
 def check_policy_legal(instance: A2Instance, policy: dict[str, dict[str, str]]) -> dict[str, Any]:
-    """Validate one-hot completeness, inventory along every scenario path, obligations."""
-    # Completeness / causal: every info set must have a choice for both cars
+    """Validate one-hot completeness, inventory, obligations, commitment deadlines."""
     for info in instance.info_sets:
         if info.info_set_id not in policy:
             return {"legal": False, "reason": f"missing info set {info.info_set_id}"}
@@ -32,8 +31,17 @@ def check_policy_legal(instance: A2Instance, policy: dict[str, dict[str, str]]) 
             ids = {a.action_id for a in instance.actions_by_car[car]}
             if aid not in ids:
                 return {"legal": False, "reason": f"illegal action {aid}"}
+            action = _action_lookup(instance, car, aid)
+            # Commitment expiry: action invalid if chosen at epoch > expiry
+            if action.commitment_expires_epoch is not None and info.epoch > action.commitment_expires_epoch:
+                return {
+                    "legal": False,
+                    "reason": (
+                        f"commitment expired {aid} at epoch={info.epoch} "
+                        f"(expires={action.commitment_expires_epoch})"
+                    ),
+                }
 
-    # Inventory along each scenario (causal path through reachable info sets)
     for sc in instance.scenarios:
         inv = {c: instance.initial_inventory[c].copy() for c in instance.car_ids}
         for epoch in range(instance.n_epochs):
@@ -94,11 +102,13 @@ def causal_visibility_ok(instance: A2Instance) -> bool:
         for sid in info.reachable_scenarios:
             sc = next(s for s in instance.scenarios if s.scenario_id == sid)
             if info.epoch == 0:
+                if info.observable_signature != "root":
+                    return False
                 continue
             if info.epoch == 1 and not info.observable_signature.startswith(f"dur:{sc.sc_duration_laps}"):
                 return False
             if info.epoch >= 2:
                 expected = f"dur:{sc.sc_duration_laps}|rst:{sc.restart_mode}"
-                if info.observable_signature != expected:
+                if not info.observable_signature.startswith(expected):
                     return False
     return True

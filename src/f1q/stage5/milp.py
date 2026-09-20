@@ -96,9 +96,21 @@ def solve_a2_milp(instance: A2Instance, *, time_limit_s: float = 30.0) -> dict[s
         b_lb.append(-1.0)
         b_ub.append(np.inf)
 
-    # Inventory / obligation: soft enumeration filter post-solve for tiny;
-    # for MILP add simple per-car compound consumption inequalities aggregated.
-    # Path-wise exact inventory via additional constraints for each scenario.
+    # Commitment deadline: expired actions forbidden at info sets beyond expiry
+    for meta in vmap["index_to_meta"]:
+        action = next(
+            a
+            for a in instance.actions_by_car[meta["car_id"]]
+            if a.action_id == meta["action_id"]
+        )
+        if action.commitment_expires_epoch is not None and meta["epoch"] > action.commitment_expires_epoch:
+            row = np.zeros(n_tot)
+            row[meta["index"]] = 1.0
+            A_rows.append(row)
+            b_lb.append(0.0)
+            b_ub.append(0.0)
+
+    # Inventory stock: path-wise per scenario
     for sc in instance.scenarios:
         for car in instance.car_ids:
             for compound in ("soft", "medium", "hard"):
@@ -113,6 +125,75 @@ def solve_a2_milp(instance: A2Instance, *, time_limit_s: float = 30.0) -> dict[s
                 A_rows.append(row)
                 b_lb.append(-np.inf)
                 b_ub.append(float(stock))
+
+    # Compound obligation: on every scenario path, distinct compounds used ≥ required
+    # Introduce binary u[sc, car, compound] indicators (appended after z)
+    u_meta: list[tuple[str, str, str]] = []
+    u_start = n_tot
+    for sc in instance.scenarios:
+        for car in instance.car_ids:
+            for compound in ("soft", "medium", "hard"):
+                u_meta.append((sc.scenario_id, car, compound))
+    n_u = len(u_meta)
+    if n_u:
+        # Expand c_full / A for u variables
+        c_full = np.concatenate([c_full, np.zeros(n_u)])
+        if A_rows:
+            A_rows = [np.concatenate([r, np.zeros(n_u)]) for r in A_rows]
+        n_tot = n_tot + n_u
+        for ui, (sid, car, compound) in enumerate(u_meta):
+            u_idx = u_start + ui
+            # u >= each pit action of this compound along the scenario path
+            sc = next(s for s in instance.scenarios if s.scenario_id == sid)
+            pit_idxs = []
+            for epoch in range(instance.n_epochs):
+                info = info_set_for_scenario(instance, epoch, sc.scenario_id)
+                for a in instance.actions_by_car[car]:
+                    if a.kind == "pit_now" and a.compound == compound:
+                        pit_idxs.append(vmap["key_to_index"][(info.info_set_id, car, a.action_id)])
+            # Also count initially used compounds
+            initially = compound in instance.initial_inventory[car].compounds_used
+            if initially:
+                # Force u = 1
+                row = np.zeros(n_tot)
+                row[u_idx] = 1.0
+                A_rows.append(row)
+                b_lb.append(1.0)
+                b_ub.append(1.0)
+            else:
+                # u >= x_i for each pit; u <= sum x_i
+                for idx in pit_idxs:
+                    row = np.zeros(n_tot)
+                    row[u_idx] = 1.0
+                    row[idx] = -1.0
+                    A_rows.append(row)
+                    b_lb.append(0.0)
+                    b_ub.append(np.inf)
+                if pit_idxs:
+                    row = np.zeros(n_tot)
+                    row[u_idx] = 1.0
+                    for idx in pit_idxs:
+                        row[idx] -= 1.0
+                    A_rows.append(row)
+                    b_lb.append(-np.inf)
+                    b_ub.append(0.0)
+                else:
+                    row = np.zeros(n_tot)
+                    row[u_idx] = 1.0
+                    A_rows.append(row)
+                    b_lb.append(0.0)
+                    b_ub.append(0.0)
+        # sum_u >= required per (scenario, car)
+        for sc in instance.scenarios:
+            for car in instance.car_ids:
+                req = instance.initial_inventory[car].required_compounds
+                row = np.zeros(n_tot)
+                for ui, (sid, c, compound) in enumerate(u_meta):
+                    if sid == sc.scenario_id and c == car:
+                        row[u_start + ui] = 1.0
+                A_rows.append(row)
+                b_lb.append(float(req))
+                b_ub.append(np.inf)
 
     A = np.vstack(A_rows) if A_rows else np.zeros((0, n_tot))
     constraints = LinearConstraint(A, np.asarray(b_lb), np.asarray(b_ub))

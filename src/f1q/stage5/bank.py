@@ -202,11 +202,15 @@ def run_parameter_bank(
         "per_anchor": per_anchor,
         "elapsed_s": time.perf_counter() - t0,
         "fits_retained": len(all_fits),
+        "n_fit_identities": len(all_fits),
+        "expected_fit_identities": len(anchors) * starts_per_anchor * len(FAMILY_DEPTHS),
+        "all_fits": all_fits,
         "receipt_hash": sha256_json(
             {
                 "evals": total_evals,
                 "failures": fit_failures,
                 "donors": {k: v["inventory_hash"] for k, v in donor_inventory.items()},
+                "n_fits": len(all_fits),
             }
         ),
     }

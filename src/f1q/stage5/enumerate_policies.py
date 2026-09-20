@@ -28,14 +28,19 @@ def enumerate_legal_policies(instance: A2Instance, *, max_policies: int = 5_000_
                 "total_one_hot_space": None,
                 "n_legal": None,
                 "best_cost": None,
+                "worst_cost": None,
+                "f_star": None,
+                "f_max": None,
                 "best_policy": None,
                 "elapsed_s": time.perf_counter() - t0,
                 "truncated": True,
             }
 
     best_cost = float("inf")
+    worst_cost = float("-inf")
     best_policy = None
     n_legal = 0
+    legal_costs: list[float] = []
     choice_iters = [b[2] for b in blocks]
     for choices in itertools.product(*choice_iters):
         policy: dict[str, dict[str, str]] = {}
@@ -46,15 +51,22 @@ def enumerate_legal_policies(instance: A2Instance, *, max_policies: int = 5_000_
         n_legal += 1
         ev = evaluate_policy_cost(instance, policy)
         cost = float(ev["expected_cost"])
+        legal_costs.append(cost)
         if cost < best_cost:
             best_cost = cost
             best_policy = policy
+        if cost > worst_cost:
+            worst_cost = cost
     return {
         "status": "OK",
         "total_one_hot_space": total_one_hot,
         "n_legal": n_legal,
         "best_cost": None if best_policy is None else float(best_cost),
+        "worst_cost": None if best_policy is None else float(worst_cost),
+        "f_star": None if best_policy is None else float(best_cost),
+        "f_max": None if best_policy is None else float(worst_cost),
         "best_policy": best_policy,
+        "legal_costs_sample": legal_costs[:32],
         "elapsed_s": time.perf_counter() - t0,
         "truncated": False,
     }

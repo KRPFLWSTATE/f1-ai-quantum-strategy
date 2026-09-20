@@ -38,6 +38,9 @@ class Phase5Config(StrictModel):
     deadline_s_circuit_unit: float = 5.0
     run_timeout_s: float = 1200.0
     progress_interval_s: float = 30.0
+    variational_ref_starts: int = 1
+    variational_ref_max_evals: int = 40
+    corrected_phase5: bool = True
     feature_schema: list[str] = [
         "n_logical_vars",
         "n_info_sets",

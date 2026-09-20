@@ -1,4 +1,4 @@
-"""C0 transverse-X mixer QAOA and shared circuit utilities (local Qiskit only)."""
+"""C0 transverse-X mixer QAOA with actual inspectable Qiskit circuits."""
 
 from __future__ import annotations
 
@@ -10,7 +10,6 @@ from f1q.stage5.qubo import qubo_energy
 
 
 def cost_unitary_diags(qubo: dict[str, Any], *, scaled: bool = True) -> np.ndarray:
-    """Diagonal of cost Hamiltonian in computational basis (length 2^n)."""
     n = int(qubo["n"])
     dim = 1 << n
     diags = np.zeros(dim, dtype=float)
@@ -25,14 +24,11 @@ def apply_diag_phase(state: np.ndarray, diags: np.ndarray, gamma: float) -> np.n
 
 
 def apply_rx_mixer(state: np.ndarray, n: int, beta: float) -> np.ndarray:
-    """Tensor-product RX(2β) on each qubit (transverse-X mixer)."""
-    # RX(θ) = [[cos(θ/2), -i sin(θ/2)], [-i sin(θ/2), cos(θ/2)]] with θ=2β
     c = np.cos(beta)
     s = np.sin(beta)
     out = state.astype(complex).copy()
     for q in range(n):
         step = 1 << q
-        # Pair amplitudes differing at bit q
         new = out.copy()
         for b in range(1 << n):
             if (b & step) == 0:
@@ -66,18 +62,64 @@ def simulate_c0(
         state = apply_diag_phase(state, diags, float(gammas[layer]))
         state = apply_rx_mixer(state, n, float(betas[layer]))
     probs = np.abs(state) ** 2
-    norm = float(np.sum(probs))
-    exp = float(np.dot(probs, diags))
     return {
         "family": "C0",
         "p": p,
         "n": n,
         "state": state,
         "probs": probs,
-        "norm": norm,
-        "expectation_scaled": exp,
+        "norm": float(np.sum(probs)),
+        "expectation_scaled": float(np.dot(probs, diags)),
         "param_count": 2 * p,
         "init": "plus",
+    }
+
+
+def build_c0_qiskit_circuit(
+    qubo: dict[str, Any],
+    gammas: list[float],
+    betas: list[float],
+    *,
+    scaled: bool = True,
+):
+    """Actual C0 circuit: H^n init, QUBO cost as Phase/CPhase (RZ/RZZ-equiv), RX mixer."""
+    from qiskit import QuantumCircuit
+    from qiskit.circuit.library import PhaseGate, CPhaseGate
+
+    n = int(qubo["n"])
+    Q = np.asarray(qubo["Q_scaled"] if scaled else qubo["Q_dense"], dtype=float)
+    offset = float(qubo["offset_scaled"] if scaled else qubo["offset"])
+    qc = QuantumCircuit(n, name="C0_actual")
+    # Init |+>^n
+    for q in range(n):
+        qc.h(q)
+    n_cost_1q = 0
+    n_cost_2q = 0
+    for g, b in zip(gammas, betas):
+        g = float(g)
+        # Global phase from offset ignored for observables
+        _ = offset
+        for i in range(n):
+            if Q[i, i] != 0.0:
+                # PhaseGate(θ)|1> = e^{iθ}|1>; want e^{-i g Q_ii} on |1>
+                qc.append(PhaseGate(-g * float(Q[i, i])), [i])
+                n_cost_1q += 1
+            for j in range(i + 1, n):
+                if Q[i, j] != 0.0:
+                    qc.append(CPhaseGate(-g * float(Q[i, j])), [i, j])
+                    n_cost_2q += 1
+        for q in range(n):
+            qc.rx(2.0 * float(b), q)
+    return {
+        "circuit": qc,
+        "n": n,
+        "cost_1q_gates": n_cost_1q,
+        "cost_2q_gates": n_cost_2q,
+        "mixer_1q_gates": n * len(betas),
+        "has_quadratic_interactions": int(qubo.get("n_quadratic_terms", 0)) > 0,
+        "init": "H^n",
+        "mixer": "transverse_X_RX",
+        "cost_encoding": "Phase_and_CPhase_from_actual_QUBO",
     }
 
 
