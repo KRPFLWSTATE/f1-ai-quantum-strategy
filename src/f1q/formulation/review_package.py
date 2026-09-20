@@ -251,7 +251,22 @@ src = os.path.join(root, "src")
 for k in list(sys.modules):
     if k == "f1q" or k.startswith("f1q."):
         del sys.modules[k]
-sys.path = [src] + [p for p in sys.path if "f1-ai-quantum-strategy" not in p.replace("\\\\","/")]
+# Keep third-party site-packages (may live under the project .venv path).
+# Strip only checkout/editable project source trees, never the extracted src.
+filtered = []
+for p in sys.path:
+    norm = os.path.realpath(p).replace("\\\\", "/")
+    if norm == os.path.realpath(src):
+        continue
+    if norm.rstrip("/").endswith("/src") and "f1-ai-quantum-strategy" in norm and "/.venv/" not in norm:
+        continue
+    if "/site-packages" in norm or "/lib-dynload" in norm or "python3." in norm or norm.endswith(".zip"):
+        filtered.append(p)
+        continue
+    if "f1-ai-quantum-strategy" in norm and "/.venv/" not in norm:
+        continue
+    filtered.append(p)
+sys.path = [src] + filtered
 import f1q
 mods = {}
 ok = True
@@ -268,7 +283,7 @@ for name in [
     if not path or not os.path.realpath(path).startswith(os.path.realpath(src)):
         ok = False
         failures.append({"module": name, "file": path})
-print(json.dumps({"ok": ok, "failures": failures, "modules": mods, "f1q_file": f1q.__file__}))
+print(json.dumps({"ok": ok, "failures": failures, "modules": mods, "f1q_file": f1q.__file__, "sys_path_head": sys.path[:6]}))
 """
     env = os.environ.copy()
     env.pop("PYTHONPATH", None)
