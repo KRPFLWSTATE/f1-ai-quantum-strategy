@@ -1,0 +1,75 @@
+{
+  "IBM_OR_OTHER_CREDENTIAL_REQUESTED_OR_USED": false,
+  "NEW_PHYSICAL_QPU_JOBS_SUBMITTED": 0,
+  "PUSH_PERFORMED": false,
+  "QPU_USAGE_SECONDS": 0,
+  "clean_extract_source_origin": {
+    "command": [
+      "/Users/kawinperera/f1-ai-quantum-strategy/.venv/bin/python",
+      "-I",
+      "-c",
+      "<audit>",
+      "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop"
+    ],
+    "f1q_file": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/__init__.py",
+    "failures": [],
+    "modules": {
+      "f1q": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/__init__.py",
+      "f1q.errors": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/errors.py",
+      "f1q.formulation": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/formulation/__init__.py",
+      "f1q.formulation.actions": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/formulation/actions.py",
+      "f1q.formulation.compiler": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/formulation/compiler.py",
+      "f1q.formulation.evaluator": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/formulation/evaluator.py",
+      "f1q.hashing": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/hashing.py",
+      "f1q.paths": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/paths.py",
+      "f1q.simulator": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/simulator/__init__.py",
+      "f1q.simulator.interface": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/simulator/interface.py"
+    },
+    "ok": true,
+    "returncode": 0,
+    "sys_path_head": [
+      "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src",
+      "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python312.zip",
+      "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12",
+      "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/lib-dynload",
+      "/Users/kawinperera/f1-ai-quantum-strategy/.venv/lib/python3.12/site-packages"
+    ]
+  },
+  "clean_extract_targeted_import": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "{\"ok\": true, \"f1q\": \"/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/__init__.py\", \"review_package\": \"/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop/src/f1q/formulation/review_package.py\"}\n"
+  },
+  "failures": [],
+  "inner_aggregate_ok": true,
+  "inner_manifest": {
+    "algorithm_version": "canonical_row_v1_bytes_path_sha256",
+    "canonical_aggregate_sha256": "c0eea8ce60f47efdfd2a71d2b0dbb173fca644ab126a367a80525358f7c7ce6e",
+    "member_count": 337
+  },
+  "interpreter": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "member_set_ok": true,
+  "ok": true,
+  "reviewed_source_commit": "97acf67b4c58816d8f710db7604151f914f3e2f8",
+  "sidecar_path": "review/STAGE_4_2_REVIEW.manifest.json",
+  "sidecar_sha256": "66af7922906d247f9d4b0943b3344a485c664e701afe1668e75f0fc3c97ed848",
+  "source_origin_ok": true,
+  "stage": "4.2",
+  "verify": {
+    "algorithm_version": "canonical_row_v1_bytes_path_sha256",
+    "canonical_aggregate_sha256": "c0eea8ce60f47efdfd2a71d2b0dbb173fca644ab126a367a80525358f7c7ce6e",
+    "extract_dir": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage42_extract_tdy9wlop",
+    "failures": [],
+    "manifest_aggregate": "c0eea8ce60f47efdfd2a71d2b0dbb173fca644ab126a367a80525358f7c7ce6e",
+    "member_count": 337,
+    "ok": true
+  },
+  "working_directory": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "zip": {
+    "bytes": 714162,
+    "path": "/Users/kawinperera/f1-ai-quantum-strategy/review/STAGE_4_2_REVIEW.zip",
+    "sha256": "7aec1f48172cab627bb274451a217b319f07671d47de1732e19b658be31f8aa5"
+  },
+  "zip_hash_stable": true,
+  "zip_sha256_recheck": "7aec1f48172cab627bb274451a217b319f07671d47de1732e19b658be31f8aa5"
+}

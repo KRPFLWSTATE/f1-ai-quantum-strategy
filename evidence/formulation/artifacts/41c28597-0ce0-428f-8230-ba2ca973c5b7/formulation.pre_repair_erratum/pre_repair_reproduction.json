@@ -1,0 +1,379 @@
+{
+  "F1": {
+    "event_kinds_in_checkpoint_log_sample": [
+      "checkpoint_regime_revealed",
+      "initialized",
+      "overtake",
+      "pit_entry",
+      "service_start"
+    ],
+    "event_schema_keys": [
+      "t",
+      "kind",
+      "car_id",
+      "detail"
+    ],
+    "family_0000_episode_02_SC": {
+      "decision_time": {
+        "availability_time": "race_s:2566.2285020002514",
+        "forecast_issuance_time": null,
+        "forecast_uncertainty": null,
+        "source": "decision epoch",
+        "status": "known",
+        "unit": "s",
+        "unknown_reason": null,
+        "value": 2566.2285020002514
+      },
+      "engine_commitment_private": [
+        {
+          "car_id": "car.fictional.windrow.a",
+          "compound": "hard",
+          "pending_compound": "soft",
+          "pending_set_id": "car.fictional.windrow.a.set.soft.0",
+          "pit_phase": "transit_in",
+          "pit_phase_end": 2569.0676621808643,
+          "pit_phase_start_t": 2547.4100300380073,
+          "t": 2566.2285020002514
+        },
+        {
+          "car_id": "car.fictional.windrow.b",
+          "compound": "soft",
+          "pending_compound": "medium",
+          "pending_set_id": "car.fictional.windrow.b.set.medium.0",
+          "pit_phase": "transit_in",
+          "pit_phase_end": 2569.2609416931514,
+          "pit_phase_start_t": 2547.6033095502944,
+          "t": 2566.2285020002514
+        }
+      ],
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/02/SC",
+      "executed_stops_all_events": {
+        "car.fictional.windrow.a": [],
+        "car.fictional.windrow.b": []
+      },
+      "executed_stops_post_only": {
+        "car.fictional.windrow.a": [],
+        "car.fictional.windrow.b": []
+      },
+      "final_compounds": {
+        "car.fictional.windrow.a": "soft",
+        "car.fictional.windrow.b": "medium"
+      },
+      "final_sets": {
+        "car.fictional.windrow.a": "car.fictional.windrow.a.set.soft.0",
+        "car.fictional.windrow.b": "car.fictional.windrow.b.set.medium.0"
+      },
+      "observation_cars": [
+        {
+          "car_id": "car.fictional.windrow.a",
+          "compound": "hard",
+          "in_pit_lane": true,
+          "mounted_set_id": "car.fictional.windrow.a.set.hard.0",
+          "service_state": "transit_in",
+          "tyre_age_laps": 16.11322790507591,
+          "used_compounds": [
+            "hard"
+          ]
+        },
+        {
+          "car_id": "car.fictional.windrow.b",
+          "compound": "soft",
+          "in_pit_lane": true,
+          "mounted_set_id": "car.fictional.windrow.b.set.soft.0",
+          "service_state": "transit_in",
+          "tyre_age_laps": 9.787799520630015,
+          "used_compounds": [
+            "soft"
+          ]
+        }
+      ],
+      "post_checkpoint_event_kinds": {
+        "car_finish": 1,
+        "lap_complete": 520,
+        "leader_finish": 1,
+        "overtake": 33,
+        "pit_exit": 20,
+        "pit_wait": 10,
+        "regime_end": 1,
+        "service_complete": 20,
+        "service_start": 19
+      },
+      "ranking_from_outcome": {
+        "car.fictional.bluehaven.a": 9,
+        "car.fictional.bluehaven.b": 13,
+        "car.fictional.cedarline.a": 3,
+        "car.fictional.cedarline.b": 8,
+        "car.fictional.harbour.a": 2,
+        "car.fictional.harbour.b": 7,
+        "car.fictional.ironbridge.a": 18,
+        "car.fictional.ironbridge.b": 4,
+        "car.fictional.lakemere.a": 11,
+        "car.fictional.lakemere.b": 15,
+        "car.fictional.northshore.a": 16,
+        "car.fictional.northshore.b": 1,
+        "car.fictional.redcliff.a": 17,
+        "car.fictional.redcliff.b": 12,
+        "car.fictional.silverfen.a": 5,
+        "car.fictional.silverfen.b": 19,
+        "car.fictional.stoneford.a": 14,
+        "car.fictional.stoneford.b": 10,
+        "car.fictional.windrow.a": 6,
+        "car.fictional.windrow.b": 20
+      },
+      "service_complete_events": [
+        {
+          "car_id": "car.fictional.windrow.a",
+          "detail": {
+            "compound": "soft",
+            "set_id": "car.fictional.windrow.a.set.soft.0"
+          },
+          "kind": "service_complete",
+          "t": 2571.567662181
+        },
+        {
+          "car_id": "car.fictional.windrow.b",
+          "detail": {
+            "compound": "medium",
+            "set_id": "car.fictional.windrow.b.set.medium.0"
+          },
+          "kind": "service_complete",
+          "t": 2574.067662181
+        }
+      ]
+    },
+    "finding": "evaluator _executed_stops_from_events reads type/event_type and tyre_change; simulator uses kind and service_complete",
+    "on_track_instructed_stop_example": {
+      "actions": {
+        "car.fictional.ironbridge.a": "car.fictional.ironbridge.a|pit_now|hard|car.fictional.ironbridge.a.set.hard.1",
+        "car.fictional.ironbridge.b": "car.fictional.ironbridge.b|continuation|compound_obligation.v1@1.1.0"
+      },
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/01/SC",
+      "executed_stops_extractor": {
+        "car.fictional.ironbridge.a": [],
+        "car.fictional.ironbridge.b": []
+      },
+      "post_checkpoint_kinds": {
+        "car_finish": 1,
+        "lap_complete": 538,
+        "leader_finish": 1,
+        "overtake": 36,
+        "pit_entry": 1,
+        "pit_exit": 1,
+        "regime_end": 1,
+        "sc_gap_meet": 5,
+        "service_complete": 1,
+        "service_start": 1
+      },
+      "service_complete": [
+        {
+          "car_id": "car.fictional.ironbridge.a",
+          "detail": {
+            "compound": "hard",
+            "set_id": "car.fictional.ironbridge.a.set.hard.1"
+          },
+          "kind": "service_complete",
+          "t": 2722.029814108
+        }
+      ]
+    },
+    "panel_style_first_menu_evals": {
+      "n_eval": 64,
+      "n_with_post_checkpoint_service_complete": 28,
+      "n_zero_extracted_stops_despite_service": 28
+    },
+    "reproduced": true
+  },
+  "F2": {
+    "actual_in_pit_unmet_no_planned_stop": 43,
+    "expected_near_43": 43,
+    "family_0000_episode_02_SC_compiler": {
+      "observation_lacks_pending_commitment": true,
+      "unary_details": {
+        "car.fictional.windrow.a": [
+          {
+            "action_id": "car.fictional.windrow.a|continuation|compound_obligation.v1@1.1.0",
+            "final_compound": "hard",
+            "n_laps": 27,
+            "pit_loss_applied_s": 0.0,
+            "planned_stops": [],
+            "unary_s": 4143.6370561834165,
+            "units": "seconds"
+          }
+        ],
+        "car.fictional.windrow.b": [
+          {
+            "action_id": "car.fictional.windrow.b|continuation|compound_obligation.v1@1.1.0",
+            "final_compound": "soft",
+            "n_laps": 27,
+            "pit_loss_applied_s": 0.0,
+            "planned_stops": [],
+            "unary_s": 3972.8676460646298,
+            "units": "seconds"
+          }
+        ]
+      }
+    },
+    "finding": "in-pit continuation with unmet obligation compiled as no planned stop / zero pit cost / pre-service final_compound",
+    "reproduced": true,
+    "stage4_1_stored_counts": {
+      "continuation_with_unmet_obligation": 56,
+      "in_pit_unmet_with_empty_planned_stops": 43,
+      "in_pit_with_unmet_obligation": 43,
+      "selected_car_continuation_actions": 128
+    }
+  },
+  "F3": {
+    "continuation_admission_comment_in_source": "Continuation is always admitted when the car is live",
+    "finding": "generate_car_actions admits live continuation and defers impossible cases",
+    "reproduced": true
+  },
+  "F4": {
+    "finding": "all-pair semantic check is not all-pair terminal execution",
+    "reproduced": true,
+    "sample_record_cross_check": {
+      "analytical_semantic": 0,
+      "cap": null,
+      "checked": 1,
+      "disagreements": [],
+      "expected": 1,
+      "failed": 0,
+      "hidden_cap": false,
+      "round_trip_ok": 1,
+      "semantic_failures": [],
+      "simulated_semantic": 1,
+      "validation_agreements": 1
+    },
+    "sum_over_64_records": {
+      "analytical_semantic": 3294,
+      "expected_pairs": 3361,
+      "simulated_semantic": 67
+    },
+    "unit_pair_cross_check_totals": {
+      "checked": 3361,
+      "expected": 3361,
+      "failed": 0,
+      "hidden_cap": false
+    }
+  },
+  "F5": {
+    "finding": "reduction equivalence proof rechecks equivalence_signature (circular)",
+    "reproduced": true,
+    "sample_reduction_equivalence_proof": {
+      "cars": {
+        "car.fictional.harbour.a": [],
+        "car.fictional.harbour.b": []
+      },
+      "ok": true
+    }
+  },
+  "F6": {
+    "finding": "classify_order_relation makes tie_loss_of_discrimination unreachable when discordant==0 because concordant>=0 always",
+    "hand_case_proxy_order_eval_tie": {
+      "concordant": 0,
+      "discordant": 0,
+      "n": 2,
+      "relation": "agreement_with_ties",
+      "tau_b": null,
+      "tied_both": 0,
+      "tied_x": 0,
+      "tied_y": 1
+    },
+    "panel_case_count": 8,
+    "panel_cases_summary": [
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/03/SC",
+        "n_unique": null,
+        "relation": null
+      },
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/06/VSC",
+        "n_unique": null,
+        "relation": null
+      },
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/03/SC",
+        "n_unique": null,
+        "relation": null
+      },
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/05/VSC",
+        "n_unique": null,
+        "relation": null
+      },
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/01/SC",
+        "n_unique": null,
+        "relation": null
+      },
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/07/VSC",
+        "n_unique": null,
+        "relation": null
+      },
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/00/SC",
+        "n_unique": null,
+        "relation": null
+      },
+      {
+        "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/04/VSC",
+        "n_unique": null,
+        "relation": null
+      }
+    ],
+    "reproduced": true,
+    "tie_loss_unreachable": true
+  },
+  "F7": {
+    "current_sha256": "8b8e62a00d3f5b538848790fa0cef4fcb1a49fc72b4c4db8f9003ea9785c0821",
+    "expected_historical_sha256": "10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35",
+    "expected_stage4_1_sha256": "8b8e62a00d3f5b538848790fa0cef4fcb1a49fc72b4c4db8f9003ea9785c0821",
+    "finding": "Stage 4.1 overwrote docs/evidence/stage3_3/post_repair_diagnostic.corrected.json",
+    "historical_sha256_from_commit_0dbbf0b": "10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35",
+    "historical_sha256_from_commit_5c94976": "10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35",
+    "matches_prompt_historical": true,
+    "matches_prompt_stage4_1": true,
+    "reproduced": true
+  },
+  "F8": {
+    "finding": "docs may retain obsolete adjacent-lap / version 1.0 body text under 1.1 banners",
+    "note": "verified separately by documentation scan during repair",
+    "obsolete_phrase_hits": [],
+    "reproduced": true
+  },
+  "F9": {
+    "final_verify_inner_aggregate_ok": true,
+    "final_verify_ok": true,
+    "finding": "Stage 4.1 ZIP aggregate claim and clean-extract packaging invalid",
+    "local_sidecar_present": true,
+    "manifest_aggregate_fields": {
+      "canonical_aggregate_sha256": "c450a3dddad33adce7acc2ebd6011ab6ddebece6629d910dca812e6408f0742f"
+    },
+    "missing_transitive_modules": {
+      "errors.py": true,
+      "hashing.py": true,
+      "paths.py": true
+    },
+    "non_manifest_members": 164,
+    "packaging_test_is_literal_compare": true,
+    "prompt_bytes_algorithm": "ff5b7f012e3da790ed845381c029208e0c04a1427a150a92e84d13e682251317",
+    "prompt_claimed_aggregate": "c450a3dddad33adce7acc2ebd6011ab6ddebece6629d910dca812e6408f0742f",
+    "prompt_path_algorithm": "aeefdaed3f72e8a57a6aa45cd6e8b23bb9b5d0f3868f969bb597cc8623df3047",
+    "recomputed_bytes_path_sha_aggregate": "ff5b7f012e3da790ed845381c029208e0c04a1427a150a92e84d13e682251317",
+    "recomputed_path_sha_only_aggregate": "aeefdaed3f72e8a57a6aa45cd6e8b23bb9b5d0f3868f969bb597cc8623df3047",
+    "reproduced": true,
+    "zip_bytes": 768854,
+    "zip_sha256": "4df5571d13eef1c87cc00ee361b2dd422dbdb732e6633af08bbd1229273d84b4"
+  },
+  "IBM_OR_OTHER_CREDENTIAL_REQUESTED_OR_USED": false,
+  "NEW_PHYSICAL_QPU_JOBS_SUBMITTED": 0,
+  "QPU_USAGE_SECONDS": 0,
+  "kind": "stage4_2_pre_repair_reproduction",
+  "prior_failed_stage_4_run": "1c5b0748-5406-4933-8e41-4f943f4296c7",
+  "prior_stage_4_1_run": "c4d0a199-9cea-4214-83ab-97964f2bf1ac",
+  "prior_stage_4_run": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+  "sound_results_preserved_note": "three illegal same-compound optima corrected; 64 self-consistent; gate_e headroom 0; representative QUBO checks passed historically \u2014 regenerate numerically in 4.2",
+  "stage": "4.2",
+  "starting_head": "cd48f732ef25859da417ef5d1596566761909b7f",
+  "wall_s": 50.49332600005437
+}

@@ -44,6 +44,9 @@ def _is_excluded(rel: Path) -> bool:
         return True
     if "evidence/ledger" in str(rel).replace("\\", "/"):
         return True
+    # Final external report is written after ZIP freeze; never freeze it as a member.
+    if rel.as_posix() == "docs/STAGE_4_2_REPORT.md":
+        return True
     return False
 
 
@@ -63,24 +66,32 @@ def default_allowlist(root: Path) -> list[str]:
         "schemas",
         ".cursor/rules",
     ]
-    # Prior receipts required for preservation claims
-    receipt_globs = [
-        "evidence/formulation/receipts/e8b87881-74a6-46c7-b48e-6b2496a5d586.json",
-        "evidence/formulation/receipts/e8b87881-74a6-46c7-b48e-6b2496a5d586.md",
-        "evidence/formulation/receipts/1c5b0748-5406-4933-8e41-4f943f4296c7.json",
-        "evidence/formulation/receipts/1c5b0748-5406-4933-8e41-4f943f4296c7.md",
-        "evidence/formulation/receipts/c4d0a199-9cea-4214-83ab-97964f2bf1ac.json",
-        "evidence/formulation/receipts/c4d0a199-9cea-4214-83ab-97964f2bf1ac.md",
-        "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.json",
-        "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.md",
-        "evidence/formulation/snapshots/e85ee977-8a35-40c1-b690-02724dea3228.json",
-        "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228/formulation.development_matrix/development_matrix_summary.json",
-        "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228/formulation.evaluator_separation_panel/evaluator_panel.json",
-        "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228/formulation.qubo_ising_gate/qubo_gate_summary.json",
-        "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228/formulation.independent_references/references_summary.json",
-        "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228/formulation.pre_repair_erratum/pre_repair_reproduction.json",
-        "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228/formulation.source_restore/source_snapshot.json",
-    ]
+    # Prior receipts required for preservation claims, plus current Stage 4.2 run
+    receipt_globs = []
+    for run_id in (
+        "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+        "1c5b0748-5406-4933-8e41-4f943f4296c7",
+        "c4d0a199-9cea-4214-83ab-97964f2bf1ac",
+        "e85ee977-8a35-40c1-b690-02724dea3228",
+        "41c28597-0ce0-428f-8230-ba2ca973c5b7",
+    ):
+        receipt_globs.extend(
+            [
+                f"evidence/formulation/receipts/{run_id}.json",
+                f"evidence/formulation/receipts/{run_id}.md",
+                f"evidence/formulation/snapshots/{run_id}.json",
+                f"evidence/formulation/artifacts/{run_id}/formulation.development_matrix/development_matrix_summary.json",
+                f"evidence/formulation/artifacts/{run_id}/formulation.evaluator_separation_panel/evaluator_panel.json",
+                f"evidence/formulation/artifacts/{run_id}/formulation.qubo_ising_gate/qubo_gate_summary.json",
+                f"evidence/formulation/artifacts/{run_id}/formulation.independent_references/references_summary.json",
+                f"evidence/formulation/artifacts/{run_id}/formulation.pre_repair_erratum/pre_repair_reproduction.json",
+                f"evidence/formulation/artifacts/{run_id}/formulation.source_restore/source_snapshot.json",
+                (
+                    f"evidence/formulation/artifacts/{run_id}/formulation.development_matrix/"
+                    "f1q.dev.block.v2__fam.green_pit_high.tyre_near_linear.traffic_dense__0000__episode__00__SC.record.json"
+                ),
+            ]
+        )
     members: list[str] = []
     for pat in patterns:
         path = root / pat
@@ -92,6 +103,8 @@ def default_allowlist(root: Path) -> list[str]:
                     continue
                 rel = fp.relative_to(root)
                 if _is_excluded(rel):
+                    continue
+                if rel.as_posix() == "docs/STAGE_4_2_REPORT.md":
                     continue
                 if fp.is_symlink():
                     raise ValueError(f"symlink not allowed in review package: {rel}")
@@ -370,6 +383,7 @@ def build_and_verify_review_package(
     extract_dir = Path(tempfile.mkdtemp(prefix="f1q_stage42_extract_"))
     verify = verify_zip_and_extract(zip_path, extract_dir)
     origin = clean_extract_import_audit(extract_dir)
+    isolated_import = _isolated_targeted_import(extract_dir, python_exe=sys.executable)
     return {
         "zip": zip_meta,
         "zip_sha256_recheck": recheck,
@@ -383,9 +397,77 @@ def build_and_verify_review_package(
         },
         "verify": verify,
         "clean_extract": origin,
+        "clean_extract_targeted_import": isolated_import,
         "extract_dir": str(extract_dir),
         "reviewed_source_commit": reviewed_commit,
     }
+
+
+def _isolated_targeted_import(extract_dir: Path, python_exe: str) -> dict[str, Any]:
+    src = extract_dir / "src"
+    script = (
+        "import importlib, json, os, sys\n"
+        "src = sys.argv[1]\n"
+        "for k in list(sys.modules):\n"
+        "    if k == 'f1q' or k.startswith('f1q.'):\n"
+        "        del sys.modules[k]\n"
+        "sys.path = [src] + [p for p in sys.path if '/site-packages' in p or 'lib-dynload' in p or 'python3.' in p]\n"
+        "import f1q, f1q.errors, f1q.hashing, f1q.paths, f1q.formulation.review_package as rp\n"
+        "print(json.dumps({'ok': True, 'f1q': f1q.__file__, 'review_package': rp.__file__}))\n"
+    )
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    proc = subprocess.run(
+        [python_exe, "-I", "-c", script, str(src)],
+        capture_output=True,
+        text=True,
+        env=env,
+        cwd=tempfile.gettempdir(),
+    )
+    return {"returncode": proc.returncode, "stdout": proc.stdout, "stderr": proc.stderr}
+
+
+def write_final_verify_json(root: Path, package: dict[str, Any]) -> str:
+    """Write review/STAGE_4_2_FINAL_VERIFY.json from verifier output only."""
+    origin = package.get("clean_extract") or {}
+    verify = package.get("verify") or {}
+    inner = package.get("inner_manifest") or {}
+    targeted = package.get("clean_extract_targeted_import") or {}
+    payload = {
+        "stage": "4.2",
+        "ok": bool(
+            package.get("zip_hash_stable")
+            and verify.get("ok")
+            and origin.get("ok")
+            and targeted.get("returncode") == 0
+            and not (verify.get("failures") or origin.get("failures"))
+        ),
+        "failures": list(verify.get("failures") or []) + list(origin.get("failures") or []),
+        "working_directory": str(root),
+        "interpreter": sys.version,
+        "reviewed_source_commit": package.get("reviewed_source_commit"),
+        "zip": package.get("zip"),
+        "zip_sha256_recheck": package.get("zip_sha256_recheck"),
+        "zip_hash_stable": package.get("zip_hash_stable"),
+        "sidecar_path": package.get("sidecar_path"),
+        "sidecar_sha256": package.get("sidecar_sha256"),
+        "inner_manifest": inner,
+        "inner_aggregate_ok": (
+            verify.get("canonical_aggregate_sha256") == inner.get("canonical_aggregate_sha256")
+        ),
+        "member_set_ok": bool(verify.get("ok")),
+        "verify": verify,
+        "clean_extract_source_origin": origin,
+        "clean_extract_targeted_import": targeted,
+        "source_origin_ok": bool(origin.get("ok")),
+        "QPU_USAGE_SECONDS": 0,
+        "NEW_PHYSICAL_QPU_JOBS_SUBMITTED": 0,
+        "IBM_OR_OTHER_CREDENTIAL_REQUESTED_OR_USED": False,
+        "PUSH_PERFORMED": False,
+    }
+    path = root / "review" / "STAGE_4_2_FINAL_VERIFY.json"
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 if __name__ == "__main__":
@@ -394,4 +476,6 @@ if __name__ == "__main__":
     root = Path(__file__).resolve().parents[3]
     commit, _ = git_state(root)
     result = build_and_verify_review_package(root, reviewed_commit=commit or "UNKNOWN")
+    fv = write_final_verify_json(root, result)
+    result["final_verify_sha256"] = fv
     print(json.dumps({k: result[k] for k in result if k != "inner_manifest"}, indent=2, sort_keys=True))

@@ -18,8 +18,8 @@ not_physical_qpu: true
 resource:
   max_workers: 1
   ram_ceiling_fraction: 0.60
-  stage4_elapsed_cap_s: 1800
-  notes: "One worker by default; at most two after benchmark. 30-minute cumulative cap. Every reduced pair terminally executed."
+  stage4_elapsed_cap_s: 28800
+  notes: "One worker by default; at most two after benchmark. Original 1800s engineering cap cannot finish 64/64 all-pair terminal execution; Stage 4.2 completion uses 28800s so the authorised matrix can finish. Every reduced pair terminally executed."
 gate_c: formulation_direct_qubo_classical_agreement
 gate_e_note: headroom_reported_not_a_quantum_claim
 hardware_execution_enabled: false

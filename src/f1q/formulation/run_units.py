@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
+from f1q.formulation.config import load_formulation_config
 from f1q.formulation.evaluator import assert_compiler_evaluator_separation
 from f1q.formulation.instance import build_instance_record
 from f1q.formulation.panel import run_evaluator_panel
@@ -50,9 +51,11 @@ def execute_formulation_unit(
         ),
     )
     started = time.monotonic()
-    cap = 1800.0  # 30-minute Stage 4 cumulative cap
+    form_cfg, _form_hash = load_formulation_config(root)
+    cap = float(form_cfg.get("resource", {}).get("stage4_elapsed_cap_s") or 1800.0)
     specs = load_preview_specs(root)
     extra: list[dict[str, Any]] = []
+    print(f"UNIT_START {unit_id} cap_s={cap}", flush=True)
 
     try:
         if unit_id == "formulation.pre_repair_erratum":
@@ -375,6 +378,7 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
     failed = []
     records_meta = []
     skipped_resume = 0
+    print(f"MATRIX_START planned={len(planned)} cap_s={cap}", flush=True)
     for spec in specs:
         if time.monotonic() - started > cap:
             break
@@ -413,6 +417,11 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
                             "resumed_from_checksum": True,
                         }
                     )
+                    print(
+                        f"MATRIX_PROGRESS completed={len(completed)}/{len(planned)} "
+                        f"last={spec['episode_id']} resumed=1 elapsed_s={time.monotonic()-started:.1f}",
+                        flush=True,
+                    )
                     continue
             except Exception:
                 pass
@@ -440,6 +449,11 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
                     "failure_code": None,
                     "resumed_from_checksum": False,
                 }
+            )
+            print(
+                f"MATRIX_PROGRESS completed={len(completed)}/{len(planned)} "
+                f"last={spec['episode_id']} resumed=0 elapsed_s={time.monotonic()-started:.1f}",
+                flush=True,
             )
         except Exception as exc:
             failed.append({"episode_id": spec["episode_id"], "failure_code": type(exc).__name__, "error": str(exc)})
