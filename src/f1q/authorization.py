@@ -186,6 +186,11 @@ def authorize_plan(config: ProjectConfig, plan_id: str) -> None:
     elif plan_id == "formulation_gate_c_closure_check":
         if config.active_stage < 4:
             raise AuthorizationError("formulation_gate_c_closure_check requires active_stage >= 4")
+    elif plan_id == "phase5":
+        if config.active_stage < 5:
+            raise AuthorizationError("phase5 requires active_stage >= 5")
+        if config.hardware_execution_enabled:
+            raise AuthorizationError("phase5 forbids hardware_execution_enabled")
     else:
         raise AuthorizationError(f"plan {plan_id!r} is not implemented")
     if config.mode != "local":

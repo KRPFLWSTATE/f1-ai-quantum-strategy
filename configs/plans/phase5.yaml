@@ -1,0 +1,14 @@
+# Phase 5 — complete local learning and circuit pipeline (no QPU)
+schema_version: "1.0.0"
+plan_id: phase5
+kind: phase5
+evidence_kind: development
+description: >
+  Complete Phase 5 A2 scenario-tree policy formulation, classical references,
+  C0/C1 local ideal circuits, parameter bank, and learned donor selector.
+  Physical quantum hardware is not authorised.
+hardware_execution_enabled: false
+qpu_execution_authorised: false
+units:
+  - unit_id: phase5_complete
+    kind: phase5_pipeline

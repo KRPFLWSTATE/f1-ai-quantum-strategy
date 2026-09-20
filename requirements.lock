@@ -1,8 +1,8 @@
-# Dependency lock for Stage 4 (third-party pins). This is not a machine-specific environment inventory.
-# Install: python3.12 -m venv .venv && .venv/bin/python -m pip install -r requirements.lock && .venv/bin/python -m pip install -e ".[dev]"
-# Updated 2026-09-19 for Stage 4 (NumPy/SciPy free/open-source MILP + vectorised enumeration).
 annotated-types==0.8.0
+dill==0.4.1
+-e git+https://github.com/KRPFLWSTATE/f1-ai-quantum-strategy.git@dff670739b6b89892cdbc57c6532dce2cf9cf440#egg=f1q
 iniconfig==2.3.0
+mpmath==1.3.0
 numpy==2.5.3
 packaging==26.3
 pluggy==1.6.0
@@ -10,7 +10,14 @@ pydantic==2.13.5
 pydantic_core==2.46.5
 Pygments==2.21.0
 pytest==8.4.2
+python-dateutil==2.9.0.post0
 PyYAML==6.0.3
+qiskit==1.4.6
+rustworkx==0.18.1
 scipy==1.18.1
+six==1.17.0
+stevedore==5.9.1
+symengine==0.13.0
+sympy==1.14.0
 typing-inspection==0.4.4
 typing_extensions==4.16.0

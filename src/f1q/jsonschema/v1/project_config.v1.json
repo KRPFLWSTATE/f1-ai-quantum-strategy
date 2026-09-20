@@ -225,8 +225,8 @@
   "additionalProperties": false,
   "properties": {
     "active_stage": {
-      "const": 1,
-      "default": 1,
+      "default": 5,
+      "enum": [1, 2, 3, 4, 5],
       "title": "Active Stage",
       "type": "integer"
     },

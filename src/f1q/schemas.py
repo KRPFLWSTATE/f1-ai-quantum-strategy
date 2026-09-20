@@ -171,7 +171,7 @@ class AuthorizationConfig(StrictModel):
 class ProjectConfig(StrictModel):
     schema_version: str = SCHEMA_VERSION
     project_name: Literal["f1-ai-quantum-strategy"] = "f1-ai-quantum-strategy"
-    active_stage: Literal[1, 2, 3, 4] = 4
+    active_stage: Literal[1, 2, 3, 4, 5] = 5
     scientific_protocol_status: Literal["DRAFT"] = "DRAFT"
     protocol_frozen: Literal[False] = False
     hardware_execution_enabled: Literal[False] = False

@@ -112,6 +112,13 @@ def main(argv: list[str] | None = None) -> int:
                 result = run_formulation_repair_check(root)
             elif args.plan == "formulation_gate_c_closure_check":
                 result = run_formulation_gate_c_closure_check(root)
+            elif args.plan == "phase5":
+                from f1q.authorization import authorize_plan, load_project_config
+                from f1q.stage5.cli_run import run_phase5
+
+                config, _, _ = load_project_config(root)
+                authorize_plan(config, args.plan)
+                result = run_phase5(root)
             else:
                 from f1q.authorization import authorize_plan, load_project_config
 
