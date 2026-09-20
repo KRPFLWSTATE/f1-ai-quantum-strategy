@@ -1,0 +1,542 @@
+{
+  "C0": {
+    "details": [
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "best_of_pool_cost": 4.691076311725443,
+        "best_of_pool_normalised_regret": 1.0,
+        "best_of_pool_unnormalised_gap": 1.7782524536057034,
+        "c0_nonzero_2q_when_quadratic": true,
+        "complete_legal_policy_probability": 0.022549296172469264,
+        "cost_2q_gates": 6,
+        "crosscheck_ok": true,
+        "f_max": 4.691076311725443,
+        "f_star": 2.912823858119739,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "n_feasible_in_pool": 1,
+        "norm_ok": true,
+        "one_hot_probability": 0.03970757325141118,
+        "optimal_sample_probability": 0.0024705554664831357,
+        "p": 1,
+        "param_count": 2,
+        "pool_size": 32,
+        "quadratic_terms": 6,
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.004941499410843386
+      },
+      {
+        "all_infeasible_pool": true,
+        "all_infeasible_pool_rate": 1.0,
+        "best_of_pool_cost": null,
+        "best_of_pool_normalised_regret": 1.0,
+        "best_of_pool_unnormalised_gap": null,
+        "c0_nonzero_2q_when_quadratic": true,
+        "complete_legal_policy_probability": 0.011185567698266176,
+        "cost_2q_gates": 12,
+        "crosscheck_ok": true,
+        "f_max": 4.691076311725443,
+        "f_star": 2.912823858119739,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "n_feasible_in_pool": 0,
+        "norm_ok": true,
+        "one_hot_probability": 0.01929024885796995,
+        "optimal_sample_probability": 0.001189868275185503,
+        "p": 2,
+        "param_count": 4,
+        "pool_size": 32,
+        "quadratic_terms": 6,
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.002380347129709669
+      },
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "best_of_pool_cost": 4.146000844018069,
+        "best_of_pool_normalised_regret": 0.7134967798205253,
+        "best_of_pool_unnormalised_gap": 2.194876835184376,
+        "c0_nonzero_2q_when_quadratic": true,
+        "complete_legal_policy_probability": 0.03970773676379067,
+        "cost_2q_gates": 6,
+        "crosscheck_ok": true,
+        "f_max": 5.027349294302368,
+        "f_star": 1.9511240088336925,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "n_feasible_in_pool": 1,
+        "norm_ok": true,
+        "one_hot_probability": 0.03970773676379067,
+        "optimal_sample_probability": 0.0024271953372363353,
+        "p": 1,
+        "param_count": 2,
+        "pool_size": 32,
+        "quadratic_terms": 6,
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      },
+      {
+        "all_infeasible_pool": true,
+        "all_infeasible_pool_rate": 1.0,
+        "best_of_pool_cost": null,
+        "best_of_pool_normalised_regret": 1.0,
+        "best_of_pool_unnormalised_gap": null,
+        "c0_nonzero_2q_when_quadratic": true,
+        "complete_legal_policy_probability": 0.019291141741670754,
+        "cost_2q_gates": 12,
+        "crosscheck_ok": true,
+        "f_max": 5.027349294302368,
+        "f_star": 1.9511240088336925,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "n_feasible_in_pool": 0,
+        "norm_ok": true,
+        "one_hot_probability": 0.019291141741670754,
+        "optimal_sample_probability": 0.001118590119161839,
+        "p": 2,
+        "param_count": 4,
+        "pool_size": 32,
+        "quadratic_terms": 6,
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      },
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "best_of_pool_cost": 3.8955910125156823,
+        "best_of_pool_normalised_regret": 0.7108489833479358,
+        "best_of_pool_unnormalised_gap": 2.2015550273031823,
+        "c0_nonzero_2q_when_quadratic": true,
+        "complete_legal_policy_probability": 0.03970767956706776,
+        "cost_2q_gates": 6,
+        "crosscheck_ok": true,
+        "f_max": 4.791114378620848,
+        "f_star": 1.6940359852125,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "n_feasible_in_pool": 1,
+        "norm_ok": true,
+        "one_hot_probability": 0.03970767956706776,
+        "optimal_sample_probability": 0.00242479226159049,
+        "p": 1,
+        "param_count": 2,
+        "pool_size": 32,
+        "quadratic_terms": 6,
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      },
+      {
+        "all_infeasible_pool": true,
+        "all_infeasible_pool_rate": 1.0,
+        "best_of_pool_cost": null,
+        "best_of_pool_normalised_regret": 1.0,
+        "best_of_pool_unnormalised_gap": null,
+        "c0_nonzero_2q_when_quadratic": true,
+        "complete_legal_policy_probability": 0.01929076890040731,
+        "cost_2q_gates": 12,
+        "crosscheck_ok": true,
+        "f_max": 4.791114378620848,
+        "f_star": 1.6940359852125,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "n_feasible_in_pool": 0,
+        "norm_ok": true,
+        "one_hot_probability": 0.01929076890040731,
+        "optimal_sample_probability": 0.0011148414036593242,
+        "p": 2,
+        "param_count": 4,
+        "pool_size": 32,
+        "quadratic_terms": 6,
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      }
+    ],
+    "fail": 0,
+    "pass": 6
+  },
+  "C1": {
+    "details": [
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_cost": 2.912823858119739,
+        "best_of_pool_normalised_regret": 0.0,
+        "best_of_pool_unnormalised_gap": 0.0,
+        "broken_schedule": {
+          "expect_disconnected_when_block_ge_3": false,
+          "fails_as_intended": true,
+          "max_block_size": 2,
+          "n_components_broken": 1
+        },
+        "complete_legal_policy_probability": 0.5683338372102842,
+        "connected_components": {
+          "component_sizes": [
+            16
+          ],
+          "is_connected": true,
+          "n_components": 1,
+          "n_edges": 64,
+          "n_nodes": 16,
+          "proof": "BFS_connected_components_on_actual_scheduled_ring_transition_graph"
+        },
+        "crosscheck_ok": true,
+        "f_max": 4.691076311725443,
+        "f_star": 2.912823858119739,
+        "feasible_graph_edges": 64,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "n_feasible_in_pool": 17,
+        "norm_ok": true,
+        "one_hot_probability": 0.9999999999999993,
+        "optimal_sample_probability": 0.062235594701684015,
+        "p": 1,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.12448189145527479
+      },
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_cost": 2.912823858119739,
+        "best_of_pool_normalised_regret": 0.0,
+        "best_of_pool_unnormalised_gap": 0.0,
+        "broken_schedule": {
+          "expect_disconnected_when_block_ge_3": false,
+          "fails_as_intended": true,
+          "max_block_size": 2,
+          "n_components_broken": 1
+        },
+        "complete_legal_policy_probability": 0.5776965644513045,
+        "connected_components": {
+          "component_sizes": [
+            16
+          ],
+          "is_connected": true,
+          "n_components": 1,
+          "n_edges": 64,
+          "n_nodes": 16,
+          "proof": "BFS_connected_components_on_actual_scheduled_ring_transition_graph"
+        },
+        "crosscheck_ok": true,
+        "f_max": 4.691076311725443,
+        "f_star": 2.912823858119739,
+        "feasible_graph_edges": 64,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "n_feasible_in_pool": 16,
+        "norm_ok": true,
+        "one_hot_probability": 0.9999999999999987,
+        "optimal_sample_probability": 0.06200276884199974,
+        "p": 2,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.12403383592685016
+      },
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_cost": 1.9511240088336925,
+        "best_of_pool_normalised_regret": 0.0,
+        "best_of_pool_unnormalised_gap": 0.0,
+        "broken_schedule": {
+          "expect_disconnected_when_block_ge_3": false,
+          "fails_as_intended": true,
+          "max_block_size": 2,
+          "n_components_broken": 1
+        },
+        "complete_legal_policy_probability": 0.9999999999999993,
+        "connected_components": {
+          "component_sizes": [
+            16
+          ],
+          "is_connected": true,
+          "n_components": 1,
+          "n_edges": 64,
+          "n_nodes": 16,
+          "proof": "BFS_connected_components_on_actual_scheduled_ring_transition_graph"
+        },
+        "crosscheck_ok": true,
+        "f_max": 5.027349294302368,
+        "f_star": 1.9511240088336925,
+        "feasible_graph_edges": 64,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "n_feasible_in_pool": 32,
+        "norm_ok": true,
+        "one_hot_probability": 0.9999999999999993,
+        "optimal_sample_probability": 0.060961157331512715,
+        "p": 1,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      },
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_cost": 1.9511240088336925,
+        "best_of_pool_normalised_regret": 0.0,
+        "best_of_pool_unnormalised_gap": 0.0,
+        "broken_schedule": {
+          "expect_disconnected_when_block_ge_3": false,
+          "fails_as_intended": true,
+          "max_block_size": 2,
+          "n_components_broken": 1
+        },
+        "complete_legal_policy_probability": 0.9999999999999984,
+        "connected_components": {
+          "component_sizes": [
+            16
+          ],
+          "is_connected": true,
+          "n_components": 1,
+          "n_edges": 64,
+          "n_nodes": 16,
+          "proof": "BFS_connected_components_on_actual_scheduled_ring_transition_graph"
+        },
+        "crosscheck_ok": true,
+        "f_max": 5.027349294302368,
+        "f_star": 1.9511240088336925,
+        "feasible_graph_edges": 64,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "n_feasible_in_pool": 32,
+        "norm_ok": true,
+        "one_hot_probability": 0.9999999999999984,
+        "optimal_sample_probability": 0.05827289296118269,
+        "p": 2,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      },
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_cost": 1.6940359852125,
+        "best_of_pool_normalised_regret": 0.0,
+        "best_of_pool_unnormalised_gap": 0.0,
+        "broken_schedule": {
+          "expect_disconnected_when_block_ge_3": false,
+          "fails_as_intended": true,
+          "max_block_size": 2,
+          "n_components_broken": 1
+        },
+        "complete_legal_policy_probability": 0.9999999999999992,
+        "connected_components": {
+          "component_sizes": [
+            16
+          ],
+          "is_connected": true,
+          "n_components": 1,
+          "n_edges": 64,
+          "n_nodes": 16,
+          "proof": "BFS_connected_components_on_actual_scheduled_ring_transition_graph"
+        },
+        "crosscheck_ok": true,
+        "f_max": 4.791114378620848,
+        "f_star": 1.6940359852125,
+        "feasible_graph_edges": 64,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "n_feasible_in_pool": 32,
+        "norm_ok": true,
+        "one_hot_probability": 0.9999999999999992,
+        "optimal_sample_probability": 0.060893854845201635,
+        "p": 1,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      },
+      {
+        "all_infeasible_pool": false,
+        "all_infeasible_pool_rate": 0.0,
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_cost": 1.6940359852125,
+        "best_of_pool_normalised_regret": 0.0,
+        "best_of_pool_unnormalised_gap": 0.0,
+        "broken_schedule": {
+          "expect_disconnected_when_block_ge_3": false,
+          "fails_as_intended": true,
+          "max_block_size": 2,
+          "n_components_broken": 1
+        },
+        "complete_legal_policy_probability": 0.9999999999999987,
+        "connected_components": {
+          "component_sizes": [
+            16
+          ],
+          "is_connected": true,
+          "n_components": 1,
+          "n_edges": 64,
+          "n_nodes": 16,
+          "proof": "BFS_connected_components_on_actual_scheduled_ring_transition_graph"
+        },
+        "crosscheck_ok": true,
+        "f_max": 4.791114378620848,
+        "f_star": 1.6940359852125,
+        "feasible_graph_edges": 64,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "n_feasible_in_pool": 32,
+        "norm_ok": true,
+        "one_hot_probability": 0.9999999999999987,
+        "optimal_sample_probability": 0.058093057598444964,
+        "p": 2,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "tolerances": {
+          "COST_ABS_TOL": 1e-08,
+          "COST_REL_TOL": 1e-08,
+          "PROB_ABS_TOL": 1e-12,
+          "REGRET_EQ_TOL": 1e-12
+        },
+        "useful_definition": {
+          "improvement_frac": 0.05,
+          "note": "Not equal to complete legal probability",
+          "rule": "legal_and_improves_weak_incumbent_by_frac_of_range"
+        },
+        "useful_feasible_probability": 0.0
+      }
+    ],
+    "fail": 0,
+    "pass": 6
+  }
+}

@@ -1,0 +1,388 @@
+{
+  "adversarial": {
+    "all_infeasible_regret_is_1": {
+      "pass": true,
+      "regret": 1.0
+    },
+    "all_pass": true,
+    "binding_compound": {
+      "n_legal": 4,
+      "pass": true,
+      "required_compounds": 2
+    },
+    "binding_deadline": {
+      "pass": true,
+      "reason": "commitment expired pit_now_soft at epoch=1 (expires=0)"
+    },
+    "binding_inventory": {
+      "n_legal": 40,
+      "one_hot_space": 729,
+      "pass": true
+    },
+    "genuine_branching": {
+      "n_branching_epochs": 1,
+      "n_info_sets": 3,
+      "pass": true
+    },
+    "missing_not_zero_regret": {
+      "pass": true,
+      "regret": 1.0
+    },
+    "no_future_duration_leak": {
+      "detail": "epoch0 observable is root only",
+      "pass": true
+    },
+    "zero_range_regret_is_0": {
+      "pass": true,
+      "regret": 0.0
+    }
+  },
+  "causal_visibility": {
+    "fail": 0,
+    "pass": 16
+  },
+  "encode_decode": {
+    "fail": 0,
+    "pass": 16
+  },
+  "enumeration_milp_checks": {
+    "cases": [
+      {
+        "enum": 2.912823858119739,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "milp": 2.912823858119739,
+        "milp_success": true
+      },
+      {
+        "enum": 1.9511240088336925,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "milp": 1.9511240088336925,
+        "milp_success": true
+      },
+      {
+        "enum": 1.6940359852125,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "milp": 1.6940359852125,
+        "milp_success": true
+      },
+      {
+        "enum": 2.848513447155364,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "milp": 2.848513447155364,
+        "milp_success": true
+      },
+      {
+        "enum": 1.5352389089400256,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+        "milp": 1.5352389089400256,
+        "milp_success": true
+      },
+      {
+        "enum": 1.595300355774574,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002",
+        "milp": 1.595300355774574,
+        "milp_success": true
+      },
+      {
+        "enum": 3.9038274658131007,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+        "milp": 3.9038274658131007,
+        "milp_success": true
+      },
+      {
+        "enum": 3.5006604546333344,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+        "milp": 3.5006604546333344,
+        "milp_success": true
+      },
+      {
+        "enum": 1.8056763332062342,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "milp": 1.8056763332062342,
+        "milp_success": true
+      },
+      {
+        "enum": 4.8716457551600225,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "milp": 4.8716457551600225,
+        "milp_success": true
+      },
+      {
+        "enum": 1.7177888320226828,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "milp": 1.7177888320226828,
+        "milp_success": true
+      },
+      {
+        "enum": 1.5873591329224412,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "milp": 1.5873591329224412,
+        "milp_success": true
+      },
+      {
+        "enum": 1.4611917608321008,
+        "id": "microcase:binding_inventory",
+        "milp": 1.4611917608321008,
+        "milp_success": true
+      },
+      {
+        "enum": 1.9448677900678515,
+        "id": "microcase:binding_compound",
+        "milp": 1.9448677900678515,
+        "milp_success": true
+      },
+      {
+        "enum": 1.5149002319876805,
+        "id": "microcase:binding_deadline",
+        "milp": 1.5149002319876805,
+        "milp_success": true
+      },
+      {
+        "enum": 1.4753209400636047,
+        "id": "microcase:force_branching",
+        "milp": 1.4753209400636047,
+        "milp_success": true
+      }
+    ],
+    "fail": 0,
+    "pass": 16
+  },
+  "exact_qubo_checks": {
+    "cases": [
+      {
+        "decoded": true,
+        "diff": 8.881784197001252e-16,
+        "direct": 2.912823858119739,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "ok": true,
+        "qubo": 2.91282385811974
+      },
+      {
+        "decoded": true,
+        "diff": 2.220446049250313e-15,
+        "direct": 1.9511240088336925,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "ok": true,
+        "qubo": 1.9511240088336903
+      },
+      {
+        "decoded": true,
+        "diff": 4.440892098500626e-16,
+        "direct": 1.6940359852125,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "ok": true,
+        "qubo": 1.6940359852125004
+      },
+      {
+        "decoded": true,
+        "diff": 8.881784197001252e-16,
+        "direct": 2.848513447155364,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "ok": true,
+        "qubo": 2.848513447155365
+      },
+      {
+        "decoded": true,
+        "diff": 2.220446049250313e-15,
+        "direct": 1.5352389089400256,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+        "ok": true,
+        "qubo": 1.5352389089400278
+      },
+      {
+        "decoded": true,
+        "diff": 2.220446049250313e-16,
+        "direct": 1.595300355774574,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002",
+        "ok": true,
+        "qubo": 1.5953003557745742
+      },
+      {
+        "decoded": true,
+        "diff": 8.881784197001252e-16,
+        "direct": 3.9038274658131007,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+        "ok": true,
+        "qubo": 3.9038274658131
+      },
+      {
+        "decoded": true,
+        "diff": 6.217248937900877e-15,
+        "direct": 3.5006604546333344,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+        "ok": true,
+        "qubo": 3.500660454633328
+      },
+      {
+        "decoded": true,
+        "diff": 1.4210854715202004e-14,
+        "direct": 1.8056763332062342,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "ok": true,
+        "qubo": 1.80567633320622
+      },
+      {
+        "decoded": true,
+        "diff": 1.4210854715202004e-14,
+        "direct": 4.8716457551600225,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "ok": true,
+        "qubo": 4.871645755160008
+      },
+      {
+        "decoded": true,
+        "diff": 1.1102230246251565e-14,
+        "direct": 1.7177888320226828,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "ok": true,
+        "qubo": 1.7177888320226717
+      },
+      {
+        "decoded": true,
+        "diff": 8.881784197001252e-16,
+        "direct": 1.5873591329224412,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "ok": true,
+        "qubo": 1.5873591329224421
+      },
+      {
+        "decoded": true,
+        "diff": 2.6645352591003757e-15,
+        "direct": 1.4611917608321008,
+        "id": "microcase:binding_inventory",
+        "ok": true,
+        "qubo": 1.4611917608321034
+      },
+      {
+        "decoded": true,
+        "diff": 8.881784197001252e-15,
+        "direct": 1.9448677900678515,
+        "id": "microcase:binding_compound",
+        "ok": true,
+        "qubo": 1.9448677900678604
+      },
+      {
+        "decoded": true,
+        "diff": 3.1086244689504383e-15,
+        "direct": 1.5149002319876805,
+        "id": "microcase:binding_deadline",
+        "ok": true,
+        "qubo": 1.5149002319876774
+      },
+      {
+        "decoded": true,
+        "diff": 2.6645352591003757e-15,
+        "direct": 1.4753209400636047,
+        "id": "microcase:force_branching",
+        "ok": true,
+        "qubo": 1.4753209400636074
+      }
+    ],
+    "fail": 0,
+    "pass": 16
+  },
+  "exhaustive_direct_qubo": {
+    "cases": [
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "n_fail": 0,
+        "n_legal_checked": 9
+      },
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "n_fail": 0,
+        "n_legal_checked": 16
+      },
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "n_fail": 0,
+        "n_legal_checked": 16
+      },
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "n_fail": 0,
+        "n_legal_checked": 9
+      },
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+        "n_fail": 0,
+        "n_legal_checked": 16
+      },
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002",
+        "n_fail": 0,
+        "n_legal_checked": 16
+      },
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+        "n_fail": 0,
+        "n_legal_checked": 16
+      },
+      {
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+        "n_fail": 0,
+        "n_legal_checked": 16
+      },
+      {
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "n_fail": 0,
+        "n_legal_checked": 1
+      },
+      {
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "n_fail": 0,
+        "n_legal_checked": 1
+      },
+      {
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "n_fail": 0,
+        "n_legal_checked": 1
+      },
+      {
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "n_fail": 0,
+        "n_legal_checked": 1
+      },
+      {
+        "id": "microcase:binding_inventory",
+        "n_fail": 0,
+        "n_legal_checked": 1
+      },
+      {
+        "id": "microcase:binding_compound",
+        "n_fail": 0,
+        "n_legal_checked": 1
+      },
+      {
+        "id": "microcase:binding_deadline",
+        "n_fail": 0,
+        "n_legal_checked": 4
+      },
+      {
+        "id": "microcase:force_branching",
+        "n_fail": 0,
+        "n_legal_checked": 1
+      }
+    ],
+    "fail": 0,
+    "pass": 16
+  },
+  "fallback_feasibility": {
+    "fail": 2,
+    "pass": 14
+  },
+  "hard_constraint_encoding": "acceptance_filtering_not_qubo_penalties",
+  "inventory_legality": {
+    "fail": 0,
+    "pass": 16
+  },
+  "n_instances": 16,
+  "nonanticipativity_checks": {
+    "fail": 0,
+    "pass": 16
+  },
+  "s_Q_excludes_offset": {
+    "fail": 0,
+    "pass": 16
+  }
+}

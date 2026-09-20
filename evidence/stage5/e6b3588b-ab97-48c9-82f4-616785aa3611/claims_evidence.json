@@ -1,0 +1,31 @@
+{
+  "A2_SCOPE": {
+    "builder_version": "corrected.v1",
+    "cost_lineage": "family_mechanism_params_Stage2_factor_map",
+    "family_driven_mechanisms": true,
+    "not_f1_calibrated": true,
+    "scenario_probability_model": "deterministic_synthetic"
+  },
+  "C2_STATUS": "NOT_ADMITTED_BY_PROTOCOL",
+  "DEVELOPMENT_HEADROOM": "ZERO",
+  "FAMILY_DEPTH_COVERAGE": [
+    "C0_p1",
+    "C0_p2",
+    "C1_p1",
+    "C1_p2"
+  ],
+  "GATE_D_LEARNING_AND_CIRCUITS": "PASS",
+  "NOVELTY_STATUS": "PROPOSED_NOT_LITERATURE_VERIFIED",
+  "ORIGINAL_RUN_PRESERVED": "6ad68021-f19c-44e7-b166-13ab44dad31b",
+  "PHASE_5_CORRECTED_ENGINEERING": "PASS",
+  "PHASE_5_ENGINEERING": "PASS",
+  "QPU_EXECUTION_AUTHORISED": false,
+  "QPU_JOBS": 0,
+  "QPU_USAGE_SECONDS": 0,
+  "SELECTED_ARCHITECTURE": "A2_multi_epoch_scenario_contingent_strategy_policy",
+  "SUPERIORITY_PATH_AVAILABLE": false,
+  "TRAINING_USED": 144,
+  "TUNING_USED": 80,
+  "evidence_only_development_tuning": true,
+  "failures": []
+}

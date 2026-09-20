@@ -1,0 +1,67 @@
+{
+  "A2_SCOPE": {
+    "builder_version": "corrected.v1",
+    "cost_lineage": "family_mechanism_params_Stage2_factor_map",
+    "family_driven_mechanisms": true,
+    "not_f1_calibrated": true,
+    "scenario_probability_model": "deterministic_synthetic"
+  },
+  "ACTUAL_CIRCUITS_TRANSPILED": true,
+  "ALL_INFEASIBLE_REGRET": 1.0,
+  "BASE_COMMIT": "d704f91f766b762a37a894dd2ef9b673bf484a06",
+  "C0_CHECKS": "6/6",
+  "C1_CHECKS": "6/6",
+  "C2_STATUS": "NOT_ADMITTED_BY_PROTOCOL",
+  "COMPARATORS": [
+    "frozen_fixed_donor_training_only",
+    "genuine_nearest_neighbour_transfer",
+    "seeded_random_donor",
+    "learned_ridge_donor_ranker",
+    "genuine_per_instance_variational_fit"
+  ],
+  "CORRECTED_RUN_ID": "e6b3588b-ab97-48c9-82f4-616785aa3611",
+  "CORRECTED_SOURCE_COMMIT": "625916aa2fba9d28ae42ffa52ca8a79f6a52741b",
+  "DEVELOPMENT_HEADROOM": "ZERO",
+  "ELAPSED_SECONDS": 1973.5377049446106,
+  "FAMILY_DEPTH_COVERAGE": [
+    "C0_p1",
+    "C0_p2",
+    "C1_p1",
+    "C1_p2"
+  ],
+  "FIT_RECORDS_PERSISTED": 288,
+  "FORMULATION_CHECKS": {
+    "adversarial_all_pass": true,
+    "enum_milp": "16/16",
+    "exact_qubo": "16/16"
+  },
+  "FROZEN_STAGE4_DIFFS": 0,
+  "FULL_TESTS": "168 passed, 1 skipped",
+  "GATE_D_LEARNING_AND_CIRCUITS": "PASS",
+  "MANIFEST": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/STAGE_5_CORRECTED_MANIFEST.json",
+  "MANIFEST_ENTRIES": 24,
+  "MANIFEST_SHA256": "b85fa90ca2596683500b24d0505de05e4c958da0758ad623ca8d2d90d8ee4faa",
+  "MANIFEST_VERIFY": {
+    "failures": [],
+    "n_checked": 24,
+    "ok": true
+  },
+  "MODEL_ARTIFACT": "selector_model_artifacts.json",
+  "MODEL_WEIGHTS_PERSISTED": true,
+  "NORMALISED_REGRET_IMPLEMENTED": true,
+  "NOVELTY_STATUS": "PROPOSED_NOT_LITERATURE_VERIFIED",
+  "ORIGINAL_RUN_PRESERVED": "6ad68021-f19c-44e7-b166-13ab44dad31b",
+  "PER_BLOCK_RECORDS": 320,
+  "PHASE_5_CORRECTED_ENGINEERING": "PASS",
+  "PHASE_6_READY": false,
+  "QPU_JOBS": 0,
+  "QPU_USAGE_SECONDS": 0,
+  "REPORT": "docs/STAGE_5_CORRECTED_REPORT.md",
+  "REPORT_SHA256": "570fc4dd4882676ec276536e2e9c0629206ad7cf37bdde7da79e0f3d8a56a4bd",
+  "SUPERIORITY_PATH_AVAILABLE": false,
+  "TARGETED_TESTS": "16 passed",
+  "TRAINING_USED": 144,
+  "TUNING_USED": 80,
+  "note": "final_verify hashes the manifest; does not include its own content hash inside the hashed payload before write",
+  "schema_version": "stage5.corrected.final_verify.v1"
+}

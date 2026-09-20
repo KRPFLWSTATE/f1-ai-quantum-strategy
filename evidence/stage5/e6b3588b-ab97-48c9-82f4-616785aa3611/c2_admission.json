@@ -1,0 +1,8 @@
+{
+  "C2_STATUS": "NOT_ADMITTED_BY_PROTOCOL",
+  "admitted": false,
+  "crew_overlap_treatment": "finite_cost",
+  "instance_id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+  "novelty_note": "C0/C1/QAOA not claimed novel",
+  "reason": "A2 models shared pit-crew overlap as a finite cost and one-hot via C1 XY exchanges; no genuine joint hard constraint requires guarded paired moves beyond C1."
+}

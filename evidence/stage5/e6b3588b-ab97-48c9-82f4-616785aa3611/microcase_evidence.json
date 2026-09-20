@@ -1,0 +1,36 @@
+{
+  "cases": [
+    {
+      "causal_ok": true,
+      "id": "microcase:binding_inventory",
+      "microcase": "binding_inventory",
+      "n_branching_epochs": 1,
+      "n_info_sets": 3,
+      "n_legal": 40
+    },
+    {
+      "causal_ok": true,
+      "id": "microcase:binding_compound",
+      "microcase": "binding_compound",
+      "n_branching_epochs": 1,
+      "n_info_sets": 3,
+      "n_legal": 4
+    },
+    {
+      "causal_ok": true,
+      "id": "microcase:binding_deadline",
+      "microcase": "binding_deadline",
+      "n_branching_epochs": 0,
+      "n_info_sets": 2,
+      "n_legal": 4
+    },
+    {
+      "causal_ok": true,
+      "id": "microcase:force_branching",
+      "microcase": "force_branching",
+      "n_branching_epochs": 1,
+      "n_info_sets": 3,
+      "n_legal": 729
+    }
+  ]
+}

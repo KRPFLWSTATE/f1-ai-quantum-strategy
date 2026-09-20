@@ -1,10 +1,14 @@
 # Project status
 
-Updated after complete Phase 5 (A2 learning and local circuit pipeline). Chat recollection is not evidence.
+Updated after **corrected** Phase 5 closure. Chat recollection is not evidence.
 
 ## Active stage
 
-`active_stage`: **5**. Stage 5A architecture decision: **`STAGE_5A: PASS`** (selected **A2**). Phase 5 engineering: see `docs/STAGE_5_REPORT.md` / `docs/evidence/stage5/STAGE_5_FINAL_VERIFY.json`. **`PROXY_HEADROOM: ZERO`** remains the Stage 4 finding on single-checkpoint proxies. Phase 5 development headroom on A2 circuit_unit/tiny instances: **`DEVELOPMENT_HEADROOM: ZERO`** (exact finishes inside deadline; superiority path disabled). **`NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`**. **`QPU_EXECUTION_AUTHORISED: false`**. **`QPU_JOBS: 0`**. **`C2_STATUS: NOT_ADMITTED_BY_PROTOCOL`**.
+`active_stage`: **5**. Stage 5A architecture decision: **`STAGE_5A: PASS`** (selected **A2**).  
+**PHASE_5_CORRECTED_ENGINEERING:** `PASS` (run `e6b3588b-ab97-48c9-82f4-616785aa3611`).  
+Historical Phase 5 run `6ad68021-f19c-44e7-b166-13ab44dad31b` is **preserved unchanged** and is **not** corrected-compliant.  
+See `docs/STAGE_5_CORRECTED_REPORT.md` / `docs/evidence/stage5_corrected/`.  
+**`PROXY_HEADROOM: ZERO`** remains the Stage 4 finding on single-checkpoint proxies. Phase 5 corrected development headroom on checked A2 instances: **`DEVELOPMENT_HEADROOM: ZERO`** (exact finishes inside deadline; superiority path disabled). **`NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`**. **`QPU_EXECUTION_AUTHORISED: false`**. **`QPU_JOBS: 0`**. **`C2_STATUS: NOT_ADMITTED_BY_PROTOCOL`**.
 
 After a valid bounded Stage 4 closure: **`STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`**. **`LEGACY_EXHAUSTIVE_GATE: PARTIAL`** with **`LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME`**. Filesystem/git-tracked counts (see `docs/STAGE_4_CLOSURE_ERRATUM.md`): **e85ee977 = 40/64**; **41c28597 = 21 archived record files** (interrupted; no completed receipt; excluded from the bounded gate). Stage 4.1 is **not independently accepted**. Stage 4 evidence remains frozen.
 
@@ -20,7 +24,8 @@ After a valid bounded Stage 4 closure: **`STAGE_4_ENGINEERING: CLOSED_WITH_DOCUM
 - Stage 4 Final Closure / Correction bounded gate regenerates under `evidence/formulation/artifacts/stage4_closure/`
 - Current simulator/interface: **1.0.4 / 3.1.0**
 - **Stage 5A:** `docs/STAGE_5A_ARCHITECTURE_REPORT.md`, `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`, `docs/evidence/stage5a/`
-- **Phase 5:** A2 package `src/f1q/stage5/`, frozen run under `evidence/stage5/<run_id>/`, report `docs/STAGE_5_REPORT.md`, verify `docs/evidence/stage5/STAGE_5_FINAL_VERIFY.json`
+- **Phase 5 (historical):** run `6ad68021-…`, report `docs/STAGE_5_REPORT.md` — preserved; superseded for engineering acceptance by correction
+- **Phase 5 corrected:** run `e6b3588b-ab97-48c9-82f4-616785aa3611`, report `docs/STAGE_5_CORRECTED_REPORT.md`, verify under `docs/evidence/stage5_corrected/`
 
 ## Protocol state
 
@@ -31,23 +36,24 @@ After a valid bounded Stage 4 closure: **`STAGE_4_ENGINEERING: CLOSED_WITH_DOCUM
 - physical QPU jobs submitted: 0
 - QPU usage from this stage: 0 seconds; account balance not queried
 - Phase 5 local circuit ideal simulations: executed (not physical)
-- learned donor selector: trained on training blocks only (development)
+- learned donor selector: trained on **all 144** training blocks; evaluated on **all 80** tuning blocks; all four family-depths (development)
 
 ## Explicit limitations
 
-Real-world calibration was not run. Reserved scientific partitions are not materialized. Hardware remains disabled. Protocol remains DRAFT. Exact legal enumeration still removes proxy headroom on development single-checkpoint menus. On A2 circuit_unit/tiny development instances, exact classical enumeration finishes inside the operational deadline, so **development objective headroom is zero** and the superiority path is disabled. Historical exhaustive matrix evidence remains PARTIAL. Novelty is proposed, not literature-verified. No quantum advantage claim. C2 not admitted by protocol.
+Real-world calibration was not run. Reserved scientific partitions are not materialized. Hardware remains disabled. Protocol remains DRAFT. Exact legal enumeration still removes proxy headroom on development single-checkpoint menus. On checked A2 circuit_unit/tiny development instances, exact classical enumeration finishes inside the operational deadline, so **development objective headroom is zero** and the superiority path is disabled. Historical exhaustive matrix evidence remains PARTIAL. Novelty is proposed, not literature-verified. No quantum advantage claim. C2 not admitted by protocol. Scenario probabilities are **deterministic_synthetic**, not AI-trained.
 
 ## Next authorised unit
 
-**Stage 6 — local pilot + resource/precision estimation**, only when an explicit Stage 6 prompt is issued after user review. Not hardware. Prerequisites: Phase 5 evidence reviewed; `QPU_EXECUTION_AUTHORISED` remains false; Stage 4 frozen; zero spend. Superiority pilot is **not** ready while `SUPERIORITY_PATH_AVAILABLE: false`.
+**NONE — await independent review.** Stage 6 local pilot + resource/precision estimation only when an explicit Stage 6 prompt is issued after review. Not hardware. Prerequisites: corrected Phase 5 evidence reviewed; `QPU_EXECUTION_AUTHORISED` remains false; Stage 4 frozen; zero spend. Superiority pilot is **not** ready while `SUPERIORITY_PATH_AVAILABLE: false`.
 
 ## Files a future Agent must read first
 
 1. `AGENTS.md`
 2. `PROJECT_STATUS.md`
-3. `docs/STAGE_5_REPORT.md`
-4. `docs/evidence/stage5/STAGE_5_FINAL_VERIFY.json`
-5. `docs/STAGE_5A_ARCHITECTURE_REPORT.md`
-6. `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`
-7. `docs/STAGE_4_CLOSURE_ERRATUM.md`
-8. `python -m f1q status` and `python -m f1q doctor`
+3. `docs/STAGE_5_CORRECTED_REPORT.md`
+4. `docs/evidence/stage5_corrected/STAGE_5_CORRECTED_FINAL_VERIFY.json`
+5. `docs/STAGE_5_REPORT.md` (historical only)
+6. `docs/STAGE_5A_ARCHITECTURE_REPORT.md`
+7. `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`
+8. `docs/STAGE_4_CLOSURE_ERRATUM.md`
+9. `python -m f1q status` and `python -m f1q doctor`
