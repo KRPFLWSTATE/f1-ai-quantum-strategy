@@ -1,6 +1,6 @@
 # Project instructions (always load)
 
-Active stage: **4.1 -- formulation repair** (Stage 4 Gate C superseded; awaiting independent review). Stage 5 (QAOA / learned selectors / hardware path) is blocked and is not authorized by this file.
+Active stage: **4.2 -- Gate C semantic closure and packaging repair (PARTIAL matrix; awaiting independent review)**. Stage 4.1 is not independently accepted. Stage 5 (QAOA / learned selectors / hardware path) is blocked and is not authorized by this file.
 
 ## Authority
 
@@ -14,7 +14,7 @@ Permitted root: the directory containing `configs/project.draft.yaml` (intended 
 
 ## Evidence rules
 
-Label claims as: proposed, implemented, verified by a named check, simulated, physically measured, unsupported. A test fixture is not an experimental observation. Successful setup, a development preview, simulator checks, and Gate C formulation agreement do not establish scientific novelty, F1 calibration, quantum advantage, or hardware readiness.
+Label claims as: proposed, implemented, verified by a named check, simulated, physically measured, unsupported. A test fixture is not an experimental observation. Successful setup, a development preview, simulator checks, and Gate C formulation agreement do not establish scientific novelty, F1 calibration, quantum advantage, or hardware readiness. Stage 4.2 reports `GATE_C_FORMULATION: PARTIAL` until the 64-episode all-pair terminal matrix completes without semantic failure.
 
 ## Limits in force
 
@@ -37,6 +37,7 @@ python -m f1q run --plan simulator_followup
 python -m f1q run --plan simulator_repair
 python -m f1q run --plan formulation_check
 python -m f1q run --plan formulation_repair_check
+python -m f1q run --plan formulation_gate_c_closure_check
 python -m f1q resume --run-id <id>
 python -m f1q receipt --run-id <id>
 python -m f1q generator validate
@@ -45,7 +46,7 @@ python -m f1q generator audit --run-id <id>
 python -m f1q simulator validate
 python -m f1q simulator inspect-checkpoint --run-id <id> --episode-id <id>
 python -m f1q simulator interface
-python -m f1q simulator diagnostic-stage3-3 [--write|--verify]
+python -m f1q simulator diagnostic-stage3-3 [--write|--verify|--verify-historical]
 ```
 
 Natural language later:
@@ -57,7 +58,7 @@ Natural language later:
 
 ## Run / resume semantics
 
-A `run` is an execution container, not automatically one scientific observation. Setup fixtures, development previews, simulator checks, and formulation checks are none of training/tuning/calibration/test/shift. Interrupted attempts are retained. Checksums are verified before skipping completed work. Corrupted evidence is not recomputed under the original identifier.
+A `run` is an execution container, not automatically one scientific observation. Setup fixtures, development previews, simulator checks, and formulation checks are none of training/tuning/calibration/test/shift. Interrupted attempts are retained. Checksums are verified before skipping completed work. Corrupted evidence is not recomputed under the original identifier. Stage 4.2 run `e85ee977-8a35-40c1-b690-02724dea3228` is interrupted PARTIAL at development matrix 40/64; resume is checksum-safe only while the source snapshot fingerprint matches.
 
 ## GitHub
 

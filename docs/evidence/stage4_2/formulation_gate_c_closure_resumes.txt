@@ -1,0 +1,437 @@
+=== resume cycle 1 status=interrupted matrix_records=24/64 Sun Sep 20 16:56:29 +0530 2026 ===
+{
+  "artifact_count": 15,
+  "attempt_count": 7,
+  "completed_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references"
+  ],
+  "configuration_hash": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+  "configuration_hash_kind": "draft",
+  "dossier_sha256": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+  "duration_monotonic_s": 2230.1530878340127,
+  "ended_at_utc": "2026-09-20T12:03:40Z",
+  "event_count": 41,
+  "evidence_kind": "development",
+  "failed_unit_ids": [],
+  "git_commit": "cd48f732ef25859da417ef5d1596566761909b7f",
+  "git_dirty": true,
+  "hardware_execution_enabled": false,
+  "injected_failure_count": 0,
+  "interrupted_unit_ids": [
+    "formulation.development_matrix"
+  ],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "resume remaining formulation_gate_c_closure_check units",
+  "notes": [
+    "event counts taken from append-only ledger events and artifact rows",
+    "This receipt is development-preview evidence, not a scientific observation or validated race checkpoint."
+  ],
+  "plan_id": "formulation_gate_c_closure_check",
+  "planned_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references",
+    "formulation.development_matrix",
+    "formulation.evaluator_separation_panel",
+    "formulation.stage3_3_diagnostic_restore",
+    "formulation.source_restore"
+  ],
+  "qpu_usage_seconds": 0,
+  "receipt_json": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.json",
+  "receipt_md": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.md",
+  "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+  "schema_version": "1.0.0",
+  "scientific_protocol": "DRAFT",
+  "source_snapshot_hash": "8dfb911f34815d6756445d7d0ed7958bd06866a49d84d406a7a21430787fc078",
+  "stage": 4,
+  "started_at_utc": "2026-09-20T10:46:56Z",
+  "status": "interrupted"
+}
+real 2231.10
+user 2153.51
+sys 26.81
+EXIT:
+=== resume cycle 2 status=interrupted matrix_records=28/64 Sun Sep 20 17:33:40 +0530 2026 ===
+=== resume cycle 1 status=running matrix_records=29/64 Sun Sep 20 17:36:58 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.61
+user 1.01
+sys 0.24
+EXIT:
+=== resume cycle 2 status=running matrix_records=29/64 Sun Sep 20 17:36:59 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.21
+user 0.96
+sys 0.19
+EXIT:
+=== resume cycle 3 status=running matrix_records=29/64 Sun Sep 20 17:37:01 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.46
+user 0.98
+sys 0.18
+EXIT:
+=== resume cycle 4 status=running matrix_records=29/64 Sun Sep 20 17:37:02 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.25
+user 0.96
+sys 0.18
+EXIT:
+=== resume cycle 5 status=running matrix_records=29/64 Sun Sep 20 17:37:04 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.38
+user 1.03
+sys 0.18
+EXIT:
+=== resume cycle 6 status=running matrix_records=29/64 Sun Sep 20 17:37:05 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.13
+user 0.91
+sys 0.16
+EXIT:
+=== resume cycle 7 status=running matrix_records=29/64 Sun Sep 20 17:37:06 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.17
+user 0.94
+sys 0.17
+EXIT:
+=== resume cycle 8 status=running matrix_records=29/64 Sun Sep 20 17:37:08 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.18
+user 0.95
+sys 0.17
+EXIT:
+=== resume cycle 9 status=running matrix_records=29/64 Sun Sep 20 17:37:09 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.32
+user 0.99
+sys 0.18
+EXIT:
+=== resume cycle 10 status=running matrix_records=29/64 Sun Sep 20 17:37:10 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.25
+user 0.96
+sys 0.18
+EXIT:
+=== resume cycle 11 status=running matrix_records=29/64 Sun Sep 20 17:37:12 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.09
+user 0.87
+sys 0.16
+EXIT:
+=== resume cycle 12 status=running matrix_records=29/64 Sun Sep 20 17:37:13 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.32
+user 1.01
+sys 0.17
+EXIT:
+=== resume cycle 13 status=running matrix_records=29/64 Sun Sep 20 17:37:14 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.12
+user 0.91
+sys 0.16
+EXIT:
+=== resume cycle 14 status=running matrix_records=29/64 Sun Sep 20 17:37:15 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.33
+user 1.03
+sys 0.18
+EXIT:
+=== resume cycle 15 status=running matrix_records=29/64 Sun Sep 20 17:37:17 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.12
+user 0.90
+sys 0.16
+EXIT:
+=== resume cycle 16 status=running matrix_records=29/64 Sun Sep 20 17:37:18 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.82
+user 1.07
+sys 0.21
+EXIT:
+=== resume cycle 17 status=running matrix_records=29/64 Sun Sep 20 17:37:20 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.19
+user 0.94
+sys 0.18
+EXIT:
+=== resume cycle 18 status=running matrix_records=29/64 Sun Sep 20 17:37:21 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.32
+user 1.00
+sys 0.18
+EXIT:
+=== resume cycle 19 status=running matrix_records=29/64 Sun Sep 20 17:37:22 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.34
+user 1.03
+sys 0.19
+EXIT:
+=== resume cycle 20 status=running matrix_records=29/64 Sun Sep 20 17:37:24 +0530 2026 ===
+{
+  "error": "LedgerLocked",
+  "message": "another writer holds the ledger lock"
+}
+real 1.23
+user 0.99
+sys 0.19
+EXIT:
+ABORT too many resume cycles
+18:03:57 waiting for active f1q; records=31/64
+18:04:27 waiting for active f1q; records=31/64
+18:04:57 waiting for active f1q; records=31/64
+18:05:27 waiting for active f1q; records=31/64
+18:05:57 waiting for active f1q; records=31/64
+18:06:27 waiting for active f1q; records=31/64
+18:06:57 waiting for active f1q; records=31/64
+18:07:28 waiting for active f1q; records=31/64
+18:07:58 waiting for active f1q; records=31/64
+{
+  "artifact_count": 15,
+  "attempt_count": 8,
+  "completed_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references"
+  ],
+  "configuration_hash": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+  "configuration_hash_kind": "draft",
+  "dossier_sha256": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+  "duration_monotonic_s": 2072.5558771659853,
+  "ended_at_utc": "2026-09-20T12:38:14Z",
+  "event_count": 52,
+  "evidence_kind": "development",
+  "failed_unit_ids": [],
+  "git_commit": "cd48f732ef25859da417ef5d1596566761909b7f",
+  "git_dirty": true,
+  "hardware_execution_enabled": false,
+  "injected_failure_count": 0,
+  "interrupted_unit_ids": [
+    "formulation.development_matrix"
+  ],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "resume remaining formulation_gate_c_closure_check units",
+  "notes": [
+    "event counts taken from append-only ledger events and artifact rows",
+    "This receipt is development-preview evidence, not a scientific observation or validated race checkpoint."
+  ],
+  "plan_id": "formulation_gate_c_closure_check",
+  "planned_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references",
+    "formulation.development_matrix",
+    "formulation.evaluator_separation_panel",
+    "formulation.stage3_3_diagnostic_restore",
+    "formulation.source_restore"
+  ],
+  "qpu_usage_seconds": 0,
+  "receipt_json": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.json",
+  "receipt_md": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.md",
+  "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+  "schema_version": "1.0.0",
+  "scientific_protocol": "DRAFT",
+  "source_snapshot_hash": "8dfb911f34815d6756445d7d0ed7958bd06866a49d84d406a7a21430787fc078",
+  "stage": 4,
+  "started_at_utc": "2026-09-20T10:46:56Z",
+  "status": "interrupted"
+}
+real 2073.65
+user 2003.84
+sys 21.50
+EXIT:
+=== resume cycle 3 status=interrupted matrix_records=32/64 Sun Sep 20 18:08:14 +0530 2026 ===
+18:08:28 waiting for active f1q; records=32/64
+18:08:58 waiting for active f1q; records=32/64
+18:09:28 waiting for active f1q; records=32/64
+18:09:58 waiting for active f1q; records=32/64
+18:10:28 waiting for active f1q; records=32/64
+18:10:58 waiting for active f1q; records=32/64
+18:11:28 waiting for active f1q; records=32/64
+18:11:58 waiting for active f1q; records=32/64
+18:12:28 waiting for active f1q; records=32/64
+18:12:58 waiting for active f1q; records=35/64
+18:13:28 waiting for active f1q; records=35/64
+18:13:58 waiting for active f1q; records=35/64
+18:14:28 waiting for active f1q; records=35/64
+18:14:58 waiting for active f1q; records=35/64
+18:15:28 waiting for active f1q; records=35/64
+18:15:58 waiting for active f1q; records=35/64
+18:16:28 waiting for active f1q; records=35/64
+18:16:58 waiting for active f1q; records=35/64
+18:17:28 waiting for active f1q; records=35/64
+18:17:58 waiting for active f1q; records=36/64
+18:18:28 waiting for active f1q; records=36/64
+18:18:58 waiting for active f1q; records=36/64
+18:19:28 waiting for active f1q; records=36/64
+18:19:58 waiting for active f1q; records=36/64
+18:20:28 waiting for active f1q; records=36/64
+18:20:59 waiting for active f1q; records=36/64
+18:21:29 waiting for active f1q; records=36/64
+18:21:59 waiting for active f1q; records=36/64
+18:22:29 waiting for active f1q; records=37/64
+18:22:59 waiting for active f1q; records=37/64
+18:23:29 waiting for active f1q; records=37/64
+18:23:59 waiting for active f1q; records=37/64
+18:24:29 waiting for active f1q; records=37/64
+18:24:59 waiting for active f1q; records=37/64
+18:25:29 waiting for active f1q; records=37/64
+18:25:59 waiting for active f1q; records=37/64
+18:26:29 waiting for active f1q; records=38/64
+18:26:59 waiting for active f1q; records=40/64
+18:27:29 waiting for active f1q; records=40/64
+18:27:59 waiting for active f1q; records=40/64
+18:28:29 waiting for active f1q; records=40/64
+18:28:59 waiting for active f1q; records=40/64
+{
+  "artifact_count": 15,
+  "attempt_count": 9,
+  "completed_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references"
+  ],
+  "configuration_hash": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+  "configuration_hash_kind": "draft",
+  "dossier_sha256": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+  "duration_monotonic_s": 1262.5870981659973,
+  "ended_at_utc": "2026-09-20T12:59:17Z",
+  "event_count": 61,
+  "evidence_kind": "development",
+  "failed_unit_ids": [],
+  "git_commit": "cd48f732ef25859da417ef5d1596566761909b7f",
+  "git_dirty": true,
+  "hardware_execution_enabled": false,
+  "injected_failure_count": 0,
+  "interrupted_unit_ids": [],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "resume remaining formulation_gate_c_closure_check units",
+  "notes": [
+    "event counts taken from append-only ledger events and artifact rows",
+    "This receipt is development-preview evidence, not a scientific observation or validated race checkpoint."
+  ],
+  "plan_id": "formulation_gate_c_closure_check",
+  "planned_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references",
+    "formulation.development_matrix",
+    "formulation.evaluator_separation_panel",
+    "formulation.stage3_3_diagnostic_restore",
+    "formulation.source_restore"
+  ],
+  "qpu_usage_seconds": 0,
+  "receipt_json": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.json",
+  "receipt_md": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.md",
+  "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+  "schema_version": "1.0.0",
+  "scientific_protocol": "DRAFT",
+  "source_snapshot_hash": "8dfb911f34815d6756445d7d0ed7958bd06866a49d84d406a7a21430787fc078",
+  "stage": 4,
+  "started_at_utc": "2026-09-20T10:46:56Z",
+  "status": "running"
+}
+real 1263.23
+user 1245.11
+sys 9.02
+EXIT:
+=== resume cycle 4 status=running matrix_records=40/64 Sun Sep 20 18:29:17 +0530 2026 ===
+{
+  "error": "IntegrityError",
+  "message": "unit formulation.development_matrix is running; inspect evidence before retrying"
+}
+real 0.87
+user 0.61
+sys 0.12
+EXIT:
+=== resume cycle 5 status=running matrix_records=40/64 Sun Sep 20 18:29:18 +0530 2026 ===
+{
+  "error": "IntegrityError",
+  "message": "unit formulation.development_matrix is running; inspect evidence before retrying"
+}
+real 0.70
+user 0.59
+sys 0.10
+EXIT:
+=== resume cycle 6 status=running matrix_records=40/64 Sun Sep 20 18:29:19 +0530 2026 ===
+{
+  "error": "IntegrityError",
+  "message": "unit formulation.development_matrix is running; inspect evidence before retrying"
+}
+real 0.72
+user 0.60
+sys 0.10
+=== resume cycle 1 run=interrupted matrix_unit=interrupted records=40/64 Sun Sep 20 18:30:49 +0530 2026 ===
+18:33:40 waiting for ledger lock
+18:33:51 waiting for ledger lock
+18:34:02 waiting for ledger lock

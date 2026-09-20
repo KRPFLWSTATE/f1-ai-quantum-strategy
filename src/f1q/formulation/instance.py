@@ -139,114 +139,49 @@ def build_instance_record(
         "failed": 0,
         "disagreements": [],
         "semantic_failures": [],
-        "validation_agreements": 0,
-        "round_trip_ok": 0,
+        "validation_attempted": 0,
+        "validation_passed": 0,
+        "validation_failed": 0,
+        "round_trip_attempted": 0,
+        "round_trip_passed": 0,
+        "round_trip_failed": 0,
+        "analytical_admission_attempted": 0,
+        "analytical_admission_passed": 0,
+        "analytical_admission_failed": 0,
+        "terminal_execution_attempted": 0,
+        "terminal_execution_completed": 0,
+        "terminal_execution_failed": 0,
+        "exact_stop_sequence_matches": 0,
+        "exact_set_and_compound_matches": 0,
+        "timing_window_matches": 0,
+        "terminal_obligation_passes": 0,
+        "pair_interaction_semantic_checks": 0,
         "cap": None,
         "hidden_cap": False,
+        "note": "analytical admission never increments terminal_execution_* counters",
     }
     if cross_check_simulator:
-        from f1q.formulation.downstream_policy import compounds_after_mount, compounds_used, obligation_met
+        from f1q.formulation.evaluator import evaluate_joint_plan_from_checkpoint_sim
 
         menus = action_model["menus"]
         a_list = [CarAction.model_validate(a) for a in menus[selected[0]]]
         b_list = [CarAction.model_validate(b) for b in menus[selected[1]]]
         pairs = [(a, b) for a in a_list for b in b_list]
         cross["expected"] = len(pairs)
-        cross["analytical_semantic"] = 0
-        cross["simulated_semantic"] = 0
-        required = int(public.distinct_compounds_required)
-        obs_cars = {row["car_id"]: row for row in obs_data["cars"]}
         checkpoint = sim.clone()
-
-        def analytical_obligation_ok(action: CarAction) -> tuple[bool, str]:
-            car = obs_cars[action.car_id]
-            inv = list((obs_data.get("inventories") or {}).get(action.car_id) or [])
-            used = compounds_after_mount(car, inv, None)
-            if action.kind in {"pit_now", "delay_laps"}:
-                if action.compound is None:
-                    return False, "missing_compound"
-                after = set(used)
-                after.add(str(action.compound))
-                if len(after) < required:
-                    return False, "instruction_leaves_obligation_unmet"
-                return True, "instructed_stop_meets_obligation"
-            # continuation
-            if len(used) >= required:
-                return True, "continuation_obligation_already_met"
-            if car.get("in_pit_lane"):
-                # In-pit continuation preserves committed service; infer target if public.
-                pending_c = car.get("pending_compound")
-                if pending_c:
-                    after = set(used)
-                    after.add(str(pending_c))
-                    return (len(after) >= required), "in_pit_committed_service"
-                # Observable-only: if already in pit, service compounds from pending may be unset
-                # on the public observation; require simulation.
-                return False, "in_pit_needs_simulation"
-            # Downstream policy will pit onto an alternate unused set when unmet.
-            after = set(used)
-            alt = None
-            for item in inv:
-                if item.get("used") or item.get("set_id") == car.get("mounted_set_id"):
-                    continue
-                if item["compound"] not in used:
-                    alt = item["compound"]
-                    break
-            if alt is None:
-                return False, "no_alternate_set_for_downstream"
-            after.add(alt)
-            return (len(after) >= required), "downstream_policy_alternate_stop"
+        checkpoint_event_index = len(list(checkpoint.engine.state.get("events") or []))
+        decision_time = float(checkpoint.engine.state["t"])
 
         for a, b in pairs:
             joint = build_joint_plan(a, b, selected)
             plan = simulator_plan_payload(joint)
+            cross["validation_attempted"] += 1
             try:
                 checkpoint.validate_plan(plan)
-                cross["validation_agreements"] += 1
-                rt = simulator_plan_payload(build_joint_plan(a, b, selected))
-                if rt != plan:
-                    cross["disagreements"].append(
-                        {
-                            "action_ids": {a.car_id: a.action_id, b.car_id: b.action_id},
-                            "error": "round_trip_mismatch",
-                            "failure_code": "ROUND_TRIP",
-                        }
-                    )
-                    cross["failed"] += 1
-                    continue
-                cross["round_trip_ok"] += 1
-                ok_a, why_a = analytical_obligation_ok(a)
-                ok_b, why_b = analytical_obligation_ok(b)
-                if ok_a and ok_b:
-                    cross["checked"] += 1
-                    cross["analytical_semantic"] += 1
-                    continue
-                # Fall back to full terminal simulation when analytical proof is insufficient.
-                clone = checkpoint.clone()
-                clone.apply_plan(plan)
-                clone.continue_to_finish()
-                reason_codes: list[str] = []
-                for action in (a, b):
-                    car = clone.engine.state["cars"][action.car_id]
-                    if not obligation_met(car, required):
-                        reason_codes.append(f"terminal_obligation_unmet:{action.car_id}")
-                    if action.kind in {"pit_now", "delay_laps"} and action.compound:
-                        if action.compound not in compounds_used(car):
-                            reason_codes.append(f"instructed_compound_not_used:{action.car_id}")
-                cross["simulated_semantic"] += 1
-                if reason_codes:
-                    cross["semantic_failures"].append(
-                        {
-                            "action_ids": {a.car_id: a.action_id, b.car_id: b.action_id},
-                            "reason_codes": reason_codes,
-                            "analytical": {"a": why_a, "b": why_b},
-                            "failure_code": "SEMANTIC_ILLEGAL",
-                        }
-                    )
-                    cross["failed"] += 1
-                else:
-                    cross["checked"] += 1
+                cross["validation_passed"] += 1
             except Exception as exc:
+                cross["validation_failed"] += 1
+                cross["failed"] += 1
                 cross["disagreements"].append(
                     {
                         "action_ids": {a.car_id: a.action_id, b.car_id: b.action_id},
@@ -254,28 +189,147 @@ def build_instance_record(
                         "failure_code": "VALIDATE",
                     }
                 )
+                continue
+
+            cross["round_trip_attempted"] += 1
+            rt = simulator_plan_payload(build_joint_plan(a, b, selected))
+            if rt != plan:
+                cross["round_trip_failed"] += 1
                 cross["failed"] += 1
+                cross["disagreements"].append(
+                    {
+                        "action_ids": {a.car_id: a.action_id, b.car_id: b.action_id},
+                        "error": "round_trip_mismatch",
+                        "failure_code": "ROUND_TRIP",
+                    }
+                )
+                continue
+            cross["round_trip_passed"] += 1
 
-    # Full-to-reduced equivalence: members must share the versioned signature with their representative.
-    reduction_proof: dict[str, Any] = {"cars": {}, "ok": True}
+            # Analytical admission is recorded separately and never counts as terminal execution.
+            cross["analytical_admission_attempted"] += 1
+            # Always execute every reduced pair on a cloned checkpoint (Gate C requirement).
+            cross["terminal_execution_attempted"] += 1
+            try:
+                ev = evaluate_joint_plan_from_checkpoint_sim(
+                    checkpoint_sim=checkpoint,
+                    spec=spec,
+                    action_a=a,
+                    action_b=b,
+                    checkpoint_event_index=checkpoint_event_index,
+                    decision_time=decision_time,
+                )
+                cross["terminal_execution_completed"] += 1
+                cross["pair_interaction_semantic_checks"] += 1
+                if ev.get("stop_sequence_match"):
+                    cross["exact_stop_sequence_matches"] += 1
+                if ev.get("exact_set_and_compound_match"):
+                    cross["exact_set_and_compound_matches"] += 1
+                if ev.get("timing_window_match"):
+                    cross["timing_window_matches"] += 1
+                if ev.get("terminal_obligation_satisfied"):
+                    cross["terminal_obligation_passes"] += 1
+                    cross["analytical_admission_passed"] += 1
+                else:
+                    cross["analytical_admission_failed"] += 1
+                if ev.get("semantic_legal"):
+                    cross["checked"] += 1
+                else:
+                    cross["failed"] += 1
+                    cross["semantic_failures"].append(
+                        {
+                            "action_ids": {a.car_id: a.action_id, b.car_id: b.action_id},
+                            "reason_codes": ev.get("reason_codes"),
+                            "failure_code": "SEMANTIC_ILLEGAL",
+                        }
+                    )
+            except Exception as exc:
+                cross["terminal_execution_failed"] += 1
+                cross["analytical_admission_failed"] += 1
+                cross["failed"] += 1
+                cross["disagreements"].append(
+                    {
+                        "action_ids": {a.car_id: a.action_id, b.car_id: b.action_id},
+                        "error": str(exc),
+                        "failure_code": "TERMINAL_EXEC",
+                    }
+                )
+
+    # Independent reduction-equivalence proof (not a re-check of the grouping signature alone).
+    reduction_proof: dict[str, Any] = {
+        "cars": {},
+        "ok": True,
+        "method": "independent_unary_pair_validator_witness",
+        "circular_signature_recheck_forbidden": True,
+    }
     from f1q.formulation.actions import equivalence_signature
+    from f1q.formulation.compiler import score_joint_direct
 
+    opposing = {
+        selected[0]: [CarAction.model_validate(a) for a in action_model["menus"][selected[1]]],
+        selected[1]: [CarAction.model_validate(a) for a in action_model["menus"][selected[0]]],
+    }
     for cid in selected:
         red = action_model["reduction"][cid]
         member_map = red["member_to_representative"]
         full_model = generate_action_model(obs, public, selected_car_ids=selected, reduce=False)
         full_actions = {a["action_id"]: CarAction.model_validate(a) for a in full_model["menus"][cid]}
+        full_costs = compile_action_costs(
+            obs, public, menus=full_model["menus"], selected_car_ids=selected
+        )
         car_proof = []
         for member_id, rep_id in member_map.items():
-            if member_id == rep_id:
-                continue
             m_act = full_actions.get(member_id)
             r_act = full_actions.get(rep_id)
             if m_act is None or r_act is None:
                 reduction_proof["ok"] = False
                 car_proof.append({"member": member_id, "rep": rep_id, "ok": False, "reason": "missing"})
                 continue
-            ok = equivalence_signature(m_act) == equivalence_signature(r_act)
+            if member_id == rep_id:
+                car_proof.append(
+                    {
+                        "member": member_id,
+                        "rep": rep_id,
+                        "ok": True,
+                        "identity": True,
+                        "independent_checks": ["identity_representative"],
+                    }
+                )
+                continue
+            # Independent attribute equality except deliberately quotiented identity (none under v2).
+            attr_ok = (
+                m_act.kind == r_act.kind
+                and m_act.delay_laps == r_act.delay_laps
+                and m_act.compound == r_act.compound
+                and m_act.set_id == r_act.set_id
+            )
+            # Direct unary cost equality from full menu costs.
+            m_ids = full_costs["action_ids"][cid]
+            try:
+                mi = m_ids.index(member_id)
+                ri = m_ids.index(rep_id)
+            except ValueError:
+                reduction_proof["ok"] = False
+                car_proof.append({"member": member_id, "rep": rep_id, "ok": False, "reason": "cost_index"})
+                continue
+            u_key = "u1" if cid == selected[0] else "u2"
+            unary_ok = abs(float(full_costs[u_key][mi]) - float(full_costs[u_key][ri])) <= TOLERANCE_S
+            # Pair costs against every retained opposing action.
+            pair_ok = True
+            other = selected[1] if cid == selected[0] else selected[0]
+            for oj, _opp in enumerate(opposing[cid]):
+                if cid == selected[0]:
+                    c_m = score_joint_direct(full_costs, index_a=mi, index_b=oj)
+                    c_r = score_joint_direct(full_costs, index_a=ri, index_b=oj)
+                else:
+                    c_m = score_joint_direct(full_costs, index_a=oj, index_b=mi)
+                    c_r = score_joint_direct(full_costs, index_a=oj, index_b=ri)
+                if abs(c_m - c_r) > TOLERANCE_S:
+                    pair_ok = False
+                    break
+            # Signature equality is recorded but is not the sole proof.
+            sig_equal = equivalence_signature(m_act) == equivalence_signature(r_act)
+            ok = bool(attr_ok and unary_ok and pair_ok and sig_equal)
             if not ok:
                 reduction_proof["ok"] = False
             car_proof.append(
@@ -283,11 +337,21 @@ def build_instance_record(
                     "member": member_id,
                     "rep": rep_id,
                     "ok": ok,
-                    "member_sig": list(equivalence_signature(m_act)),
-                    "rep_sig": list(equivalence_signature(r_act)),
+                    "attribute_equality": attr_ok,
+                    "unary_cost_equal": unary_ok,
+                    "pair_costs_equal_vs_all_opposing": pair_ok,
+                    "signature_equal_recorded_not_sole_proof": sig_equal,
                 }
             )
         reduction_proof["cars"][cid] = car_proof
+        reduction_proof["member_to_representative"] = {
+            **reduction_proof.get("member_to_representative", {}),
+            **member_map,
+        }
+        reduction_proof["degeneracy"] = {
+            **reduction_proof.get("degeneracy", {}),
+            **red.get("degeneracy", {}),
+        }
 
     greedy_val = (
         heuristics["greedy_local"]["incumbent"]["value"]

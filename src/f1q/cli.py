@@ -12,7 +12,7 @@ from f1q.generator.config import load_generator_config, sorted_families
 from f1q.generator.splits import build_split_plan, planned_counts
 from f1q.generator.stage3 import stage3_handoff_contract
 from f1q.paths import resolve_project_root
-from f1q.runner import regenerate_receipt, resume_run, run_bootstrap, run_development_preview, run_formulation_check, run_formulation_repair_check, run_simulator_check, run_simulator_followup, run_simulator_repair
+from f1q.runner import regenerate_receipt, resume_run, run_bootstrap, run_development_preview, run_formulation_check, run_formulation_gate_c_closure_check, run_formulation_repair_check, run_simulator_check, run_simulator_followup, run_simulator_repair
 from f1q.snapshot import take_source_snapshot
 from f1q.status import run_status
 
@@ -70,12 +70,17 @@ def main(argv: list[str] | None = None) -> int:
     diag.add_argument(
         "--write",
         action="store_true",
-        help="write docs/evidence/stage3_3/post_repair_diagnostic.corrected.json",
+        help="write current Stage 4.2 regression diagnostic (never overwrites Stage 3.3 identity)",
     )
     diag.add_argument(
         "--verify",
         action="store_true",
-        help="compare the checked-in corrected JSON scientific_payload to a live regeneration",
+        help="compare Stage 4.2 regression diagnostic scientific_payload to a live regeneration",
+    )
+    diag.add_argument(
+        "--verify-historical",
+        action="store_true",
+        help="verify immutable Stage 3.3 corrected diagnostic SHA-256 only",
     )
 
     args = parser.parse_args(argv)
@@ -105,6 +110,8 @@ def main(argv: list[str] | None = None) -> int:
                 result = run_formulation_check(root)
             elif args.plan == "formulation_repair_check":
                 result = run_formulation_repair_check(root)
+            elif args.plan == "formulation_gate_c_closure_check":
+                result = run_formulation_gate_c_closure_check(root)
             else:
                 from f1q.authorization import authorize_plan, load_project_config
 
@@ -254,9 +261,14 @@ def _simulator_command(root, args) -> int:
         from f1q.simulator.stage3_3_diagnostic import (
             build_diagnostic_document,
             scientific_payload_matches_live,
+            verify_historical_stage3_3,
             write_corrected_diagnostic,
         )
 
+        if getattr(args, "verify_historical", False):
+            detail = verify_historical_stage3_3(root)
+            print(json.dumps({"ok": detail["ok"], **detail}, indent=2, sort_keys=True))
+            return 0 if detail["ok"] else 1
         if args.verify:
             match, detail = scientific_payload_matches_live(root)
             print(json.dumps({"ok": match, **detail}, indent=2, sort_keys=True))
@@ -270,6 +282,7 @@ def _simulator_command(root, args) -> int:
                         "path": result["path"],
                         "sha256": result["sha256"],
                         "scientific_payload_sha256": result["scientific_payload_sha256"],
+                        "historical_path_untouched": result.get("historical_path_untouched"),
                     },
                     indent=2,
                     sort_keys=True,

@@ -41,6 +41,7 @@ authorization:
     - simulator_repair
     - formulation_check
     - formulation_repair_check
+    - formulation_gate_c_closure_check
   github_push_authorized: false
 unresolved:
   - field: ibm_backend

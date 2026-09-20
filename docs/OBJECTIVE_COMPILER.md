@@ -1,28 +1,27 @@
-> Stage 4.1 repair supersedes Stage 4 Gate C software/evidence claims for action semantics, pair timing, evaluator legality, accounting, and packaging. QUBO algebra conventions remain; numerical coefficients regenerate under repaired costs.
+# Restricted proxy objective compiler (Stage 4.2)
 
-# Restricted proxy objective compiler (Stage 4)
+Version: **1.2.0**. Primary coefficient unit: **seconds**. Stage 4 risk weight: **exactly 0**. This is an **analytical proxy**, not the simulator evaluator and not race truth.
 
-Version: **1.0.0**. Primary coefficient unit: **seconds**. Stage 4 risk weight: **exactly 0** (weights have not been selected on tuning data).
+Stage 4.2 supersedes Stage 4 / 4.1 Gate C software claims for in-pit residual costing, pair timing, and planned-stop semantics. Numerical coefficients must be regenerated; do not copy Stage 4.1 goldens.
 
 ## Decomposition
-
-For cars 1 and 2 with legal plans `a` and `b`:
 
 ```text
 f(a,b) = C + u1[a] + u2[b] + v[a,b]
 ```
 
-- `C` — reported constant baseline (0 in the current analytical accumulation; race-time baseline lives in the unaries)
-- `u1[a]`, `u2[b]` — predicted remaining-time contribution for each car under the restricted analytical model
-- `v[a,b]` — **additional** pair interaction only (shared-crew wait / restricted rejoin), not already inside the unaries
+- `C` — constant baseline (0 in the current analytical accumulation)
+- `u1[a]`, `u2[b]` — predicted remaining-time contribution under the restricted analytical model
+- `v[a,b]` — additional shared-crew wait from observable service-interval overlap only
 
 ## Analytical model (declared public inputs only)
 
 Observable / public inputs:
 
 - compound, tyre age, estimated fuel kg, remaining laps, revealed regime (if any)
-- public `green_lap_s`, `green_pit_loss_s`, tyre form/wear/curvature scales, compound offsets, `kg_per_lap`, `time_per_kg_s`, service time, SC/VSC pace factors
-- compound obligation count
+- public lap/pit/tyre/fuel constants and SC/VSC pace factors
+- public `pit_entry_frac`
+- public `committed_pit_service` for selected-team in-pit cars (compound, set, phase, residual phase timings, crew free-at)
 
 Lap time (restricted):
 
@@ -30,7 +29,7 @@ Lap time (restricted):
 T = (green_lap_s + compound_offset + tyre_delta(age) + time_per_kg * fuel_est) * pace_factor(regime)
 ```
 
-Regime-adjusted pit loss:
+Regime-adjusted pit loss for on-track scheduled stops:
 
 ```text
 pit_loss_eff = green_pit_loss_s / pace_factor(regime)
@@ -39,15 +38,18 @@ pit_loss_eff = green_pit_loss_s / pace_factor(regime)
 Plans:
 
 - `pit_now` / `delay_k` apply `pit_loss_eff` at the scheduled lap index and reset age on the new compound
-- `continuation` may force a downstream obligation stop near the horizon under `compound_obligation.v1`
+- on-track `continuation` may schedule an immediate alternate-compound stop when the obligation is unmet
+- **in-pit continuation** models the **residual** committed stop from the decision instant: remaining transit/wait/service/exit once, mount the exact committed set/compound, reset age at service completion, and use that compound for subsequent laps. Source of the planned-stop record: `in_progress_commitment`. Elapsed pit time is not double-charged.
 
-Pair term `v`:
+## Pair term
 
-- same scheduled pit lap → add `service_stationary_s` once (double-stack wait)
-- adjacent pit laps → add `0.5 * service_stationary_s`
-- otherwise 0
+```text
+wait = max(0, earlier_service_end - later_service_start)
+```
 
-No separate degradation/traffic/pit penalty is added if already inside predicted remaining time. No arbitrary risk/tail functional.
+using predicted box arrivals and/or public committed service intervals. The pair term is zero with an explicit reason when public timing is insufficient. The deleted Stage 4 adjacent-lap half-service coefficient is not restored.
+
+Unary residuals include a car’s own remaining wait once; the pair term adds shared-crew overlap once.
 
 ## Centring
 
@@ -59,14 +61,4 @@ u2_centered[b] = u2[b] - m2
 C_centered = C + m1 + m2
 ```
 
-Verified exhaustively on legal pairs: centring changes no physical objective, optimum, gap, or tie. Restore the constant for physical-unit reports.
-
-## Direct scorer
-
-`score_joint_direct` evaluates a legal joint plan from the uncentred (or centred) action-cost table **without** importing or calling the QUBO builder. It is the primary reference for energy agreement.
-
-## Separation from the evaluator
-
-The compiler builds an analytical proxy in seconds. The simulator evaluator (`f1q.formulation.evaluator`) applies complete plans to **cloned** checkpoints via `continue_to_finish` and reports modelled ranks / `L`. These are **not** aliases, wrappers, or two modes of one implementation. AST import-boundary checks enforce separation.
-
-The compiler never calls `continue_to_finish` and never reads private simulator state.
+Centring must not change the physical objective ordering beyond declared tolerance.

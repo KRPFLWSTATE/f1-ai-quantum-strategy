@@ -586,7 +586,7 @@ class RaceEngine:
                     planned = {
                         "kind": "continuation",
                         "downstream_policy_id": "compound_obligation.v1",
-                        "downstream_policy_version": "1.1.0",
+                        "downstream_policy_version": "1.2.0",
                         "reason": (planned or {}).get("reason") or "downstream_policy",
                     }
                     self.state["policies"][car["car_id"]] = planned
@@ -607,7 +607,7 @@ class RaceEngine:
                         "kind": "continuation",
                         "reason": "expired_pit_now_missed_entry",
                         "downstream_policy_id": "compound_obligation.v1",
-                        "downstream_policy_version": "1.1.0",
+                        "downstream_policy_version": "1.2.0",
                     }
                     self._log("pit_now_expired", car["car_id"], {"frac": car["frac"], "not_relabelled_next_lap": True})
                     continue
@@ -653,7 +653,7 @@ class RaceEngine:
                         "kind": "continuation",
                         "reason": "one_shot_plan_consumed",
                         "downstream_policy_id": "compound_obligation.v1",
-                        "downstream_policy_version": "1.1.0",
+                        "downstream_policy_version": "1.2.0",
                     }
                 self._log("pit_entry", cid, {"t_in_s": self.state["pit_parts"]["t_in_s"]})
             elif kind == "pit_timer":

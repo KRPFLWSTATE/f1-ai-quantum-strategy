@@ -1,0 +1,44 @@
+{
+  "historical_stage3_3_sha": "10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35",
+  "matrix_completed": 40,
+  "matrix_planned": 64,
+  "pair_cross_check_totals": {
+    "analytical_admission_passed": 7195,
+    "exact_set_and_compound_matches": 7195,
+    "expected": 7195,
+    "failed": 0,
+    "hidden_cap": false,
+    "matrix_episodes_incomplete": 24,
+    "round_tripped": 7195,
+    "semantic_passed": 7195,
+    "terminal_attempted": 7195,
+    "terminal_executed": 7195,
+    "terminal_obligation_passes": 7195,
+    "timing_window_matches": 7195,
+    "validated": 7195
+  },
+  "panel_relation_counts_raw": {
+    "agreement": 1,
+    "agreement_with_ties": 1,
+    "insufficient_unique_plans": 4,
+    "reversal": 1,
+    "tie_loss_of_discrimination": 1
+  },
+  "panel_tie_aware": {
+    "agreement": 2,
+    "agreement_with_ties": 1,
+    "insufficient": 4,
+    "reversal": 1,
+    "tie_loss": 1
+  },
+  "proxy_headroom_stats": {
+    "gate_e_warning": true,
+    "max": 0.0,
+    "mean": 0.0,
+    "min": 0.0,
+    "n_with_headroom": 40,
+    "zero_count": 40
+  },
+  "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+  "source_snapshot_hash": "8dfb911f34815d6756445d7d0ed7958bd06866a49d84d406a7a21430787fc078"
+}

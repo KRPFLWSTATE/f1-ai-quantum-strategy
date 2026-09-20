@@ -1,0 +1,57 @@
+{
+  "artifact_count": 15,
+  "attempt_count": 6,
+  "completed_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references"
+  ],
+  "configuration_hash": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+  "configuration_hash_kind": "draft",
+  "dossier_sha256": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+  "duration_monotonic_s": 2363.3843938329956,
+  "ended_at_utc": "2026-09-20T11:26:20Z",
+  "event_count": 30,
+  "evidence_kind": "development",
+  "failed_unit_ids": [],
+  "git_commit": "cd48f732ef25859da417ef5d1596566761909b7f",
+  "git_dirty": true,
+  "hardware_execution_enabled": false,
+  "injected_failure_count": 0,
+  "interrupted_unit_ids": [
+    "formulation.development_matrix"
+  ],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "resume remaining formulation_gate_c_closure_check units",
+  "notes": [
+    "event counts taken from append-only ledger events and artifact rows",
+    "This receipt is development-preview evidence, not a scientific observation or validated race checkpoint."
+  ],
+  "plan_id": "formulation_gate_c_closure_check",
+  "planned_unit_ids": [
+    "formulation.pre_repair_erratum",
+    "formulation.action_model",
+    "formulation.compiler_direct_costs",
+    "formulation.qubo_ising_gate",
+    "formulation.independent_references",
+    "formulation.development_matrix",
+    "formulation.evaluator_separation_panel",
+    "formulation.stage3_3_diagnostic_restore",
+    "formulation.source_restore"
+  ],
+  "qpu_usage_seconds": 0,
+  "receipt_json": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.json",
+  "receipt_md": "evidence/formulation/receipts/e85ee977-8a35-40c1-b690-02724dea3228.md",
+  "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+  "schema_version": "1.0.0",
+  "scientific_protocol": "DRAFT",
+  "source_snapshot_hash": "8dfb911f34815d6756445d7d0ed7958bd06866a49d84d406a7a21430787fc078",
+  "stage": 4,
+  "started_at_utc": "2026-09-20T10:46:56Z",
+  "status": "interrupted"
+}
+real 2363.84
+user 2326.32
+sys 19.70

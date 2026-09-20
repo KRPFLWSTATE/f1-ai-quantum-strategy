@@ -1,0 +1,10 @@
+.......F.....                                                            [100%]
+=================================== FAILURES ===================================
+/Users/kawinperera/f1-ai-quantum-strategy/tests/formulation/test_stage4_2_repair.py:190: AssertionError: assert ('adjacent-lap half-service' not in '# action mo...vate keys.\n'
+=========================== short test summary info ============================
+FAILED tests/formulation/test_stage4_2_repair.py::test_docs_reject_obsolete_adjacent_lap_coefficient
+F..............                                                          [100%]
+=================================== FAILURES ===================================
+/Users/kawinperera/f1-ai-quantum-strategy/tests/formulation/test_stage4_1_repair.py:121: AssertionError: assert '1.2.0' == '1.1.0'
+=========================== short test summary info ============================
+FAILED tests/formulation/test_stage4_1_repair.py::test_versions_bumped_for_stage41

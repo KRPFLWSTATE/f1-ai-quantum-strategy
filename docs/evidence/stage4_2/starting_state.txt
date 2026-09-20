@@ -1,0 +1,22 @@
+=== git status --short ===
+?? docs/evidence/stage4_2/
+?? review/STAGE_4_1_FINAL_VERIFY.json
+?? review/STAGE_4_1_REVIEW.manifest.json
+?? review/STAGE_4_1_REVIEW.zip
+=== git rev-parse HEAD ===
+cd48f732ef25859da417ef5d1596566761909b7f
+=== git log -12 ===
+cd48f73 (HEAD -> main) Align Stage 4.1 report ending HEAD with tip.
+db4e0a2 Clarify Stage 4.1 tip commit in the report.
+1173bb3 Record Stage 4.1 ending git state in the report.
+d184027 Close Stage 4.1 formulation repair with Gate C revalidation.
+0b69a41 Clarify Stage 4 closing commit hash in the report.
+0a1aab7 Record Stage 4 ending git state in the report.
+5c94976 Close Stage 4 Gate C formulation with action model, QUBO, and classical references.
+6e504f9 Record Stage 3.3 ending git state in the report.
+0dbbf0b Close Stage 3.2 repairs and Stage 3.3 evidence correction.
+358a17b Record Stage 2 generator and Stage 3 restricted simulator validation.
+2434682 Record Stage 1 doctor repair and check-evidence notes.
+f0dd49f Initialize Stage 1 research infrastructure and evidence ledger.
+=== python -VV ===
+Python 3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.0.0 (clang-2100.0.123.102)]

@@ -18,6 +18,7 @@ from f1q.errors import RejectionError, SimulatorNotImplementedError
 from f1q.generator.observation import project_decision_observation
 from f1q.generator.streams import stream_seed
 from f1q.simulator.classification import classify, team_rank_loss
+from f1q.simulator.commitment import project_committed_pit_service
 from f1q.simulator.config import INTERFACE_VERSION, SIMULATOR_VERSION, load_simulator_config
 from f1q.simulator.deadline import effective_deadline, is_timely
 from f1q.simulator.engine import RaceEngine, clone_state, distance
@@ -81,7 +82,17 @@ class RaceSimulator:
         )
         public_cars = []
         inventories: dict[str, Any] = {}
+        selected_team = st["selected_team_id"]
         for cid, car in st["cars"].items():
+            commitment = None
+            if car["team_id"] == selected_team and car.get("in_pit"):
+                commitment = project_committed_pit_service(
+                    car=car,
+                    decision_time_race_s=t,
+                    pit_parts=st["pit_parts"],
+                    crew_free_at_race_s=st["crew_free_at"].get(selected_team),
+                    selected_team_id=selected_team,
+                )
             public_cars.append(
                 {
                     "car_id": cid,
@@ -98,8 +109,10 @@ class RaceSimulator:
                     "fuel_uncertainty_kg": car["fuel_uncertainty_kg"],
                     "in_pit_lane": car["in_pit"],
                     "service_state": car["pit_phase"] or "on_track",
+                    "pit_phase": car["pit_phase"],
                     "pit_entry_commitment_cutoff_race_s": cutoffs[cid],
                     "used_compounds": list(car["used_compounds"]),
+                    "committed_pit_service": commitment,
                 }
             )
             inventories[cid] = copy.deepcopy(car["inventory"])
@@ -129,10 +142,19 @@ class RaceSimulator:
             else spec.get("checkpoint_request", {}).get("completed_laps"),
             "remaining_laps": int(st["horizon"]) - int(eng.leader()["completed_laps"]),
             "selected_team_id": st["selected_team_id"],
-            "pit_lane": {"occupied": any(c["in_pit"] for c in st["cars"].values()), "physics": "simulator.v1"},
+            "pit_lane": {
+                "occupied": any(c["in_pit"] for c in st["cars"].values()),
+                "physics": "simulator.v1",
+                "public_pit_parts_s": {
+                    "t_in_s": float(st["pit_parts"]["t_in_s"]),
+                    "t_service_s": float(st["pit_parts"]["t_service_s"]),
+                    "t_out_s": float(st["pit_parts"]["t_out_s"]),
+                },
+            },
             "team_service": {
                 "shared_service": True,
                 "crew_free_at": {k: v for k, v in st["crew_free_at"].items() if k == st["selected_team_id"]},
+                "note": "selected-team crew occupancy only; existing commitments not future rivals",
             },
             "effective_deadline_s": window["effective_end_race_s"] if not window["closed"] else None,
             "deadline_window": window,
@@ -184,12 +206,15 @@ class RaceSimulator:
         }
         data["cars"] = public_cars
         data["inventories"] = inventories
+        data["pit_lane"] = public["pit_lane"]
+        data["team_service"] = public["team_service"]
         data["provenance"] = {
             "constructed_by": "stage3_observation",
             "interface_version": INTERFACE_VERSION,
             "simulator_version": SIMULATOR_VERSION,
             "private_state_excluded": "true",
             "realized_future_duration_excluded": "true",
+            "committed_pit_service_exposed": "selected_team_in_progress_only",
         }
         return DecisionObservation.model_validate(data)
 

@@ -39,8 +39,14 @@ def _pair_key(a: CarAction, b: CarAction) -> tuple[str, str]:
     return (a.action_id, b.action_id)
 
 
-def kendall_tau_b(ranks_x: list[float], ranks_y: list[float]) -> dict[str, Any]:
-    """Pairwise concordant/discordant/tied counts and Kendall tau-b."""
+def kendall_tau_b(
+    ranks_x: list[float],
+    ranks_y: list[float],
+    *,
+    x_tol: float = TOLERANCE_S,
+    y_tol: float = EVALUATOR_RANK_TOLERANCE,
+) -> dict[str, Any]:
+    """Pairwise concordant/discordant/tied counts and Kendall tau-b with independent tolerances."""
     n = len(ranks_x)
     if n != len(ranks_y) or n < 2:
         return {
@@ -59,17 +65,18 @@ def kendall_tau_b(ranks_x: list[float], ranks_y: list[float]) -> dict[str, Any]:
         for j in range(i + 1, n):
             dx = ranks_x[j] - ranks_x[i]
             dy = ranks_y[j] - ranks_y[i]
-            if abs(dx) <= EVALUATOR_RANK_TOLERANCE and abs(dy) <= EVALUATOR_RANK_TOLERANCE:
+            x_tie = abs(dx) <= x_tol
+            y_tie = abs(dy) <= y_tol
+            if x_tie and y_tie:
                 tb += 1
-            elif abs(dx) <= EVALUATOR_RANK_TOLERANCE:
+            elif x_tie and not y_tie:
                 tx += 1
-            elif abs(dy) <= EVALUATOR_RANK_TOLERANCE:
+            elif y_tie and not x_tie:
                 ty += 1
             elif dx * dy > 0:
                 conc += 1
             else:
                 disc += 1
-    # Kendall tau-b: (C-D) / sqrt((n0-n1)(n0-n2)); n1/n2 count all pairs tied on x/y.
     n0 = n * (n - 1) / 2.0
     n1 = tx + tb
     n2 = ty + tb
@@ -93,16 +100,79 @@ def classify_order_relation(
     proxy_tol: float = TOLERANCE_S,
     eval_tol: float = EVALUATOR_RANK_TOLERANCE,
 ) -> dict[str, Any]:
-    kt = kendall_tau_b(proxy_vals, eval_vals)
-    if kt["discordant"] == 0 and kt["concordant"] >= 0:
-        relation = "agreement"
-        if kt["tied_x"] or kt["tied_y"] or kt["tied_both"]:
-            relation = "agreement_with_ties"
-    elif kt["discordant"] > 0:
+    """Classify proxy vs evaluator order using independent tolerances.
+
+    - fewer than two unique plans: insufficient_unique_plans (caller may short-circuit)
+    - discordant strict pair: reversal
+    - strict order on one axis that becomes a tie on the other: tie_loss_of_discrimination
+    - ties on both axes (and no discordance): agreement_with_ties
+    - otherwise agreement
+    """
+    n = len(proxy_vals)
+    if n != len(eval_vals) or n < 2:
+        return {
+            "relation": "insufficient_unique_plans",
+            "n": n,
+            "concordant": 0,
+            "discordant": 0,
+            "tied_x": 0,
+            "tied_y": 0,
+            "tied_both": 0,
+            "tau_b": None,
+            "proxy_tol": proxy_tol,
+            "eval_tol": eval_tol,
+        }
+
+    conc = disc = tx = ty = tb = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            dx = proxy_vals[j] - proxy_vals[i]
+            dy = eval_vals[j] - eval_vals[i]
+            x_tie = abs(dx) <= proxy_tol
+            y_tie = abs(dy) <= eval_tol
+            if x_tie and y_tie:
+                tb += 1
+            elif x_tie and not y_tie:
+                tx += 1
+            elif y_tie and not x_tie:
+                ty += 1
+            elif dx * dy > 0:
+                conc += 1
+            else:
+                disc += 1
+
+    import math
+
+    n0 = n * (n - 1) / 2.0
+    n1 = tx + tb
+    n2 = ty + tb
+    denom = math.sqrt(max(0.0, (n0 - n1) * (n0 - n2)))
+    tau = ((conc - disc) / denom) if denom > 0 else None
+
+    if disc > 0:
         relation = "reversal"
-    else:
+    elif ty > 0 or tx > 0:
+        # Strict order on one axis, tie on the other.
         relation = "tie_loss_of_discrimination"
-    return {"relation": relation, **kt}
+    elif tb > 0 and conc == 0:
+        relation = "agreement_with_ties"
+    elif conc > 0 or (disc == 0 and tx == 0 and ty == 0):
+        relation = "agreement_with_ties" if tb > 0 else "agreement"
+    else:
+        relation = "agreement"
+
+    return {
+        "relation": relation,
+        "n": n,
+        "concordant": conc,
+        "discordant": disc,
+        "tied_x": tx,
+        "tied_y": ty,
+        "tied_both": tb,
+        "tau_b": tau,
+        "proxy_tol": proxy_tol,
+        "eval_tol": eval_tol,
+    }
 
 
 def run_evaluator_panel(
@@ -210,10 +280,19 @@ def run_evaluator_panel(
 
         # Drop NaN evaluator entries for ranking comparison.
         paired = [(p, e) for p, e in zip(proxy_vals, eval_vals) if e == e]
-        if len(paired) >= 2:
+        case["n_unique_joint_plans"] = len(unique)
+        case["n_legal_evaluated_plans"] = len(paired)
+        if len(paired) < 2:
+            case["tie_aware_comparison"] = {
+                "relation": "insufficient_unique_plans",
+                "n": len(paired),
+                "tau_b": None,
+            }
+            case["rank_agreement"] = None
+            case["order_relation"] = "insufficient_unique_plans"
+        else:
             p_only = [p for p, _ in paired]
             e_only = [e for _, e in paired]
-            # Identify proxy ties / evaluator ties
             proxy_ties = sum(
                 1
                 for i in range(len(p_only))
@@ -226,14 +305,12 @@ def run_evaluator_panel(
                 for j in range(i + 1, len(e_only))
                 if abs(e_only[i] - e_only[j]) <= EVALUATOR_RANK_TOLERANCE
             )
-            relation = classify_order_relation(p_only, e_only)
+            relation = classify_order_relation(p_only, e_only, proxy_tol=TOLERANCE_S, eval_tol=EVALUATOR_RANK_TOLERANCE)
             case["proxy_ties_pairs"] = proxy_ties
             case["evaluator_ties_pairs"] = eval_ties
             case["tie_aware_comparison"] = relation
+            case["order_relation"] = relation["relation"]
             case["rank_agreement"] = relation["relation"] in {"agreement", "agreement_with_ties"}
-        else:
-            case["tie_aware_comparison"] = None
-            case["rank_agreement"] = None
         panel["cases"].append(case)
     panel["n_cases"] = len(panel["cases"])
     panel["n_agree"] = sum(1 for c in panel["cases"] if c.get("rank_agreement") is True)
@@ -244,6 +321,11 @@ def run_evaluator_panel(
         1
         for c in panel["cases"]
         if (c.get("tie_aware_comparison") or {}).get("relation") == "tie_loss_of_discrimination"
+    )
+    panel["n_insufficient_unique_plans"] = sum(
+        1
+        for c in panel["cases"]
+        if (c.get("tie_aware_comparison") or {}).get("relation") == "insufficient_unique_plans"
     )
     panel["panel_hash"] = sha256_json({"selection": selection_hash, "n": panel["n_cases"]})
     return panel

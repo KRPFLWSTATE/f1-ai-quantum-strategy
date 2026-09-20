@@ -1,8 +1,8 @@
-> Stage 4.1 repair supersedes Stage 4 Gate C software/evidence claims for action semantics, pair timing, evaluator legality, accounting, and packaging. QUBO algebra conventions remain; numerical coefficients regenerate under repaired costs.
+# QUBO / Ising specification (Stage 4.2)
 
-# QUBO / Ising specification (Stage 4)
+Version: **1.2.0** (enclosing formulation/spec identity; algebraic conventions unchanged). Gate C only. No QAOA circuits, mixers, angle fitting, or provider submission.
 
-Version: **1.0.0**. Gate C only. No QAOA circuits, mixers, angle fitting, or provider submission.
+The QUBO encodes the **analytical proxy** coefficients from the Stage 4.2 compiler. It is not the simulator evaluator and not race truth. Coefficients regenerate under repaired in-pit residual and pair-interval costs.
 
 ## Variables
 
@@ -25,7 +25,7 @@ M * (sum_a x(1,a) - 1)^2
 M * (sum_b x(2,b) - 1)^2
 ```
 
-Expanded with `x^2 = x`. No additional pairwise hard prohibitions are encoded in Stage 4 (double-stack is a soft pair cost).
+Expanded with `x^2 = x`. No additional pairwise hard prohibitions are encoded (double-stack is a soft pair cost).
 
 ## Penalty proof
 
@@ -39,26 +39,10 @@ For each encoded instance:
 - `P(x) = 0` on every feasible state; `P(x) ≥ v_min · M` on every infeasible state
 - exhaustive small-n verification: no infeasible state beats the best feasible energy
 
-`B = 0`, empty menus, one-action menus, ties, and negative pair terms are handled explicitly. An adversarial weak `M` fixture demonstrates failure of an unjustified penalty while the derived `M` passes.
-
-Store both the decision objective and the penalised energy. Never compare physical seconds after dropping the offset.
-
 ## Ising map
 
 ```text
 x = (1 - Z) / 2
 ```
 
-with `Z = +1` for bit 0 and `Z = -1` for bit 1. Record constant, `h_i`, upper `J_ij`, bit/sign convention, and variable order. Verify QUBO and Ising energies for every bit string on small fixtures.
-
-## Scale `s_Q` (for future circuits; no circuit in Stage 4)
-
-```text
-s_Q = max(1, max_i |h_i|, max_{i<j} |J_ij|)
-```
-
-in the fixed seconds convention, excluding the constant but including hard penalties. Scaling by `s_Q` and undoing it restores energy differences / physical decision margins.
-
-## Decoding
-
-Decode only states satisfying all hard constraints. Return explicit infeasibility reasons otherwise. Deterministic tie handling retains the full set of tolerance-tied optimal legal plans.
+with scale restoration checked against the direct objective.

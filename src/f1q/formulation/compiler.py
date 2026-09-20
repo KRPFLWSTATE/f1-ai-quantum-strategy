@@ -109,10 +109,45 @@ def _simulate_unary(
     forced_pit_done = False
     planned_stops: list[dict[str, Any]] = []
     inventory = (obs.get("inventories") or {}).get(action.car_id) or []
+    residual_components: dict[str, Any] | None = None
+    action_compound = action.compound
+    action_set = action.set_id
 
-    # Continuation under compound_obligation.v1@1.1.0: immediate alternate stop when unmet
-    # (matches simulator continuation_intent / continuation_stop_intent).
-    if action.kind == "continuation" and obligation_needed and not car.get("in_pit_lane"):
+    commitment = car.get("committed_pit_service")
+    # In-pit continuation: residual committed stop from the decision instant (not zero, not a full new stop).
+    if action.kind == "continuation" and car.get("in_pit_lane") and commitment:
+        residual = float(commitment["residual_pit_time_s"])
+        total += residual
+        compound = str(commitment["target_compound"])
+        action_compound = compound
+        action_set = str(commitment["set_id"])
+        age = 0.0
+        used.add(compound)
+        obligation_needed = len(used) < int(public.distinct_compounds_required)
+        forced_pit_done = True
+        residual_components = {
+            "remaining_current_phase_s": commitment["remaining_current_phase_s"],
+            "remaining_wait_s": commitment["remaining_wait_s"],
+            "remaining_service_s": commitment["remaining_service_s"],
+            "remaining_transit_out_s": commitment["remaining_transit_out_s"],
+            "residual_pit_time_s": residual,
+            "units": "seconds",
+            "no_elapsed_double_charge": True,
+            "pit_phase_at_decision": commitment["pit_phase"],
+        }
+        planned_stops.append(
+            normalize_stop_record(
+                car_id=action.car_id,
+                source="in_progress_commitment",
+                kind="pit",
+                compound=compound,
+                set_id=action_set,
+                pit_lap_index=commitment.get("pit_entry_completed_laps"),
+                reason="in_progress_commitment",
+            )
+        )
+    elif action.kind == "continuation" and obligation_needed and not car.get("in_pit_lane"):
+        # Continuation under compound_obligation.v1: immediate alternate stop when unmet.
         choice = _select_obligation_inventory(car, inventory, used)
         if choice is not None:
             pit_at = 0
@@ -121,9 +156,6 @@ def _simulate_unary(
         else:
             action_compound = None
             action_set = None
-    else:
-        action_compound = action.compound
-        action_set = action.set_id
 
     for lap in range(n):
         if pit_at is not None and lap == pit_at and action_compound and action_set and not forced_pit_done:
@@ -159,14 +191,43 @@ def _simulate_unary(
         total += lt
         age += 1.0
         fuel = max(0.0, fuel - float(public.kg_per_lap))
+    pit_loss_applied = 0.0
+    if residual_components is not None:
+        pit_loss_applied = float(residual_components["residual_pit_time_s"])
+    elif forced_pit_done or (pit_at is not None and action.kind != "continuation"):
+        pit_loss_applied = float(pit_loss)
     return {
         "unary_s": float(total),
-        "pit_loss_applied_s": float(pit_loss if forced_pit_done or (pit_at is not None and action.kind != "continuation") else 0.0),
+        "pit_loss_applied_s": pit_loss_applied,
         "n_laps": n,
         "final_compound": compound,
         "planned_stops": planned_stops,
+        "residual_in_pit_components": residual_components,
         "units": COEFFICIENT_UNITS,
     }
+
+
+def service_interval_from_commitment(commitment: dict[str, Any] | None) -> tuple[float, float] | None:
+    """Return [service_start, service_end] absolute race-seconds, or None."""
+    if not commitment:
+        return None
+    t0 = float(commitment["decision_time_race_s"])
+    phase = commitment["pit_phase"]
+    remain_phase = float(commitment["remaining_current_phase_s"])
+    remain_wait = float(commitment["remaining_wait_s"])
+    remain_service = float(commitment["remaining_service_s"])
+    if phase == "transit_out":
+        return None
+    if phase == "service":
+        start = 0.0
+        end = remain_service
+    elif phase == "waiting":
+        start = remain_wait
+        end = remain_wait + remain_service
+    else:
+        start = remain_phase + remain_wait
+        end = start + remain_service
+    return (t0 + start, t0 + end)
 
 
 def predicted_box_arrival_s(
@@ -178,10 +239,16 @@ def predicted_box_arrival_s(
 
     Units: seconds from the decision checkpoint. Uses current estimated lap time and
     public pit_entry_frac. Returns None when the action has no scheduled stop.
+    For already-in-pit commitments, returns time from decision until service start.
     """
     car = _car_row(obs, action.car_id)
+    commitment = car.get("committed_pit_service")
+    if action.kind == "continuation" and car.get("in_pit_lane") and commitment:
+        interval = service_interval_from_commitment(commitment)
+        if interval is None:
+            return None
+        return float(interval[0] - float(commitment["decision_time_race_s"]))
     if action.kind == "continuation":
-        # Obligation continuation may schedule an immediate stop; treat as pit_now for timing.
         used = set(car.get("used_compounds") or [])
         used.add(car["compound"])
         if len(used) >= int(public.distinct_compounds_required) or car.get("in_pit_lane"):
@@ -207,13 +274,10 @@ def predicted_box_arrival_s(
     )
     frac = float(car.get("frac") or 0.0)
     entry = float(public.pit_entry_frac)
-    # Time to complete current lap to entry, then delay whole laps, then to entry frac.
     if delay == 0:
         if frac <= entry + 1e-12:
             return (entry - frac) * lt
-        # Past entry: cannot pit this lap under admission rules; treat as unreachable.
         return None
-    # delay >= 1: finish current lap, then (delay-1) full laps, then to entry.
     to_sf = (1.0 - frac) * lt
     return to_sf + float(delay - 1) * lt + entry * lt
 
@@ -224,13 +288,7 @@ def service_interval_overlap_wait_s(
     *,
     service_s: float,
 ) -> float:
-    """Shared-crew wait: later car waits until earlier service completes, if overlapping.
-
-    Intervals are [arrival, arrival + service_s]. Wait equals
-    max(0, earlier_end - later_arrival). Same nominal pit lap is not automatically
-    a full service wait unless arrivals overlap under this calculation.
-    Adjacent-lap schedules with non-overlapping intervals yield zero.
-    """
+    """Shared-crew wait: later car waits until earlier service completes, if overlapping."""
     if arrival_a <= arrival_b:
         earlier, later = arrival_a, arrival_b
     else:
@@ -245,10 +303,41 @@ def _pair_interaction(
     action_a: CarAction,
     action_b: CarAction,
 ) -> dict[str, Any]:
-    """Derived shared-crew wait from predicted box-arrival intervals, or zero if unknown."""
+    """Derived shared-crew wait from predicted/committed service intervals, or zero if unknown."""
+    car_a = _car_row(obs, action_a.car_id)
+    car_b = _car_row(obs, action_b.car_id)
+    commit_a = car_a.get("committed_pit_service") if action_a.kind == "continuation" else None
+    commit_b = car_b.get("committed_pit_service") if action_b.kind == "continuation" else None
+    service = float(public.service_stationary_s)
+
+    abs_a = service_interval_from_commitment(commit_a) if commit_a else None
+    abs_b = service_interval_from_commitment(commit_b) if commit_b else None
     arr_a = predicted_box_arrival_s(obs, public, action_a)
     arr_b = predicted_box_arrival_s(obs, public, action_b)
-    service = float(public.service_stationary_s)
+
+    if abs_a is not None and abs_b is not None:
+        a0, a1 = abs_a
+        b0, b1 = abs_b
+        if a0 <= b0:
+            wait = max(0.0, a1 - b0)
+        else:
+            wait = max(0.0, b1 - a0)
+        if wait <= PAIR_ARRIVAL_TOLERANCE_S:
+            wait = 0.0
+        return {
+            "pair_s": float(wait),
+            "reason": "committed_service_interval_overlap" if wait > 0 else "no_overlap",
+            "arrival_a_s": arr_a,
+            "arrival_b_s": arr_b,
+            "service_interval_a": list(abs_a),
+            "service_interval_b": list(abs_b),
+            "service_stationary_s": service,
+            "equation": "wait = max(0, earlier_service_end - later_service_start) from public commitments",
+            "units": "seconds",
+            "no_double_counting": "unary residual includes own wait once; pair adds shared-crew overlap once",
+            "adjacent_lap_arbitrary_half_service": False,
+        }
+
     if arr_a is None or arr_b is None:
         return {
             "pair_s": 0.0,
@@ -257,6 +346,7 @@ def _pair_interaction(
             "arrival_b_s": arr_b,
             "service_stationary_s": service,
             "equation": "wait = max(0, min_arrival + service - max_arrival); zero if either arrival unknown",
+            "adjacent_lap_arbitrary_half_service": False,
         }
     wait = service_interval_overlap_wait_s(arr_a, arr_b, service_s=service)
     if wait <= PAIR_ARRIVAL_TOLERANCE_S:

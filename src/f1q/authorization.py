@@ -11,6 +11,7 @@ from f1q.schemas import (
     parse_bootstrap_plan,
     parse_development_preview_plan,
     parse_formulation_check_plan,
+    parse_formulation_gate_c_closure_check_plan,
     parse_formulation_repair_check_plan,
     parse_project_config,
     parse_simulator_check_plan,
@@ -116,6 +117,13 @@ def load_formulation_repair_check_plan(root: Path):
     return plan, sha256_file(path), data
 
 
+def load_formulation_gate_c_closure_check_plan(root: Path):
+    path = resolve_within(root, "configs/plans/formulation_gate_c_closure_check.yaml", must_exist=True)
+    data = load_yaml(path)
+    plan = parse_formulation_gate_c_closure_check_plan(data)
+    return plan, sha256_file(path), data
+
+
 def lock_hash(root: Path) -> str | None:
     lock = root / "requirements.lock"
     if not lock.is_file():
@@ -175,6 +183,9 @@ def authorize_plan(config: ProjectConfig, plan_id: str) -> None:
     elif plan_id == "formulation_repair_check":
         if config.active_stage < 4:
             raise AuthorizationError("formulation_repair_check requires active_stage >= 4")
+    elif plan_id == "formulation_gate_c_closure_check":
+        if config.active_stage < 4:
+            raise AuthorizationError("formulation_gate_c_closure_check requires active_stage >= 4")
     else:
         raise AuthorizationError(f"plan {plan_id!r} is not implemented")
     if config.mode != "local":

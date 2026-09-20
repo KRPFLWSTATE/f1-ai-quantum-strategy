@@ -23,6 +23,9 @@ from f1q.simulator.interface import RaceSimulator
 from f1q.snapshot import git_state, take_source_snapshot
 
 CORRECTED_DIAGNOSTIC_RELPATH = "docs/evidence/stage3_3/post_repair_diagnostic.corrected.json"
+HISTORICAL_STAGE3_3_SHA256 = "10fe73b81f7580163ef29ff5d2125614dd8ee0c98a8f6c568d766e908915fa35"
+# Stage 4.2+: never overwrite the immutable historical Stage 3.3 identity.
+STAGE4_2_DIAGNOSTIC_RELPATH = "docs/evidence/stage4_2/stage3_3_regression_diagnostic.json"
 STALE_DIAGNOSTIC_RELPATH = "docs/evidence/stage3_2/post_repair_diagnostic.json"
 ERRATUM_RELPATH = "docs/evidence/stage3_3/stage3_2_post_repair_diagnostic_erratum.json"
 
@@ -368,8 +371,52 @@ def build_diagnostic_document(root: Path) -> dict[str, Any]:
     }
 
 
+def restore_historical_stage3_3_bytes(root: Path, *, source_commit: str = "5c94976") -> dict[str, Any]:
+    """Restore immutable Stage 3.3 corrected diagnostic byte-for-byte from pre-Stage-4.1 history."""
+    import hashlib
+    import subprocess
+
+    rel = CORRECTED_DIAGNOSTIC_RELPATH
+    blob = subprocess.check_output(["git", "show", f"{source_commit}:{rel}"], cwd=root)
+    digest = hashlib.sha256(blob).hexdigest()
+    if digest != HISTORICAL_STAGE3_3_SHA256:
+        raise AssertionError(
+            f"historical blob sha {digest} != expected {HISTORICAL_STAGE3_3_SHA256}"
+        )
+    out = root / rel
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(blob)
+    return {
+        "path": rel,
+        "sha256": digest,
+        "source_commit": source_commit,
+        "restored": True,
+        "immutable": True,
+    }
+
+
+def verify_historical_stage3_3(root: Path) -> dict[str, Any]:
+    import hashlib
+
+    path = root / CORRECTED_DIAGNOSTIC_RELPATH
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    return {
+        "path": CORRECTED_DIAGNOSTIC_RELPATH,
+        "sha256": digest,
+        "expected": HISTORICAL_STAGE3_3_SHA256,
+        "ok": digest == HISTORICAL_STAGE3_3_SHA256,
+        "immutable_identity": True,
+    }
+
+
 def write_corrected_diagnostic(root: Path, *, path: Path | None = None) -> dict[str, Any]:
-    out_path = path or (root / CORRECTED_DIAGNOSTIC_RELPATH)
+    """Write a *current* regression diagnostic. Refuses the immutable Stage 3.3 identity path."""
+    out_path = path or (root / STAGE4_2_DIAGNOSTIC_RELPATH)
+    if out_path.resolve() == (root / CORRECTED_DIAGNOSTIC_RELPATH).resolve():
+        raise ValueError(
+            "refusing to overwrite immutable Stage 3.3 evidence identity; "
+            f"write current diagnostics to {STAGE4_2_DIAGNOSTIC_RELPATH}"
+        )
     doc = build_diagnostic_document(root)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(doc, indent=2, sort_keys=True) + "\n"
@@ -379,6 +426,7 @@ def write_corrected_diagnostic(root: Path, *, path: Path | None = None) -> dict[
         "sha256": sha256_file(out_path),
         "scientific_payload_sha256": doc["scientific_payload_sha256"],
         "document": doc,
+        "historical_path_untouched": CORRECTED_DIAGNOSTIC_RELPATH,
     }
 
 
@@ -387,15 +435,22 @@ def load_checked_in_corrected(root: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def scientific_payload_matches_live(root: Path) -> tuple[bool, dict[str, Any]]:
-    """Compare checked-in scientific_payload to a fresh live generation."""
-    checked = load_checked_in_corrected(root)
+def scientific_payload_matches_live(root: Path, *, path: Path | None = None) -> tuple[bool, dict[str, Any]]:
+    """Compare a Stage 4.2 current diagnostic to a fresh live generation.
+
+    Historical Stage 3.3 file is verified by hash only (verify_historical_stage3_3).
+    """
+    checked_path = path or (root / STAGE4_2_DIAGNOSTIC_RELPATH)
+    checked = json.loads(checked_path.read_text(encoding="utf-8"))
     live = build_diagnostic_document(root)
     match = checked["scientific_payload"] == live["scientific_payload"]
+    hist = verify_historical_stage3_3(root)
     detail = {
         "match": match,
         "checked_scientific_payload_sha256": checked.get("scientific_payload_sha256"),
         "live_scientific_payload_sha256": live["scientific_payload_sha256"],
-        "checked_file_sha256": sha256_file(root / CORRECTED_DIAGNOSTIC_RELPATH),
+        "checked_file_sha256": sha256_file(checked_path),
+        "checked_path": str(checked_path.relative_to(root)) if checked_path.is_relative_to(root) else str(checked_path),
+        "historical_stage3_3": hist,
     }
     return match, detail

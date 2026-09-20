@@ -1,0 +1,8 @@
+..F.................s................................................... [ 52%]
+........................................................F........        [100%]
+=================================== FAILURES ===================================
+/Users/kawinperera/f1-ai-quantum-strategy/tests/formulation/test_gate_c.py:197: KeyError: 'same_file'
+/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py:1013: FileNotFoundError: [Errno 2] No such file or directory: '/Users/kawinperera/f1-ai-quantum-strategy/docs/evidence/stage4_2/stage3_3_regression_diagnostic.json'
+=========================== short test summary info ============================
+FAILED tests/formulation/test_gate_c.py::test_no_private_future_access_by_action_generation_or_compilation
+FAILED tests/test_stage3_3_evidence.py::test_corrected_diagnostic_matches_live_production

@@ -25,7 +25,12 @@ def build_receipt(ledger: Ledger, manifest: RunManifest) -> Receipt:
     else:
         notes = ["event counts taken from append-only ledger events and artifact rows"]
     if by_status.get("completed") == len(manifest.planned_unit_ids):
-        if manifest.plan_id == "formulation_repair_check":
+        if manifest.plan_id == "formulation_gate_c_closure_check":
+            next_work = (
+                "independent review of Stage 4.2 only; Stage 5 and IBM credential entry remain blocked; "
+                "protocol DRAFT; hardware disabled; Gate E headroom decision outstanding"
+            )
+        elif manifest.plan_id == "formulation_repair_check":
             next_work = (
                 "independent review of Stage 4.1; Stage 5 blocked pending that review and Gate E decision; "
                 "protocol DRAFT; hardware disabled; no credentials requested"
@@ -104,7 +109,7 @@ def write_receipt(root, receipt: Receipt) -> dict:
         sub = "bootstrap"
     elif receipt.plan_id in {"simulator_check", "simulator_followup", "simulator_repair"}:
         sub = "simulator"
-    elif receipt.plan_id in {"formulation_check", "formulation_repair_check"}:
+    elif receipt.plan_id in {"formulation_check", "formulation_repair_check", "formulation_gate_c_closure_check"}:
         sub = "formulation"
     else:
         sub = "development"

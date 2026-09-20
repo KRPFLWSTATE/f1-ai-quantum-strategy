@@ -1,20 +1,20 @@
 {
   "generation_metadata": {
     "command": "python -m f1q simulator diagnostic-stage3-3",
-    "documentation_hash": "3878183cc61158f1f6c7caaa50f5603ef570d4a5a34cd54ae80b8882b365f944",
+    "documentation_hash": "4abd5da32df46ef56b467cea4f0dc14565c2e5d88de63d9fbd26351bf6737736",
     "generator_module": "f1q.simulator.stage3_3_diagnostic",
-    "git_commit": "0b69a415f230a8ccca4b82ecb74faef74908f3b0",
+    "git_commit": "358a17b1a03d53248c5dd81305c24db384691f9b",
     "git_dirty": true,
-    "interface_version": "3.0.1",
+    "interface_version": "3.0.0",
     "note": "Timestamps intentionally omitted from scientific_payload for determinism. Source snapshot and git identity live here so evidence stays associated with the tested tree without making the scientific payload non-reproducible under documentation packaging edits.",
-    "simulator_config_hash": "d48cab174c3fa7b4723d4ace5bc5ba6860df2a554cfb77df8cd13b38c3b7a542",
-    "simulator_version": "1.0.3",
-    "source_snapshot_hash": "9c5d833c37c868f1faad83c4299986477465051c8180143b30ac3ba872f74a6e"
+    "simulator_config_hash": "4c24994812593cf9550fdf4beac583338f77dc5042da62f67de47ffc283ae47b",
+    "simulator_version": "1.0.2",
+    "source_snapshot_hash": "41776c3c9b8536e99ccafa0d7b55b6160d44c162d58fd249277dfafaeec5c9a3"
   },
   "scientific_payload": {
     "crossing_snap_upper_bound_laps": 2e-12,
     "evidence_class": "engineering_fixture",
-    "interface_version": "3.0.1",
+    "interface_version": "3.0.0",
     "kind": "stage3_3_post_repair_diagnostic_corrected",
     "not_experimental_observation": true,
     "not_f1_calibration": true,
@@ -134,8 +134,8 @@
       "valid_pit_gate": "PASS",
       "valid_row_status": "PASS"
     },
-    "simulator_config_hash": "d48cab174c3fa7b4723d4ace5bc5ba6860df2a554cfb77df8cd13b38c3b7a542",
-    "simulator_version": "1.0.3"
+    "simulator_config_hash": "4c24994812593cf9550fdf4beac583338f77dc5042da62f67de47ffc283ae47b",
+    "simulator_version": "1.0.2"
   },
-  "scientific_payload_sha256": "4183d4acc8cc39d4dac217870cdca9b388df237e0e98a9f7c1a06a43f16c2730"
+  "scientific_payload_sha256": "0d5ef101a6da5f2d133c8d6b06a0916fd4a3c779fd9441981da1aba0c680a115"
 }

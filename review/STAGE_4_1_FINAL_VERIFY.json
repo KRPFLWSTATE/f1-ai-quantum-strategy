@@ -1,0 +1,32 @@
+{
+  "formulation_record_spotcheck": {
+    "cross_checked": 1,
+    "cross_expected": 1,
+    "milp_agree": true,
+    "path": "evidence/formulation/artifacts/c4d0a199-9cea-4214-83ab-97964f2bf1ac/formulation.development_matrix/f1q.dev.block.v2__fam.green_pit_low.tyre_nonlinear.traffic_sparse__0007__episode__07__VSC.record.json",
+    "record_hash": "3addcc12ab112352594f93e17a1c1593a8b87f5a130d3014203800ac50622723"
+  },
+  "inner_aggregate_ok": true,
+  "inner_canonical_aggregate_sha256": "c450a3dddad33adce7acc2ebd6011ab6ddebece6629d910dca812e6408f0742f",
+  "inner_members_verified": 164,
+  "ok": true,
+  "omitted_inputs": [
+    ".git",
+    ".venv",
+    "evidence/var/ledger.sqlite",
+    "private",
+    "credentials",
+    "mutable caches",
+    "external verify JSON"
+  ],
+  "safe_paths": true,
+  "sidecar_sha256": "b34440b9f1521a30198d8691506535ea1dd55106c221f881bc614527ef5a881f",
+  "stale_stage4_zip_hash_rejected": true,
+  "symlinks_found": false,
+  "targeted_pytest_exit": 0,
+  "targeted_pytest_summary": [
+    "...................................s                                     [100%]"
+  ],
+  "zip_bytes": 768854,
+  "zip_sha256": "4df5571d13eef1c87cc00ee361b2dd422dbdb732e6633af08bbd1229273d84b4"
+}

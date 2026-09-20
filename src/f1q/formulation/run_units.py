@@ -25,6 +25,10 @@ from f1q.snapshot import take_source_snapshot
 _GUARDS: dict[str, MemoryGuard] = {}
 
 
+class TimeCapPartial(Exception):
+    """Raised when the Stage 4.2 wall-time cap stops a resumable matrix early."""
+
+
 def execute_formulation_unit(
     *,
     root: Path,
@@ -50,26 +54,43 @@ def execute_formulation_unit(
     specs = load_preview_specs(root)
     extra: list[dict[str, Any]] = []
 
-    if unit_id == "formulation.pre_repair_erratum":
-        payload = _unit_pre_repair_erratum(root, dest, seed=seed)
-    elif unit_id == "formulation.action_model":
-        payload = _unit_action_model(cfg, specs, dest, seed=seed)
-    elif unit_id == "formulation.compiler_direct_costs":
-        payload = _unit_compiler(cfg, specs, dest, seed=seed)
-    elif unit_id == "formulation.qubo_ising_gate":
-        payload = _unit_qubo(cfg, specs, dest, seed=seed)
-    elif unit_id == "formulation.independent_references":
-        payload = _unit_refs(cfg, specs, dest, seed=seed)
-    elif unit_id == "formulation.development_matrix":
-        payload = _unit_matrix(cfg, specs, dest, seed=seed, started=started, cap=cap, guard=guard)
-    elif unit_id == "formulation.evaluator_separation_panel":
-        payload = _unit_panel(root, cfg, specs, dest, seed=seed)
-    elif unit_id == "formulation.stage3_3_diagnostic_restore":
-        payload = _unit_stage3_3_restore(root, dest, seed=seed)
-    elif unit_id == "formulation.source_restore":
-        payload = _unit_source(root, dest, run_id)
-    else:
-        raise ValueError(f"unknown formulation unit {unit_id}")
+    try:
+        if unit_id == "formulation.pre_repair_erratum":
+            payload = _unit_pre_repair_erratum(root, dest, seed=seed)
+        elif unit_id == "formulation.action_model":
+            payload = _unit_action_model(cfg, specs, dest, seed=seed)
+        elif unit_id == "formulation.compiler_direct_costs":
+            payload = _unit_compiler(cfg, specs, dest, seed=seed)
+        elif unit_id == "formulation.qubo_ising_gate":
+            payload = _unit_qubo(cfg, specs, dest, seed=seed)
+        elif unit_id == "formulation.independent_references":
+            payload = _unit_refs(cfg, specs, dest, seed=seed)
+        elif unit_id == "formulation.development_matrix":
+            payload = _unit_matrix(cfg, specs, dest, seed=seed, started=started, cap=cap, guard=guard)
+        elif unit_id == "formulation.evaluator_separation_panel":
+            payload = _unit_panel(root, cfg, specs, dest, seed=seed)
+        elif unit_id == "formulation.stage3_3_diagnostic_restore":
+            payload = _unit_stage3_3_restore(root, dest, seed=seed)
+        elif unit_id == "formulation.source_restore":
+            payload = _unit_source(root, dest, run_id)
+        else:
+            raise ValueError(f"unknown formulation unit {unit_id}")
+    except TimeCapPartial as exc:
+        # Persist partial matrix summary already written; stamp unit.json then re-raise.
+        payload = {
+            "ok": False,
+            "partial": True,
+            "unit": unit_id,
+            "error": str(exc),
+            "status": "PARTIAL",
+        }
+        payload["memory_sample"] = guard.observe()
+        payload["formulation_version"] = FORMULATION_VERSION
+        payload["simulator_config_hash"] = cfg_hash
+        payload["seed"] = seed
+        unit_rel = f"{rel_dir}/unit.json"
+        atomic_write_bytes(resolve_within(root, unit_rel), canonical_json(_public(payload)) + b"\n")
+        raise
 
     payload["memory_sample"] = guard.observe()
     payload["formulation_version"] = FORMULATION_VERSION
@@ -128,63 +149,82 @@ def _write(dest: Path, name: str, obj: Any) -> str:
 
 
 def _unit_pre_repair_erratum(root: Path, dest: Path, *, seed: int) -> dict[str, Any]:
-    """Copy/register pre-repair diagnostic and Stage 4 receipt erratum; do not mutate prior IDs."""
+    """Register Stage 4.1 independent-review failure via new Stage 4.2 erratum; preserve prior IDs."""
     import shutil
 
-    src = resolve_within(root, "docs/evidence/stage4_1/pre_repair_reproduction.json")
+    src = resolve_within(root, "docs/evidence/stage4_2/pre_repair_reproduction.json")
     if not src.is_file():
-        raise FileNotFoundError("missing docs/evidence/stage4_1/pre_repair_reproduction.json")
+        raise FileNotFoundError("missing docs/evidence/stage4_2/pre_repair_reproduction.json")
     shutil.copy2(src, dest / "pre_repair_reproduction.json")
-    prior_receipt = resolve_within(
+    prior_41 = resolve_within(
+        root, "evidence/formulation/receipts/c4d0a199-9cea-4214-83ab-97964f2bf1ac.json"
+    )
+    prior_4 = resolve_within(
         root, "evidence/formulation/receipts/e8b87881-74a6-46c7-b48e-6b2496a5d586.json"
     )
-    prior = json.loads(prior_receipt.read_text(encoding="utf-8"))
+    prior41 = json.loads(prior_41.read_text(encoding="utf-8"))
+    prior4 = json.loads(prior_4.read_text(encoding="utf-8"))
     erratum = {
-        "kind": "stage4_receipt_erratum",
-        "prior_run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
-        "prior_receipt_preserved": True,
-        "prior_next_permitted_work": prior.get("next_permitted_work"),
+        "kind": "stage4_1_independent_review_erratum",
+        "prior_stage4_run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+        "prior_stage4_1_run_id": "c4d0a199-9cea-4214-83ab-97964f2bf1ac",
+        "prior_failed_stage4_run_id": "1c5b0748-5406-4933-8e41-4f943f4296c7",
+        "prior_receipts_preserved": True,
+        "prior_stage4_1_next_permitted_work": prior41.get("next_permitted_work"),
+        "prior_stage4_next_permitted_work": prior4.get("next_permitted_work"),
         "erratum": (
-            "The Stage 4 receipt incorrectly stated next_permitted_work as Stage 2 awaiting "
-            "its implementation prompt. That text was a stale default for unrecognised plan_ids. "
-            "Stage 4 Gate C conclusions are superseded by Stage 4.1; Stage 5 remains blocked."
+            "Stage 4.1 is not independently accepted. Independent review found F1–F9 defects "
+            "(evaluator event schema, in-pit continuation costing, continuation admission, "
+            "analytical-vs-terminal pair evidence, circular reduction proof, unreachable "
+            "tie_loss classification, Stage 3.3 evidence overwrite, stale docs, and invalid "
+            "review packaging/clean-extract). Stage 4.2 repairs these without rewriting prior "
+            "run identifiers."
         ),
         "corrected_interpretation": (
-            "independent review of Stage 4.1; Stage 5 blocked pending that review and Gate E decision"
+            "independent review of Stage 4.2 only; Stage 5 and IBM credential entry remain blocked"
         ),
+        "findings_reproduced_path": "docs/evidence/stage4_2/pre_repair_reproduction.json",
         "seed": seed,
         "qpu_usage_seconds": 0,
         "new_physical_qpu_jobs_submitted": 0,
     }
-    _write(dest, "stage4_receipt_erratum.json", erratum)
+    _write(dest, "stage4_1_independent_review_erratum.json", erratum)
     return {
         "ok": True,
         "unit": "formulation.pre_repair_erratum",
         "prior_stage4_run_preserved": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+        "prior_stage4_1_run_preserved": "c4d0a199-9cea-4214-83ab-97964f2bf1ac",
         "prior_failed_run_preserved": "1c5b0748-5406-4933-8e41-4f943f4296c7",
-        "erratum_path": f"{dest.name}/stage4_receipt_erratum.json",
+        "erratum_path": f"{dest.name}/stage4_1_independent_review_erratum.json",
         "seed": seed,
     }
 
 
 def _unit_stage3_3_restore(root: Path, dest: Path, *, seed: int) -> dict[str, Any]:
     from f1q.simulator.stage3_3_diagnostic import (
+        restore_historical_stage3_3_bytes,
         scientific_payload_matches_live,
+        verify_historical_stage3_3,
         write_corrected_diagnostic,
     )
 
-    written = write_corrected_diagnostic(root)
+    hist = verify_historical_stage3_3(root)
+    if not hist["ok"]:
+        restore_historical_stage3_3_bytes(root)
+        hist = verify_historical_stage3_3(root)
+    written = write_corrected_diagnostic(root)  # writes under stage4_2/
     match, detail = scientific_payload_matches_live(root)
     report = {
-        "ok": bool(match),
+        "ok": bool(match) and bool(hist["ok"]),
         "unit": "formulation.stage3_3_diagnostic_restore",
-        "write": written,
-        "verify": detail,
+        "historical_verify": hist,
+        "write": {k: written[k] for k in written if k != "document"},
+        "verify_current": detail,
         "match": match,
-        "simulator_version": "1.0.3",
-        "interface_version": "3.0.1",
+        "simulator_version": "1.0.4",
+        "interface_version": "3.1.0",
         "seed": seed,
-        "note": "Prior Stage 3.3 evidence identifiers preserved; corrected live diagnostic rewritten for 1.0.3",
+        "note": "Historical Stage 3.3 identity restored/verified; current diagnostic under stage4_2 only",
     }
     _write(dest, "stage3_3_restore.json", report)
     return report
@@ -334,13 +374,50 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
     completed = []
     failed = []
     records_meta = []
+    skipped_resume = 0
     for spec in specs:
         if time.monotonic() - started > cap:
             break
         guard.observe()
+        name = spec["episode_id"].replace("/", "__") + ".record.json"
+        existing = dest / name
+        if existing.is_file():
+            try:
+                import json as _json
+
+                prior = _json.loads(existing.read_text(encoding="utf-8"))
+                # Resume by checksum: trust record if hash recomputes from stored content key.
+                if prior.get("record_hash") and prior.get("simulator_cross_check", {}).get("expected") == prior.get(
+                    "simulator_cross_check", {}
+                ).get("terminal_execution_completed"):
+                    completed.append(spec["episode_id"])
+                    skipped_resume += 1
+                    records_meta.append(
+                        {
+                            "episode_id": spec["episode_id"],
+                            "record_hash": prior["record_hash"],
+                            "exact": prior["enumeration"]["exact_proxy_minimum"],
+                            "headroom": prior["proxy_headroom"]["heuristic_proxy_headroom"],
+                            "scan_s": prior["timing"]["scan_s"],
+                            "cross_expected": prior["simulator_cross_check"]["expected"],
+                            "cross_checked": prior["simulator_cross_check"]["checked"],
+                            "cross_failed": prior["simulator_cross_check"]["failed"],
+                            "cross_validation_passed": prior["simulator_cross_check"].get("validation_passed"),
+                            "cross_round_trip_passed": prior["simulator_cross_check"].get("round_trip_passed"),
+                            "cross_terminal_executed": prior["simulator_cross_check"].get("terminal_execution_completed"),
+                            "cross_terminal_attempted": prior["simulator_cross_check"].get("terminal_execution_attempted"),
+                            "cross_analytical_passed": prior["simulator_cross_check"].get("analytical_admission_passed"),
+                            "cross_disagreements": len(prior["simulator_cross_check"]["disagreements"]),
+                            "semantic_failures": len(prior["simulator_cross_check"].get("semantic_failures") or []),
+                            "failure_code": None,
+                            "resumed_from_checksum": True,
+                        }
+                    )
+                    continue
+            except Exception:
+                pass
         try:
             rec = build_instance_record(cfg=cfg, spec=spec, seed=seed, verify_energies=False, cross_check_simulator=True)
-            name = spec["episode_id"].replace("/", "__") + ".record.json"
             _write(dest, name, rec)
             completed.append(spec["episode_id"])
             records_meta.append(
@@ -353,25 +430,35 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
                     "cross_expected": rec["simulator_cross_check"]["expected"],
                     "cross_checked": rec["simulator_cross_check"]["checked"],
                     "cross_failed": rec["simulator_cross_check"]["failed"],
+                    "cross_validation_passed": rec["simulator_cross_check"].get("validation_passed"),
+                    "cross_round_trip_passed": rec["simulator_cross_check"].get("round_trip_passed"),
+                    "cross_terminal_executed": rec["simulator_cross_check"].get("terminal_execution_completed"),
+                    "cross_terminal_attempted": rec["simulator_cross_check"].get("terminal_execution_attempted"),
+                    "cross_analytical_passed": rec["simulator_cross_check"].get("analytical_admission_passed"),
                     "cross_disagreements": len(rec["simulator_cross_check"]["disagreements"]),
                     "semantic_failures": len(rec["simulator_cross_check"].get("semantic_failures") or []),
                     "failure_code": None,
+                    "resumed_from_checksum": False,
                 }
             )
         except Exception as exc:
             failed.append({"episode_id": spec["episode_id"], "failure_code": type(exc).__name__, "error": str(exc)})
+    partial = len(completed) < len(planned) and len(failed) == 0
     summary = {
         "ok": len(failed) == 0 and len(completed) == len(planned),
+        "partial": partial,
         "unit": "formulation.development_matrix",
         "planned": len(planned),
         "completed": len(completed),
         "failed": len(failed),
+        "skipped_resume": skipped_resume,
         "failed_rows": failed,
         "records": records_meta,
         "not_powered_comparison": True,
         "seed": seed,
         "elapsed_s": time.monotonic() - started,
         "cap_s": cap,
+        "status": "PARTIAL" if partial else ("FAILED" if failed else "COMPLETE"),
     }
     # Aggregate headroom warning
     headrooms = [r["headroom"] for r in records_meta if r["headroom"] is not None]
@@ -385,11 +472,21 @@ def _unit_matrix(cfg, specs, dest, *, seed: int, started: float, cap: float, gua
     }
     summary["pair_cross_check_totals"] = {
         "expected": sum(int(r.get("cross_expected") or 0) for r in records_meta),
-        "checked": sum(int(r.get("cross_checked") or 0) for r in records_meta),
+        "validated": sum(int(r.get("cross_validation_passed") or 0) for r in records_meta),
+        "round_tripped": sum(int(r.get("cross_round_trip_passed") or 0) for r in records_meta),
+        "terminal_executed": sum(int(r.get("cross_terminal_executed") or 0) for r in records_meta),
+        "terminal_attempted": sum(int(r.get("cross_terminal_attempted") or 0) for r in records_meta),
+        "analytical_admission_passed": sum(int(r.get("cross_analytical_passed") or 0) for r in records_meta),
+        "semantic_passed": sum(int(r.get("cross_checked") or 0) for r in records_meta),
         "failed": sum(int(r.get("cross_failed") or 0) for r in records_meta),
         "hidden_cap": False,
     }
     _write(dest, "development_matrix_summary.json", summary)
+    if partial:
+        raise TimeCapPartial(
+            f"STAGE_4_2_TIME_CAP_PARTIAL completed={len(completed)}/{len(planned)} "
+            f"elapsed_s={summary['elapsed_s']:.1f} cap_s={cap}"
+        )
     return summary
 
 

@@ -148,10 +148,13 @@ def generate_car_actions(
 
     finished = car.get("classified_position") is not None and remaining <= 0
     in_pit = bool(car.get("in_pit_lane"))
+    commitment = car.get("committed_pit_service")
+    candidates = _candidate_pit_sets(car, inventory)
+    alternate_unused = [
+        item for item in candidates if item["compound"] not in _compounds_used(car, inventory)
+    ]
 
     cont_id = f"{car_id}|continuation|{DOWNSTREAM_POLICY_ID}@{DOWNSTREAM_POLICY_VERSION}"
-    # Continuation is always admitted when the car is live: the downstream policy itself
-    # decides whether an obligation stop is still feasible; empty inventory surfaces later.
     cont = CarAction(
         action_id=cont_id,
         car_id=car_id,
@@ -168,14 +171,41 @@ def generate_car_actions(
             "in_pit_lane": in_pit,
             "pit_entry_frac": pit_entry_frac,
             "one_solver_visible_stop": True,
+            "committed_pit_service": commitment,
         },
     )
     if finished:
         reject(cont, "car_finished")
+    elif remaining <= 0.0 + 1e-12 and not in_pit:
+        reject(cont, "nonpositive_remaining_race_distance")
     elif in_pit:
-        admit(cont)
-    elif remaining < 0.0 - 1e-12:
-        reject(cont, "insufficient_horizon")
+        if not commitment:
+            reject(cont, "malformed_incomplete_in_pit_commitment")
+        elif commitment.get("target_compound") is None or commitment.get("set_id") is None:
+            reject(cont, "malformed_incomplete_in_pit_commitment")
+        else:
+            # Commitment must match inventory identity/compound.
+            inv_match = next((i for i in inventory if i.get("set_id") == commitment["set_id"]), None)
+            if inv_match is None:
+                reject(cont, "committed_set_not_in_inventory")
+            elif inv_match.get("compound") != commitment.get("target_compound"):
+                reject(cont, "committed_compound_conflicts_inventory")
+            else:
+                admit(cont)
+    elif not obligation_already and not alternate_unused:
+        reject(cont, "unmet_obligation_no_eligible_alternate_unused_set")
+    elif not obligation_already and remaining < 1.0 - 1e-12:
+        reject(cont, "insufficient_horizon_to_enter_and_complete_required_stop")
+    elif not obligation_already and _missed_pit_entry(car, obs, pit_entry_frac=pit_entry_frac):
+        reject(cont, "pit_entry_already_missed_immediate_obligation_stop_required")
+    elif required > 2:
+        # Supported one-stop language cannot achieve >2 distinct compounds from one remaining stop
+        # when the car has already used compounds; reject impossible obligation language.
+        used_n = len(_compounds_used(car, inventory))
+        if used_n + 1 < required:
+            reject(cont, "distinct_compounds_required_exceeds_supported_stop_language")
+        else:
+            admit(cont)
     else:
         admit(cont)
 
@@ -257,7 +287,10 @@ def generate_car_actions(
 
 
 def equivalence_signature(action: CarAction) -> tuple[Any, ...]:
-    """Versioned cost/semantic signature. Different ages must not merge."""
+    """Versioned cost/semantic signature including physical set identity.
+
+    Different set IDs are never merged. Different ages must not merge.
+    """
     facts = action.observable_admission_facts or {}
     age = facts.get("set_age_laps")
     if age is None:
@@ -266,6 +299,7 @@ def equivalence_signature(action: CarAction) -> tuple[Any, ...]:
         action.kind,
         action.delay_laps,
         action.compound,
+        action.set_id,
         None if age is None else round(float(age), 9),
     )
 
@@ -276,10 +310,9 @@ def reduce_action_menu(
     policy: str = REDUCTION_POLICY_ID,
 ) -> dict[str, Any]:
     admitted = [a for a in actions if a.admitted]
-    if policy not in {REDUCTION_POLICY_ID, "kind_delay_compound_lex_set"}:
-        # Legacy alias maps to the Stage 4.1 signature policy.
-        if policy != "kind_delay_compound_age_lex_set.v1":
-            raise SchemaError(f"unsupported reduction policy {policy}")
+    allowed = {REDUCTION_POLICY_ID, "kind_delay_compound_age_lex_set.v1", "kind_delay_compound_lex_set"}
+    if policy not in allowed and policy != REDUCTION_POLICY_ID:
+        raise SchemaError(f"unsupported reduction policy {policy}")
     groups: dict[tuple[Any, ...], list[CarAction]] = {}
     for action in admitted:
         groups.setdefault(equivalence_signature(action), []).append(action)
@@ -288,7 +321,6 @@ def reduce_action_menu(
     degeneracy: dict[str, int] = {}
     equivalence_ok: list[dict[str, Any]] = []
     for key, members in sorted(groups.items(), key=lambda kv: kv[0]):
-        # Before reduction, assert all members share the signature attributes.
         ages = {equivalence_signature(m) for m in members}
         if len(ages) != 1:
             raise AssertionError("reduction group is not signature-equivalent")
@@ -303,7 +335,9 @@ def reduce_action_menu(
                 "signature": list(key),
                 "representative": rep.action_id,
                 "members": [m.action_id for m in members_sorted],
-                "cost_semantic_equivalent": True,
+                # Cost/semantic equivalence is proven independently in instance reduction proof.
+                "cost_semantic_equivalent_claimed_here": False,
+                "requires_independent_proof": True,
             }
         )
     retained.sort(key=lambda a: a.action_id)
@@ -316,6 +350,7 @@ def reduce_action_menu(
         "retained_action_ids": [a.action_id for a in retained],
         "retained_actions": retained,
         "equivalence_groups": equivalence_ok,
+        "note": "set_id included in signature; unsupported set merging disabled",
     }
 
 

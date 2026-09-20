@@ -11,9 +11,13 @@ from f1q.hashing import sha256_file
 from f1q.simulator.stage3_3_diagnostic import (
     CORRECTED_DIAGNOSTIC_RELPATH,
     ERRATUM_RELPATH,
+    HISTORICAL_STAGE3_3_SHA256,
+    STAGE4_2_DIAGNOSTIC_RELPATH,
     STALE_DIAGNOSTIC_RELPATH,
     build_diagnostic_document,
     scientific_payload_matches_live,
+    verify_historical_stage3_3,
+    write_corrected_diagnostic,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,11 +38,17 @@ def test_stale_stage3_2_diagnostic_preserved_byte_for_byte():
 
 
 def test_corrected_diagnostic_matches_live_production():
-    path = ROOT / CORRECTED_DIAGNOSTIC_RELPATH
-    assert path.is_file()
+    # Historical Stage 3.3 identity is immutable and hash-verified.
+    hist = verify_historical_stage3_3(ROOT)
+    assert hist["ok"] is True
+    assert hist["sha256"] == HISTORICAL_STAGE3_3_SHA256
+    assert (ROOT / CORRECTED_DIAGNOSTIC_RELPATH).is_file()
+    # Current regression diagnostic lives under Stage 4.2 identity only.
+    written = write_corrected_diagnostic(ROOT)
+    assert written["path"] == STAGE4_2_DIAGNOSTIC_RELPATH
     match, detail = scientific_payload_matches_live(ROOT)
     assert match, detail
-    doc = json.loads(path.read_text(encoding="utf-8"))
+    doc = json.loads((ROOT / STAGE4_2_DIAGNOSTIC_RELPATH).read_text(encoding="utf-8"))
     sci = doc["scientific_payload"]
     assert sci["r3_finite_gap"]["pass_deltas"] == [0.0, 0.0, 0.0, 0.0]
     assert sci["r3_finite_gap"]["pass_deltas_exact_zeros"] is True
@@ -51,6 +61,7 @@ def test_corrected_diagnostic_matches_live_production():
     assert sci["r5_plan_validation"]["atomic_rollback_on_two_car_failure"] is True
     assert sci["r6_resolution_gate"]["valid_row_status"] == "PASS"
     assert sci["r6_resolution_gate"]["missing_pit_events_pit_gate"] == "FAIL"
+    assert sci["simulator_version"] == "1.0.4"
 
 
 def test_live_diagnostic_build_has_required_fields():
@@ -72,4 +83,4 @@ def test_live_diagnostic_build_has_required_fields():
         assert key in sci
     assert "source_snapshot_hash" in doc["generation_metadata"]
     assert len(sci["r1_pit_trace"]) >= 3
-    assert sci["simulator_version"] == "1.0.3"
+    assert sci["simulator_version"] == "1.0.4"

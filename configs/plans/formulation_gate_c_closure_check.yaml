@@ -1,0 +1,95 @@
+schema_version: "1.0.0"
+plan_id: formulation_gate_c_closure_check
+stage: 4
+evidence_kind: development
+authorization_scope: stage4-local-formulation-gate-c-closure
+description: >
+  Stage 4.2 Gate C semantic closure and clean-room packaging repair.
+  Preserves Stage 4 and Stage 4.1 run identifiers. Not Stage 5, not QPU,
+  not reserved splits. Completion leaves Stage 5 unauthorized pending
+  independent review and Gate E.
+seed_specification:
+  policy: unit_payloads_use_declared_seeds
+  unit_seeds:
+    formulation.pre_repair_erratum: 20260920042
+    formulation.action_model: 20260920042
+    formulation.compiler_direct_costs: 20260920042
+    formulation.qubo_ising_gate: 20260920042
+    formulation.independent_references: 20260920042
+    formulation.development_matrix: 20260920042
+    formulation.evaluator_separation_panel: 20260920042
+    formulation.stage3_3_diagnostic_restore: 20260920042
+    formulation.source_restore: 20260920042
+units:
+  - schema_version: "1.0.0"
+    unit_id: formulation.pre_repair_erratum
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Register Stage 4.1 independent-review failure erratum and F1-F9 reproductions.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.action_model
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Action dictionaries under Stage 4.2 admission and commitment semantics.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.compiler_direct_costs
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Compiler unary residual in-pit costs and observable pair intervals.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.qubo_ising_gate
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: QUBO/Ising/penalty revalidation on Stage 4.2 coefficients.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.independent_references
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Enumeration, MILP, DP, heuristics accounting under repaired costs.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.development_matrix
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Full 64-episode matrix with terminal execution of every reduced pair.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.evaluator_separation_panel
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Tie-aware eight-family panel with repaired order classification.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.stage3_3_diagnostic_restore
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Verify historical Stage 3.3 SHA; write current diagnostic under stage4_2.
+    seed: 20260920042
+  - schema_version: "1.0.0"
+    unit_id: formulation.source_restore
+    stage: 4
+    plan_id: formulation_gate_c_closure_check
+    evidence_kind: development
+    authorization_scope: stage4-local-formulation-gate-c-closure
+    description: Source snapshot for the Stage 4.2 closure run.
+    seed: 20260920042

@@ -118,9 +118,10 @@ def _hand_obs(*, remaining=5, frac_a=0.5, compound="soft", used=None, sets=None,
 
 
 def test_versions_bumped_for_stage41():
-    assert ACTION_MODEL_VERSION == "1.1.0"
-    assert FORMULATION_VERSION == "1.1.0"
-    assert DOWNSTREAM_POLICY_VERSION == "1.1.0"
+    # Stage 4.2 further bumps behaviourally changed components to 1.2.0.
+    assert ACTION_MODEL_VERSION == "1.2.0"
+    assert FORMULATION_VERSION == "1.2.0"
+    assert DOWNSTREAM_POLICY_VERSION == "1.2.0"
 
 
 def test_same_compound_while_unmet_rejected():

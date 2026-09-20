@@ -91,11 +91,25 @@ def run_status(root: Path | None = None) -> dict:
                                     for r in runs
                                 )
                                 if repair_done:
-                                    next_work = (
-                                        "independent review of Stage 4.1; Stage 5 blocked pending that "
-                                        "review and Gate E decision; protocol DRAFT; hardware disabled"
+                                    closure_done = any(
+                                        r["plan_id"] == "formulation_gate_c_closure_check"
+                                        and r["status"] == "completed"
+                                        for r in runs
                                     )
-                                    readiness = "stage4_1-complete-pending-independent-review"
+                                    if closure_done:
+                                        next_work = (
+                                            "independent review of Stage 4.2 only; Stage 5 and IBM "
+                                            "credential entry remain blocked; protocol DRAFT; "
+                                            "hardware disabled; Gate E decision outstanding"
+                                        )
+                                        readiness = "stage4_2-complete-pending-independent-review"
+                                    else:
+                                        next_work = (
+                                            "Stage 4.2 -- formulation_gate_c_closure_check plan "
+                                            "(python -m f1q run --plan formulation_gate_c_closure_check); "
+                                            "Stage 5 blocked; Stage 4.1 not independently accepted"
+                                        )
+                                        readiness = "stage4_1-rejected-pending-stage4_2"
                                 else:
                                     next_work = (
                                         "Stage 4.1 -- formulation_repair_check plan "
