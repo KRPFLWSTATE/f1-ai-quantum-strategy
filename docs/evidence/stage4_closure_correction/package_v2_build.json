@@ -1,0 +1,59 @@
+{
+  "clean_extract": {
+    "command": [
+      "/Users/kawinperera/f1-ai-quantum-strategy/.venv/bin/python",
+      "-I",
+      "-c",
+      "<audit>",
+      "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf"
+    ],
+    "f1q_file": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/__init__.py",
+    "failures": [],
+    "modules": {
+      "f1q": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/__init__.py",
+      "f1q.errors": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/errors.py",
+      "f1q.formulation": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/formulation/__init__.py",
+      "f1q.formulation.actions": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/formulation/actions.py",
+      "f1q.formulation.compiler": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/formulation/compiler.py",
+      "f1q.formulation.evaluator": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/formulation/evaluator.py",
+      "f1q.hashing": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/hashing.py",
+      "f1q.paths": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/paths.py",
+      "f1q.simulator": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/simulator/__init__.py",
+      "f1q.simulator.interface": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src/f1q/simulator/interface.py"
+    },
+    "ok": true,
+    "returncode": 0,
+    "sys_path_head": [
+      "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf/src",
+      "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python312.zip",
+      "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12",
+      "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/lib-dynload",
+      "/Users/kawinperera/f1-ai-quantum-strategy/.venv/lib/python3.12/site-packages"
+    ]
+  },
+  "extract_dir": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf",
+  "inner_manifest": {
+    "algorithm_version": "canonical_row_v1_bytes_path_sha256",
+    "canonical_aggregate_sha256": "a4467d88477793024bb1e16e11ad2e72efe6d820c45f31c5905cc83176240ff0",
+    "member_count": 640
+  },
+  "reviewed_source_commit": "945d30d533ea0fadfcabb2ad17da134b73141b6d",
+  "sidecar_path": "review/STAGE_4_CLOSURE_REVIEW_v2.manifest.json",
+  "sidecar_sha256": "df808efaf9ac335bf871de5e2a98985e2af77e1592c3f210e0b2bbd5a8948318",
+  "verify": {
+    "algorithm_version": "canonical_row_v1_bytes_path_sha256",
+    "canonical_aggregate_sha256": "a4467d88477793024bb1e16e11ad2e72efe6d820c45f31c5905cc83176240ff0",
+    "extract_dir": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q_stage_4_closure_review_v2_extract_43xkfxwf",
+    "failures": [],
+    "manifest_aggregate": "a4467d88477793024bb1e16e11ad2e72efe6d820c45f31c5905cc83176240ff0",
+    "member_count": 640,
+    "ok": true
+  },
+  "zip": {
+    "bytes": 2018802,
+    "path": "/Users/kawinperera/f1-ai-quantum-strategy/review/STAGE_4_CLOSURE_REVIEW_v2.zip",
+    "sha256": "e30c6a6d7e12f01d6e42d59fa38a341d6aeebb7bd44635955838924130830f91"
+  },
+  "zip_hash_stable": true,
+  "zip_sha256_recheck": "e30c6a6d7e12f01d6e42d59fa38a341d6aeebb7bd44635955838924130830f91"
+}
