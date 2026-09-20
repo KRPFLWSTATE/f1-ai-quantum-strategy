@@ -1,0 +1,45 @@
+{
+  "numpy_training_functions_unchanged_vs_start_commit": true,
+  "function_sha256_at_start": {
+    "one_hot_feasible_mask": "7249ce31968599fdbcf6d29eac69dadc73a75d9ab4a28222cb009b63ab732c9a",
+    "prepare_one_hot_uniform": "f2f8ffea5add3bc914cb698af3ad36d0e7768f9a87b44739938575f6638d6ce1",
+    "scheduled_ring_edges": "43bc070ea2b5db11f8358497a99af278eff428d568d70f920955e93e5adc1b1d",
+    "_xy_exchange": "44f31f9fe45eb66dff29a4f33b0a206c7d7b65321087f4786aab1bf6b55a40a3",
+    "apply_c1_mixer": "a84ee54db11991d1a61b4d9fce534aa6314de05a037d3e065acabe95ec81bb05",
+    "simulate_c1": "42a6136b366e1a3d5ac98393df505b3256285bed2b8edb0a997985115539c01d"
+  },
+  "function_sha256_now": {
+    "one_hot_feasible_mask": "7249ce31968599fdbcf6d29eac69dadc73a75d9ab4a28222cb009b63ab732c9a",
+    "prepare_one_hot_uniform": "f2f8ffea5add3bc914cb698af3ad36d0e7768f9a87b44739938575f6638d6ce1",
+    "scheduled_ring_edges": "43bc070ea2b5db11f8358497a99af278eff428d568d70f920955e93e5adc1b1d",
+    "_xy_exchange": "44f31f9fe45eb66dff29a4f33b0a206c7d7b65321087f4786aab1bf6b55a40a3",
+    "apply_c1_mixer": "a84ee54db11991d1a61b4d9fce534aa6314de05a037d3e065acabe95ec81bb05",
+    "simulate_c1": "42a6136b366e1a3d5ac98393df505b3256285bed2b8edb0a997985115539c01d"
+  },
+  "changed_functions": [],
+  "only_qiskit_executable_prep_and_crosscheck_repaired": true,
+  "fingerprints": [
+    {
+      "seed": 7,
+      "n": 8,
+      "init_sha256": "56363c6fa8a163f5eed24553a38bdd3b60fbd76d874c4420d512b3773d059b50",
+      "state_sha256": "377ec334e6a35ae94ce182a3c502626160fe82444b123a3c29fb59d251ab1797",
+      "expectation_scaled": 0.2051764512349318
+    },
+    {
+      "seed": 11,
+      "n": 8,
+      "init_sha256": "56363c6fa8a163f5eed24553a38bdd3b60fbd76d874c4420d512b3773d059b50",
+      "state_sha256": "9c36e3a53d279fc3302a6a8f9a3702baea2434a8a252ace310510519b05f2b0e",
+      "expectation_scaled": 0.20814096021019396
+    },
+    {
+      "seed": 3,
+      "n": 6,
+      "init_sha256": "c11b60ccc4ea2bb1f07c1d2f3b38f1f4642f94ad63f233c5821f652d90a123e4",
+      "state_sha256": "9956127c9da8468c240e8062e5cb98ffcefa77555319034be34d91cb2454ed42",
+      "expectation_scaled": 0.11919061094669973
+    }
+  ],
+  "conclusion": "NumPy prepare_one_hot_uniform / apply_c1_mixer / simulate_c1 unchanged; parameter bank, donors, and fitted selectors remain scientifically valid to reuse with provenance from corrected run e6b3588b-ab97-48c9-82f4-616785aa3611. No retraining required."
+}

@@ -12,20 +12,28 @@ from f1q.stage5.bank import fit_one_start, select_donors
 from f1q.stage5.c2_admission import decide_c2_admission
 from f1q.stage5.circuits_c0 import build_c0_qiskit_circuit, simulate_c0
 from f1q.stage5.circuits_c1 import (
+    append_one_hot_uniform_prep,
     broken_schedule_disconnects,
+    build_c1_qiskit_circuit,
     connected_components_of_transition_graph,
     feasible_graph_edges,
     one_hot_feasible_mask,
+    prepare_one_hot_uniform,
     simulate_c1,
 )
-from f1q.stage5.encode import binary_to_policy, policy_to_binary
+from f1q.stage5.encode import binary_to_policy, policy_to_binary, variable_index_map
 from f1q.stage5.enumerate_policies import enumerate_legal_policies
 from f1q.stage5.evaluate import causal_visibility_ok, check_policy_legal
 from f1q.stage5.headroom import run_adversarial_formulation_tests, run_formulation_checks
-from f1q.stage5.ideal_sim import qiskit_statevector_crosscheck_c0, transpile_actual_circuit
+from f1q.stage5.ideal_sim import (
+    qiskit_statevector_crosscheck_c0,
+    qiskit_statevector_crosscheck_c1,
+    transpile_actual_circuit,
+)
 from f1q.stage5.metrics import normalised_regret
 from f1q.stage5.milp import solve_a2_milp
 from f1q.stage5.model import (
+    CAUSAL_DURATION_MODEL,
     build_a2_instance,
     decisions_cannot_see_hidden_duration,
     parse_family_factors,
@@ -174,6 +182,101 @@ def test_c1_one_hot_graph_connectivity_and_broken_schedule():
     assert comps["proof"].startswith("BFS_")
     broken = broken_schedule_disconnects(inst)
     assert broken["fails_as_intended"]
+
+
+def test_c1_prep_matches_numpy_all_positive_phases():
+    """Executable prep must match NumPy uniform one-hot including relative phases."""
+    from qiskit import QuantumCircuit
+    from qiskit.quantum_info import Statevector
+
+    for k in (1, 2, 3, 4, 5):
+        qc = QuantumCircuit(k)
+        append_one_hot_uniform_prep(qc, list(range(k)))
+        sv = np.asarray(Statevector.from_instruction(qc).data, dtype=complex)
+        target = np.zeros(1 << k, dtype=complex)
+        for i in range(k):
+            target[1 << i] = 1.0 / np.sqrt(k)
+        ov = np.vdot(target, sv)
+        phase = ov / abs(ov)
+        assert abs(ov) > 1.0 - 1e-10
+        assert np.max(np.abs(target - sv * np.conj(phase))) < 1e-10
+        # Relative phases among one-hot support are all +1 (after global phase)
+        aligned = sv * np.conj(phase)
+        for i in range(k):
+            assert abs(np.angle(aligned[1 << i])) < 1e-9
+
+
+def test_c1_actual_circuit_crosscheck_p1_p2_and_negative_control():
+    """Genuine Statevector.from_instruction cross-check; wrong relative phase rejected."""
+    fixtures = [
+        # block size 2, n=8
+        dict(n_epochs=2, n_actions=2, seed=7, gammas=[0.37], betas=[0.21]),
+        dict(n_epochs=2, n_actions=2, seed=7, gammas=[0.37, -0.15], betas=[0.21, 0.48]),
+        dict(n_epochs=2, n_actions=2, seed=11, gammas=[1.1], betas=[-0.4]),
+        # block size 3, n=6
+        dict(n_epochs=1, n_actions=3, seed=3, gammas=[0.25], betas=[0.33]),
+        dict(n_epochs=1, n_actions=3, seed=3, gammas=[0.25, 0.7], betas=[0.33, -0.55]),
+        # block size 4, n=8
+        dict(n_epochs=1, n_actions=4, seed=5, gammas=[0.5], betas=[0.15]),
+    ]
+    for fx in fixtures:
+        inst = build_a2_instance(
+            instance_id=f"c1x_{fx['seed']}_{fx['n_actions']}_{len(fx['gammas'])}",
+            family_id="fam.green_pit_low.tyre_near_linear.traffic_sparse",
+            rung="circuit_unit",
+            n_scenarios=2,
+            n_epochs=fx["n_epochs"],
+            n_actions=fx["n_actions"],
+            seed=fx["seed"],
+            microcase="standard",
+        )
+        assert inst.n_logical_vars() <= 12
+        sizes = {b["size"] for b in variable_index_map(inst)["blocks"]}
+        assert fx["n_actions"] in sizes
+        qubo = build_a2_qubo(inst)
+        # Prep alone
+        prep = qiskit_statevector_crosscheck_c1(inst, qubo, [], [])
+        assert prep["ok"], prep
+        assert prep["bit_order"] == "little_endian_bit_i_equals_qubit_i"
+        assert prep["method"].startswith("qiskit.Statevector.from_instruction")
+        # Full circuit
+        full = qiskit_statevector_crosscheck_c1(inst, qubo, fx["gammas"], fx["betas"])
+        assert full["ok"], full
+        assert full["amp_outside_one_hot_qiskit"] <= 1e-8
+        # Negative control: deliberately wrong relative phase must be rejected
+        neg = qiskit_statevector_crosscheck_c1(
+            inst, qubo, fx["gammas"], fx["betas"], wrong_prep_phase=True
+        )
+        assert neg["expect_reject"] is True
+        assert neg["ok"] is True  # ok means correctly rejected
+        assert neg["max_amp_diff_global_phase"] >= 1e-3 or neg["state_fidelity_abs_inner"] < 0.99
+
+
+def test_c1_resources_include_prep_and_not_fake_routing():
+    inst = _cu(5)
+    qubo = build_a2_qubo(inst)
+    built = build_c1_qiskit_circuit(inst, qubo, [0.3], [0.2], scaled=True)
+    assert built["prep_1q_gates"] > 0
+    assert built["prep_2q_gates"] > 0
+    assert built["cost_2q_gates"] + built["cost_1q_gates"] >= 0
+    tr = transpile_actual_circuit(inst, qubo, "C1", 1)
+    assert tr["routing_used"] is False
+    assert tr["coupling_map"] is None
+    assert tr["swap_routing_overhead_cx"] == 0
+    assert "native_basis_decomposition_cx_excess" in tr
+    assert tr["prep_gates"] == built["prep_1q_gates"] + built["prep_2q_gates"]
+
+
+def test_causal_model_is_restricted_synthetic_surrogate():
+    inst = _cu(microcase="force_branching")
+    assert inst.meta["causal_duration_model"] == CAUSAL_DURATION_MODEL
+    assert inst.meta["causal_event_timed_on_track_validated"] is False
+    assert inst.meta["causal_pit_entry_deadline_validated"] is False
+    assert decisions_cannot_see_hidden_duration(inst)
+    # Epoch 1 observables carry full duration by assumption (surrogate, not live causal proof)
+    for s in inst.scenarios:
+        assert s.observable_at_epoch[0] == "root"
+        assert s.observable_at_epoch[1].startswith(f"dur:{s.sc_duration_laps}")
 
 
 def test_genuine_nn_not_constant_first_donor():

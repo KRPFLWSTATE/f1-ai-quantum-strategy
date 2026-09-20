@@ -217,6 +217,45 @@ def broken_schedule_disconnects(instance: A2Instance) -> dict[str, Any]:
     }
 
 
+def append_one_hot_uniform_prep(qc, idxs: list[int]) -> tuple[int, int]:
+    """Append W-state / uniform Hamming-weight-1 prep on ``idxs`` (all-positive amplitudes).
+
+    Matches ``prepare_one_hot_uniform`` on a single block under little-endian indexing
+    (bit ``i`` of the amplitude index = qubit ``i``), up to a single global phase.
+
+    Construction: excite the highest-index qubit, then cascade CRY+CX downward so each
+    computational one-hot basis state receives amplitude ``1/sqrt(k)`` with relative
+    phase ``+1``. The prior RY+CZ+X+CX+X sequence produced ``(|01>-|10>)/sqrt(2)`` for
+    ``k=2`` and incorrect probabilities for ``k>=3`` — not a global-phase difference.
+    """
+    k = len(idxs)
+    if k == 0:
+        return 0, 0
+    if k == 1:
+        qc.x(idxs[0])
+        return 1, 0
+    prep_1q = 1
+    prep_2q = 0
+    qc.x(idxs[k - 1])
+    for i in range(k - 1, 0, -1):
+        theta = 2.0 * np.arccos(np.sqrt(1.0 / (i + 1)))
+        qc.cry(float(theta), idxs[i], idxs[i - 1])
+        qc.cx(idxs[i - 1], idxs[i])
+        prep_2q += 2  # CRY (controlled) + CX
+    return prep_1q, prep_2q
+
+
+def append_deliberately_wrong_phase_prep(qc, idxs: list[int]) -> None:
+    """Negative-control prep: uniform one-hot magnitudes with a wrong relative phase.
+
+    For ``k>=2``, applies the repaired W prep then a Z on the first qubit so the
+    relative phase between one-hot basis states is no longer all ``+1``.
+    """
+    append_one_hot_uniform_prep(qc, idxs)
+    if len(idxs) >= 2:
+        qc.z(idxs[0])
+
+
 def build_c1_qiskit_circuit(
     instance: A2Instance,
     qubo: dict[str, Any],
@@ -224,17 +263,19 @@ def build_c1_qiskit_circuit(
     betas: list[float],
     *,
     scaled: bool = True,
+    wrong_prep_phase: bool = False,
 ):
-    """Actual C1 circuit: validated one-hot prep + QUBO Phase/CPhase + XY ring (RXX+RYY equiv)."""
+    """Actual C1 circuit: validated one-hot prep + QUBO Phase/CPhase + XY ring (RXX+RYY equiv).
+
+    Bit ordering (declared, fixed): little-endian — amplitude index bit ``i`` is qubit
+    ``i``, identical to NumPy ``prepare_one_hot_uniform`` / ``simulate_c1``.
+    """
     from qiskit import QuantumCircuit
     from qiskit.circuit.library import PhaseGate, CPhaseGate
 
     n = int(qubo["n"])
     Q = np.asarray(qubo["Q_scaled"] if scaled else qubo["Q_dense"], dtype=float)
     qc = QuantumCircuit(n, name="C1_actual")
-    # Prep: for each block, create uniform one-hot via sequential controlled rotations proxy
-    # Exact prep for product of one-hot uniforms: initialise |10..0> per block then mix —
-    # For inspectability we encode prep as: W state construction per block (counted).
     prep_1q = 0
     prep_2q = 0
     vmap = variable_index_map(instance)
@@ -242,20 +283,15 @@ def build_c1_qiskit_circuit(
         idxs = list(range(block["start"], block["end"]))
         if not idxs:
             continue
-        # Start |100..0> then apply XY partial swaps to uniformise — recorded as prep gates
-        qc.x(idxs[0])
-        prep_1q += 1
-        k = len(idxs)
-        for t in range(k - 1):
-            # Givens-like via RY+CZ proxy counted as 2q
-            theta = 2 * np.arccos(np.sqrt(1.0 / (k - t)))
-            qc.ry(theta, idxs[t + 1])
-            qc.cz(idxs[t], idxs[t + 1])
-            qc.x(idxs[t])
-            qc.cx(idxs[t + 1], idxs[t])
-            qc.x(idxs[t])
-            prep_1q += 2
-            prep_2q += 2
+        if wrong_prep_phase:
+            append_deliberately_wrong_phase_prep(qc, idxs)
+            k = len(idxs)
+            prep_1q += 1 + (1 if k >= 2 else 0)  # X (+ Z for negative control)
+            prep_2q += 2 * max(0, k - 1)
+        else:
+            p1, p2 = append_one_hot_uniform_prep(qc, idxs)
+            prep_1q += p1
+            prep_2q += p2
     n_cost_1q = 0
     n_cost_2q = 0
     n_mixer_2q = 0
@@ -270,7 +306,7 @@ def build_c1_qiskit_circuit(
                     qc.append(CPhaseGate(-g * float(Q[i, j])), [i, j])
                     n_cost_2q += 1
         for qi, qj in scheduled_ring_edges(instance):
-            # XY exchange ≈ 0.5 (XX+YY) rotation
+            # XY exchange = exp(-i β/2 (XX+YY)) ≡ RXX(β) RYY(β)
             qc.rxx(float(b), qi, qj)
             qc.ryy(float(b), qi, qj)
             n_mixer_2q += 2
@@ -283,7 +319,9 @@ def build_c1_qiskit_circuit(
         "cost_2q_gates": n_cost_2q,
         "mixer_2q_gates": n_mixer_2q,
         "ring_edges": scheduled_ring_edges(instance),
-        "init": "validated_one_hot_prep",
+        "init": "validated_one_hot_prep_w_cascade",
+        "bit_order": "little_endian_bit_i_equals_qubit_i",
         "mixer": "XY_ring_RXX_RYY",
         "cost_encoding": "Phase_and_CPhase_from_actual_QUBO",
+        "wrong_prep_phase": bool(wrong_prep_phase),
     }

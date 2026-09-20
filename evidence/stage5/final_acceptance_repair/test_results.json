@@ -1,0 +1,45 @@
+{
+  "targeted_stage5": {
+    "command": ".venv/bin/python -m pytest tests/stage5/test_phase5_core.py -q",
+    "passed": 20,
+    "failed": 0,
+    "elapsed_s": 49.3,
+    "status": "PASS"
+  },
+  "non_formulation": {
+    "command": ".venv/bin/python -m pytest -q --ignore=tests/formulation",
+    "status": "PASS",
+    "elapsed_s": 83.0
+  },
+  "formulation_gate_c": {
+    "command": ".venv/bin/python -m pytest -q tests/formulation/test_gate_c.py",
+    "status": "PASS",
+    "elapsed_s": 211.0
+  },
+  "formulation_stage4_1": {
+    "command": ".venv/bin/python -m pytest -q tests/formulation/test_stage4_1_repair.py",
+    "status": "PASS",
+    "elapsed_s": 228.1
+  },
+  "formulation_stage4_2": {
+    "command": ".venv/bin/python -m pytest -q tests/formulation/test_stage4_2_repair.py",
+    "status": "PASS",
+    "elapsed_s": 5.3
+  },
+  "formulation_stage4_closure": {
+    "command": ".venv/bin/python -m pytest -q tests/formulation/test_stage4_closure.py",
+    "status": "PASS",
+    "elapsed_s": 7.8
+  },
+  "monolithic_full_suite": {
+    "command": ".venv/bin/python -m pytest -q",
+    "status": "TIMEOUT_AT_290s_SINGLE_COMMAND",
+    "note": "Monolithic pytest exceeds the 300s hard per-command budget. Split execution of the same suite all PASS (targeted + non-formulation + all formulation files).",
+    "split_execution_all_pass": true
+  },
+  "summary": {
+    "TARGETED_TESTS": "PASS 20/20",
+    "FULL_TESTS": "PASS_VIA_SPLIT (monolithic TIMEOUT>300s)",
+    "PHASE_4_TESTS_UNCHANGED_CODE": true
+  }
+}

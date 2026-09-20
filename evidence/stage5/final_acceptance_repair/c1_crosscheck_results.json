@@ -1,0 +1,241 @@
+{
+  "n_fixtures": 9,
+  "n_pass": 9,
+  "n_fail": 0,
+  "denom": 9,
+  "rows": [
+    {
+      "label": "prep_size2_n8",
+      "n": 8,
+      "p": 0,
+      "block_sizes": [
+        2
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 8.326672684688674e-17,
+      "state_fidelity_abs_inner": 1.0,
+      "max_prob_diff": 4.163336342344337e-17,
+      "expectation_diff": 0.0,
+      "amp_outside_one_hot_qiskit": 0.0,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "p1_size2_asym",
+      "n": 8,
+      "p": 1,
+      "block_sizes": [
+        2
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 3.365900013051177e-16,
+      "state_fidelity_abs_inner": 0.9999999999999996,
+      "max_prob_diff": 1.6653345369377348e-16,
+      "expectation_diff": 3.608224830031759e-16,
+      "amp_outside_one_hot_qiskit": 0.0,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "p2_size2_asym",
+      "n": 8,
+      "p": 2,
+      "block_sizes": [
+        2
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 5.214799211354908e-16,
+      "state_fidelity_abs_inner": 0.9999999999999983,
+      "max_prob_diff": 2.914335439641036e-16,
+      "expectation_diff": 6.38378239159465e-16,
+      "amp_outside_one_hot_qiskit": 0.0,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "p1_size2_seed11",
+      "n": 8,
+      "p": 1,
+      "block_sizes": [
+        2
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 2.355138688025663e-16,
+      "state_fidelity_abs_inner": 1.0000000000000002,
+      "max_prob_diff": 8.326672684688674e-17,
+      "expectation_diff": 1.1102230246251565e-16,
+      "amp_outside_one_hot_qiskit": 0.0,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "prep_size3_n6",
+      "n": 6,
+      "p": 0,
+      "block_sizes": [
+        3
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 5.551115123125783e-17,
+      "state_fidelity_abs_inner": 1.0,
+      "max_prob_diff": 2.7755575615628914e-17,
+      "expectation_diff": 1.3877787807814457e-17,
+      "amp_outside_one_hot_qiskit": 0.0,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "p1_size3",
+      "n": 6,
+      "p": 1,
+      "block_sizes": [
+        3
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 1.6653345369377348e-16,
+      "state_fidelity_abs_inner": 1.0,
+      "max_prob_diff": 8.326672684688674e-17,
+      "expectation_diff": 1.3877787807814457e-17,
+      "amp_outside_one_hot_qiskit": 6.500013562306922e-34,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "p2_size3",
+      "n": 6,
+      "p": 2,
+      "block_sizes": [
+        3
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 2.9893669801409083e-16,
+      "state_fidelity_abs_inner": 1.0000000000000002,
+      "max_prob_diff": 1.3877787807814457e-16,
+      "expectation_diff": 2.7755575615628914e-17,
+      "amp_outside_one_hot_qiskit": 1.7363462154866173e-33,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "p1_size4",
+      "n": 8,
+      "p": 1,
+      "block_sizes": [
+        4
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 4.484050470211362e-16,
+      "state_fidelity_abs_inner": 1.0000000000000004,
+      "max_prob_diff": 2.0122792321330962e-16,
+      "expectation_diff": 2.3592239273284576e-16,
+      "amp_outside_one_hot_qiskit": 2.2302043113690626e-34,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    },
+    {
+      "label": "p2_size2_n4",
+      "n": 4,
+      "p": 2,
+      "block_sizes": [
+        2
+      ],
+      "ok": true,
+      "max_amp_diff_global_phase": 5.613217783960923e-16,
+      "state_fidelity_abs_inner": 1.0000000000000004,
+      "max_prob_diff": 4.440892098500626e-16,
+      "expectation_diff": 1.1102230246251565e-16,
+      "amp_outside_one_hot_qiskit": 0.0,
+      "amp_tol": 1e-08,
+      "prob_tol": 1e-08,
+      "exp_tol": 1e-08,
+      "bit_order": "little_endian_bit_i_equals_qubit_i",
+      "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)"
+    }
+  ],
+  "negative_controls": {
+    "n": 7,
+    "n_correctly_rejected": 7,
+    "rows": [
+      {
+        "label": "p1_size2_asym_wrong_phase",
+        "ok_means_correctly_rejected": true,
+        "expect_reject": true,
+        "max_amp_diff_global_phase": 0.44221846640781076,
+        "state_fidelity_abs_inner": 7.34665142449335e-17,
+        "max_prob_diff": 0.0023086094435917776
+      },
+      {
+        "label": "p2_size2_asym_wrong_phase",
+        "ok_means_correctly_rejected": true,
+        "expect_reject": true,
+        "max_amp_diff_global_phase": 0.4290069940184877,
+        "state_fidelity_abs_inner": 4.792274520364065e-17,
+        "max_prob_diff": 0.0002450360963542064
+      },
+      {
+        "label": "p1_size2_seed11_wrong_phase",
+        "ok_means_correctly_rejected": true,
+        "expect_reject": true,
+        "max_amp_diff_global_phase": 0.4372361913662227,
+        "state_fidelity_abs_inner": 1.0613383717949356e-16,
+        "max_prob_diff": 0.008129122946055972
+      },
+      {
+        "label": "p1_size3_wrong_phase",
+        "ok_means_correctly_rejected": true,
+        "expect_reject": true,
+        "max_amp_diff_global_phase": 0.7417440736414294,
+        "state_fidelity_abs_inner": 0.11111111111111124,
+        "max_prob_diff": 0.11880451971835794
+      },
+      {
+        "label": "p2_size3_wrong_phase",
+        "ok_means_correctly_rejected": true,
+        "expect_reject": true,
+        "max_amp_diff_global_phase": 0.6364634629908096,
+        "state_fidelity_abs_inner": 0.11111111111111119,
+        "max_prob_diff": 0.1775421559793825
+      },
+      {
+        "label": "p1_size4_wrong_phase",
+        "ok_means_correctly_rejected": true,
+        "expect_reject": true,
+        "max_amp_diff_global_phase": 0.498895806188131,
+        "state_fidelity_abs_inner": 0.2500000000000003,
+        "max_prob_diff": 0.01215894428675663
+      },
+      {
+        "label": "p2_size2_n4_wrong_phase",
+        "ok_means_correctly_rejected": true,
+        "expect_reject": true,
+        "max_amp_diff_global_phase": 0.9853214568126564,
+        "state_fidelity_abs_inner": 1.451127553355748e-16,
+        "max_prob_diff": 0.011920628650019499
+      }
+    ]
+  }
+}

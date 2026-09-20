@@ -1,0 +1,10 @@
+{
+  "failures": [],
+  "manifest_path": "docs/evidence/stage5_final_acceptance/STAGE_5_FINAL_ACCEPTANCE_MANIFEST.json",
+  "manifest_sha256": "e3d7e8eb1202bf59e561f2439f46664441729a18cd18886cc06edda4dd9fef19",
+  "n_checked": 19,
+  "note": "final_verify hashes the manifest; does not embed its own file hash in the hashed payload before write",
+  "ok": true,
+  "schema_version": "stage5.final_acceptance.final_verify.v1",
+  "verified_at_unix": 1789928584.454608
+}

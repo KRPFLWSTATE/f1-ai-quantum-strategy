@@ -1,0 +1,16 @@
+{
+  "model": "restricted_synthetic_revealed_at_epoch_1",
+  "assumption": "SC/VSC duration is fully placed into epoch-1 observables; epoch 0 is root-only. Synthetic commitment-epoch check \u2014 not event-timed on-track causal validation.",
+  "epoch0": "root_only",
+  "epoch1": "full_duration_revealed_by_construction",
+  "event_timed_on_track_validated": false,
+  "pit_entry_deadline_validated": false,
+  "demonstrates_actual_f1_value": false,
+  "phase6_operational_prerequisite": "causal_simulator_integration",
+  "instance_meta_flags": {
+    "causal_duration_model": "restricted_synthetic_revealed_at_epoch_1",
+    "causal_event_timed_on_track_validated": false,
+    "causal_pit_entry_deadline_validated": false
+  },
+  "synthetic_commitment_epoch_check": "decisions_cannot_see_hidden_duration / causal_visibility_ok only validate the restricted surrogate (epoch0=root; duration at epoch1)."
+}

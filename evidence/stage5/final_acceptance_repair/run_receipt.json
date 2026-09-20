@@ -1,0 +1,26 @@
+{
+  "corrected_run_id": "e6b3588b-ab97-48c9-82f4-616785aa3611",
+  "crosscheck_summary": {
+    "denom": 9,
+    "fail": 0,
+    "negative_controls_denom": 7,
+    "negative_controls_rejected": 7,
+    "pass": 9
+  },
+  "elapsed_s": 0.7936310768127441,
+  "original_run_id": "6ad68021-f19c-44e7-b166-13ab44dad31b",
+  "packages": {
+    "PyYAML": "6.0.3",
+    "numpy": "2.5.3",
+    "pydantic": "2.13.5",
+    "qiskit": "1.4.6",
+    "scipy": "1.18.1"
+  },
+  "qpu_jobs": 0,
+  "resource_rows": 12,
+  "schema": "stage5.final_acceptance.receipt.v1",
+  "source_commit_at_evidence_build": "7563c169b2e69123657ff3f6e0b4c9aa970e8363",
+  "starting_commit": "7563c169b2e69123657ff3f6e0b4c9aa970e8363",
+  "training_reruns": 0,
+  "training_simulator_unchanged": true
+}

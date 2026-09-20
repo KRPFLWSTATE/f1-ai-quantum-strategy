@@ -86,43 +86,102 @@ def qiskit_statevector_crosscheck_c0(qubo: dict[str, Any], gammas: list[float], 
     }
 
 
+def _global_phase_aligned_amp_diff(a: np.ndarray, b: np.ndarray) -> tuple[float, float]:
+    """Max |a - e^{iφ} b| after choosing one global phase; also return |⟨a|b⟩| fidelity."""
+    a = np.asarray(a, dtype=complex)
+    b = np.asarray(b, dtype=complex)
+    ov = np.vdot(a, b)
+    fid = float(abs(ov))
+    if fid < 1e-15:
+        return float(np.max(np.abs(a - b))), fid
+    phase = ov / abs(ov)
+    return float(np.max(np.abs(a - b * np.conj(phase)))), fid
+
+
 def qiskit_statevector_crosscheck_c1(
     instance: A2Instance,
     qubo: dict[str, Any],
     gammas: list[float],
     betas: list[float],
+    *,
+    amp_tol: float = 1e-8,
+    prob_tol: float = 1e-8,
+    exp_tol: float = 1e-8,
+    wrong_prep_phase: bool = False,
 ) -> dict[str, Any]:
-    """Cross-check numpy C1 probs vs independent diagonal evolution (prep aligned).
+    """Independent Qiskit Statevector cross-check on the ACTUAL C1 circuit.
 
-    Full Qiskit prep may differ by local phases; we compare cost+mixer evolution from
-    shared one-hot uniform init via Operator diagonal path.
+    Evolves ``Statevector.from_instruction(build_c1_qiskit_circuit(...))`` only.
+    Does **not** hand-initialise a NumPy one-hot state and does **not** call
+    ``apply_c1_mixer`` on the independent path.
+
+    Bit order is fixed little-endian (bit i = qubit i), matching NumPy ``simulate_c1``.
+    Equivalence is up to one global phase on amplitudes; probabilities and scaled
+    objective expectation must agree without reordering.
     """
-    from qiskit import QuantumCircuit
-    from qiskit.quantum_info import Operator, Statevector
+    from qiskit.quantum_info import Statevector
 
     from f1q.stage5.circuits_c0 import cost_unitary_diags
-    from f1q.stage5.circuits_c1 import prepare_one_hot_uniform, apply_c1_mixer
 
     n = int(qubo["n"])
     if n > 12:
-        return {"ok": False, "reason": "n_too_large"}
+        return {"ok": False, "reason": "n_too_large_for_crosscheck", "n": n}
     ours = simulate_c1(instance, qubo, gammas, betas, scaled=True)
+    built = build_c1_qiskit_circuit(
+        instance, qubo, gammas, betas, scaled=True, wrong_prep_phase=wrong_prep_phase
+    )
+    qc = built["circuit"]
+    q_state = np.asarray(Statevector.from_instruction(qc).data, dtype=complex)
+    q_probs = np.abs(q_state) ** 2
+    amp_diff, fidelity = _global_phase_aligned_amp_diff(ours["state"], q_state)
+    prob_diff = float(np.max(np.abs(ours["probs"] - q_probs)))
     diags = cost_unitary_diags(qubo, scaled=True)
-    state = Statevector(prepare_one_hot_uniform(instance))
-    for g, b in zip(gammas, betas):
-        phase = np.exp(-1j * float(g) * diags)
-        state = state.evolve(Operator(np.diag(phase)))
-        # Apply mixer via numpy then re-wrap (mixer is XY — validated separately)
-        mixed = apply_c1_mixer(np.asarray(state.data, dtype=complex), instance, float(b))
-        state = Statevector(mixed)
-    q_probs = np.asarray(state.probabilities())
-    diff = float(np.max(np.abs(ours["probs"] - q_probs)))
+    exp_ours = float(ours["expectation_scaled"])
+    exp_q = float(np.dot(q_probs, diags))
+    exp_diff = float(abs(exp_ours - exp_q))
+    mask = np.abs(ours["state"]) > 1e-12
+    # One-hot preservation on the actual circuit output
+    from f1q.stage5.circuits_c1 import one_hot_feasible_mask
+
+    oh_mask = one_hot_feasible_mask(instance)
+    amp_outside = float(np.sum(q_probs[~oh_mask]))
+    if wrong_prep_phase:
+        # Magnitudes may still match; relative-phase defect must fail amplitude alignment
+        ok = not (amp_diff < amp_tol and fidelity > 1.0 - 1e-9)
+        expect_reject = True
+    else:
+        ok = (
+            amp_diff < amp_tol
+            and prob_diff < prob_tol
+            and exp_diff < exp_tol
+            and amp_outside <= 1e-8
+            and fidelity > 1.0 - 1e-9
+        )
+        expect_reject = False
     return {
-        "ok": diff < 1e-8,
-        "max_prob_diff": diff,
+        "ok": bool(ok),
+        "expect_reject": expect_reject,
+        "wrong_prep_phase": bool(wrong_prep_phase),
+        "max_amp_diff_global_phase": amp_diff,
+        "state_fidelity_abs_inner": fidelity,
+        "max_prob_diff": prob_diff,
+        "expectation_diff": exp_diff,
+        "expectation_ours": exp_ours,
+        "expectation_qiskit": exp_q,
+        "amp_outside_one_hot_qiskit": amp_outside,
+        "amp_outside_one_hot_numpy": float(ours["amp_outside_one_hot"]),
         "n": n,
-        "method": "qiskit.Statevector_diagonal_cost_plus_numpy_XY_mixer",
-        "amp_outside_one_hot": ours["amp_outside_one_hot"],
+        "p": len(gammas),
+        "amp_tol": amp_tol,
+        "prob_tol": prob_tol,
+        "exp_tol": exp_tol,
+        "bit_order": "little_endian_bit_i_equals_qubit_i",
+        "method": "qiskit.Statevector.from_instruction(actual_C1_circuit)",
+        "prep_1q_gates": built["prep_1q_gates"],
+        "prep_2q_gates": built["prep_2q_gates"],
+        "cost_2q_gates": built["cost_2q_gates"],
+        "mixer_2q_gates": built["mixer_2q_gates"],
+        "support_size_numpy": int(np.count_nonzero(mask)),
     }
 
 
@@ -176,10 +235,12 @@ def transpile_actual_circuit(
     )
     counts = tqc.count_ops()
     cx = int(counts.get("cx", 0))
-    # Routing overhead proxy: CX beyond logical 2q estimate
     logical_2q = int(built.get("cost_2q_gates", 0)) + int(built.get("mixer_2q_gates", 0)) + int(
         built.get("prep_2q_gates", 0)
     )
+    # No coupling map / device routing is used — excess CX vs logical 2q count is
+    # native-basis decomposition (e.g. RXX/RYY/CRY/CPhase → CX), not SWAP routing.
+    native_decomp_cx_excess = max(0, cx - logical_2q)
     return {
         "family": family,
         "p": p,
@@ -188,10 +249,21 @@ def transpile_actual_circuit(
         "n_1q": int(sum(v for k, v in counts.items() if k != "cx")),
         "n_2q_cx": cx,
         "logical_2q_est": logical_2q,
-        "swap_routing_overhead_cx_proxy": max(0, cx - logical_2q),
+        "native_basis_decomposition_cx_excess": native_decomp_cx_excess,
+        "swap_routing_overhead_cx": 0,
+        "routing_used": False,
+        "coupling_map": None,
+        # Retained key name for readers of older rows; value is decomposition excess, NOT routing.
+        "swap_routing_overhead_cx_proxy": native_decomp_cx_excess,
+        "swap_routing_overhead_cx_proxy_meaning": (
+            "DEPRECATED_ALIAS_of_native_basis_decomposition_cx_excess;"
+            "no_coupling_map_or_SWAP_routing_was_applied"
+        ),
         "cost_interaction_gates": int(built.get("cost_2q_gates", 0)),
         "mixer_gates": int(built.get("mixer_2q_gates", 0) or built.get("mixer_1q_gates", 0)),
         "prep_gates": int(built.get("prep_1q_gates", 0)) + int(built.get("prep_2q_gates", 0)),
+        "prep_1q_gates": int(built.get("prep_1q_gates", 0)),
+        "prep_2q_gates": int(built.get("prep_2q_gates", 0)),
         "seed": seed,
         "opt_level": opt_level,
         "basis_gates": ["rz", "sx", "x", "cx"],

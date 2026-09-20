@@ -1,8 +1,18 @@
 """A2 deterministic scenario-tree policy model (non-anticipative by construction).
 
 Corrected builder: family factors drive mechanisms; action costs have documented
-Stage-3/4 lineage; SC/VSC duration revealed only via causal observables; scenario
-probabilities are deterministic_synthetic (not claimed AI-trained).
+Stage-3/4 lineage; scenario probabilities are deterministic_synthetic (not claimed
+AI-trained).
+
+Causal duration scope (restricted synthetic surrogate — preserved for Phase 5 evidence):
+the training model ASSUMES SC/VSC duration is fully revealed at the second decision
+epoch (epoch 1 observables are ``dur:<laps>``). Epoch 0 is a shared ``root`` info set
+only. This is a **synthetic commitment-epoch revealed-duration surrogate**, not a
+demonstration of event-timed, on-track causal validity or Stage-3 pit-entry deadline
+integration. Checking that epoch 0 equals ``root`` does **not** prove causal validity
+at subsequent decisions under a live simulator. Operational Phase 6 race-decision
+pilots require explicit causal simulator integration as a prerequisite. This
+surrogate does **not** demonstrate actual F1 operational value.
 """
 
 from __future__ import annotations
@@ -14,6 +24,14 @@ from typing import Any, Iterable
 import numpy as np
 
 from f1q.hashing import sha256_json
+
+# Documented assumption retained so training evidence stays valid without regenerating
+# the generator. Do not silently widen revelation timing without a new authorised run.
+CAUSAL_DURATION_MODEL = "restricted_synthetic_revealed_at_epoch_1"
+CAUSAL_DURATION_ASSUMPTION = (
+    "SC/VSC duration is fully placed into epoch-1 observables; epoch 0 is root-only. "
+    "Synthetic commitment-epoch check — not event-timed on-track causal validation."
+)
 
 
 def _stable_unit_jitter(*parts: Any) -> float:
@@ -390,9 +408,13 @@ def build_a2_instance(
             else:
                 duration = int(rng.integers(1, 5))
         restart = ("rolling", "standing", "none")[int(rng.integers(0, 3))]
-        # CRITICAL: epoch 0 observes only "root" — duration NOT revealed before epoch 1
+        # Restricted synthetic revealed-duration surrogate (CAUSAL_DURATION_MODEL):
+        # epoch 0 = shared "root"; full sampled duration is placed into epoch-1+
+        # observables. This ASSUMES duration is fully revealed by the second decision
+        # epoch. It is NOT event-timed / on-track causal validation and does NOT
+        # substitute for Stage-3 pit-entry deadline checks under the live simulator.
         obs = tuple("root" if e == 0 else f"dur:{duration}" for e in range(n_epochs))
-        # Full duration never placed in epoch-0 observable
+        # Duration is intentionally absent from epoch-0; present from epoch 1 by assumption.
         scenarios.append(
             Scenario(
                 scenario_id=f"s{i}",
@@ -523,7 +545,8 @@ def build_a2_instance(
                     joint = float(crew_overlap_cost)  # finite cost, not hard rule
                 pair_costs[(info.info_set_id, a1.action_id, a2.action_id)] = joint
 
-    # Leaf costs use duration — but decisions at epoch 0 cannot observe duration
+    # Leaf costs use duration — under the restricted surrogate, epoch-0 decisions
+    # cannot observe duration; epoch-1+ decisions may (by construction).
     scenario_leaf_costs = {
         s.scenario_id: float(
             0.1 * s.sc_duration_laps
@@ -562,6 +585,10 @@ def build_a2_instance(
             "n_branching_epochs": n_branching_epochs,
             "family_factors": factors,
             "mechanism_params": mech,
+            "causal_duration_model": CAUSAL_DURATION_MODEL,
+            "causal_duration_assumption": CAUSAL_DURATION_ASSUMPTION,
+            "causal_event_timed_on_track_validated": False,
+            "causal_pit_entry_deadline_validated": False,
         },
         cost_lineage={
             "source": "family_mechanism_params + Stage-2 factor map",
@@ -598,7 +625,12 @@ def iter_action_choices(instance: A2Instance) -> Iterable[tuple[str, str, list[s
 
 
 def decisions_cannot_see_hidden_duration(instance: A2Instance) -> bool:
-    """Epoch-0 info set must not encode scenario duration in its observable signature."""
+    """Synthetic commitment-epoch check: epoch-0 must be root-only (no ``dur:``).
+
+    Passing this check only validates the restricted revealed-duration surrogate
+    (duration fully exposed at epoch 1 by construction). It does **not** prove
+    event-timed, on-track causal validity or live pit-entry deadline behaviour.
+    """
     for info in instance.info_sets:
         if info.epoch == 0:
             if "dur:" in info.observable_signature:

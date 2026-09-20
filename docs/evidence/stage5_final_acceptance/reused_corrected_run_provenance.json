@@ -1,0 +1,124 @@
+{
+  "corrected_run_id": "e6b3588b-ab97-48c9-82f4-616785aa3611",
+  "original_run_id": "6ad68021-f19c-44e7-b166-13ab44dad31b",
+  "reused_artifacts": {
+    "bank_fit_records.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/bank_fit_records.json",
+      "bytes": 428933,
+      "sha256": "edb74a1d83edb5af8fa1ea126b5e58301e333bba357498cc8c51228ce37828a5",
+      "reused": true
+    },
+    "parameter_bank_receipt.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/parameter_bank_receipt.json",
+      "bytes": 3384,
+      "sha256": "7d238181e7b80e50afa2bd400ede714dfdbe350a19e01f84b37886b4268d878e",
+      "reused": true
+    },
+    "donor_inventory.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/donor_inventory.json",
+      "bytes": 16731,
+      "sha256": "12c637be3046cd34aacad9a54c4dc72b893baa4cdc00158e55652b23e8aeeeb7",
+      "reused": true
+    },
+    "selector_model_artifacts.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_model_artifacts.json",
+      "bytes": 20485,
+      "sha256": "1490f96b6d00cea297bae6faf06fde67ea788a5a167463ec9945eb72635fbc41",
+      "reused": true
+    },
+    "selector_training_receipt.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_training_receipt.json",
+      "bytes": 40544,
+      "sha256": "d35794bc61879295e6c764da4012150573bed1f96e85b254ddb661be0a7ee4d9",
+      "reused": true
+    },
+    "selector_tuning_results.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_tuning_results.json",
+      "bytes": 32717,
+      "sha256": "d1d18af1f47a287e2310fef8b5124efb32f7ed728b1eb6e8750d3aef223d9221",
+      "reused": true
+    },
+    "selector_per_block_records.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_per_block_records.json",
+      "bytes": 956958,
+      "sha256": "532aba16e3976e65eaa7f396844f70c32a85237e8c24f2ed474d295028ee7156",
+      "reused": true
+    },
+    "selector_train_usage.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_train_usage.json",
+      "bytes": 216167,
+      "sha256": "62d4751eb620b8e9f1b1483512a6ec974851465cbb5fdf2cfb8002adf6d06fc4",
+      "reused": true
+    },
+    "frozen_config.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/frozen_config.json",
+      "bytes": 1527,
+      "sha256": "3cefded2c9ac67b5d753e631aae20ea264a0eb37d272fda5c8cb73fed4b3f96d",
+      "reused": true
+    },
+    "run_receipt.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/run_receipt.json",
+      "bytes": 575,
+      "sha256": "b2a03d3fe4d50ce4420c577bc795899fe747597ab13de91f04d29f5eb4c65335",
+      "reused": true
+    },
+    "test_results.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/test_results.json",
+      "bytes": 179,
+      "sha256": "7499970c3412589aa44ede68e2bf329e17124b7e7dcd8507111c8141478238bf",
+      "reused": true
+    },
+    "formulation_checks.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/formulation_checks.json",
+      "bytes": 10967,
+      "sha256": "80f7b564b7c0e96c28e79808c4a5babd9bb54f1e87a912af4a18523fdde05840",
+      "reused": true
+    },
+    "headroom_results.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/headroom_results.json",
+      "bytes": 9206,
+      "sha256": "571f8049e5d8879999e4841f526024e1c396af01c2ece759dad4c14b94b3a8ee",
+      "reused": true
+    },
+    "split_audit.json": {
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/split_audit.json",
+      "bytes": 550,
+      "sha256": "abaf0e104d38907747bff553811d20018164b6cd2feedf3b54e26150379e858b",
+      "reused": true
+    }
+  },
+  "variational_reference_coverage": {
+    "n_fits": 288,
+    "n_with_best_params": 288,
+    "n_with_history_compact": 288,
+    "history_note": "Full per-eval traces are stored as history_compact (length 10) plus n_history; not a complete raw optimizer trace for every evaluation.",
+    "sample_fit_keys": [
+      "best_params",
+      "best_value_scaled",
+      "block_id",
+      "cpu_s",
+      "evals",
+      "failure",
+      "family",
+      "family_id",
+      "history_compact",
+      "n_history",
+      "p",
+      "params_hash",
+      "s_Q",
+      "seed",
+      "success"
+    ],
+    "sample_best_params": [
+      2.8948061816398867,
+      -0.3878374771576961
+    ],
+    "sample_n_history": 80,
+    "sample_history_compact_len": 10,
+    "selector_model_weights_file": {
+      "path": "selector_model_weights.json",
+      "present_in_corrected_run": false,
+      "note": "Weights live inside selector_model_artifacts.json (present)."
+    }
+  }
+}
