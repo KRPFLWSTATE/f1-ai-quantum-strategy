@@ -4,16 +4,17 @@ Independent research infrastructure for a **deadline-constrained two-car pit-str
 
 This repository is **not** affiliated with a Formula 1 team. It reports **no experimental results**. Completing software setup, a development preview, or simulator checks does not establish scientific novelty, F1 calibration, or hardware readiness.
 
-## Current scope -- Stage 4 engineering closure
+## Current scope -- Phase 5 complete (local)
 
-Restricted independent race simulator (`simulator.v1` **1.0.4** / interface **3.1.0**), Stage 3.x validation/repair/evidence correction, and Stage 4 local formulation (action model, proxy compiler, QUBO/Ising, independent classical references). Engineering status: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS` after a valid bounded closure. Legacy exhaustive Gate C remains `PARTIAL` / `ARCHIVED_DO_NOT_RESUME` (see `docs/STAGE_4_CLOSURE_ERRATUM.md`). This does **not** establish quantum advantage, F1 calibration, H1/H2/H3 evidence, or hardware readiness. Gate E: `PROXY_HEADROOM: ZERO`.
+Restricted independent race simulator (`simulator.v1` **1.0.4** / interface **3.1.0**), Stage 3.x validation/repair/evidence correction, Stage 4 local formulation closed with documented limitations, and **Phase 5** A2 scenario-contingent strategy-policy pipeline (classical references, C0/C1 ideal circuits, parameter bank, learned donor selector). Engineering status: see `docs/STAGE_5_REPORT.md`. Legacy exhaustive Gate C remains `PARTIAL` / `ARCHIVED_DO_NOT_RESUME` (see `docs/STAGE_4_CLOSURE_ERRATUM.md`). This does **not** establish quantum advantage, F1 calibration, held-out H1/H2/H3 evidence, or hardware readiness. Stage 4 Gate E: `PROXY_HEADROOM: ZERO`. Phase 5 development headroom: `ZERO` (superiority path disabled).
 
-Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. `QPU_EXECUTION_AUTHORISED: false`. Stage 5 is design-ready only for an architecture decision addressing zero headroom — not authorised to execute QAOA/hardware.
+Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. `QPU_EXECUTION_AUTHORISED: false`. `NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`.
 
 ## Supported local environment
 
 - macOS (Apple silicon verified on the author's machine), CPython **3.12** (`requires-python >=3.12,<3.14`)
 - Project-local virtualenv; no system Python changes and no administrator install
+- Optional local Qiskit for ideal circuit simulation only (no IBM Runtime / provider path)
 
 ## Setup
 
@@ -37,7 +38,9 @@ python -m f1q generator plan-splits [--test-blocks 80|88|...|160]
 python -m f1q run --plan development_preview
 python -m f1q run --plan simulator_check
 python -m f1q run --plan formulation_check
-python -m f1q resume --run-id <id>    # only if a run was interrupted
+python -m f1q run --plan phase5
+python -m f1q.stage5
+python -m f1q resume --run-id <id>    # only if a run was interrupted; never legacy Gate C
 python -m f1q receipt --run-id <id>
 python -m f1q generator audit --run-id <id>
 python -m f1q simulator validate
@@ -54,21 +57,15 @@ There is no `submit`, hardware, or IBM command. Reserved scientific partitions c
 - Bootstrap artifacts: `evidence/bootstrap/`
 - Development preview specs/receipts: `evidence/development/`
 - Formulation Stage 4 artifacts/receipts: `evidence/formulation/`
+- Phase 5 evidence: `evidence/stage5/`, summaries `docs/evidence/stage5/`
+- Phase 5 report: `docs/STAGE_5_REPORT.md`
 - Private simulator-state seeds (gitignored, not solver-visible): `evidence/development/private/`
 - Dossier and extraction: `docs/protocol/`
-- Stage 1 follow-up: `docs/STAGE_1_FOLLOWUP.md`
-- Stage 2 report: `docs/STAGE_2_REPORT.md`
-- Stage 3 report: `docs/STAGE_3_REPORT.md`
-- Stage 3.1 / 3.2 / 3.3 reports: `docs/STAGE_3_1_REPORT.md`, `docs/STAGE_3_2_REPORT.md`, `docs/STAGE_3_3_REPORT.md`
-- Stage 4 report and specs: `docs/STAGE_4_REPORT.md`, `docs/ACTION_MODEL.md`, `docs/OBJECTIVE_COMPILER.md`, `docs/QUBO_SPECIFICATION.md`, `docs/CLASSICAL_REFERENCES.md`
-- Simulator selection / model / validation: `docs/SIMULATOR_SELECTION.md`, `docs/SIMULATOR_MODEL.md`, `docs/SIMULATOR_VALIDATION.md`
-- Simulator receipts (engineering): `evidence/simulator/receipts/`
-- Private simulator checkpoint state (gitignored, hashed not printed): `evidence/simulator/private/`
-- Stage 3.3 corrected diagnostic: `docs/evidence/stage3_3/`
-- Generator specification: `docs/GENERATOR_SPEC.md`
+- Stage 1–4 reports under `docs/`
+- Stage 5A architecture/contract: `docs/STAGE_5A_ARCHITECTURE_REPORT.md`, `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`
 
-Development outputs and simulator-check admissions are **not** scientific observations. Do not place them in a results table.
+Development outputs, simulator-check admissions, and Phase 5 tuning results are **not** held-out scientific observations. Do not place them in a results table as quantum advantage.
 
 ## Next stage
 
-Stage 5 **architecture decision** addressing zero proxy headroom. Keep `active_stage` at 4 until a separate Stage 5 implementation prompt. No QAOA, learned selectors, IBM, or QPU execution without that prompt.
+**Stage 6 — local pilot + resource/precision estimation**, only after user review and an explicit Stage 6 prompt. Not hardware. Superiority pilot is not ready while Phase 5 development headroom is zero.

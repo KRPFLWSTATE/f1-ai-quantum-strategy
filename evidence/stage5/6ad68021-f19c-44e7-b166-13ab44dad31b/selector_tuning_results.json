@@ -1,0 +1,39 @@
+{
+  "best_reference_mean_regret": 0.0,
+  "family_depth_key": "C1_p1",
+  "feature_keys": [
+    "n_logical_vars",
+    "n_info_sets",
+    "n_scenarios",
+    "n_epochs",
+    "n_blocks",
+    "mean_block_size",
+    "qubo_n_terms",
+    "qubo_density",
+    "coeff_abs_mean",
+    "coeff_abs_max",
+    "penalty_M",
+    "crew_overlap_cost",
+    "family_is_c1",
+    "depth_p",
+    "nnz_Q"
+  ],
+  "fixed_mean_regret": 0.011048080216256157,
+  "learned_mean_regret": 0.0049519283907807025,
+  "learned_median_regret": 0.0,
+  "n_tuning_blocks": 80,
+  "nn_mean_regret": 0.009314780714386368,
+  "noninferiority_0_02": true,
+  "noninferiority_margin": 0.02,
+  "note": "development/tuning results only \u2014 NOT held-out scientific claims",
+  "paired_interval": {
+    "alpha": 0.05,
+    "mean": 0.0049519283907807025,
+    "n": 80,
+    "se": 0.0033982830870130224,
+    "upper_95_one_sided": 0.010541606651861917
+  },
+  "random_mean_regret": 0.024188757634146914,
+  "selector_model": "numpy_ridge_ranking",
+  "variational_best_mean_regret": 0.011652982540728146
+}

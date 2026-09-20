@@ -1,0 +1,91 @@
+{
+  "a2_instances_built": 228,
+  "anchors": 24,
+  "circuit_unit_qubit_range": [
+    8,
+    8
+  ],
+  "size_ladder": [
+    {
+      "construction_s": 0.00018420896958559752,
+      "exact_enum_s": 0.0002477080561220646,
+      "executed_exact": true,
+      "feasible_policy_count": 16,
+      "ideal_statevector_feasible": true,
+      "logical_vars": 8,
+      "milp_s": 0.005358833004720509,
+      "milp_success": true,
+      "n_actions_per_car": 2,
+      "n_epochs": 2,
+      "n_info_sets": 2,
+      "n_scenarios": 2,
+      "note": null,
+      "qubo_density": 0.4375,
+      "qubo_terms": 14,
+      "rung": "circuit_unit",
+      "statevector_memory_bytes_complex128": 4096
+    },
+    {
+      "construction_s": 0.00021487509366124868,
+      "exact_enum_s": null,
+      "executed_exact": false,
+      "feasible_policy_count": null,
+      "ideal_statevector_feasible": true,
+      "logical_vars": 18,
+      "milp_s": null,
+      "n_actions_per_car": 3,
+      "n_epochs": 2,
+      "n_info_sets": 3,
+      "n_scenarios": 3,
+      "note": null,
+      "qubo_density": 0.2962962962962963,
+      "qubo_terms": 48,
+      "rung": "tiny",
+      "statevector_memory_bytes_complex128": 4194304
+    },
+    {
+      "construction_s": 0.0003179990453645587,
+      "exact_enum_s": null,
+      "executed_exact": false,
+      "feasible_policy_count": null,
+      "ideal_statevector_feasible": false,
+      "logical_vars": 36,
+      "milp_s": null,
+      "n_actions_per_car": 3,
+      "n_epochs": 3,
+      "n_info_sets": 6,
+      "n_scenarios": 4,
+      "note": "resource_estimation_only_not_circuit_execution; dense statevector NOT claimed locally practical without measured evidence",
+      "one_hot_space_estimate": 531441,
+      "qubo_density": 0.14814814814814814,
+      "qubo_terms": 96,
+      "rung": "small",
+      "statevector_memory_bytes_complex128": 1099511627776
+    },
+    {
+      "construction_s": 0.0027138330042362213,
+      "exact_enum_s": null,
+      "executed_exact": false,
+      "feasible_policy_count": null,
+      "ideal_statevector_feasible": false,
+      "logical_vars": 136,
+      "milp_s": null,
+      "n_actions_per_car": 4,
+      "n_epochs": 4,
+      "n_info_sets": 17,
+      "n_scenarios": 8,
+      "note": "resource_estimation_only_not_circuit_execution; dense statevector NOT claimed locally practical without measured evidence",
+      "one_hot_space_estimate": 295147905179352825856,
+      "qubo_density": 0.05330882352941176,
+      "qubo_terms": 493,
+      "rung": "larger",
+      "statevector_memory_bytes_complex128": 1393796574908163946345982392040522594123776
+    }
+  ],
+  "tiny_measured_variable_range": [
+    18,
+    24
+  ],
+  "training_extra": 120,
+  "tuning": 80
+}

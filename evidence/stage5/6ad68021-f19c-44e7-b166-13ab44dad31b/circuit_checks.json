@@ -1,0 +1,182 @@
+{
+  "C0": {
+    "details": [
+      {
+        "best_of_pool_regret": 1.6483013508163813,
+        "crosscheck_ok": true,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "norm_ok": true,
+        "p": 1,
+        "param_count": 2,
+        "pool_size": 32,
+        "raw_feasibility": 0.050134219279330254,
+        "useful_feasible_prob": 0.050134219279330254
+      },
+      {
+        "best_of_pool_regret": null,
+        "crosscheck_ok": true,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "norm_ok": true,
+        "p": 2,
+        "param_count": 4,
+        "pool_size": 32,
+        "raw_feasibility": 0.036112759742061684,
+        "useful_feasible_prob": 0.036112759742061684
+      },
+      {
+        "best_of_pool_regret": 0.24998055812011266,
+        "crosscheck_ok": true,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "norm_ok": true,
+        "p": 1,
+        "param_count": 2,
+        "pool_size": 32,
+        "raw_feasibility": 0.050183272434769416,
+        "useful_feasible_prob": 0.050183272434769416
+      },
+      {
+        "best_of_pool_regret": null,
+        "crosscheck_ok": true,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "norm_ok": true,
+        "p": 2,
+        "param_count": 4,
+        "pool_size": 32,
+        "raw_feasibility": 0.03620535528292101,
+        "useful_feasible_prob": 0.03620535528292101
+      },
+      {
+        "best_of_pool_regret": 0.19361881060055142,
+        "crosscheck_ok": true,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "norm_ok": true,
+        "p": 1,
+        "param_count": 2,
+        "pool_size": 32,
+        "raw_feasibility": 0.050160306074911794,
+        "useful_feasible_prob": 0.050160306074911794
+      },
+      {
+        "best_of_pool_regret": null,
+        "crosscheck_ok": true,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "norm_ok": true,
+        "p": 2,
+        "param_count": 4,
+        "pool_size": 32,
+        "raw_feasibility": 0.03616162586925088,
+        "useful_feasible_prob": 0.03616162586925088
+      }
+    ],
+    "fail": 0,
+    "pass": 6
+  },
+  "C1": {
+    "details": [
+      {
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_regret": 0.0,
+        "feasible_graph_edges": 32,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "norm_ok": true,
+        "p": 1,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "raw_feasibility": 0.9999999999999993,
+        "useful_feasible_prob": 0.9999999999999993
+      },
+      {
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_regret": 0.31212237118230846,
+        "feasible_graph_edges": 32,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "norm_ok": true,
+        "p": 2,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "raw_feasibility": 0.9999999999999987,
+        "useful_feasible_prob": 0.9999999999999987
+      },
+      {
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_regret": 0.0,
+        "feasible_graph_edges": 32,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "norm_ok": true,
+        "p": 1,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "raw_feasibility": 0.9999999999999992,
+        "useful_feasible_prob": 0.9999999999999992
+      },
+      {
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_regret": 0.0,
+        "feasible_graph_edges": 32,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "norm_ok": true,
+        "p": 2,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "raw_feasibility": 0.9999999999999987,
+        "useful_feasible_prob": 0.9999999999999987
+      },
+      {
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_regret": 0.0,
+        "feasible_graph_edges": 32,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "norm_ok": true,
+        "p": 1,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "raw_feasibility": 0.9999999999999992,
+        "useful_feasible_prob": 0.9999999999999992
+      },
+      {
+        "amp_ok": true,
+        "amp_outside_one_hot": 0.0,
+        "best_of_pool_regret": 0.0,
+        "feasible_graph_edges": 32,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "norm_ok": true,
+        "p": 2,
+        "pool_size": 32,
+        "prep": {
+          "counted": true,
+          "estimated_2q_gates": 4,
+          "logical_qubits": 8
+        },
+        "raw_feasibility": 0.9999999999999984,
+        "useful_feasible_prob": 0.9999999999999984
+      }
+    ],
+    "fail": 0,
+    "pass": 6
+  }
+}

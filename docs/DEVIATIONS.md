@@ -20,5 +20,8 @@ No invented deviations. Record only genuine discrepancies.
 | 2026-09-19 | Missed pit-now as next lap | software | Expired/rejected; not relabelled. |
 | 2026-09-19 | TUM pin wording | report | Selection text no longer infers that all modern adapters are impossible. |
 | 2026-09-19 | Resolution rank flip | limitation | One development episode flipped rank under h/h2/h4 with finish error \(\sim 5\times 10^{-7}\) s. Gate PARTIAL. |
+| 2026-09-20 | Phase 5 development headroom zero | measured limitation | On A2 circuit_unit/tiny development instances, exact enumeration finishes inside the operational deadline; `DEVELOPMENT_HEADROOM: ZERO`; `SUPERIORITY_PATH_AVAILABLE: false`. Weak fallback gaps are not superiority headroom. |
+| 2026-09-20 | C2 not admitted | protocol decision | Shared crew overlap is a finite cost; C1 one-hot XY sufficient. `C2_STATUS: NOT_ADMITTED_BY_PROTOCOL`. |
+| 2026-09-20 | Phase 5 novelty | standing rule | `NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`; C0/C1/QAOA not claimed novel. |
 
 No protocol amendments. `frozen: false`.

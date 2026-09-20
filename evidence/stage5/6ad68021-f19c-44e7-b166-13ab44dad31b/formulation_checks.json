@@ -1,0 +1,203 @@
+{
+  "causal_visibility": {
+    "fail": 0,
+    "pass": 12
+  },
+  "encode_decode": {
+    "fail": 0,
+    "pass": 12
+  },
+  "enumeration_milp_checks": {
+    "cases": [
+      {
+        "enum": 4.828775245461959,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "milp": 4.828775245461959,
+        "milp_success": true
+      },
+      {
+        "enum": 3.9929109216212915,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "milp": 3.9929109216212915,
+        "milp_success": true
+      },
+      {
+        "enum": 3.9797510126680637,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "milp": 3.9797510126680637,
+        "milp_success": true
+      },
+      {
+        "enum": 4.342077704433512,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "milp": 4.342077704433512,
+        "milp_success": true
+      },
+      {
+        "enum": 4.718710333824864,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+        "milp": 4.718710333824864,
+        "milp_success": true
+      },
+      {
+        "enum": 4.527243878314975,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002",
+        "milp": 4.527243878314975,
+        "milp_success": true
+      },
+      {
+        "enum": 2.8291607643297247,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+        "milp": 2.8291607643297247,
+        "milp_success": true
+      },
+      {
+        "enum": 2.9839774310091505,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+        "milp": 2.9839774310091505,
+        "milp_success": true
+      },
+      {
+        "enum": 3.4573357518433165,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "milp": 3.4573357518433165,
+        "milp_success": true
+      },
+      {
+        "enum": 4.118857985482072,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "milp": 4.118857985482072,
+        "milp_success": true
+      },
+      {
+        "enum": 4.840210967007024,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "milp": 4.840210967007024,
+        "milp_success": true
+      },
+      {
+        "enum": 4.1298306042505475,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "milp": 4.1298306042505475,
+        "milp_success": true
+      }
+    ],
+    "fail": 0,
+    "pass": 12
+  },
+  "exact_qubo_checks": {
+    "cases": [
+      {
+        "decoded": true,
+        "diff": 0.0,
+        "direct": 4.828775245461959,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "ok": true,
+        "qubo": 4.828775245461959
+      },
+      {
+        "decoded": true,
+        "diff": 5.329070518200751e-15,
+        "direct": 3.9929109216212915,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "ok": true,
+        "qubo": 3.992910921621286
+      },
+      {
+        "decoded": true,
+        "diff": 1.3322676295501878e-15,
+        "direct": 3.9797510126680637,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "ok": true,
+        "qubo": 3.9797510126680624
+      },
+      {
+        "decoded": true,
+        "diff": 1.7763568394002505e-15,
+        "direct": 4.342077704433512,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "ok": true,
+        "qubo": 4.34207770443351
+      },
+      {
+        "decoded": true,
+        "diff": 1.7763568394002505e-15,
+        "direct": 4.718710333824864,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+        "ok": true,
+        "qubo": 4.718710333824863
+      },
+      {
+        "decoded": true,
+        "diff": 0.0,
+        "direct": 4.527243878314975,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002",
+        "ok": true,
+        "qubo": 4.527243878314975
+      },
+      {
+        "decoded": true,
+        "diff": 1.0658141036401503e-14,
+        "direct": 2.8291607643297247,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+        "ok": true,
+        "qubo": 2.829160764329714
+      },
+      {
+        "decoded": true,
+        "diff": 8.881784197001252e-16,
+        "direct": 2.9839774310091505,
+        "id": "phase5.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+        "ok": true,
+        "qubo": 2.9839774310091514
+      },
+      {
+        "decoded": true,
+        "diff": 1.021405182655144e-14,
+        "direct": 3.4573357518433165,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+        "ok": true,
+        "qubo": 3.4573357518433063
+      },
+      {
+        "decoded": true,
+        "diff": 2.398081733190338e-14,
+        "direct": 4.118857985482072,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+        "ok": true,
+        "qubo": 4.118857985482048
+      },
+      {
+        "decoded": true,
+        "diff": 6.217248937900877e-15,
+        "direct": 4.840210967007024,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+        "ok": true,
+        "qubo": 4.8402109670070175
+      },
+      {
+        "decoded": true,
+        "diff": 3.108624468950438e-14,
+        "direct": 4.1298306042505475,
+        "id": "tiny:phase5.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+        "ok": true,
+        "qubo": 4.129830604250579
+      }
+    ],
+    "fail": 0,
+    "pass": 12
+  },
+  "fallback_feasibility": {
+    "fail": 0,
+    "pass": 12
+  },
+  "inventory_legality": {
+    "fail": 0,
+    "pass": 12
+  },
+  "n_instances": 12,
+  "nonanticipativity_checks": {
+    "fail": 0,
+    "pass": 12
+  }
+}

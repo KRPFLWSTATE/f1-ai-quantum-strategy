@@ -1,0 +1,29 @@
+{
+  "files": {
+    "STAGE_5_FINAL_VERIFY.json": "9e0e04b33569b2ea9978ff5be962f89d28efe82df6c2fc9f162bc5a5c4eb5cfd",
+    "c2_admission.json": "3653bec0fc179b1f9bf157f45fddca0d46a2db25ffd5d1589d68856afc61d44e",
+    "circuit_checks.json": "62db387bc16d3a7a3fc9cf6b00837c3a7054365b24efca41f628a0ded93e266e",
+    "circuit_resources.json": "a0f98799c785fc5027d16dbba326d5f0de9bc15b790ee50420cf0eab91413fd4",
+    "claims_evidence.json": "5cc887ab22cb0dcb37853199c76f16385d9fd04b0deff7a0894c51b53c0cf5ba",
+    "deviations.json": "efa93e320afab8e9a69e2a9cd2612f27ec3db072eaa277e49571198494f99ef7",
+    "donor_inventory.json": "5f2e33dc10a6a40ad53d0931a17d9fa92673f088d47031bcfe7b851c8c81df73",
+    "environment.json": "729e91370d2a2c82d0b626dc664a7a154e8c8f7612bfa5cbdff84d43f164f034",
+    "formulation_checks.json": "3dd61823ce4a4bc1b081154ead3f9fa1f79dd7f2f4ef3f4d10ab28ebaa197c1d",
+    "frozen_config.json": "6d42f4cbbc10cd71787fb695980958e9c8e9bf72d12b79302f5af7a29f64c074",
+    "headroom_results.json": "a6ab0ba4352d0df90aa76dbd58e2ca9c73fe313f784f228cf3139637156df757",
+    "instance_inventory.json": "c49f84c3c1637ac7e1a07ec71626ecc44c882cd513305170fb4ab4a504c83d2c",
+    "parameter_bank_receipt.json": "3c72ba9eeefaf42801c52be63af079bc4bcf05c12bc39b77b07e59ae4aff0865",
+    "run_receipt.json": "7003034bb508c88ee2dd1ab55ed833256a608a896a9b26e195ae08488a4f6ff1",
+    "selector_training_receipt.json": "628e8d06eff0375a05dc7ce4a59206a6487f2e6021f4a693d5e55f8fefa1a3d1",
+    "selector_tuning_results.json": "f93120fb0e4f681f52efce5c301b6a364031950535f7b15ec08eab498b96fd91",
+    "split_audit.json": "d74ea2e3d13d23e443b9fa03dde95f89f491494fa0617abf5ebac658b4f8589f",
+    "test_results.json": "6895c6bd48713e462f6e30ef9c34ed5e1de27d38a7282d53066b42a3f62a7780"
+  },
+  "manifest_payload_sha256": "e6e27f039706c19429bbdffc1051e0cb9ba30f9b08dacd99919d4efc27bd8e30",
+  "n_files": 18,
+  "report_path": "docs/STAGE_5_REPORT.md",
+  "report_sha256": "e556a65bc9f9a6e816a7a8ecd4d38215579e590a39f550f5bea12529739a24b8",
+  "rule": "manifest excludes itself from its own digest",
+  "run_id": "6ad68021-f19c-44e7-b166-13ab44dad31b",
+  "schema_version": "stage5.manifest.v1"
+}

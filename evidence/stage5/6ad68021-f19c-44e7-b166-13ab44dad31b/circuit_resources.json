@@ -1,0 +1,352 @@
+{
+  "resources": [
+    {
+      "family": "C0",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 2,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 1,
+      "prep_two_qubit_gates_est": 0,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 0,
+        "depth": 5,
+        "ops": {
+          "rz": 24,
+          "sx": 16
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 0
+    },
+    {
+      "family": "C0",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 4,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 2,
+      "prep_two_qubit_gates_est": 0,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 0,
+        "depth": 5,
+        "ops": {
+          "rz": 24,
+          "sx": 16
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 0
+    },
+    {
+      "family": "C1",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 3,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 1,
+      "prep_two_qubit_gates_est": 4,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 21,
+        "depth": 24,
+        "ops": {
+          "cx": 21,
+          "rz": 15
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 12
+    },
+    {
+      "family": "C1",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 5,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 2,
+      "prep_two_qubit_gates_est": 4,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 35,
+        "depth": 31,
+        "ops": {
+          "cx": 35,
+          "rz": 30
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 20
+    },
+    {
+      "family": "C0",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 2,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 1,
+      "prep_two_qubit_gates_est": 0,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 0,
+        "depth": 5,
+        "ops": {
+          "rz": 24,
+          "sx": 16
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 0
+    },
+    {
+      "family": "C0",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 4,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 2,
+      "prep_two_qubit_gates_est": 0,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 0,
+        "depth": 5,
+        "ops": {
+          "rz": 24,
+          "sx": 16
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 0
+    },
+    {
+      "family": "C1",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 3,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 1,
+      "prep_two_qubit_gates_est": 4,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 21,
+        "depth": 24,
+        "ops": {
+          "cx": 21,
+          "rz": 15
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 12
+    },
+    {
+      "family": "C1",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 5,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 2,
+      "prep_two_qubit_gates_est": 4,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 35,
+        "depth": 31,
+        "ops": {
+          "cx": 35,
+          "rz": 30
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 20
+    },
+    {
+      "family": "C0",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 2,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 1,
+      "prep_two_qubit_gates_est": 0,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 0,
+        "depth": 5,
+        "ops": {
+          "rz": 24,
+          "sx": 16
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 0
+    },
+    {
+      "family": "C0",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 4,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 2,
+      "prep_two_qubit_gates_est": 0,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 0,
+        "depth": 5,
+        "ops": {
+          "rz": 24,
+          "sx": 16
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 0
+    },
+    {
+      "family": "C1",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 3,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 1,
+      "prep_two_qubit_gates_est": 4,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 21,
+        "depth": 24,
+        "ops": {
+          "cx": 21,
+          "rz": 15
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 12
+    },
+    {
+      "family": "C1",
+      "ideal_statevector_feasible": true,
+      "logical_depth_est": 5,
+      "logical_qubits": 8,
+      "opt_level": 1,
+      "p": 2,
+      "prep_two_qubit_gates_est": 4,
+      "statevector_memory_bytes_complex128": 4096,
+      "target": "generic_local_basis_rz_sx_cx",
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "cx": 35,
+        "depth": 31,
+        "ops": {
+          "cx": 35,
+          "rz": 30
+        },
+        "opt_level": 1,
+        "seed": 17
+      },
+      "transpiler_seed": 17,
+      "two_qubit_gates_logical_est": 20
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "anchors": 24,
+  "balanced_per_family": {
+    "anchors": 3,
+    "training_extra": 15,
+    "tuning": 10
+  },
+  "calib_eval_test_materialized": false,
+  "expected_total": 224,
+  "forbidden_partition_access": [],
+  "generator_version": "2.0.0",
+  "n_families": 8,
+  "overlap_failures": [],
+  "source_hash": "ebe74374e317ca0970d1c5fa134a005b12b7a09cd345b3ca75a2cbba07e8d4ba",
+  "split_hash": "b556d0ba46de3498ed5faaadf34e1eb4144471986968dbb1f9f76ff9980f30a1",
+  "total_blocks": 224,
+  "training_extra": 120,
+  "training_total": 144,
+  "tuning": 80
+}
