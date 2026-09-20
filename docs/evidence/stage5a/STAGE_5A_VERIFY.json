@@ -1,0 +1,56 @@
+{
+  "schema_version": "stage5a.verify.v1",
+  "final_status": "PASS",
+  "base_commit": "1bdcb88a797e17dc9e29df262b6e02a1c17a1a51",
+  "selected_architecture": "A2_multi_epoch_scenario_contingent_strategy_policy",
+  "genuine_headroom_source": "non_anticipative_scenario_tree_policy_space",
+  "novelty_status": "PROPOSED_NOT_LITERATURE_VERIFIED",
+  "qpu_jobs": 0,
+  "qpu_usage_seconds": 0,
+  "elapsed_seconds": 216,
+  "stage4_frozen": true,
+  "validation_checks": {
+    "head_matches_required": true,
+    "worktree_clean_at_start": true,
+    "json_load_architecture_options": true,
+    "json_load_resource_budget": true,
+    "json_load_verify": true,
+    "sha256_files_present": true,
+    "stage4_closure_not_run": true,
+    "formulation_gate_c_not_invoked": true,
+    "no_qpu_jobs": true
+  },
+  "deliverable_sha256": {
+    "docs/STAGE_5A_ARCHITECTURE_REPORT.md": "440905c240f1bca75beb87f75d77b9534de3add0e02db7a2a273588d5d16919a",
+    "docs/STAGE_5A_EXPERIMENT_CONTRACT.md": "4cf5e7de2be7e9ccf63c1843cb0fe25307d11d3e8a15a98faf91f00374342616",
+    "docs/evidence/stage5a/architecture_options.json": "4a77de0a484c5e28f248a1970f30a038cf5e80e1bbaeb501eed69326802a2ae6",
+    "docs/evidence/stage5a/resource_budget.json": "9c89c10d771fb3d053e4ace550cfefa47da3ffe8fcad431924a0ee689099103d",
+    "PROJECT_STATUS.md": "571cfe13f7575a66b137069505cbb2cbcf04a23628bf3af25a3c522d8d55dc2f"
+  },
+  "commands_run": [
+    {
+      "command": "git rev-parse HEAD",
+      "exit_code": 0
+    },
+    {
+      "command": "git status --porcelain",
+      "exit_code": 0
+    },
+    {
+      "command": "date +%s (start_epoch=1789918648)",
+      "exit_code": 0
+    },
+    {
+      "command": "ls canonical Stage4/Stage5 docs",
+      "exit_code": 0
+    },
+    {
+      "command": "mkdir -p docs/evidence/stage5a",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/python -c 'json.load architecture_options+resource_budget; sha256 deliverables'",
+      "exit_code": 0
+    }
+  ]
+}

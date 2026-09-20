@@ -1,10 +1,12 @@
 # Project status
 
-Updated after Stage 4 timing-provenance repair and corrected bounded closure (v2 packaging). Chat recollection is not evidence.
+Updated after Stage 5A architecture decision and experiment contract. Chat recollection is not evidence.
 
 ## Active stage
 
-`active_stage`: **4**. After a valid bounded closure: **`STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`**. **`LEGACY_EXHAUSTIVE_GATE: PARTIAL`** with **`LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME`**. Filesystem/git-tracked counts (see `docs/STAGE_4_CLOSURE_ERRATUM.md`): **e85ee977 = 40/64**; **41c28597 = 21 archived record files** (interrupted; no completed receipt; excluded from the bounded gate). Stage 4.1 is **not independently accepted**. **`PROXY_HEADROOM: ZERO`**. **`STAGE_5_DESIGN_READY: true`** only for the architecture decision addressing zero headroom. **`QPU_EXECUTION_AUTHORISED: false`**.
+`active_stage`: **4** (engineering frozen). Stage 5A architecture decision: **`STAGE_5A: PASS`**. Selected architecture **A2** (two-car multi-epoch scenario-contingent strategy-policy optimisation). **`PROXY_HEADROOM: ZERO`** remains the Stage 4 finding on single-checkpoint proxies; A2 proposes genuine headroom via non-anticipative scenario-tree policy space (**proposed, not measured**). **`NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`**. **`QPU_EXECUTION_AUTHORISED: false`**. No Stage 5B implementation, circuits, solver campaigns, or QPU jobs authorised by Stage 5A alone.
+
+After a valid bounded Stage 4 closure: **`STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`**. **`LEGACY_EXHAUSTIVE_GATE: PARTIAL`** with **`LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME`**. Filesystem/git-tracked counts (see `docs/STAGE_4_CLOSURE_ERRATUM.md`): **e85ee977 = 40/64**; **41c28597 = 21 archived record files** (interrupted; no completed receipt; excluded from the bounded gate). Stage 4.1 is **not independently accepted**.
 
 ## Completed work with evidence
 
@@ -21,6 +23,7 @@ Updated after Stage 4 timing-provenance repair and corrected bounded closure (v2
 - Erratum: `docs/STAGE_4_CLOSURE_ERRATUM.md`
 - Historical v1 closure ZIP superseded; canonical package is v2 after this correction
 - Current simulator/interface: **1.0.4 / 3.1.0** (package constants, YAML, engine agree)
+- **Stage 5A:** `docs/STAGE_5A_ARCHITECTURE_REPORT.md`, `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`, `docs/evidence/stage5a/` (architecture_options.json, resource_budget.json, STAGE_5A_VERIFY.json)
 
 ## Protocol state
 
@@ -32,21 +35,23 @@ Updated after Stage 4 timing-provenance repair and corrected bounded closure (v2
 - QPU usage from this stage: 0 seconds; account balance not queried
 - learned models trained: 0
 - quantum circuits executed: 0
+- Stage 5A architecture decision: PASS (A2 selected); no execution
 
 ## Explicit limitations
 
-Real-world calibration was not run. Reserved scientific partitions are not materialized. Hardware remains disabled. Protocol remains DRAFT. Exact legal enumeration still removes all proxy headroom on development checkpoints — Stage 5 must not bypass this finding or create artificial difficulty. Historical exhaustive matrix evidence remains PARTIAL and is not proof of 64/64 terminal Cartesian coverage.
+Real-world calibration was not run. Reserved scientific partitions are not materialized. Hardware remains disabled. Protocol remains DRAFT. Exact legal enumeration still removes all proxy headroom on development **single-checkpoint** menus — Stage 5 must not bypass this finding with artificial difficulty. Historical exhaustive matrix evidence remains PARTIAL and is not proof of 64/64 terminal Cartesian coverage. Stage 5A novelty is proposed, not literature-verified. No quantum advantage claim.
 
 ## Next authorised unit
 
-**Stage 5 architecture decision addressing zero proxy headroom.** Keep `active_stage` at 4 until a separate Stage 5 prompt. No automatic campaigns. No resume of archived legacy Gate C runs.
+**Stage 5B — local encoding and classical baselines for architecture A2**, only when an explicit Stage 5B prompt is issued. Prerequisites: experiment contract in force; headroom-gate protocol before any superiority test; no QPU; no IBM credentials; Stage 4 frozen. Keep `active_stage` documentation at 4 until Stage 5B implementation is authorised and status is updated under that prompt.
 
 ## Files a future Agent must read first
 
 1. `AGENTS.md`
 2. `PROJECT_STATUS.md`
-3. `docs/STAGE_4_CLOSURE_ERRATUM.md`
-4. `STAGE_4_CLOSURE_REPORT_v2.md` / `docs/STAGE_4_CLOSURE_REPORT_v2.md` (after correction packaging)
-5. `STAGE_4_CLOSURE_REPORT.md` (historical v1; superseded)
-6. `docs/STAGE_4_2_REPORT.md` (historical PARTIAL; withdrawn as engineering gate)
-7. `python -m f1q status` and `python -m f1q doctor`
+3. `docs/STAGE_5A_ARCHITECTURE_REPORT.md`
+4. `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`
+5. `docs/evidence/stage5a/STAGE_5A_VERIFY.json`
+6. `docs/STAGE_4_CLOSURE_ERRATUM.md`
+7. `STAGE_4_CLOSURE_REPORT_v2.md` / `docs/STAGE_4_CLOSURE_REPORT_v2.md`
+8. `python -m f1q status` and `python -m f1q doctor`

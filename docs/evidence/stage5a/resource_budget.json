@@ -1,0 +1,64 @@
+{
+  "schema_version": "stage5a.resource_budget.v1",
+  "base_commit": "1bdcb88a797e17dc9e29df262b6e02a1c17a1a51",
+  "label": "ESTIMATED",
+  "note": "All numeric sizes are engineering estimates for planning; not measured Stage 5B encodings.",
+  "selected_architecture": "A2_multi_epoch_scenario_contingent_strategy_policy",
+  "qpu_jobs_authorised": 0,
+  "qpu_usage_seconds_authorised": 0,
+  "ibm_credentials": "forbidden",
+  "spending_ceiling_usd": 0,
+  "size_ladder": [
+    {
+      "rung": "tiny",
+      "scenarios": 2,
+      "epochs": 2,
+      "estimated_logical_variables": "24-40",
+      "estimated_feasible_policy_or_search_space": "1e3-1e5",
+      "estimated_logical_qubits": "24-40",
+      "estimated_constraint_coupling_burden": "one-hot + few non-anticipativity + soft crew",
+      "classical_verification_method": "exhaustive + MILP",
+      "local_qaoa_sim_feasibility": "yes_shallow",
+      "current_ibm_feasibility": "possible_but_not_authorised"
+    },
+    {
+      "rung": "small",
+      "scenarios": 4,
+      "epochs": 3,
+      "estimated_logical_variables": "60-120",
+      "estimated_feasible_policy_or_search_space": "1e6-1e9_raw_policy_space_reduced_encodings_lower",
+      "estimated_logical_qubits": "60-120",
+      "estimated_constraint_coupling_burden": "dense cross-car + scenario linking",
+      "classical_verification_method": "exhaustive_if_reduced_else_milp_cpsat_plus_heuristic",
+      "local_qaoa_sim_feasibility": "shot_sim_limited_depth",
+      "current_ibm_feasibility": "edge_only_not_authorised"
+    },
+    {
+      "rung": "medium",
+      "scenarios": 8,
+      "epochs": 4,
+      "estimated_logical_variables": "150-400",
+      "estimated_feasible_policy_or_search_space": "beyond_full_exhaustive_typical",
+      "estimated_logical_qubits": "150-400",
+      "estimated_constraint_coupling_burden": "heavy_needs_reduction_or_decomposition",
+      "classical_verification_method": "time_capped_milp_cpsat_plus_strong_heuristics",
+      "local_qaoa_sim_feasibility": "noisy_sim_only_aggressive_limits",
+      "current_ibm_feasibility": "not_honest_without_decomposition"
+    },
+    {
+      "rung": "larger",
+      "scenarios": 16,
+      "epochs": 5,
+      "estimated_logical_variables": ">>500",
+      "estimated_feasible_policy_or_search_space": "heuristic_only_regime",
+      "estimated_logical_qubits": ">>500",
+      "estimated_constraint_coupling_burden": "exceeds_comfortable_nisq_mapping",
+      "classical_verification_method": "heuristic_random_gap_certificates_only",
+      "local_qaoa_sim_feasibility": "no_full_statevector",
+      "current_ibm_feasibility": "no"
+    }
+  ],
+  "stage5a_wall_time_budget_s": 900,
+  "command_timeout_s": 300,
+  "background_processes": "forbidden"
+}

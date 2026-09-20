@@ -1,0 +1,126 @@
+{
+  "schema_version": "stage5a.architecture_options.v1",
+  "base_commit": "1bdcb88a797e17dc9e29df262b6e02a1c17a1a51",
+  "novelty_status": "PROPOSED_NOT_LITERATURE_VERIFIED",
+  "stage4_proxy_headroom": "ZERO",
+  "selected_id": "A2",
+  "final_status": "PASS",
+  "options": [
+    {
+      "id": "A1",
+      "name": "single_checkpoint_stage4_proxy_qaoa",
+      "f1_operational_value": "Recognisable two-car pit-now/delay/continue at one SC/VSC checkpoint",
+      "combinatorial_growth_source": "Per-car reduced action menu times joint pair term",
+      "ai_role": "Optional donor or allocator only",
+      "quantum_role": "Sample or optimise one-hot joint plan QUBO",
+      "decision_variables_constraints": "Binary x(c,a); one-hot penalties; soft crew pair costs",
+      "non_anticipativity_causal_validity": "Single information set; no scenario tree",
+      "logical_var_qubit_interaction_estimates": {
+        "label": "ESTIMATED",
+        "logical_variables": "tens (Stage-4-like menus)",
+        "logical_qubits": "tens",
+        "interactions": "unary plus sparse cross-car pair terms"
+      },
+      "classical_baselines": "Exact legal table enumeration; independent MILP; heuristics; random",
+      "local_sim_ibm_feasibility": "Local exact trivial; IBM irrelevant for superiority given zero headroom",
+      "scientific_falsifiability": "Can falsify sampler quality only; cannot support optimisation superiority",
+      "principal_failure_modes": [
+        "PROXY_HEADROOM_ZERO_observed_stage4",
+        "exact_classical_dominates_inside_deadline"
+      ],
+      "selected": false,
+      "reject_reason": "Fails genuine headroom criterion; Stage 4 measured PROXY_HEADROOM ZERO on 64/64"
+    },
+    {
+      "id": "A2",
+      "name": "multi_epoch_scenario_contingent_strategy_policy",
+      "f1_operational_value": "SC/VSC duration uncertainty, restart, double-stack wait, tyre inventory, commitment deadlines",
+      "combinatorial_growth_source": "Scenario tree times epochs times joint admissible actions under non-anticipativity",
+      "ai_role": "Scenario probabilities and calibrated outcome or risk estimates; not the combinatorial solver",
+      "quantum_role": "Combinatorial policy-selection QUBO / QAOA (penalty primary; warm-start secondary; constraint-preserving mixer optional)",
+      "decision_variables_constraints": "Policy binaries per information set; one-hot; inventory; crew timing; non-anticipativity equalities; soft double-stack costs",
+      "non_anticipativity_causal_validity": "Explicit information sets; no private tau or future draws in decisions",
+      "logical_var_qubit_interaction_estimates": {
+        "label": "ESTIMATED",
+        "tiny_logical_variables": "24-40",
+        "small_logical_variables": "60-120",
+        "medium_logical_variables": "150-400",
+        "larger_logical_variables": ">>500",
+        "interactions": "one-hot blocks plus cross-car crew couplings plus scenario-linking constraints"
+      },
+      "classical_baselines": "Exhaustive tiny/small; MILP/CP-SAT; local search; random feasible; deterministic fallback",
+      "local_sim_ibm_feasibility": "Tiny-small local exact and shallow QAOA sim; medium noisy-sim limited; larger not current-IBM-honest without decomposition",
+      "scientific_falsifiability": "Null: no better than classical under matched budget; headroom gate before superiority",
+      "principal_failure_modes": [
+        "model_misspecification",
+        "anticipative_leakage",
+        "ai_probability_error_dominates",
+        "classical_milp_still_wins",
+        "circuit_noise_collapses_yield"
+      ],
+      "selected": true,
+      "reject_reason": null
+    },
+    {
+      "id": "A3",
+      "name": "multi_stop_green_sequence_planning",
+      "f1_operational_value": "Multi-stop tyre strategy under known green-flag conditions",
+      "combinatorial_growth_source": "Stop count times lap slots times compounds times sets times crew",
+      "ai_role": "Tyre and fuel residual predictors",
+      "quantum_role": "Sequence selection QUBO",
+      "decision_variables_constraints": "Sequence binaries; inventory; crew",
+      "non_anticipativity_causal_validity": "Weaker SC/VSC causal structure than A2",
+      "logical_var_qubit_interaction_estimates": {
+        "label": "ESTIMATED",
+        "note": "Similar growth to A2 without scenario factor; often smaller"
+      },
+      "classical_baselines": "Exhaustive/MILP/heuristics/random as applicable",
+      "local_sim_ibm_feasibility": "Similar qualitative ladder to A2",
+      "scientific_falsifiability": "Falsifiable on sequence cost vs classical",
+      "principal_failure_modes": [
+        "near_enumerable_menus",
+        "weaker_link_to_stage4_sc_vsc_domain"
+      ],
+      "selected": false,
+      "reject_reason": "Legitimate but secondary; weaker non-anticipativity and SC/VSC operational story than A2"
+    },
+    {
+      "id": "A4",
+      "name": "multi_agent_rival_reactive_game",
+      "f1_operational_value": "High operational colour via rival reactions",
+      "combinatorial_growth_source": "Joint team actions times discretised rival responses",
+      "ai_role": "Rival intent or response models",
+      "quantum_role": "Game-form QUBO or sampling",
+      "decision_variables_constraints": "Large joint discrete game encoding",
+      "non_anticipativity_causal_validity": "Hard; rival private information",
+      "logical_var_qubit_interaction_estimates": {
+        "label": "ESTIMATED",
+        "logical_variables": "often >>1000 without aggressive reduction"
+      },
+      "classical_baselines": "Exact rarely available",
+      "local_sim_ibm_feasibility": "Poor exact baselines; IBM infeasible for honest instances",
+      "scientific_falsifiability": "Weak without exact small games",
+      "principal_failure_modes": [
+        "intractable_verification",
+        "ai_optimiser_boundary_bleed",
+        "unfalsifiable_advantage_claims"
+      ],
+      "selected": false,
+      "reject_reason": "Fails exact-small-instance and clean verification requirements for Stage 5B"
+    }
+  ],
+  "quantum_formulation_recommendation": {
+    "primary": "penalty_qubo_standard_qaoa",
+    "secondary": "warm_start_qaoa",
+    "optional_substudy": "constraint_preserving_mixer",
+    "custom_mixer_requires": [
+      "genuine_hard_constraints_only",
+      "mechanism_and_transition_semantics",
+      "ideal_zero_infeasible_amplitude_check",
+      "feasible_graph_connectivity_match",
+      "comparison_baseline_penalty_qaoa",
+      "falsification_test_on_useful_yield_per_cost"
+    ],
+    "do_not_invent": "hard_no_double_stack_prohibition_for_difficulty"
+  }
+}
