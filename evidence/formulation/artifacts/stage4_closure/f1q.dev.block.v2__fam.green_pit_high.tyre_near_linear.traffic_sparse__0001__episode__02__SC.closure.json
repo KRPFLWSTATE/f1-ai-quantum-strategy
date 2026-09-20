@@ -16,7 +16,7 @@
     "action_dictionary_hash": "c4c38b7e7f12703cc52f5d3dd8de79dbc7aefc5a3513a93a8b6a1727c2587296",
     "coefficient_hash": "7ddf9a18b693f870f6e2c6b7b059f1e244876d914916626fba23238ac8925dfc",
     "qubo_hash": "8ae0d6f2f6662fe4df0de6a735b459f7e9845d10b18b26cb333f83b1e71d7ead",
-    "record_hash_math_fields_only": "72ccf5c75cf078e64006bc8721f5f965316e4a403529e43ba98cca7e977d99d7"
+    "record_hash_math_fields_only": "dd4488d5707246ee92c97c48dc29d619fdfadf5bd936b9b76e23667ad53bad32"
   },
   "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/02/SC",
   "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
@@ -24,12 +24,14 @@
   "ok": true,
   "pair_validation": {
     "expected": 16,
+    "round_trip_attempted": 16,
     "round_trip_failed": 0,
+    "round_trip_method": "typed_actions_to_payload_to_canonical_json_to_loads_to_validate_to_reencode",
     "round_trip_passed": 16,
     "validation_failed": 0,
     "validation_passed": 16
   },
-  "payload_sha256": "03baaba076ce174552c5c176a00d410924328be38f7b478aa269d2cc0f3053a0",
+  "payload_sha256": "26d1c46695b87a42c3de340e3002ddc1fabb1c981db5414ff3cb8346b57e9d94",
   "qubo_ising": {
     "algebraic_penalty": {
       "B": 312.6386866585706,
@@ -58,11 +60,15 @@
     "block_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001",
     "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/02/SC",
     "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
-    "interface_version": "3.0.1",
+    "interface_version": "3.1.0",
     "observation_hash": "94a9e5e8929d01d449bf1f65eb736a36bfd47c0c65b96af252bf30f5617484f0",
-    "simulator_version": "1.0.3",
+    "simulator_version": "1.0.4",
     "spec_hash": "6a7fff0d62eadf26c8a6e34c9deb51191a82d09ee51718c71bfbaf2f44e4f649",
     "spec_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/02/SC/spec"
+  },
+  "source_versions": {
+    "interface_version": "3.1.0",
+    "simulator_version": "1.0.4"
   },
   "terminal_witness": {
     "action_ids": {
@@ -88,11 +94,15 @@
             "compound": "soft",
             "downstream_policy_id": "compound_obligation.v1",
             "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "post_checkpoint_pit_entry_paired",
             "event_time_race_s": 3057.750314441,
+            "evidence_source": "pit_entry.detail.pit_entry_completed_laps",
             "kind": "service_complete",
             "pit_entry_completed_laps": 33,
+            "pit_entry_event_index": 24,
             "pit_lap_index": 33,
             "reason": "service_complete",
+            "service_complete_event_index": 72,
             "set_id": "car.fictional.cedarline.a.set.soft.0",
             "source": "simulator",
             "stop_index": 1,
@@ -143,11 +153,15 @@
             "compound": "soft",
             "downstream_policy_id": "compound_obligation.v1",
             "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "continuation_pre_checkpoint_service_complete",
             "event_time_race_s": 3051.78825119,
+            "evidence_source": "continuation_pre_checkpoint_entry_via_service_complete.detail.pit_entry_completed_laps",
             "kind": "service_complete",
             "pit_entry_completed_laps": 33,
+            "pit_entry_event_index": null,
             "pit_lap_index": 33,
             "reason": "service_complete",
+            "service_complete_event_index": 64,
             "set_id": "car.fictional.cedarline.b.set.soft.0",
             "source": "simulator",
             "stop_index": 1,
@@ -186,7 +200,7 @@
           }
         ],
         "instructed_set_compound_ok": true,
-        "pit_entry_completed_laps": null,
+        "pit_entry_completed_laps": 33,
         "stop_sequence_ok": true,
         "timing_ok": true,
         "timing_reason": "continuation_sequence_checked"
@@ -202,8 +216,8 @@
     "timing_window_match": true
   },
   "timing_s": {
-    "analytical": 2.1609129999997094,
-    "terminal": 0.5217932920204476,
-    "total": 2.682706292020157
+    "analytical": 1.4952840000623837,
+    "terminal": 0.36255287495441735,
+    "total": 1.857836875016801
   }
 }

@@ -192,8 +192,22 @@ def build_instance_record(
                 continue
 
             cross["round_trip_attempted"] += 1
-            rt = simulator_plan_payload(build_joint_plan(a, b, selected))
-            if rt != plan:
+            from f1q.formulation.round_trip import real_plan_round_trip
+
+            try:
+                rt = real_plan_round_trip(checkpoint, a, b, selected)
+            except Exception as exc:
+                cross["round_trip_failed"] += 1
+                cross["failed"] += 1
+                cross["disagreements"].append(
+                    {
+                        "action_ids": {a.car_id: a.action_id, b.car_id: b.action_id},
+                        "error": f"round_trip_exception:{exc}",
+                        "failure_code": "ROUND_TRIP",
+                    }
+                )
+                continue
+            if not rt.get("ok"):
                 cross["round_trip_failed"] += 1
                 cross["failed"] += 1
                 cross["disagreements"].append(
@@ -205,6 +219,7 @@ def build_instance_record(
                 )
                 continue
             cross["round_trip_passed"] += 1
+            cross["round_trip_method"] = rt.get("method")
 
             # Analytical admission is recorded separately and never counts as terminal execution.
             cross["analytical_admission_attempted"] += 1

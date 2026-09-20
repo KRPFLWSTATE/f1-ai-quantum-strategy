@@ -49,6 +49,17 @@ def _is_excluded(rel: Path) -> bool:
         "docs/STAGE_4_2_REPORT.md",
         "docs/STAGE_4_CLOSURE_REPORT.md",
         "STAGE_4_CLOSURE_REPORT.md",
+        "docs/STAGE_4_CLOSURE_REPORT_v2.md",
+        "STAGE_4_CLOSURE_REPORT_v2.md",
+    }:
+        return True
+    # Unauthorized resume tooling / logs must never enter the review package.
+    if rel.as_posix() in {
+        "docs/evidence/stage4_2/detached_resume_loop.py",
+        "docs/evidence/stage4_2/matrix_resume.nohup.log",
+        "docs/evidence/stage4_2/package_on_64.py",
+        "docs/evidence/stage4_2/package_on_64.lock",
+        "docs/evidence/stage4_2/package_on_64.log",
     }:
         return True
     return False
@@ -108,6 +119,12 @@ def default_allowlist(root: Path) -> list[str]:
     closure_dir = root / "evidence/formulation/artifacts/stage4_closure"
     if closure_dir.is_dir():
         for fp in sorted(closure_dir.rglob("*")):
+            if fp.is_file():
+                receipt_globs.append(fp.relative_to(root).as_posix())
+    # Preserved unsuccessful timing-attempt evidence (not canonical closure)
+    failed_dir = root / "evidence/formulation/artifacts/stage4_closure_failed_timing_attempt_1"
+    if failed_dir.is_dir():
+        for fp in sorted(failed_dir.rglob("*")):
             if fp.is_file():
                 receipt_globs.append(fp.relative_to(root).as_posix())
     members: list[str] = []

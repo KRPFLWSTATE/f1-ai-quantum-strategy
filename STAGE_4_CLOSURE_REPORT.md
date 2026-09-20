@@ -1,5 +1,7 @@
 # Stage 4 Closure Report — bounded engineering closure
 
+> **SUPERSEDED.** This v1 report and `STAGE_4_CLOSURE_REVIEW.zip` are historical. Canonical deliverables are `STAGE_4_CLOSURE_REPORT_v2.md`, `STAGE_4_CLOSURE_REVIEW_v2.zip`, and companions. Do not treat v1 as the corrected timing-provenance closure.
+
 ```text
 STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS
 LEGACY_EXHAUSTIVE_GATE: PARTIAL

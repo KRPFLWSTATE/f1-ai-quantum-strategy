@@ -8,6 +8,7 @@ from f1q.errors import RejectionError
 from f1q.generator.sampling import StreamRNG
 from f1q.generator.streams import stream_seed
 from f1q.simulator.classification import classify, team_rank_loss
+from f1q.simulator.config import INTERFACE_VERSION, SIMULATOR_VERSION
 from f1q.simulator.fuel import AMENDMENT_ID as FUEL_AMENDMENT_ID
 from f1q.simulator.fuel import horizon_need_kg, realize_initial_fuel
 from f1q.simulator.physics import compound_offset_s, decompose_green_pit, free_lap_time_s, verify_pit_identity
@@ -231,8 +232,8 @@ class RaceEngine:
             "leader_finish_car_id": None,
             "rank_at_leader_finish": None,
             "stacking_policy": spec.get("team_service", {}).get("stacking_policy", "delay_cost_not_prohibition"),
-            "interface_version": "3.0.1",
-            "simulator_version": "1.0.3",
+            "interface_version": INTERFACE_VERSION,
+            "simulator_version": SIMULATOR_VERSION,
             "init_is_fictional_pre_checkpoint": True,
         }
         self._log("initialized", None, {"t": t0})

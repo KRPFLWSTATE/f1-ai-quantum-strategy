@@ -4,15 +4,45 @@ from pathlib import Path
 
 from f1q.authorization import load_project_config
 from f1q.errors import LedgerLocked
+from f1q.formulation.legacy_counts import LEGACY_WITHDRAWN_RUN_IDS, legacy_archive_summary
 from f1q.ledger import Ledger
 from f1q.paths import resolve_project_root
 from f1q.runner import ledger_paths
+from f1q.simulator.config import INTERFACE_VERSION, SIMULATOR_VERSION
+
+
+def _closure_complete(root: Path) -> bool:
+    summary = root / "evidence/formulation/artifacts/stage4_closure/closure_summary.json"
+    if not summary.is_file():
+        return False
+    import json
+
+    try:
+        data = json.loads(summary.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    return bool(data.get("ok")) and int(data.get("completed_episodes") or 0) == 64
 
 
 def run_status(root: Path | None = None) -> dict:
     root = resolve_project_root(root)
     config, config_hash, _ = load_project_config(root)
     db, lock = ledger_paths(root, config)
+    legacy = legacy_archive_summary(root)
+    gate = {
+        "STAGE_4_ENGINEERING": "CLOSED_WITH_DOCUMENTED_LIMITATIONS"
+        if _closure_complete(root)
+        else "PENDING_BOUNDED_CLOSURE",
+        "LEGACY_EXHAUSTIVE_GATE": "PARTIAL",
+        "LEGACY_GATE_ACTION": "ARCHIVED_DO_NOT_RESUME",
+        "PROXY_HEADROOM": "ZERO",
+        "STAGE_5_DESIGN_READY": True,
+        "QPU_EXECUTION_AUTHORISED": False,
+        "simulator_version": SIMULATOR_VERSION,
+        "interface_version": INTERFACE_VERSION,
+        "legacy_archive": legacy,
+    }
+    next_work_default = "Stage 5 architecture decision addressing zero proxy headroom."
     ledger_state: dict
     if not db.is_file():
         ledger_state = {
@@ -33,14 +63,17 @@ def run_status(root: Path | None = None) -> dict:
             failed: list[str] = []
             pending: list[str] = []
             interrupted: list[str] = []
+            archived_incomplete: list[str] = []
             for row in ledger.list_runs():
                 units = ledger.units_for(row["run_id"])
+                archived = row["run_id"] in LEGACY_WITHDRAWN_RUN_IDS
                 runs.append(
                     {
                         "run_id": row["run_id"],
                         "status": row["status"],
                         "plan_id": row["plan_id"],
                         "evidence_kind": row["evidence_kind"],
+                        "archived_do_not_resume": archived,
                         "units": [{"unit_id": u["unit_id"], "status": u["status"]} for u in units],
                     }
                 )
@@ -54,84 +87,60 @@ def run_status(root: Path | None = None) -> dict:
                         pending.append(key)
                     elif unit["status"] == "interrupted":
                         interrupted.append(key)
-            incomplete = [r["run_id"] for r in runs if r["status"] in {"running", "interrupted", "pending"}]
+            incomplete = [
+                r["run_id"]
+                for r in runs
+                if r["status"] in {"running", "interrupted", "pending"}
+                and r["run_id"] not in LEGACY_WITHDRAWN_RUN_IDS
+            ]
+            archived_incomplete = [
+                r["run_id"]
+                for r in runs
+                if r["status"] in {"running", "interrupted", "pending"}
+                and r["run_id"] in LEGACY_WITHDRAWN_RUN_IDS
+            ]
             bootstrap_done = any(
                 r["plan_id"] == "bootstrap" and r["status"] == "completed" for r in runs
             )
-            if incomplete:
+            if _closure_complete(root):
+                next_work = next_work_default
+                readiness = "stage4-engineering-closed-pending-stage5-architecture"
+                gate["STAGE_4_ENGINEERING"] = "CLOSED_WITH_DOCUMENTED_LIMITATIONS"
+            elif incomplete:
                 next_work = f"resume --run-id <id> ; incomplete={incomplete}"
                 readiness = "not ready"
             elif bootstrap_done:
-                next_work = "Stage 2 -- scenario generator and causal checkpoint schema (awaiting implementation prompt)"
-                readiness = "stage1-complete-pending-stage2"
+                next_work = next_work_default
+                readiness = "stage4-engineering-pending-or-review"
                 preview_done = any(
                     r["plan_id"] == "development_preview" and r["status"] == "completed" for r in runs
                 )
                 if preview_done:
-                    next_work = "Stage 3 -- simulator-check plan (python -m f1q run --plan simulator_check)"
-                    readiness = "stage2-complete-pending-stage3"
                     sim_done = any(
                         r["plan_id"] == "simulator_check" and r["status"] == "completed" for r in runs
                     )
-                    if sim_done:
-                        follow_done = any(
-                            r["plan_id"] == "simulator_followup" and r["status"] == "completed" for r in runs
-                        )
-                        repair_done = any(
-                            r["plan_id"] == "simulator_repair" and r["status"] == "completed" for r in runs
-                        )
-                        if repair_done:
-                            form_done = any(
-                                r["plan_id"] == "formulation_check" and r["status"] == "completed"
-                                for r in runs
-                            )
-                            if form_done:
-                                repair_done = any(
-                                    r["plan_id"] == "formulation_repair_check" and r["status"] == "completed"
-                                    for r in runs
-                                )
-                                if repair_done:
-                                    closure_done = any(
-                                        r["plan_id"] == "formulation_gate_c_closure_check"
-                                        and r["status"] == "completed"
-                                        for r in runs
-                                    )
-                                    if closure_done:
-                                        next_work = (
-                                            "independent review of Stage 4.2 only; Stage 5 and IBM "
-                                            "credential entry remain blocked; protocol DRAFT; "
-                                            "hardware disabled; Gate E decision outstanding"
-                                        )
-                                        readiness = "stage4_2-complete-pending-independent-review"
-                                    else:
-                                        next_work = (
-                                            "Stage 4.2 -- formulation_gate_c_closure_check plan "
-                                            "(python -m f1q run --plan formulation_gate_c_closure_check); "
-                                            "Stage 5 blocked; Stage 4.1 not independently accepted"
-                                        )
-                                        readiness = "stage4_1-rejected-pending-stage4_2"
-                                else:
-                                    next_work = (
-                                        "Stage 4.1 -- formulation_repair_check plan "
-                                        "(python -m f1q run --plan formulation_repair_check); "
-                                        "Stage 5 blocked"
-                                    )
-                                    readiness = "stage4-superseded-pending-stage4_1"
-                            else:
-                                next_work = (
-                                    "Stage 4 -- formulation_check plan "
-                                    "(python -m f1q run --plan formulation_check)"
-                                )
-                                readiness = "stage3_3-complete-pending-stage4"
-                        elif follow_done:
-                            next_work = "Stage 3.2 -- simulator-repair plan (python -m f1q run --plan simulator_repair)"
-                            readiness = "stage3_1-complete-pending-stage3_2"
-                        else:
-                            next_work = "Stage 3.1 -- simulator-followup plan (python -m f1q run --plan simulator_followup)"
-                            readiness = "stage3-complete-pending-stage3_1"
+                    repair_done = any(
+                        r["plan_id"] == "simulator_repair" and r["status"] == "completed" for r in runs
+                    )
+                    form_done = any(
+                        r["plan_id"] == "formulation_check" and r["status"] == "completed" for r in runs
+                    )
+                    form_repair_done = any(
+                        r["plan_id"] == "formulation_repair_check" and r["status"] == "completed"
+                        for r in runs
+                    )
+                    if form_repair_done or form_done or repair_done or sim_done:
+                        next_work = next_work_default
+                        readiness = "stage4-engineering-closed-or-pending-bounded-closure"
             else:
                 next_work = "run --plan bootstrap"
                 readiness = "unknown"
+            if archived_incomplete:
+                # Visible as history only — never suggest resume.
+                next_work = (
+                    f"{next_work} | archived_legacy_incomplete={archived_incomplete} "
+                    "(ARCHIVED_DO_NOT_RESUME)"
+                )
             ledger_state = {
                 "present": True,
                 "runs": runs,
@@ -139,6 +148,7 @@ def run_status(root: Path | None = None) -> dict:
                 "failed_units": failed,
                 "pending_units": pending,
                 "interrupted_units": interrupted,
+                "archived_legacy_incomplete_run_ids": archived_incomplete,
                 "next_permitted_work": next_work,
                 "readiness": readiness,
             }
@@ -162,5 +172,6 @@ def run_status(root: Path | None = None) -> dict:
         "research_experiments_executed": 0,
         "configuration_hash_draft": config_hash,
         "unknown_is_not_ready": True,
+        **gate,
         **ledger_state,
     }

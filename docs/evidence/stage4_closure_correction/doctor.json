@@ -1,0 +1,100 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "cpu_count": 10,
+        "disk_free_bytes": 130091020288,
+        "machine": "arm64",
+        "max_workers_default": 1,
+        "os": "macOS-26.5.2-arm64-arm-64bit",
+        "physical_memory_bytes": 25769803776,
+        "processor": "arm",
+        "python": "3.12.13",
+        "python_implementation": "CPython",
+        "release": "25.5.0",
+        "system": "Darwin"
+      },
+      "message": "recorded local OS/CPU/Python without provider login",
+      "name": "environment",
+      "ok": true
+    },
+    {
+      "detail": {
+        "is_symlink": false,
+        "root": "/Users/kawinperera/f1-ai-quantum-strategy"
+      },
+      "message": "resolved project root is not a symlink escape",
+      "name": "project_boundary",
+      "ok": true
+    },
+    {
+      "detail": {
+        "hardware_execution_enabled": false,
+        "hash": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+        "hash_kind": "draft",
+        "protocol_frozen": false
+      },
+      "message": "draft project configuration parsed",
+      "name": "config",
+      "ok": true
+    },
+    {
+      "detail": {
+        "dossier_version": "3.1",
+        "expected": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+        "expected_pages": 33,
+        "pages_extracted": 33,
+        "path": "docs/protocol/F1_AI_Quantum_Research_Dossier_v3_1.pdf",
+        "sha256": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76"
+      },
+      "message": "PDF hash and 33-page extraction markers match",
+      "name": "dossier",
+      "ok": true
+    },
+    {
+      "detail": {
+        "sha256": "c92957b8b2bf649ab60f6892af561b9205c95436195886fe4599066ed8707111"
+      },
+      "message": "lock file present",
+      "name": "dependency_lock",
+      "ok": true
+    },
+    {
+      "detail": {
+        "error_type": "LedgerLocked",
+        "present": true
+      },
+      "message": "ledger locked by another writer",
+      "name": "ledger",
+      "ok": false
+    }
+  ],
+  "command": "doctor",
+  "config_hash_draft": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+  "dependency_lock_hash": "c92957b8b2bf649ab60f6892af561b9205c95436195886fe4599066ed8707111",
+  "environment": {
+    "cpu_count": 10,
+    "disk_free_bytes": 130091020288,
+    "machine": "arm64",
+    "max_workers_default": 1,
+    "os": "macOS-26.5.2-arm64-arm-64bit",
+    "physical_memory_bytes": 25769803776,
+    "processor": "arm",
+    "python": "3.12.13",
+    "python_implementation": "CPython",
+    "release": "25.5.0",
+    "system": "Darwin"
+  },
+  "git": {
+    "commit": "83f480a404ab6760b128051e4f98bdede796eba0",
+    "dirty": true
+  },
+  "hardware_execution_enabled": false,
+  "package_version": "0.4.2",
+  "project_root": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "provider_login_attempted": false,
+  "qpu_account_queried": false,
+  "scientific_protocol": "DRAFT",
+  "status": "failed"
+}
+DOCTOR_EXIT:1

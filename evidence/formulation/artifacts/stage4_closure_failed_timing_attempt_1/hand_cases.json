@@ -1,0 +1,139 @@
+{
+  "committed_case_ids": [
+    "wrong_executed_set",
+    "extra_unplanned_mount",
+    "omitted_expected_mount",
+    "late_pit_entry_lap",
+    "delay_boundary_exact",
+    "pit_phase_transit_in",
+    "pit_phase_waiting",
+    "pit_phase_service",
+    "pit_phase_transit_out",
+    "mixed_crew_on_track_in_pit",
+    "mixed_crew_already_waiting",
+    "historical_invalid_optima_panel"
+  ],
+  "n_cases": 12,
+  "ok": true,
+  "payload_sha256": "6ec22b054cd31f2b48f4ba8fda95eb7e476fb45cd91db29772b0c44fb7875705",
+  "results": [
+    {
+      "id": "late_pit_entry_lap",
+      "ok": true,
+      "reason_codes": [
+        "timing_mismatch:c:pit_now_entry_lap_mismatch"
+      ],
+      "timing_ok": false,
+      "timing_reason": "pit_now_entry_lap_mismatch"
+    },
+    {
+      "id": "delay_boundary_exact",
+      "ok": true,
+      "timing_reason": "delay_laps_entry_lap_mismatch"
+    },
+    {
+      "codes": [
+        "instructed_set_mismatch:c",
+        "terminal_mounted_set_mismatch:c"
+      ],
+      "id": "wrong_executed_set",
+      "ok": true
+    },
+    {
+      "codes": [
+        "extra_unplanned_mount:c"
+      ],
+      "id": "extra_unplanned_mount",
+      "ok": true
+    },
+    {
+      "codes": [
+        "instructed_stop_not_executed:c",
+        "timing_mismatch:c:no_executed_stop"
+      ],
+      "id": "omitted_expected_mount",
+      "ok": true
+    },
+    {
+      "id": "pit_phase_transit_in",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "id": "pit_phase_waiting",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "id": "pit_phase_service",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "id": "pit_phase_transit_out",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "coordinate": "service_interval_absolute_race_s",
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/02/SC",
+      "equation": "wait = max(0, earlier_service_end - later_service_start) - committed_wait_already_in_unary; coordinate=service_interval_absolute_race_s",
+      "exactly_one_selected_car_in_pit": true,
+      "id": "mixed_crew_on_track_in_pit",
+      "n_selected_in_pit": 1,
+      "n_selected_on_track": 1,
+      "note": "deterministic proxy; seconds are not a full race prediction",
+      "ok": true,
+      "pair_s": 0.0,
+      "pair_s_expected_from_equation": 0.0,
+      "positive_overlap_fixture": {
+        "committed_wait_b": 0.5,
+        "interval_a": [
+          100.0,
+          102.5
+        ],
+        "interval_b": [
+          101.0,
+          103.5
+        ],
+        "ok": true,
+        "pair_s": 1.0,
+        "wait_accounting": "incremental_overlap_minus_committed_wait"
+      },
+      "pred_in_pit_reason": "committed_remaining_service",
+      "pred_on_track_reason": "on_track_entry_plus_public_t_in",
+      "pred_reasons": [
+        "committed_remaining_service",
+        "on_track_entry_plus_public_t_in"
+      ]
+    },
+    {
+      "committed_wait_counted_in_unary": true,
+      "id": "mixed_crew_already_waiting",
+      "ok": true,
+      "remaining_wait_s": 3.0
+    },
+    {
+      "id": "historical_invalid_optima_panel",
+      "note": "historical panel recomputed; not re-executed as exhaustive matrix",
+      "observed_order_relation_counts": {
+        "agreement": 1,
+        "agreement_with_ties": 1,
+        "insufficient_unique_plans": 4,
+        "reversal": 1,
+        "tie_loss_of_discrimination": 1
+      },
+      "ok": true,
+      "required": {
+        "reversal_min": 1,
+        "tie_loss_of_discrimination_min": 1
+      },
+      "reused": true,
+      "source_path": "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228/formulation.evaluator_separation_panel/evaluator_panel.json",
+      "source_sha256": "30b73c250364e4ac0cfda9b9651d93b5c7e2cbd2d106c37398e328160512f101",
+      "stored_panel_n_disagree_reversal": 1,
+      "stored_panel_n_tie_loss": 1
+    }
+  ],
+  "schema": "stage4_closure_hand_cases_v1"
+}

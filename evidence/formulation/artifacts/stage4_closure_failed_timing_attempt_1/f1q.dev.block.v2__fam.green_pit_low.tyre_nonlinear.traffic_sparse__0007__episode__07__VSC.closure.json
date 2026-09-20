@@ -1,0 +1,230 @@
+{
+  "analytical": {
+    "energy_checks": [
+      {
+        "bitstrings_checked": 4,
+        "qubo_ising_mismatches": 0
+      },
+      {
+        "restore_error": 0.0,
+        "s_Q": 1.0,
+        "scaled_times_sQ": 8071.772784003255,
+        "unscaled": 8071.772784003255
+      }
+    ],
+    "enumeration_exact": 8071.772784003255,
+    "legal_action_count": 1,
+    "milp_agrees": true,
+    "n_ties": 1,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 8071.772784003255,
+      "greedy_value": 8071.772784003255,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "54c71b7adf140edf64c4d3b4f7acc4f4d3405fe396312d4fee2dce6de0a6e132",
+    "coefficient_hash": "6632848e9a114239f74fc6825c4302b67144ae8e1db7af8ba9b9f4393206b4d3",
+    "qubo_hash": "4f77778ab154bbfc94ac698b9c9aedba1b1cf58757fbf1c2c79c8d2ba089b3df",
+    "record_hash_math_fields_only": "7611d3cd636b27c9be47d0b9a9bad4e51cbaf8c3a8b7e304df84596b72088504"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/07/VSC",
+  "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+  "fresh": true,
+  "ok": true,
+  "pair_validation": {
+    "expected": 1,
+    "round_trip_attempted": 1,
+    "round_trip_failed": 0,
+    "round_trip_method": "typed_actions_to_payload_to_canonical_json_to_loads_to_validate_to_reencode",
+    "round_trip_passed": 1,
+    "validation_failed": 0,
+    "validation_passed": 1
+  },
+  "payload_sha256": "23c5f421875bfe00c6ed35e21323af2500d28d78c877d375287d13c1b571a5ed",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 0.05009567401612003,
+      "M": 1.05009567401612,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "B": 0.05009567401612003,
+      "M": 1.05009567401612,
+      "M_gt_B_over_vmin": true,
+      "all_feasible_P_zero": true,
+      "all_infeasible_P_ge_M": true,
+      "best_feasible_energy": 8071.772784003255,
+      "feasible_count": 1,
+      "ok": true,
+      "v_min": 1.0
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 1,
+    "n_variables": 2,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/07/VSC",
+    "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+    "interface_version": "3.1.0",
+    "observation_hash": "87d76b273bb079b84e34f3ac4bf57352ae66d7624a8e3321a6b543fecad82b88",
+    "simulator_version": "1.0.4",
+    "spec_hash": "37e935921373126ddfce26def778a4872a0205ab7bb026406223538f81dca25d",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/07/VSC/spec"
+  },
+  "source_versions": {
+    "interface_version": "3.1.0",
+    "simulator_version": "1.0.4"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.harbour.a": "car.fictional.harbour.a|continuation|compound_obligation.v1@1.2.0",
+      "car.fictional.harbour.b": "car.fictional.harbour.b|continuation|compound_obligation.v1@1.2.0"
+    },
+    "checkpoint_event_index": 22,
+    "choice": {
+      "action_id_1": "car.fictional.harbour.a|continuation|compound_obligation.v1@1.2.0",
+      "action_id_2": "car.fictional.harbour.b|continuation|compound_obligation.v1@1.2.0",
+      "i": 0,
+      "j": 0,
+      "n_ties": 1,
+      "value": 8071.772784003255
+    },
+    "decision_time_race_s": 2684.535894585857,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.harbour.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.harbour.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2692.577474034,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": null,
+            "pit_lap_index": null,
+            "reason": "service_complete",
+            "set_id": "car.fictional.harbour.a.set.soft.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.harbour.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 27,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.harbour.a.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.harbour.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 27,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.harbour.a.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      },
+      "car.fictional.harbour.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.harbour.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2690.077474034,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": null,
+            "pit_lap_index": null,
+            "reason": "service_complete",
+            "set_id": "car.fictional.harbour.b.set.soft.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.harbour.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 27,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.harbour.b.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.harbour.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 27,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.harbour.b.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": true,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": true
+  },
+  "timing_s": {
+    "analytical": 0.023646167013794184,
+    "terminal": 0.785084416042082,
+    "total": 0.8087305830558762
+  }
+}

@@ -35,6 +35,7 @@ from f1q.formulation.evaluator import (
     expected_continuation_stops,
 )
 from f1q.formulation.instance import build_instance_record
+from f1q.formulation.legacy_counts import legacy_archive_summary
 from f1q.formulation.public_config import public_physics_from_sources
 from f1q.formulation.qubo import (
     compute_penalty_bound,
@@ -45,10 +46,11 @@ from f1q.formulation.qubo import (
     qubo_to_ising,
     verify_penalty_proof,
 )
-from f1q.hashing import atomic_write_bytes, sha256_json
+from f1q.formulation.round_trip import real_plan_round_trip
+from f1q.hashing import atomic_write_bytes, sha256_file, sha256_json
 from f1q.paths import resolve_project_root
 from f1q.simulator.commitment import project_committed_pit_service
-from f1q.simulator.config import load_simulator_config
+from f1q.simulator.config import INTERFACE_VERSION, SIMULATOR_VERSION, load_simulator_config
 from f1q.simulator.interface import RaceSimulator
 from f1q.simulator.matrix import load_preview_specs
 
@@ -246,6 +248,8 @@ def run_analytical_and_witness(
         b_list = [CarAction.model_validate(b) for b in menus[selected[1]]]
         val_ok = rt_ok = 0
         val_fail = rt_fail = 0
+        rt_attempted = 0
+        rt_method = None
         for a in a_list:
             for b in b_list:
                 plan = simulator_plan_payload(build_joint_plan(a, b, selected))
@@ -255,10 +259,15 @@ def run_analytical_and_witness(
                 except Exception:
                     val_fail += 1
                     continue
-                rt = simulator_plan_payload(build_joint_plan(a, b, selected))
-                if rt == plan:
-                    rt_ok += 1
-                else:
+                rt_attempted += 1
+                try:
+                    rt = real_plan_round_trip(checkpoint, a, b, selected)
+                    rt_method = rt.get("method")
+                    if rt.get("ok"):
+                        rt_ok += 1
+                    else:
+                        rt_fail += 1
+                except Exception:
                     rt_fail += 1
 
         choice = _lex_first_minimiser(enum, costs, selected)
@@ -299,8 +308,14 @@ def run_analytical_and_witness(
                 "expected": len(a_list) * len(b_list),
                 "validation_passed": val_ok,
                 "validation_failed": val_fail,
+                "round_trip_method": rt_method,
+                "round_trip_attempted": rt_attempted,
                 "round_trip_passed": rt_ok,
                 "round_trip_failed": rt_fail,
+            },
+            "source_versions": {
+                "simulator_version": SIMULATOR_VERSION,
+                "interface_version": INTERFACE_VERSION,
             },
             "qubo_ising": qubo_check,
             "terminal_witness": {
@@ -482,57 +497,98 @@ def _run_hand_cases(root: Path, cfg: dict[str, Any], specs: list[dict[str, Any]]
             phases_ok[phase] = bool(proj and not proj.get("service_already_completed") and proj.get("set_id"))
         results.append({"id": f"pit_phase_{phase}", "ok": phases_ok[phase], "projection": bool(proj)})
 
-    # Mixed crew timing: on-track + in-pit on the in-pit episode
-    obs = sim.observe()
-    public = _physics(cfg, in_pit_spec)
+    # Mixed crew timing: real development checkpoint with one on-track + one in-pit car.
     from f1q.formulation.actions import generate_action_model
+    from f1q.formulation.compiler import _incremental_pair_wait, compile_action_costs
 
-    cars = list(in_pit_spec["selected_car_ids"])
-    am = generate_action_model(obs, public, selected_car_ids=cars)
-    # Both cars are typically in-pit on this episode; also try an on-track episode for mixed.
-    on_track = next(s for s in specs if s["episode_id"].endswith("/0000/episode/00/SC"))
-    sim2 = RaceSimulator(cfg)
-    sim2.initialize(on_track)
-    sim2.advance_to_checkpoint()
-    obs2 = sim2.observe()
-    public2 = _physics(cfg, on_track)
-    am2 = generate_action_model(obs2, public2, selected_car_ids=list(on_track["selected_car_ids"]))
-    cids2 = list(on_track["selected_car_ids"])
-    stop_a = next((a for a in am2["menus"][cids2[0]] if a["kind"] in {"pit_now", "delay_laps"}), None)
-    stop_b = next((a for a in am2["menus"][cids2[1]] if a["kind"] in {"pit_now", "delay_laps"}), None)
+    mixed_spec = next(s for s in specs if s["episode_id"].endswith("/0001/episode/02/SC"))
+    sim_m = RaceSimulator(cfg)
+    sim_m.initialize(mixed_spec)
+    sim_m.advance_to_checkpoint()
+    obs_m = sim_m.observe()
+    obs_d = obs_m.model_dump(mode="python")
+    public_m = _physics(cfg, mixed_spec)
+    cids_m = list(mixed_spec["selected_car_ids"])
+    am_m = generate_action_model(obs_m, public_m, selected_car_ids=cids_m)
+    in_pit_cars = [c for c in obs_d["cars"] if c["car_id"] in cids_m and c.get("in_pit_lane")]
+    on_track_cars = [c for c in obs_d["cars"] if c["car_id"] in cids_m and not c.get("in_pit_lane")]
+    exactly_one_in_pit = len(in_pit_cars) == 1 and len(on_track_cars) == 1
     mixed_ok = False
-    if stop_a and stop_b:
-        from f1q.formulation.compiler import compile_action_costs
-
-        costs = compile_action_costs(
-            obs2, public2, menus={cids2[0]: [stop_a], cids2[1]: [stop_b]}, selected_car_ids=cids2
-        )
-        pair = costs["pair_details"][0][0]
-        pred_a = predicted_service_interval(
-            obs2.model_dump(mode="python"), public2, CarAction.model_validate(stop_a)
-        )
-        pred_b = predicted_service_interval(
-            obs2.model_dump(mode="python"), public2, CarAction.model_validate(stop_b)
-        )
-        mixed_ok = bool(
-            pred_a.get("ok")
-            and pred_b.get("ok")
-            and pred_a.get("interval")
-            and pred_b.get("interval")
-        )
-        results.append(
-            {
-                "id": "mixed_crew_on_track_in_pit",
-                "ok": mixed_ok,
-                "pair_s": pair.get("pair_s"),
-                "coordinate": "service_interval_absolute_race_s",
-                "pred_a_reason": pred_a.get("reason"),
-                "pred_b_reason": pred_b.get("reason"),
-                "note": "deterministic proxy; seconds are not a full race prediction",
-            }
-        )
+    mixed_payload: dict[str, Any] = {
+        "id": "mixed_crew_on_track_in_pit",
+        "episode_id": mixed_spec["episode_id"],
+        "exactly_one_selected_car_in_pit": exactly_one_in_pit,
+        "n_selected_in_pit": len(in_pit_cars),
+        "n_selected_on_track": len(on_track_cars),
+    }
+    if exactly_one_in_pit:
+        on_id = on_track_cars[0]["car_id"]
+        pit_id = in_pit_cars[0]["car_id"]
+        stop = next((a for a in am_m["menus"][on_id] if a["kind"] in {"pit_now", "delay_laps"}), None)
+        cont = next((a for a in am_m["menus"][pit_id] if a["kind"] == "continuation"), None)
+        if stop and cont:
+            costs = compile_action_costs(
+                obs_m, public_m, menus={on_id: [stop], pit_id: [cont]}, selected_car_ids=cids_m
+            )
+            pair = costs["pair_details"][0][0]
+            pred_a = predicted_service_interval(obs_d, public_m, CarAction.model_validate(stop))
+            pred_b = predicted_service_interval(obs_d, public_m, CarAction.model_validate(cont))
+            reasons = {pred_a.get("reason"), pred_b.get("reason")}
+            coords = {pred_a.get("coordinate"), pred_b.get("coordinate")}
+            eq_ok = (
+                pred_a.get("ok")
+                and pred_b.get("ok")
+                and pred_a.get("interval")
+                and pred_b.get("interval")
+                and coords == {"service_interval_absolute_race_s"}
+                and "on_track_entry_plus_public_t_in" in reasons
+                and "committed_remaining_service" in reasons
+            )
+            expected_wait, _ = _incremental_pair_wait(
+                pred_a["interval"],
+                pred_b["interval"],
+                committed_wait_a=float(pred_a.get("committed_wait_already_counted_s") or 0.0),
+                committed_wait_b=float(pred_b.get("committed_wait_already_counted_s") or 0.0),
+            )
+            pair_matches_eq = abs(float(pair.get("pair_s") or 0.0) - float(expected_wait)) <= 1e-12
+            # Deterministic positive-overlap fixture inside the same hand-case ID.
+            synth_a = [100.0, 102.5]
+            synth_b = [101.0, 103.5]
+            synth_wait, synth_reason = _incremental_pair_wait(
+                synth_a, synth_b, committed_wait_a=0.0, committed_wait_b=0.5
+            )
+            positive_fixture_ok = abs(synth_wait - 1.0) <= 1e-12 and synth_wait > 0.0
+            mixed_ok = bool(eq_ok and pair_matches_eq and positive_fixture_ok)
+            mixed_payload.update(
+                {
+                    "ok": mixed_ok,
+                    "pair_s": pair.get("pair_s"),
+                    "pair_s_expected_from_equation": expected_wait,
+                    "equation": pair.get("equation"),
+                    "coordinate": "service_interval_absolute_race_s",
+                    "pred_on_track_reason": pred_a.get("reason")
+                    if pred_a.get("reason") == "on_track_entry_plus_public_t_in"
+                    else pred_b.get("reason"),
+                    "pred_in_pit_reason": pred_b.get("reason")
+                    if pred_b.get("reason") == "committed_remaining_service"
+                    else pred_a.get("reason"),
+                    "pred_reasons": sorted(reasons),
+                    "positive_overlap_fixture": {
+                        "interval_a": synth_a,
+                        "interval_b": synth_b,
+                        "committed_wait_b": 0.5,
+                        "pair_s": synth_wait,
+                        "wait_accounting": synth_reason,
+                        "ok": positive_fixture_ok,
+                    },
+                    "note": "deterministic proxy; seconds are not a full race prediction",
+                }
+            )
+        else:
+            mixed_payload.update({"ok": False, "error": "missing_pit_or_continuation_action"})
     else:
-        results.append({"id": "mixed_crew_on_track_in_pit", "ok": False, "error": "no_scheduled_stop_pair"})
+        mixed_payload.update({"ok": False, "error": "checkpoint_not_exactly_one_in_pit"})
+    results.append(mixed_payload)
 
     # Already-waiting: use commitment with waiting phase
     waiting_car = dict(next(c for c in st["cars"].values() if c["team_id"] == st["selected_team_id"]))
@@ -557,26 +613,56 @@ def _run_hand_cases(root: Path, cfg: dict[str, Any], specs: list[dict[str, Any]]
         }
     )
 
-    # Historical invalid optima: reuse Stage 4.2 panel relation if present
-    panel_path = root / "docs/evidence/stage4_2/panel_summary.json"
+    # Historical panel: load source, hash it, recompute order_relation counts.
+    from collections import Counter
+
+    from f1q.formulation.panel import EVALUATOR_RANK_TOLERANCE, TOLERANCE_S, classify_order_relation
+
+    panel_path = (
+        root
+        / "evidence/formulation/artifacts/e85ee977-8a35-40c1-b690-02724dea3228"
+        / "formulation.evaluator_separation_panel/evaluator_panel.json"
+    )
     if panel_path.is_file():
         panel = json.loads(panel_path.read_text(encoding="utf-8"))
-        # Historical Stage 4.2 panel file uses panel_ok or relation counts; accept either.
-        panel_present = (
-            panel.get("panel_ok") is not None
-            or panel.get("panel_relation_counts") is not None
-            or panel.get("panel_relation_counts_raw") is not None
-            or panel.get("panel_tie_aware") is not None
-            or panel.get("panel_n_cases") is not None
+        source_sha = sha256_file(panel_path)
+        recomputed: Counter[str] = Counter()
+        for case in panel.get("cases") or []:
+            paired: list[tuple[float, float]] = []
+            for entry in case.get("evaluations") or []:
+                ev = entry.get("evaluator") or {}
+                if ev.get("semantic_legal") and "team_rank_loss_L" in ev:
+                    paired.append((float(entry["proxy_value"]), float(ev["team_rank_loss_L"])))
+            if len(paired) < 2:
+                recomputed["insufficient_unique_plans"] += 1
+                continue
+            relation = classify_order_relation(
+                [p for p, _ in paired],
+                [e for _, e in paired],
+                proxy_tol=TOLERANCE_S,
+                eval_tol=EVALUATOR_RANK_TOLERANCE,
+            )
+            recomputed[str(relation["relation"])] += 1
+        observed = dict(sorted(recomputed.items()))
+        panel_ok = (
+            int(recomputed.get("reversal", 0)) >= 1
+            and int(recomputed.get("tie_loss_of_discrimination", 0)) >= 1
         )
         results.append(
             {
                 "id": "historical_invalid_optima_panel",
-                "ok": bool(panel_present),
+                "ok": panel_ok,
                 "reused": True,
-                "panel_ok": panel.get("panel_ok"),
-                "panel_n_cases": panel.get("panel_n_cases"),
-                "note": "historical panel evidence reused; not re-executed as exhaustive matrix",
+                "source_path": str(panel_path.relative_to(root)),
+                "source_sha256": source_sha,
+                "observed_order_relation_counts": observed,
+                "required": {
+                    "reversal_min": 1,
+                    "tie_loss_of_discrimination_min": 1,
+                },
+                "stored_panel_n_disagree_reversal": panel.get("n_disagree_reversal"),
+                "stored_panel_n_tie_loss": panel.get("n_tie_loss"),
+                "note": "historical panel recomputed; not re-executed as exhaustive matrix",
             }
         )
     else:
@@ -667,6 +753,15 @@ def main(argv: list[str] | None = None) -> int:
 
     hand = _run_hand_cases(root, cfg, specs, dest)
     headrooms = [e["headroom"] for e in episodes if e.get("headroom") is not None]
+    rt_attempted_total = 0
+    rt_passed_total = 0
+    rt_failed_total = 0
+    for path in sorted(dest.glob("*.closure.json")):
+        row = json.loads(path.read_text(encoding="utf-8"))
+        pv = row.get("pair_validation") or {}
+        rt_attempted_total += int(pv.get("round_trip_attempted") or 0)
+        rt_passed_total += int(pv.get("round_trip_passed") or 0)
+        rt_failed_total += int(pv.get("round_trip_failed") or 0)
     summary = {
         "schema": "stage4_closure_summary_v1",
         "planned_episodes": 64,
@@ -675,6 +770,12 @@ def main(argv: list[str] | None = None) -> int:
         "episodes_ok": sum(1 for e in episodes if e["ok"]),
         "hand_cases_ok": hand.get("ok"),
         "hand_cases_n": hand.get("n_cases"),
+        "real_round_trip": {
+            "method": "typed_actions_to_payload_to_canonical_json_to_loads_to_validate_to_reencode",
+            "attempted": rt_attempted_total,
+            "passed": rt_passed_total,
+            "failed": rt_failed_total,
+        },
         "proxy_headroom": {
             "min": min(headrooms) if headrooms else None,
             "max": max(headrooms) if headrooms else None,
@@ -683,15 +784,22 @@ def main(argv: list[str] | None = None) -> int:
         },
         "elapsed_s": time.monotonic() - budget.started,
         "legacy_exhaustive_gate": "PARTIAL",
-        "legacy_runs_preserved": {
-            "e85ee977-8a35-40c1-b690-02724dea3228": "40/64 PARTIAL",
-            "41c28597-0ce0-428f-8230-ba2ca973c5b7": "14/64 interrupted",
+        "legacy_gate_action": "ARCHIVED_DO_NOT_RESUME",
+        "legacy_archive": legacy_archive_summary(root),
+        "source_versions": {
+            "simulator_version": SIMULATOR_VERSION,
+            "interface_version": INTERFACE_VERSION,
         },
         "ok": (
             len(episodes) == 64
             and all(e["ok"] for e in episodes)
             and bool(hand.get("ok"))
             and not failures
+            and rt_attempted_total > 0
+            and rt_failed_total == 0
+            and rt_passed_total == rt_attempted_total
+            and SIMULATOR_VERSION == "1.0.4"
+            and INTERFACE_VERSION == "3.1.0"
         ),
     }
     _atomic_json(dest / "closure_summary.json", summary)

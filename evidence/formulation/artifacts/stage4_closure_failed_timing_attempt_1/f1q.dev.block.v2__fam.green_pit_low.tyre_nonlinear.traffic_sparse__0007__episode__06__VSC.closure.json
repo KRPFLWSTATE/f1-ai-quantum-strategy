@@ -1,0 +1,216 @@
+{
+  "analytical": {
+    "energy_checks": [],
+    "enumeration_exact": 8027.818789690631,
+    "legal_action_count": 304,
+    "milp_agrees": true,
+    "n_ties": 6,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 8027.818789690631,
+      "greedy_value": 8027.818789690631,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "0779ccb60ebc26051d6e0b85c7aa15bca6a752e0499c27b1bab94000094bbd06",
+    "coefficient_hash": "0688e91c884fe299f6d2225d03d182d24f9e4ed1f59148b626a10446fce23b2b",
+    "qubo_hash": "b890baeb28b01018d28e9fa7ecc18646ea5cc9078aba7e96f3a2c4cd8a14a76b",
+    "record_hash_math_fields_only": "045163b8a0d5c53f5037f3f1cb25cea66d7f3c10505dac959bf5a8ad660daa76"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/06/VSC",
+  "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+  "fresh": true,
+  "ok": false,
+  "pair_validation": {
+    "expected": 304,
+    "round_trip_attempted": 304,
+    "round_trip_failed": 0,
+    "round_trip_method": "typed_actions_to_payload_to_canonical_json_to_loads_to_validate_to_reencode",
+    "round_trip_passed": 304,
+    "validation_failed": 0,
+    "validation_passed": 304
+  },
+  "payload_sha256": "2c4f0b656c764579837f0b96de12cbed93cf5310ca317f786f72f2bb8d9f42be",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 1186.1955305772808,
+      "M": 1187.1955305772808,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "algebraic_bound_ok": true,
+      "n": 35,
+      "ok": true,
+      "reason": "n_gt_12_algebraic_bound_only",
+      "skipped_exhaustive": true
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 304,
+    "n_variables": 35,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/06/VSC",
+    "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+    "interface_version": "3.1.0",
+    "observation_hash": "d636b1665219e8775cd68726634d6efad5f4c960b95b9f84180158273e9507f3",
+    "simulator_version": "1.0.4",
+    "spec_hash": "ec333e05c1255894e388cb1632790795e803d85cd871a5b33843cdfe486a027b",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/06/VSC/spec"
+  },
+  "source_versions": {
+    "interface_version": "3.1.0",
+    "simulator_version": "1.0.4"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.redcliff.a": "car.fictional.redcliff.a|delay_laps|2|medium|car.fictional.redcliff.a.set.medium.0",
+      "car.fictional.redcliff.b": "car.fictional.redcliff.b|delay_laps|2|soft|car.fictional.redcliff.b.set.soft.0"
+    },
+    "checkpoint_event_index": 17,
+    "choice": {
+      "action_id_1": "car.fictional.redcliff.a|delay_laps|2|medium|car.fictional.redcliff.a.set.medium.0",
+      "action_id_2": "car.fictional.redcliff.b|delay_laps|2|soft|car.fictional.redcliff.b.set.soft.0",
+      "i": 10,
+      "j": 9,
+      "n_ties": 6,
+      "value": 8027.818789690631
+    },
+    "decision_time_race_s": 2688.003973028259,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.redcliff.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.redcliff.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2990.944501878,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": null,
+            "pit_lap_index": null,
+            "reason": "service_complete",
+            "set_id": "car.fictional.redcliff.a.set.medium.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.redcliff.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.redcliff.a.set.medium.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.redcliff.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.redcliff.a.set.medium.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": false,
+        "timing_reason": "missing_pit_entry_completed_laps"
+      },
+      "car.fictional.redcliff.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.redcliff.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2994.039395359,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": null,
+            "pit_lap_index": null,
+            "reason": "service_complete",
+            "set_id": "car.fictional.redcliff.b.set.soft.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.redcliff.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.redcliff.b.set.soft.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.redcliff.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.redcliff.b.set.soft.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": false,
+        "timing_reason": "missing_pit_entry_completed_laps"
+      }
+    },
+    "reason_codes": [
+      "timing_mismatch:car.fictional.redcliff.a:missing_pit_entry_completed_laps",
+      "timing_mismatch:car.fictional.redcliff.b:missing_pit_entry_completed_laps"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": false,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": false
+  },
+  "timing_s": {
+    "analytical": 0.07159920909907669,
+    "terminal": 0.7610471670050174,
+    "total": 0.8326463761040941
+  }
+}

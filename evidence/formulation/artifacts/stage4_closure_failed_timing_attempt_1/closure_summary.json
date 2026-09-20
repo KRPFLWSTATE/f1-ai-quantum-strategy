@@ -1,0 +1,395 @@
+{
+  "completed_episodes": 64,
+  "elapsed_s": 69.6807942079613,
+  "episodes_ok": 20,
+  "failed": [
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/00/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.bluehaven.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.bluehaven.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/01/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.ironbridge.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.ironbridge.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/03/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.redcliff.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.redcliff.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/06/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.northshore.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.northshore.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/07/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.lakemere.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.lakemere.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/00/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.redcliff.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/01/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.silverfen.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.silverfen.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/06/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.stoneford.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.stoneford.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_sparse/0001/episode/07/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.harbour.a:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/01/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.northshore.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.northshore.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/02/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.lakemere.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.lakemere.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/04/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.silverfen.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.silverfen.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/05/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.stoneford.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.stoneford.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/07/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.redcliff.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.redcliff.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/00/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.silverfen.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.silverfen.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/01/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.lakemere.a:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/02/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.ironbridge.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.ironbridge.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/03/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.windrow.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.windrow.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/04/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.cedarline.a:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/05/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.ironbridge.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.ironbridge.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/06/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.cedarline.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.cedarline.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_sparse/0003/episode/07/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.harbour.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.harbour.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/00/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.harbour.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.harbour.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/03/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.lakemere.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.lakemere.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/04/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.northshore.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.northshore.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/05/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.windrow.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.windrow.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/00/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.northshore.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.northshore.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/01/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.ironbridge.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/02/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.redcliff.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.redcliff.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/03/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.stoneford.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.stoneford.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/04/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.lakemere.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.lakemere.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/05/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.silverfen.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.silverfen.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/06/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.northshore.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.northshore.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/07/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.lakemere.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.lakemere.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/03/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.redcliff.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.redcliff.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/04/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.ironbridge.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.ironbridge.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/05/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.windrow.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.windrow.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/07/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.stoneford.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.stoneford.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/00/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.northshore.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/01/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.northshore.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.northshore.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/02/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.silverfen.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.silverfen.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/03/SC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.cedarline.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.cedarline.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/05/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.silverfen.b:missing_pit_entry_completed_laps"
+      ]
+    },
+    {
+      "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/06/VSC",
+      "failure_code": "EPISODE_NOT_OK",
+      "reason_codes": [
+        "timing_mismatch:car.fictional.redcliff.a:missing_pit_entry_completed_laps",
+        "timing_mismatch:car.fictional.redcliff.b:missing_pit_entry_completed_laps"
+      ]
+    }
+  ],
+  "hand_cases_n": 12,
+  "hand_cases_ok": true,
+  "legacy_archive": {
+    "41c28597": {
+      "archived_record_files": 21,
+      "description": "21 archived record files; interrupted; no completed receipt; excluded from the bounded engineering gate",
+      "planned": 64,
+      "run_id": "41c28597-0ce0-428f-8230-ba2ca973c5b7",
+      "status": "interrupted"
+    },
+    "e85ee977": {
+      "archived_record_files": 40,
+      "description": "40 archived record files; interrupted/PARTIAL; no completed all-pair terminal Cartesian coverage",
+      "planned": 64,
+      "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+      "status": "PARTIAL"
+    },
+    "legacy_exhaustive_gate": "PARTIAL",
+    "legacy_gate_action": "ARCHIVED_DO_NOT_RESUME",
+    "note": "Counts derived from git-tracked *.record.json; do not resume either run."
+  },
+  "legacy_exhaustive_gate": "PARTIAL",
+  "legacy_gate_action": "ARCHIVED_DO_NOT_RESUME",
+  "ok": false,
+  "payload_sha256": "00c668b474c2c682721bc768c5fdcb51bedff90aadc8e689f30edfa33f79cbde",
+  "planned_episodes": 64,
+  "proxy_headroom": {
+    "max": 0.0,
+    "mean": 0.0,
+    "min": 0.0,
+    "zero_count": 64
+  },
+  "real_round_trip": {
+    "attempted": 12322,
+    "failed": 0,
+    "method": "typed_actions_to_payload_to_canonical_json_to_loads_to_validate_to_reencode",
+    "passed": 12322
+  },
+  "schema": "stage4_closure_summary_v1",
+  "source_versions": {
+    "interface_version": "3.1.0",
+    "simulator_version": "1.0.4"
+  }
+}

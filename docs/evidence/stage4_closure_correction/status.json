@@ -1,0 +1,44 @@
+{
+  "LEGACY_EXHAUSTIVE_GATE": "PARTIAL",
+  "LEGACY_GATE_ACTION": "ARCHIVED_DO_NOT_RESUME",
+  "PROXY_HEADROOM": "ZERO",
+  "QPU_EXECUTION_AUTHORISED": false,
+  "STAGE_4_ENGINEERING": "PENDING_BOUNDED_CLOSURE",
+  "STAGE_5_DESIGN_READY": true,
+  "active_stage": 4,
+  "command": "status",
+  "configuration_hash_draft": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+  "hardware_execution_enabled": false,
+  "interface_version": "3.1.0",
+  "legacy_archive": {
+    "41c28597": {
+      "archived_record_files": 21,
+      "description": "21 archived record files; interrupted; no completed receipt; excluded from the bounded engineering gate",
+      "planned": 64,
+      "run_id": "41c28597-0ce0-428f-8230-ba2ca973c5b7",
+      "status": "interrupted"
+    },
+    "e85ee977": {
+      "archived_record_files": 40,
+      "description": "40 archived record files; interrupted/PARTIAL; no completed all-pair terminal Cartesian coverage",
+      "planned": 64,
+      "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+      "status": "PARTIAL"
+    },
+    "legacy_exhaustive_gate": "PARTIAL",
+    "legacy_gate_action": "ARCHIVED_DO_NOT_RESUME",
+    "note": "Counts derived from git-tracked *.record.json; do not resume either run."
+  },
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "ledger locked by another writer",
+  "present": true,
+  "project_root": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "protocol_frozen": false,
+  "qpu_account_queried": false,
+  "readiness": "unknown",
+  "research_experiments_executed": 0,
+  "scientific_protocol": "DRAFT",
+  "simulator_version": "1.0.4",
+  "unknown_is_not_ready": true
+}
+STATUS_EXIT:0

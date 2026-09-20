@@ -16,7 +16,7 @@
     "action_dictionary_hash": "f609c71c3302f066a64557cffa3d155194e4ca7a8809ed1d4a2ff9e357fd17d9",
     "coefficient_hash": "d857744eee41ed6696b4b00267d207ccf3a71d2603f40c858a67319a1d4cd46d",
     "qubo_hash": "eee72bf1354b6e4f29fc24f01a8dc4dc446a452781f482943734734c06df7cfe",
-    "record_hash_math_fields_only": "ac94821d460d013fe056ac8e5e17ab006d021c345e5f3b0b5ecc7ed85f3dbffe"
+    "record_hash_math_fields_only": "473768526c0a1b787626b36662b9c4fcafd2fa165b4d4110eccb0d8bdd8fc04f"
   },
   "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/02/SC",
   "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
@@ -24,12 +24,14 @@
   "ok": true,
   "pair_validation": {
     "expected": 361,
+    "round_trip_attempted": 361,
     "round_trip_failed": 0,
+    "round_trip_method": "typed_actions_to_payload_to_canonical_json_to_loads_to_validate_to_reencode",
     "round_trip_passed": 361,
     "validation_failed": 0,
     "validation_passed": 361
   },
-  "payload_sha256": "8350c061543588327b616f5e6ccf7b13aac76760085cb3f6ec170804842b13d7",
+  "payload_sha256": "8f7cd604395fce20ce0ed3201b60cc4a72caa401a4054ef50d575a81db35202d",
   "qubo_ising": {
     "algebraic_penalty": {
       "B": 2246.8912456971857,
@@ -58,11 +60,15 @@
     "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007",
     "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/02/SC",
     "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
-    "interface_version": "3.0.1",
+    "interface_version": "3.1.0",
     "observation_hash": "6f45fa4dca37d9397620ea7696686d6c2121899b35198116e7784125b955126e",
-    "simulator_version": "1.0.3",
+    "simulator_version": "1.0.4",
     "spec_hash": "2534f35dafce2bdea2b63193b9a718e68fbd4d19e96f6b5d55dcc0625ac14c3e",
     "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_sparse/0007/episode/02/SC/spec"
+  },
+  "source_versions": {
+    "interface_version": "3.1.0",
+    "simulator_version": "1.0.4"
   },
   "terminal_witness": {
     "action_ids": {
@@ -88,11 +94,15 @@
             "compound": "soft",
             "downstream_policy_id": "compound_obligation.v1",
             "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "post_checkpoint_pit_entry_paired",
             "event_time_race_s": 3101.329036735,
+            "evidence_source": "pit_entry.detail.pit_entry_completed_laps",
             "kind": "service_complete",
             "pit_entry_completed_laps": 30,
+            "pit_entry_event_index": 145,
             "pit_lap_index": 30,
             "reason": "service_complete",
+            "service_complete_event_index": 170,
             "set_id": "car.fictional.silverfen.a.set.soft.1",
             "source": "simulator",
             "stop_index": 1,
@@ -143,11 +153,15 @@
             "compound": "soft",
             "downstream_policy_id": "compound_obligation.v1",
             "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "post_checkpoint_pit_entry_paired",
             "event_time_race_s": 3103.829036735,
+            "evidence_source": "pit_entry.detail.pit_entry_completed_laps",
             "kind": "service_complete",
             "pit_entry_completed_laps": 30,
+            "pit_entry_event_index": 146,
             "pit_lap_index": 30,
             "reason": "service_complete",
+            "service_complete_event_index": 172,
             "set_id": "car.fictional.silverfen.b.set.soft.1",
             "source": "simulator",
             "stop_index": 1,
@@ -202,8 +216,8 @@
     "timing_window_match": true
   },
   "timing_s": {
-    "analytical": 0.1694635000312701,
-    "terminal": 1.2198461670195684,
-    "total": 1.3893096670508385
+    "analytical": 0.1099507090402767,
+    "terminal": 0.7922615420538932,
+    "total": 0.9022122510941699
   }
 }

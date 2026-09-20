@@ -1,0 +1,321 @@
+{
+  "action_ids": {
+    "car.fictional.bluehaven.a": "car.fictional.bluehaven.a|delay_laps|2|hard|car.fictional.bluehaven.a.set.hard.0",
+    "car.fictional.bluehaven.b": "car.fictional.bluehaven.b|delay_laps|2|hard|car.fictional.bluehaven.b.set.hard.0"
+  },
+  "action_kinds": {
+    "car.fictional.bluehaven.a": "delay_laps",
+    "car.fictional.bluehaven.b": "delay_laps"
+  },
+  "checkpoint_completed_laps": {
+    "car.fictional.bluehaven.a": 30,
+    "car.fictional.bluehaven.b": 30
+  },
+  "checkpoint_event_index": 150,
+  "decoded_action_payloads": {
+    "car.fictional.bluehaven.a": {
+      "compound": "hard",
+      "delay_laps": 2,
+      "kind": "delay_laps",
+      "set_id": "car.fictional.bluehaven.a.set.hard.0"
+    },
+    "car.fictional.bluehaven.b": {
+      "compound": "hard",
+      "delay_laps": 2,
+      "kind": "delay_laps",
+      "set_id": "car.fictional.bluehaven.b.set.hard.0"
+    }
+  },
+  "delay_laps": {
+    "car.fictional.bluehaven.a": 2,
+    "car.fictional.bluehaven.b": 2
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/00/SC",
+  "evaluator_extracted_stops": {
+    "car.fictional.bluehaven.a": {
+      "entry_laps_helper": 32,
+      "stops": [
+        {
+          "car_id": "car.fictional.bluehaven.a",
+          "compound": "hard",
+          "downstream_policy_id": "compound_obligation.v1",
+          "downstream_policy_version": "1.2.0",
+          "entry_lap_provenance": "post_checkpoint_pit_entry_paired",
+          "event_time_race_s": 3056.174067876,
+          "evidence_source": "pit_entry.detail.pit_entry_completed_laps",
+          "kind": "service_complete",
+          "pit_entry_completed_laps": 32,
+          "pit_entry_event_index": 190,
+          "pit_lap_index": 32,
+          "reason": "service_complete",
+          "service_complete_event_index": 213,
+          "set_id": "car.fictional.bluehaven.a.set.hard.0",
+          "source": "simulator",
+          "stop_index": 1,
+          "supporting_kinds_ignored_as_separate_stops": [
+            "pit_entry",
+            "pit_exit",
+            "pit_wait",
+            "service_start"
+          ]
+        }
+      ]
+    },
+    "car.fictional.bluehaven.b": {
+      "entry_laps_helper": 32,
+      "stops": [
+        {
+          "car_id": "car.fictional.bluehaven.b",
+          "compound": "hard",
+          "downstream_policy_id": "compound_obligation.v1",
+          "downstream_policy_version": "1.2.0",
+          "entry_lap_provenance": "post_checkpoint_pit_entry_paired",
+          "event_time_race_s": 3059.062548795,
+          "evidence_source": "pit_entry.detail.pit_entry_completed_laps",
+          "kind": "service_complete",
+          "pit_entry_completed_laps": 32,
+          "pit_entry_event_index": 192,
+          "pit_lap_index": 32,
+          "reason": "service_complete",
+          "service_complete_event_index": 215,
+          "set_id": "car.fictional.bluehaven.b.set.hard.0",
+          "source": "simulator",
+          "stop_index": 1,
+          "supporting_kinds_ignored_as_separate_stops": [
+            "pit_entry",
+            "pit_exit",
+            "pit_wait",
+            "service_start"
+          ]
+        }
+      ]
+    }
+  },
+  "evaluator_result": {
+    "checkpoint_event_index": 150,
+    "instructed_versus_executed": {
+      "car.fictional.bluehaven.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.a",
+            "compound": "hard",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "post_checkpoint_pit_entry_paired",
+            "event_time_race_s": 3056.174067876,
+            "evidence_source": "pit_entry.detail.pit_entry_completed_laps",
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 32,
+            "pit_entry_event_index": 190,
+            "pit_lap_index": 32,
+            "reason": "service_complete",
+            "service_complete_event_index": 213,
+            "set_id": "car.fictional.bluehaven.a.set.hard.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.a",
+            "compound": "hard",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.bluehaven.a.set.hard.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.bluehaven.a",
+            "compound": "hard",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.bluehaven.a.set.hard.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": 32,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "delay_laps_exact_entry_lap"
+      },
+      "car.fictional.bluehaven.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.b",
+            "compound": "hard",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "post_checkpoint_pit_entry_paired",
+            "event_time_race_s": 3059.062548795,
+            "evidence_source": "pit_entry.detail.pit_entry_completed_laps",
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 32,
+            "pit_entry_event_index": 192,
+            "pit_lap_index": 32,
+            "reason": "service_complete",
+            "service_complete_event_index": 215,
+            "set_id": "car.fictional.bluehaven.b.set.hard.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.b",
+            "compound": "hard",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.bluehaven.b.set.hard.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.bluehaven.b",
+            "compound": "hard",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.bluehaven.b.set.hard.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": 32,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "delay_laps_exact_entry_lap"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "semantic_legal": true,
+    "timing_window_match": true
+  },
+  "expected_invariants": {
+    "checkpoint_completed_laps": 30,
+    "delay_laps": 2,
+    "observed_pit_entry_completed_laps": 32,
+    "timing_reason": "delay_laps_exact_entry_lap"
+  },
+  "post_checkpoint_pit_events": [
+    {
+      "abs_index": 190,
+      "car_id": "car.fictional.bluehaven.a",
+      "detail": {
+        "completed_laps": 32,
+        "pit_entry_completed_laps": 32,
+        "t_in_s": 21.657632142857157
+      },
+      "kind": "pit_entry",
+      "t": 3032.016435733
+    },
+    {
+      "abs_index": 192,
+      "car_id": "car.fictional.bluehaven.b",
+      "detail": {
+        "completed_laps": 32,
+        "pit_entry_completed_laps": 32,
+        "t_in_s": 21.657632142857157
+      },
+      "kind": "pit_entry",
+      "t": 3034.904916652
+    },
+    {
+      "abs_index": 212,
+      "car_id": "car.fictional.bluehaven.a",
+      "detail": {
+        "box_progress": 33.0,
+        "wait_s": 0.0
+      },
+      "kind": "service_start",
+      "t": 3053.674067876
+    },
+    {
+      "abs_index": 213,
+      "car_id": "car.fictional.bluehaven.a",
+      "detail": {
+        "completed_laps_at_service": 33,
+        "compound": "hard",
+        "note": "service_complete is not the pit-entry lap; use pit_entry event / pit_entry_completed_laps",
+        "pit_entry_completed_laps": 32,
+        "set_id": "car.fictional.bluehaven.a.set.hard.0"
+      },
+      "kind": "service_complete",
+      "t": 3056.174067876
+    },
+    {
+      "abs_index": 214,
+      "car_id": "car.fictional.bluehaven.b",
+      "detail": {
+        "box_progress": 33.0,
+        "wait_s": 0.0
+      },
+      "kind": "service_start",
+      "t": 3056.562548795
+    },
+    {
+      "abs_index": 215,
+      "car_id": "car.fictional.bluehaven.b",
+      "detail": {
+        "completed_laps_at_service": 33,
+        "compound": "hard",
+        "note": "service_complete is not the pit-entry lap; use pit_entry event / pit_entry_completed_laps",
+        "pit_entry_completed_laps": 32,
+        "set_id": "car.fictional.bluehaven.b.set.hard.0"
+      },
+      "kind": "service_complete",
+      "t": 3059.062548795
+    },
+    {
+      "abs_index": 216,
+      "car_id": "car.fictional.bluehaven.a",
+      "detail": {
+        "frac": 0.02,
+        "progress": 33.02
+      },
+      "kind": "pit_exit",
+      "t": 3064.837120733
+    },
+    {
+      "abs_index": 217,
+      "car_id": "car.fictional.bluehaven.b",
+      "detail": {
+        "frac": 0.02,
+        "progress": 33.02
+      },
+      "kind": "pit_exit",
+      "t": 3067.725601652
+    }
+  ],
+  "root_cause": "Dirty-tree engine.py pit_entry/_log omitted detail.pit_entry_completed_laps (and service_complete omitted the same field). State still set car[pit_entry_completed_laps] but event detail lacked it, so evaluator returned missing_pit_entry_completed_laps. Restored producer logging from 83f480a and added strict pit_entry\u2194service_complete pairing.",
+  "root_cause_class": "C",
+  "schema": "stage4_timing_failure_diagnosis_v1"
+}

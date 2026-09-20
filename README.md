@@ -4,11 +4,11 @@ Independent research infrastructure for a **deadline-constrained two-car pit-str
 
 This repository is **not** affiliated with a Formula 1 team. It reports **no experimental results**. Completing software setup, a development preview, or simulator checks does not establish scientific novelty, F1 calibration, or hardware readiness.
 
-## Current scope -- Stage 4 closed (Gate C)
+## Current scope -- Stage 4 engineering closure
 
-Restricted independent race simulator (`simulator.v1` **1.0.2** / interface `3.0.0`), Stage 3.x validation/repair/evidence correction, and Stage 4 local formulation (action model, proxy compiler, QUBO/Ising, independent classical references). Gate C PASS does **not** establish quantum advantage, F1 calibration, H1/H2/H3 evidence, or hardware readiness. Gate E: zero proxy headroom on the 64 admitted development checkpoints.
+Restricted independent race simulator (`simulator.v1` **1.0.4** / interface **3.1.0**), Stage 3.x validation/repair/evidence correction, and Stage 4 local formulation (action model, proxy compiler, QUBO/Ising, independent classical references). Engineering status: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS` after a valid bounded closure. Legacy exhaustive Gate C remains `PARTIAL` / `ARCHIVED_DO_NOT_RESUME` (see `docs/STAGE_4_CLOSURE_ERRATUM.md`). This does **not** establish quantum advantage, F1 calibration, H1/H2/H3 evidence, or hardware readiness. Gate E: `PROXY_HEADROOM: ZERO`.
 
-Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. Stage 5 is not authorized by this file.
+Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. `QPU_EXECUTION_AUTHORISED: false`. Stage 5 is design-ready only for an architecture decision addressing zero headroom — not authorised to execute QAOA/hardware.
 
 ## Supported local environment
 
@@ -71,4 +71,4 @@ Development outputs and simulator-check admissions are **not** scientific observ
 
 ## Next stage
 
-Stage 4 -- action model, objective compiler, QUBO and independent classical references -- awaits its implementation prompt.
+Stage 5 **architecture decision** addressing zero proxy headroom. Keep `active_stage` at 4 until a separate Stage 5 implementation prompt. No QAOA, learned selectors, IBM, or QPU execution without that prompt.

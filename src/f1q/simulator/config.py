@@ -22,6 +22,26 @@ def load_simulator_config(root: Path | None = None) -> tuple[dict[str, Any], str
         raise ValueError("simulator config must remain DRAFT")
     if data.get("upstream_adapter_used"):
         raise ValueError("this package must not enable an upstream adapter without a new prompt")
+    yaml_sim = str(data.get("simulator_version") or "")
+    yaml_iface = str(data.get("interface_version") or "")
+    if yaml_sim != SIMULATOR_VERSION:
+        raise ValueError(
+            f"simulator.v1.yaml simulator_version={yaml_sim!r} disagrees with "
+            f"package constant SIMULATOR_VERSION={SIMULATOR_VERSION!r}"
+        )
+    if yaml_iface != INTERFACE_VERSION:
+        raise ValueError(
+            f"simulator.v1.yaml interface_version={yaml_iface!r} disagrees with "
+            f"package constant INTERFACE_VERSION={INTERFACE_VERSION!r}"
+        )
+    iface_path = resolve_within(root, "configs/simulator.interface.v1.yaml", must_exist=True)
+    iface = load_yaml(iface_path)
+    iface_ver = str(iface.get("interface_version") or "")
+    if iface_ver != INTERFACE_VERSION:
+        raise ValueError(
+            f"simulator.interface.v1.yaml interface_version={iface_ver!r} disagrees with "
+            f"package constant INTERFACE_VERSION={INTERFACE_VERSION!r}"
+        )
     return data, sha256_file(path)
 
 

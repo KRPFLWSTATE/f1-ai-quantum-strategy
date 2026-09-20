@@ -27,7 +27,7 @@
     "action_dictionary_hash": "b205d0398642b757c2db4514cd93e2f9e980a978910ae98fa4a2e9e15fa78adf",
     "coefficient_hash": "adb80c4e37f6c11cdd0bc2d5b224fe202d0e2503ca7cf6ef1b7d6e092ad5a4b1",
     "qubo_hash": "bf5de3cbb4fba7336516bb848e09ddd74b4817cb091e9220e629d67421ff6138",
-    "record_hash_math_fields_only": "8ff230a883ea6094cacc86a83784469450077e7506fd1a2220325e0badd0bcfd"
+    "record_hash_math_fields_only": "a1d4eb13b43f56c27a8889bbbdb27405bfac6805498b9ed89002553e0161003d"
   },
   "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/04/VSC",
   "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
@@ -35,12 +35,14 @@
   "ok": true,
   "pair_validation": {
     "expected": 1,
+    "round_trip_attempted": 1,
     "round_trip_failed": 0,
+    "round_trip_method": "typed_actions_to_payload_to_canonical_json_to_loads_to_validate_to_reencode",
     "round_trip_passed": 1,
     "validation_failed": 0,
     "validation_passed": 1
   },
-  "payload_sha256": "7af08b674bf1ae98cb42aa85f2d30569f65043f51b180d374dab852f853ad131",
+  "payload_sha256": "cc33e92083d3df06b35f92fcba1d84f729efa663fd6528655ca0288a53a563d3",
   "qubo_ising": {
     "algebraic_penalty": {
       "B": 0.45993254083577995,
@@ -73,11 +75,15 @@
     "block_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000",
     "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/04/VSC",
     "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
-    "interface_version": "3.0.1",
+    "interface_version": "3.1.0",
     "observation_hash": "2f169dff104c74890e166eddcea62919e875c42c09d26aba9431d1b7e601b1be",
-    "simulator_version": "1.0.3",
+    "simulator_version": "1.0.4",
     "spec_hash": "ccce03058bfaf98d54f5822806dc3f75d27a4ab62714ebc39274356767e8ab79",
     "spec_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_near_linear.traffic_dense/0000/episode/04/VSC/spec"
+  },
+  "source_versions": {
+    "interface_version": "3.1.0",
+    "simulator_version": "1.0.4"
   },
   "terminal_witness": {
     "action_ids": {
@@ -103,11 +109,15 @@
             "compound": "medium",
             "downstream_policy_id": "compound_obligation.v1",
             "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "continuation_pre_checkpoint_service_complete",
             "event_time_race_s": 2571.633060707,
+            "evidence_source": "continuation_pre_checkpoint_entry_via_service_complete.detail.pit_entry_completed_laps",
             "kind": "service_complete",
             "pit_entry_completed_laps": 28,
+            "pit_entry_event_index": null,
             "pit_lap_index": 28,
             "reason": "service_complete",
+            "service_complete_event_index": 48,
             "set_id": "car.fictional.lakemere.a.set.medium.0",
             "source": "simulator",
             "stop_index": 1,
@@ -146,7 +156,7 @@
           }
         ],
         "instructed_set_compound_ok": true,
-        "pit_entry_completed_laps": null,
+        "pit_entry_completed_laps": 28,
         "stop_sequence_ok": true,
         "timing_ok": true,
         "timing_reason": "continuation_sequence_checked"
@@ -158,11 +168,15 @@
             "compound": "medium",
             "downstream_policy_id": "compound_obligation.v1",
             "downstream_policy_version": "1.2.0",
+            "entry_lap_provenance": "continuation_pre_checkpoint_service_complete",
             "event_time_race_s": 2574.133060707,
+            "evidence_source": "continuation_pre_checkpoint_entry_via_service_complete.detail.pit_entry_completed_laps",
             "kind": "service_complete",
             "pit_entry_completed_laps": 28,
+            "pit_entry_event_index": null,
             "pit_lap_index": 28,
             "reason": "service_complete",
+            "service_complete_event_index": 67,
             "set_id": "car.fictional.lakemere.b.set.medium.0",
             "source": "simulator",
             "stop_index": 1,
@@ -201,7 +215,7 @@
           }
         ],
         "instructed_set_compound_ok": true,
-        "pit_entry_completed_laps": null,
+        "pit_entry_completed_laps": 28,
         "stop_sequence_ok": true,
         "timing_ok": true,
         "timing_reason": "continuation_sequence_checked"
@@ -217,8 +231,8 @@
     "timing_window_match": true
   },
   "timing_s": {
-    "analytical": 0.037059207912534475,
-    "terminal": 0.9884859169833362,
-    "total": 1.0255451248958707
+    "analytical": 0.022768915980122983,
+    "terminal": 0.6637609589379281,
+    "total": 0.6865298749180511
   }
 }

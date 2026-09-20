@@ -64,21 +64,13 @@ def pit_entry_completed_laps_from_events(
     *,
     checkpoint_event_index: int = 0,
 ) -> int | None:
-    """Return the supporting pit-entry completed-lap counter, or None if missing."""
-    post = events[int(checkpoint_event_index) :]
-    for ev in post:
-        if ev.get("car_id") != car_id:
-            continue
-        if _event_kind(ev) != "pit_entry":
-            continue
-        detail = _detail(ev)
-        # Prefer explicit entry counter; do not use service-time completed laps.
-        value = _numeric_field(detail, "pit_entry_completed_laps", "completed_laps")
-        if value is not None:
-            return value
-        value = _numeric_field(ev, "pit_entry_completed_laps", "lap", "completed_laps")
-        return value
-    return None
+    """Return entry-lap from the first strictly paired post-checkpoint stop, if any."""
+    stops = executed_stops_from_events(
+        events, car_id, checkpoint_event_index=checkpoint_event_index
+    )
+    if not stops:
+        return None
+    return _numeric_field(stops[0], "pit_entry_completed_laps", "pit_lap_index")
 
 
 def executed_stops_from_events(
@@ -87,24 +79,56 @@ def executed_stops_from_events(
     *,
     checkpoint_event_index: int = 0,
 ) -> list[dict[str, Any]]:
-    """One executed stop per post-checkpoint service_complete for car_id."""
+    """One executed stop per post-checkpoint service_complete, paired with prior pit_entry.
+
+    Scheduled stops require a post-checkpoint pit_entry with explicit
+    detail.pit_entry_completed_laps (completed_laps is same-event compatibility only).
+    Continuation of service already in progress at the checkpoint may use the
+    service_complete copy of the entry lap, labelled distinctly, because the
+    pit_entry legitimately predates the checkpoint boundary.
+    """
     stops: list[dict[str, Any]] = []
     ordered = 0
-    post = events[int(checkpoint_event_index) :]
-    entry_laps = pit_entry_completed_laps_from_events(
-        events, car_id, checkpoint_event_index=checkpoint_event_index
-    )
-    for ev in post:
+    pending_entry: dict[str, Any] | None = None
+    for abs_idx in range(int(checkpoint_event_index), len(events)):
+        ev = events[abs_idx]
         if ev.get("car_id") != car_id:
             continue
-        if _event_kind(ev) != "service_complete":
+        kind = _event_kind(ev)
+        detail = _detail(ev) or {}
+        if kind == "pit_entry":
+            entry = _numeric_field(detail, "pit_entry_completed_laps")
+            source = "pit_entry.detail.pit_entry_completed_laps"
+            if entry is None:
+                entry = _numeric_field(detail, "completed_laps")
+                source = "pit_entry.detail.completed_laps_compat"
+            pending_entry = {
+                "pit_entry_event_index": abs_idx,
+                "pit_entry_completed_laps": entry,
+                "evidence_source": source,
+            }
             continue
-        detail = _detail(ev)
+        if kind != "service_complete":
+            continue
         ordered += 1
-        # Entry lap comes from the supporting pit_entry event, never from service time.
-        pit_lap = entry_laps
-        if pit_lap is None:
-            pit_lap = _numeric_field(detail, "pit_entry_completed_laps")
+        sc_entry = _numeric_field(detail, "pit_entry_completed_laps")
+        if pending_entry is not None:
+            pit_lap = pending_entry.get("pit_entry_completed_laps")
+            evidence_source = str(pending_entry.get("evidence_source"))
+            entry_idx = pending_entry.get("pit_entry_event_index")
+            if pit_lap is not None and sc_entry is not None and int(pit_lap) != int(sc_entry):
+                pit_lap = None
+                evidence_source = "contradictory_pit_entry_and_service_complete"
+            pending_entry = None
+            provenance = "post_checkpoint_pit_entry_paired"
+        else:
+            # No post-checkpoint pit_entry: in-progress continuation only.
+            pit_lap = sc_entry
+            evidence_source = (
+                "continuation_pre_checkpoint_entry_via_service_complete.detail.pit_entry_completed_laps"
+            )
+            entry_idx = None
+            provenance = "continuation_pre_checkpoint_service_complete"
         stops.append(
             normalize_stop_record(
                 car_id=car_id,
@@ -119,7 +143,13 @@ def executed_stops_from_events(
                 "stop_index": ordered,
                 "event_time_race_s": ev.get("t"),
                 "pit_entry_completed_laps": pit_lap,
-                "supporting_kinds_ignored_as_separate_stops": sorted(PIT_SUPPORTING_KINDS - {"service_complete"}),
+                "pit_entry_event_index": entry_idx,
+                "service_complete_event_index": abs_idx,
+                "evidence_source": evidence_source,
+                "entry_lap_provenance": provenance,
+                "supporting_kinds_ignored_as_separate_stops": sorted(
+                    PIT_SUPPORTING_KINDS - {"service_complete"}
+                ),
             }
         )
     return stops
@@ -188,10 +218,17 @@ def _timing_match(
         return True, "continuation_timing_via_expected_sequence"
     if not executed:
         return False, "no_executed_stop"
+    stop0 = executed[0]
+    if stop0.get("evidence_source") == "contradictory_pit_entry_and_service_complete":
+        return False, "contradictory_pit_entry_and_service_complete"
+    if action.kind in {"pit_now", "delay_laps"}:
+        if stop0.get("pit_entry_event_index") is None:
+            return False, "missing_post_checkpoint_pit_entry_event"
+        if stop0.get("entry_lap_provenance") != "post_checkpoint_pit_entry_paired":
+            return False, "scheduled_stop_requires_post_checkpoint_pit_entry"
     # Required timing evidence: supporting pit-entry completed-lap counter.
     if pit_entry_completed_laps is None:
-        # Fall back to executed stop field only if explicitly present (including zero).
-        pit_entry_completed_laps = _numeric_field(executed[0], "pit_entry_completed_laps", "pit_lap_index")
+        pit_entry_completed_laps = _numeric_field(stop0, "pit_entry_completed_laps", "pit_lap_index")
     if pit_entry_completed_laps is None:
         return False, "missing_pit_entry_completed_laps"
 
