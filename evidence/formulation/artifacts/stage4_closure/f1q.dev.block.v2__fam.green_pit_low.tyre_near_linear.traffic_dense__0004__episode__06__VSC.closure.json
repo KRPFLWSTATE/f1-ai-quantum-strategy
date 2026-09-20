@@ -1,0 +1,224 @@
+{
+  "analytical": {
+    "energy_checks": [
+      {
+        "bitstrings_checked": 4,
+        "qubo_ising_mismatches": 0
+      },
+      {
+        "restore_error": 0.0,
+        "s_Q": 1.0,
+        "scaled_times_sQ": 8228.202043212877,
+        "unscaled": 8228.202043212877
+      }
+    ],
+    "enumeration_exact": 8228.202043212877,
+    "legal_action_count": 1,
+    "milp_agrees": true,
+    "n_ties": 1,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 8228.202043212877,
+      "greedy_value": 8228.202043212877,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "27dff4657f56386a44674c70147b767e3ef13d76634eb822ab63153631132573",
+    "coefficient_hash": "766d91a32135aea53ad9183f79297b5634634434a154aa7e3f185a2d3e7a1a9d",
+    "qubo_hash": "876d3e434186aec752147c4ca6316dc0d53fa042b8e37eef1ac0ec60ce12fe1e",
+    "record_hash_math_fields_only": "58dfee9a14c1aebd839c6124616e46c1479eaa2bf7aa32ae396ed55f10eeef9d"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/06/VSC",
+  "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+  "fresh": true,
+  "ok": true,
+  "pair_validation": {
+    "expected": 1,
+    "round_trip_failed": 0,
+    "round_trip_passed": 1,
+    "validation_failed": 0,
+    "validation_passed": 1
+  },
+  "payload_sha256": "c9e17a677c8b5fab4505234f2a8ffc8879406099c0c81e382f8d7e88434b75ba",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 0.0,
+      "M": 1.0,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "B": 0.0,
+      "M": 1.0,
+      "M_gt_B_over_vmin": true,
+      "all_feasible_P_zero": true,
+      "all_infeasible_P_ge_M": true,
+      "best_feasible_energy": 8228.202043212877,
+      "feasible_count": 1,
+      "ok": true,
+      "v_min": 1.0
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 1,
+    "n_variables": 2,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/06/VSC",
+    "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+    "interface_version": "3.0.1",
+    "observation_hash": "d770af7601f4079972ce24e6f9265234b8ebee3cd42c54405ba6ca9bdd57ef07",
+    "simulator_version": "1.0.3",
+    "spec_hash": "2c3c070dbb6abcfbf69a56540132b2d62456dbe7e3d2bb8dbf487bd8fedafbd7",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/06/VSC/spec"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.cedarline.a": "car.fictional.cedarline.a|continuation|compound_obligation.v1@1.2.0",
+      "car.fictional.cedarline.b": "car.fictional.cedarline.b|continuation|compound_obligation.v1@1.2.0"
+    },
+    "checkpoint_event_index": 22,
+    "choice": {
+      "action_id_1": "car.fictional.cedarline.a|continuation|compound_obligation.v1@1.2.0",
+      "action_id_2": "car.fictional.cedarline.b|continuation|compound_obligation.v1@1.2.0",
+      "i": 0,
+      "j": 0,
+      "n_ties": 1,
+      "value": 8228.202043212877
+    },
+    "decision_time_race_s": 2913.861505354112,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.cedarline.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.cedarline.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2925.992514399,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 34,
+            "pit_lap_index": 34,
+            "reason": "service_complete",
+            "set_id": "car.fictional.cedarline.a.set.soft.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.cedarline.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.cedarline.a.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.cedarline.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.cedarline.a.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      },
+      "car.fictional.cedarline.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.cedarline.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2919.581728392,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 34,
+            "pit_lap_index": 34,
+            "reason": "service_complete",
+            "set_id": "car.fictional.cedarline.b.set.soft.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.cedarline.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.cedarline.b.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.cedarline.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.cedarline.b.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": true,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": true
+  },
+  "timing_s": {
+    "analytical": 0.03277108399197459,
+    "terminal": 1.1246385000413284,
+    "total": 1.157409584033303
+  }
+}

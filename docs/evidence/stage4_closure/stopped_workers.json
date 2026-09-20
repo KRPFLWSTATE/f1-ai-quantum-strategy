@@ -1,0 +1,36 @@
+{
+  "stopped_at_utc": "2026-09-20T14:01:02Z",
+  "stopped_pids": {
+    "formulation_run_parent_zsh": 46713,
+    "formulation_run_python": 46723,
+    "closeout_watcher_zsh": 47780,
+    "packager_parent_zsh": 48032,
+    "packager_python": 48039
+  },
+  "commands": {
+    "46723": "python -m f1q run --plan formulation_gate_c_closure_check",
+    "47780": "while true; stage4_2_closeout loop",
+    "48039": "docs/evidence/stage4_2/package_on_64.py"
+  },
+  "cwd": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "run_ids_preserved": {
+    "live_interrupted": "41c28597-0ce0-428f-8230-ba2ca973c5b7",
+    "stage4_2_partial_40_64": "e85ee977-8a35-40c1-b690-02724dea3228",
+    "stage4_1": "c4d0a199-9cea-4214-83ab-97964f2bf1ac",
+    "stage4": "e8b87881-74a6-46c7-b48e-6b2496a5d586"
+  },
+  "matrix_record_counts": {
+    "41c28597": 14,
+    "e85ee977": 40
+  },
+  "note": "Stopped per Stage 4 Final Closure; no resume; preserve PARTIAL evidence; do not merge runs.",
+  "additional_stop": {
+    "stopped_at_utc": "2026-09-20T14:15:53Z",
+    "pids": {
+      "resume_zsh": 50679,
+      "resume_python": 50686
+    },
+    "command": "python -m f1q resume --run-id 41c28597-0ce0-428f-8230-ba2ca973c5b7",
+    "note": "leftover resume discovered holding ledger lock during Final Closure packaging; stopped; not authorised by Final Closure"
+  }
+}

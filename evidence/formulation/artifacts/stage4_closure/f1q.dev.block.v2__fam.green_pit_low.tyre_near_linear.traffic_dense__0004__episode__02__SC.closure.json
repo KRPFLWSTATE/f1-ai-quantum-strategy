@@ -1,0 +1,224 @@
+{
+  "analytical": {
+    "energy_checks": [
+      {
+        "bitstrings_checked": 4,
+        "qubo_ising_mismatches": 0
+      },
+      {
+        "restore_error": 0.0,
+        "s_Q": 1.0,
+        "scaled_times_sQ": 8606.799311819028,
+        "unscaled": 8606.799311819028
+      }
+    ],
+    "enumeration_exact": 8606.799311819026,
+    "legal_action_count": 1,
+    "milp_agrees": true,
+    "n_ties": 1,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 8606.799311819026,
+      "greedy_value": 8606.799311819026,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "6e985169e33e9c7b959dae18f174bb35e11b28d0dd6979c708bb4eaa9d4975a6",
+    "coefficient_hash": "714acb8a8b505fc61ff2105ff93420b2c3a2c09432ecd5e897818306d191f0c5",
+    "qubo_hash": "2377a24282f48170cccb0914a0a31117acd9ddc55bce92ceb26198ea28ed8541",
+    "record_hash_math_fields_only": "1c8504d8ca42497aeaa5bafe41bd3cf5c83b21d27cc0cf1d3edda4d4abceedb8"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/02/SC",
+  "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+  "fresh": true,
+  "ok": true,
+  "pair_validation": {
+    "expected": 1,
+    "round_trip_failed": 0,
+    "round_trip_passed": 1,
+    "validation_failed": 0,
+    "validation_passed": 1
+  },
+  "payload_sha256": "0becd248dc0473515520a7cce2e7f743846a6718bc1a89c55dd44e211d871b85",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 1.8896636041408783,
+      "M": 2.8896636041408783,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "B": 1.8896636041408783,
+      "M": 2.8896636041408783,
+      "M_gt_B_over_vmin": true,
+      "all_feasible_P_zero": true,
+      "all_infeasible_P_ge_M": true,
+      "best_feasible_energy": 8606.799311819026,
+      "feasible_count": 1,
+      "ok": true,
+      "v_min": 1.0
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 1,
+    "n_variables": 2,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/02/SC",
+    "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+    "interface_version": "3.0.1",
+    "observation_hash": "f01eeaec5ec7272d3d3396347ecf486ce44cd5c402242351700dccc291cf0010",
+    "simulator_version": "1.0.3",
+    "spec_hash": "57f6b3475db65db00fa36301986090a71e7517009c6c0b4e1757d429e3732f33",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_dense/0004/episode/02/SC/spec"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.northshore.a": "car.fictional.northshore.a|continuation|compound_obligation.v1@1.2.0",
+      "car.fictional.northshore.b": "car.fictional.northshore.b|continuation|compound_obligation.v1@1.2.0"
+    },
+    "checkpoint_event_index": 25,
+    "choice": {
+      "action_id_1": "car.fictional.northshore.a|continuation|compound_obligation.v1@1.2.0",
+      "action_id_2": "car.fictional.northshore.b|continuation|compound_obligation.v1@1.2.0",
+      "i": 0,
+      "j": 0,
+      "n_ties": 1,
+      "value": 8606.799311819026
+    },
+    "decision_time_race_s": 2904.0190762866587,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.northshore.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.northshore.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2918.520707355,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 34,
+            "pit_lap_index": 34,
+            "reason": "service_complete",
+            "set_id": "car.fictional.northshore.a.set.medium.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.northshore.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.a.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.northshore.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.a.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      },
+      "car.fictional.northshore.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.northshore.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 2916.020707355,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 34,
+            "pit_lap_index": 34,
+            "reason": "service_complete",
+            "set_id": "car.fictional.northshore.b.set.medium.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.northshore.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.b.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.northshore.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 34,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.b.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": true,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": true
+  },
+  "timing_s": {
+    "analytical": 0.03404762502759695,
+    "terminal": 1.1878482499159873,
+    "total": 1.2218958749435842
+  }
+}

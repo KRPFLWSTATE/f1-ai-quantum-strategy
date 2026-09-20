@@ -1,0 +1,520 @@
+{
+  "active_stage": 4,
+  "command": "status",
+  "completed_units": [
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.artifact_roundtrip",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checkpoint_fixture",
+    "77816c72-6248-4ae2-b944-70973975888a:bootstrap.checksum_verify",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.artifact_roundtrip",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checkpoint_fixture",
+    "a0c7a5d7-4387-40f8-82f7-08b7d3593f85:bootstrap.checksum_verify",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.00",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.01",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.02",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.03",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.04",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.05",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.06",
+    "8f292588-a328-4232-b425-c36c610a29f5:development.preview.fam.07",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.development_matrix",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.diagnostic_interventions",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.mechanism_checks",
+    "e2258740-1d08-4427-8305-b149ed504a73:simulator.source_restore",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.behavioral",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.commitment",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.criteria",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.fuel",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.memory",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.resolution",
+    "4388ad68-6bd3-4a43-9099-32e52f56eb28:simulator.followup.sc_vsc_traffic",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.development_matrix",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.diagnostic_interventions",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.mechanism_checks",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.repair.resolution",
+    "62b1e5ee-3f13-44be-98e0-8af018eb286b:simulator.source_restore",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.action_model",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.compiler_direct_costs",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.action_model",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.compiler_direct_costs",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.development_matrix",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.evaluator_separation_panel",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.independent_references",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.qubo_ising_gate",
+    "e8b87881-74a6-46c7-b48e-6b2496a5d586:formulation.source_restore",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.action_model",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.compiler_direct_costs",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.development_matrix",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.evaluator_separation_panel",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.independent_references",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.pre_repair_erratum",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.qubo_ising_gate",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.source_restore",
+    "c4d0a199-9cea-4214-83ab-97964f2bf1ac:formulation.stage3_3_diagnostic_restore",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.action_model",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.compiler_direct_costs",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.independent_references",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.pre_repair_erratum",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.qubo_ising_gate",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.action_model",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.compiler_direct_costs",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.evaluator_separation_panel",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.independent_references",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.pre_repair_erratum",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.qubo_ising_gate",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.source_restore",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.stage3_3_diagnostic_restore",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.action_model",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.compiler_direct_costs",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.independent_references",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.pre_repair_erratum",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.qubo_ising_gate"
+  ],
+  "configuration_hash_draft": "53a7d43e51d557073c6e6a44602b38b15e29a875f2d6b24cb8cf5adf54fe07c6",
+  "failed_units": [
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.qubo_ising_gate",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.development_matrix",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.evaluator_separation_panel",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.source_restore",
+    "90e50d03-371c-4663-94fb-ad1da84a0bcf:formulation.stage3_3_diagnostic_restore",
+    "e85ee977-8a35-40c1-b690-02724dea3228:formulation.development_matrix"
+  ],
+  "hardware_execution_enabled": false,
+  "interrupted_units": [],
+  "new_physical_qpu_jobs_submitted": 0,
+  "next_permitted_work": "resume --run-id <id> ; incomplete=['41c28597-0ce0-428f-8230-ba2ca973c5b7']",
+  "pending_units": [
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.development_matrix",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.evaluator_separation_panel",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.independent_references",
+    "1c5b0748-5406-4933-8e41-4f943f4296c7:formulation.source_restore",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.evaluator_separation_panel",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.source_restore",
+    "41c28597-0ce0-428f-8230-ba2ca973c5b7:formulation.stage3_3_diagnostic_restore"
+  ],
+  "present": true,
+  "project_root": "/Users/kawinperera/f1-ai-quantum-strategy",
+  "protocol_frozen": false,
+  "qpu_account_queried": false,
+  "readiness": "not ready",
+  "research_experiments_executed": 0,
+  "runs": [
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "77816c72-6248-4ae2-b944-70973975888a",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "setup_fixture",
+      "plan_id": "bootstrap",
+      "run_id": "a0c7a5d7-4387-40f8-82f7-08b7d3593f85",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.artifact_roundtrip"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checkpoint_fixture"
+        },
+        {
+          "status": "completed",
+          "unit_id": "bootstrap.checksum_verify"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "development_preview",
+      "run_id": "8f292588-a328-4232-b425-c36c610a29f5",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.00"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.01"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.02"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.03"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.04"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.05"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.06"
+        },
+        {
+          "status": "completed",
+          "unit_id": "development.preview.fam.07"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_check",
+      "run_id": "e2258740-1d08-4427-8305-b149ed504a73",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.diagnostic_interventions"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.mechanism_checks"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_followup",
+      "run_id": "4388ad68-6bd3-4a43-9099-32e52f56eb28",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.behavioral"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.commitment"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.criteria"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.fuel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.memory"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.resolution"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.followup.sc_vsc_traffic"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "simulator_repair",
+      "run_id": "62b1e5ee-3f13-44be-98e0-8af018eb286b",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "simulator.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.diagnostic_interventions"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.mechanism_checks"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.repair.resolution"
+        },
+        {
+          "status": "completed",
+          "unit_id": "simulator.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_check",
+      "run_id": "1c5b0748-5406-4933-8e41-4f943f4296c7",
+      "status": "failed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "failed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_check",
+      "run_id": "e8b87881-74a6-46c7-b48e-6b2496a5d586",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.source_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_repair_check",
+      "run_id": "c4d0a199-9cea-4214-83ab-97964f2bf1ac",
+      "status": "completed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.pre_repair_erratum"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.source_restore"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.stage3_3_diagnostic_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_gate_c_closure_check",
+      "run_id": "90e50d03-371c-4663-94fb-ad1da84a0bcf",
+      "status": "failed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "failed",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "failed",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.pre_repair_erratum"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "failed",
+          "unit_id": "formulation.source_restore"
+        },
+        {
+          "status": "failed",
+          "unit_id": "formulation.stage3_3_diagnostic_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_gate_c_closure_check",
+      "run_id": "e85ee977-8a35-40c1-b690-02724dea3228",
+      "status": "failed",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "failed",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.pre_repair_erratum"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.source_restore"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.stage3_3_diagnostic_restore"
+        }
+      ]
+    },
+    {
+      "evidence_kind": "development",
+      "plan_id": "formulation_gate_c_closure_check",
+      "run_id": "41c28597-0ce0-428f-8230-ba2ca973c5b7",
+      "status": "running",
+      "units": [
+        {
+          "status": "completed",
+          "unit_id": "formulation.action_model"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.compiler_direct_costs"
+        },
+        {
+          "status": "running",
+          "unit_id": "formulation.development_matrix"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.evaluator_separation_panel"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.independent_references"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.pre_repair_erratum"
+        },
+        {
+          "status": "completed",
+          "unit_id": "formulation.qubo_ising_gate"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.source_restore"
+        },
+        {
+          "status": "pending",
+          "unit_id": "formulation.stage3_3_diagnostic_restore"
+        }
+      ]
+    }
+  ],
+  "scientific_protocol": "DRAFT",
+  "unknown_is_not_ready": true
+}

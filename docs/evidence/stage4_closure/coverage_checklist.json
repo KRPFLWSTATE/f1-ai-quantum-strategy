@@ -1,0 +1,62 @@
+{
+  "hand_cases": [
+    {
+      "id": "wrong_executed_set",
+      "kind": "mutate_executed"
+    },
+    {
+      "id": "extra_unplanned_mount",
+      "kind": "mutate_executed"
+    },
+    {
+      "id": "omitted_expected_mount",
+      "kind": "mutate_executed"
+    },
+    {
+      "id": "late_pit_entry_lap",
+      "kind": "timing_unit"
+    },
+    {
+      "id": "delay_boundary_exact",
+      "kind": "timing_unit"
+    },
+    {
+      "id": "pit_phase_transit_in",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "pit_phase_waiting",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "pit_phase_service",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "pit_phase_transit_out",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "mixed_crew_on_track_in_pit",
+      "kind": "mixed_timing"
+    },
+    {
+      "id": "mixed_crew_already_waiting",
+      "kind": "mixed_timing"
+    },
+    {
+      "id": "historical_invalid_optima_panel",
+      "kind": "reuse_panel"
+    }
+  ],
+  "payload_sha256": "b41cebff5ccac08270760d7931e8a589e923bdfed2fee7bcefaa2664fe89ebbb",
+  "seed": 20260920042,
+  "selection_rule": [
+    "64 development specs: admission/validation/encode-decode/costs/enumeration/MILP",
+    "QUBO/Ising legal one-hot pairs + fixed infeasible; algebraic penalty every instance",
+    "exhaustive bitstrings only if n<=12 (hand fixture)",
+    "64 lex-first tied-optimum terminal witnesses",
+    "<=12 committed hand/regression cases"
+  ],
+  "withdrawn": "exhaustive all-pair terminal Cartesian development matrix"
+}

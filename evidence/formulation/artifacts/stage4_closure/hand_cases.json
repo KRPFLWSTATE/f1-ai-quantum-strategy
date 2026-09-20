@@ -1,0 +1,102 @@
+{
+  "committed_case_ids": [
+    "wrong_executed_set",
+    "extra_unplanned_mount",
+    "omitted_expected_mount",
+    "late_pit_entry_lap",
+    "delay_boundary_exact",
+    "pit_phase_transit_in",
+    "pit_phase_waiting",
+    "pit_phase_service",
+    "pit_phase_transit_out",
+    "mixed_crew_on_track_in_pit",
+    "mixed_crew_already_waiting",
+    "historical_invalid_optima_panel"
+  ],
+  "n_cases": 12,
+  "ok": true,
+  "payload_sha256": "2c82f9851a07026e5a40e5def61e2092f9045c0df36274f6fd29aa6a0365a379",
+  "results": [
+    {
+      "id": "late_pit_entry_lap",
+      "ok": true,
+      "reason_codes": [
+        "timing_mismatch:c:pit_now_entry_lap_mismatch"
+      ],
+      "timing_ok": false,
+      "timing_reason": "pit_now_entry_lap_mismatch"
+    },
+    {
+      "id": "delay_boundary_exact",
+      "ok": true,
+      "timing_reason": "delay_laps_entry_lap_mismatch"
+    },
+    {
+      "codes": [
+        "instructed_set_mismatch:c",
+        "terminal_mounted_set_mismatch:c"
+      ],
+      "id": "wrong_executed_set",
+      "ok": true
+    },
+    {
+      "codes": [
+        "extra_unplanned_mount:c"
+      ],
+      "id": "extra_unplanned_mount",
+      "ok": true
+    },
+    {
+      "codes": [
+        "instructed_stop_not_executed:c",
+        "timing_mismatch:c:no_executed_stop"
+      ],
+      "id": "omitted_expected_mount",
+      "ok": true
+    },
+    {
+      "id": "pit_phase_transit_in",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "id": "pit_phase_waiting",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "id": "pit_phase_service",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "id": "pit_phase_transit_out",
+      "ok": true,
+      "projection": true
+    },
+    {
+      "coordinate": "service_interval_absolute_race_s",
+      "id": "mixed_crew_on_track_in_pit",
+      "note": "deterministic proxy; seconds are not a full race prediction",
+      "ok": true,
+      "pair_s": 0.0,
+      "pred_a_reason": "on_track_entry_plus_public_t_in",
+      "pred_b_reason": "on_track_entry_plus_public_t_in"
+    },
+    {
+      "committed_wait_counted_in_unary": true,
+      "id": "mixed_crew_already_waiting",
+      "ok": true,
+      "remaining_wait_s": 3.0
+    },
+    {
+      "id": "historical_invalid_optima_panel",
+      "note": "historical panel evidence reused; not re-executed as exhaustive matrix",
+      "ok": true,
+      "panel_n_cases": null,
+      "panel_ok": null,
+      "reused": true
+    }
+  ],
+  "schema": "stage4_closure_hand_cases_v1"
+}

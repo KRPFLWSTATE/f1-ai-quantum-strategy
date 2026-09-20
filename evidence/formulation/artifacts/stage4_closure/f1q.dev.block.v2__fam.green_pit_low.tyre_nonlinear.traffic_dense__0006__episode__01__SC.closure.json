@@ -1,0 +1,224 @@
+{
+  "analytical": {
+    "energy_checks": [
+      {
+        "bitstrings_checked": 4,
+        "qubo_ising_mismatches": 0
+      },
+      {
+        "restore_error": 0.0,
+        "s_Q": 1.0,
+        "scaled_times_sQ": 11580.056719883345,
+        "unscaled": 11580.056719883345
+      }
+    ],
+    "enumeration_exact": 11580.056719883343,
+    "legal_action_count": 1,
+    "milp_agrees": true,
+    "n_ties": 1,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 11580.056719883343,
+      "greedy_value": 11580.056719883343,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "7309243e5e11e2db72a70119daf32daca30cad6b90e4322558a45c40673b83c0",
+    "coefficient_hash": "e0ff37841de7a053e14bed473347bc135e4b418aaa6b0f6ba1449c92c35ef1df",
+    "qubo_hash": "78ca43ed085fd368fe10316cdc857322aaaafec3cd35ef30d3cadfffa7e09da5",
+    "record_hash_math_fields_only": "231f3a1e86f910df8837eb9e6e2febe3a7bb8f5a020bd63f5a4b9ac7acc1d3ff"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/01/SC",
+  "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+  "fresh": true,
+  "ok": true,
+  "pair_validation": {
+    "expected": 1,
+    "round_trip_failed": 0,
+    "round_trip_passed": 1,
+    "validation_failed": 0,
+    "validation_passed": 1
+  },
+  "payload_sha256": "9175913dcf073e6bda092cc44612f5ea2361c9f0e9e2a3c0418d70c418220259",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 0.12674406844030273,
+      "M": 1.1267440684403027,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "B": 0.12674406844030273,
+      "M": 1.1267440684403027,
+      "M_gt_B_over_vmin": true,
+      "all_feasible_P_zero": true,
+      "all_infeasible_P_ge_M": true,
+      "best_feasible_energy": 11580.056719883343,
+      "feasible_count": 1,
+      "ok": true,
+      "v_min": 1.0
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 1,
+    "n_variables": 2,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/01/SC",
+    "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+    "interface_version": "3.0.1",
+    "observation_hash": "83290d95bb37caf17fa1e15c95cfabbe412f5562fc477afc7bc7fbf68f898ff9",
+    "simulator_version": "1.0.3",
+    "spec_hash": "31adba41f5f5f5fd52a2ea49e352f48058f11f480c29908c317d79154a63c869",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_nonlinear.traffic_dense/0006/episode/01/SC/spec"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.bluehaven.a": "car.fictional.bluehaven.a|continuation|compound_obligation.v1@1.2.0",
+      "car.fictional.bluehaven.b": "car.fictional.bluehaven.b|continuation|compound_obligation.v1@1.2.0"
+    },
+    "checkpoint_event_index": 29,
+    "choice": {
+      "action_id_1": "car.fictional.bluehaven.a|continuation|compound_obligation.v1@1.2.0",
+      "action_id_2": "car.fictional.bluehaven.b|continuation|compound_obligation.v1@1.2.0",
+      "i": 0,
+      "j": 0,
+      "n_ties": 1,
+      "value": 11580.056719883343
+    },
+    "decision_time_race_s": 1352.667417142859,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.bluehaven.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 1359.327813358,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 13,
+            "pit_lap_index": 13,
+            "reason": "service_complete",
+            "set_id": "car.fictional.bluehaven.a.set.medium.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 13,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.bluehaven.a.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.bluehaven.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 13,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.bluehaven.a.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      },
+      "car.fictional.bluehaven.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 1361.827813358,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 13,
+            "pit_lap_index": 13,
+            "reason": "service_complete",
+            "set_id": "car.fictional.bluehaven.b.set.soft.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.bluehaven.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 13,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.bluehaven.b.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.bluehaven.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 13,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.bluehaven.b.set.soft.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": true,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": true
+  },
+  "timing_s": {
+    "analytical": 0.037070541991852224,
+    "terminal": 1.518813083996065,
+    "total": 1.5558836259879172
+  }
+}

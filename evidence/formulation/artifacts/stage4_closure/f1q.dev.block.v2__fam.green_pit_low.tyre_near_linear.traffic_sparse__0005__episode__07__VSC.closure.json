@@ -1,0 +1,209 @@
+{
+  "analytical": {
+    "energy_checks": [],
+    "enumeration_exact": 12439.21140015391,
+    "legal_action_count": 304,
+    "milp_agrees": true,
+    "n_ties": 6,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 12439.21140015391,
+      "greedy_value": 12439.21140015391,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "4275f7f82ee82d183b23344ede59cf8bd5e96056127fdf99eb2b99da91940936",
+    "coefficient_hash": "094dc4b526c4862873daa170bf8da94ae4ea68cadf86583280564bf19b6e7519",
+    "qubo_hash": "5b93b243bf354076cd47d7581d23c458696b50b569a9e94eb1d7db02262366c3",
+    "record_hash_math_fields_only": "9fd3d45555050a7633aef010eb82488de9492e1f1fc3e7297db2b6eea7536bc0"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/07/VSC",
+  "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+  "fresh": true,
+  "ok": true,
+  "pair_validation": {
+    "expected": 304,
+    "round_trip_failed": 0,
+    "round_trip_passed": 304,
+    "validation_failed": 0,
+    "validation_passed": 304
+  },
+  "payload_sha256": "df59b504b1b3723f1867ada64bca80fb1827c8882fc279f4aa6e561f5c238f40",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 1690.7620296529358,
+      "M": 1691.7620296529358,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "algebraic_bound_ok": true,
+      "n": 35,
+      "ok": true,
+      "reason": "n_gt_12_algebraic_bound_only",
+      "skipped_exhaustive": true
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 304,
+    "n_variables": 35,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/07/VSC",
+    "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+    "interface_version": "3.0.1",
+    "observation_hash": "f370121cb0b3294c70535b79a389393b3e87fe3664f6b9446b977f009fb813a2",
+    "simulator_version": "1.0.3",
+    "spec_hash": "7340511965ed44cc370da1836d537762df49e428fc9d0eaad31fd7abfc4eeecb",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/07/VSC/spec"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.lakemere.a": "car.fictional.lakemere.a|delay_laps|2|soft|car.fictional.lakemere.a.set.soft.0",
+      "car.fictional.lakemere.b": "car.fictional.lakemere.b|delay_laps|2|medium|car.fictional.lakemere.b.set.medium.0"
+    },
+    "checkpoint_event_index": 10,
+    "choice": {
+      "action_id_1": "car.fictional.lakemere.a|delay_laps|2|soft|car.fictional.lakemere.a.set.soft.0",
+      "action_id_2": "car.fictional.lakemere.b|delay_laps|2|medium|car.fictional.lakemere.b.set.medium.0",
+      "i": 9,
+      "j": 10,
+      "n_ties": 6,
+      "value": 12439.21140015391
+    },
+    "decision_time_race_s": 3116.8577139124304,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.lakemere.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.lakemere.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 3413.461148298,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 34,
+            "pit_lap_index": 34,
+            "reason": "service_complete",
+            "set_id": "car.fictional.lakemere.a.set.soft.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.lakemere.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.lakemere.a.set.soft.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.lakemere.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.lakemere.a.set.soft.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": 34,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "delay_laps_exact_entry_lap"
+      },
+      "car.fictional.lakemere.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.lakemere.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 3419.322294171,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 34,
+            "pit_lap_index": 34,
+            "reason": "service_complete",
+            "set_id": "car.fictional.lakemere.b.set.medium.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.lakemere.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.lakemere.b.set.medium.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.lakemere.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.lakemere.b.set.medium.0",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": 34,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "delay_laps_exact_entry_lap"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": true,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": true
+  },
+  "timing_s": {
+    "analytical": 0.11246233410201967,
+    "terminal": 1.730939875007607,
+    "total": 1.8434022091096267
+  }
+}

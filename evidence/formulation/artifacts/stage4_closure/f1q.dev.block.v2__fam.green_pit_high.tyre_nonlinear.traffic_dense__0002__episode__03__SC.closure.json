@@ -1,0 +1,224 @@
+{
+  "analytical": {
+    "energy_checks": [
+      {
+        "bitstrings_checked": 4,
+        "qubo_ising_mismatches": 0
+      },
+      {
+        "restore_error": 0.0,
+        "s_Q": 1.0,
+        "scaled_times_sQ": 7444.026825433839,
+        "unscaled": 7444.026825433839
+      }
+    ],
+    "enumeration_exact": 7444.026825433839,
+    "legal_action_count": 1,
+    "milp_agrees": true,
+    "n_ties": 1,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 7444.026825433839,
+      "greedy_value": 7444.026825433839,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "61a6f19b41dfc8dd661b8cfda44eaae7a0bfa4e5e57d089500e98a6a387782c2",
+    "coefficient_hash": "5f814b10edac122ec42d7acc63664509565b86e31e40b702e3eb53240f54fbaf",
+    "qubo_hash": "788d5857fff1fc510a84e3c8720cdc705d2be870b3e963275ca403935e375084",
+    "record_hash_math_fields_only": "da511a24a7d30419ea9594a7c1facf07ecf5bc745c184c0bb1f2c78fc48a2062"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/03/SC",
+  "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+  "fresh": true,
+  "ok": true,
+  "pair_validation": {
+    "expected": 1,
+    "round_trip_failed": 0,
+    "round_trip_passed": 1,
+    "validation_failed": 0,
+    "validation_passed": 1
+  },
+  "payload_sha256": "617b6536bb9f2b1dcd9f6e0afd675cfa83779327c803724cc1727fbdc5d56b36",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 0.46658570842510017,
+      "M": 1.4665857084251002,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "B": 0.46658570842510017,
+      "M": 1.4665857084251002,
+      "M_gt_B_over_vmin": true,
+      "all_feasible_P_zero": true,
+      "all_infeasible_P_ge_M": true,
+      "best_feasible_energy": 7444.026825433839,
+      "feasible_count": 1,
+      "ok": true,
+      "v_min": 1.0
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 1,
+    "n_variables": 2,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/03/SC",
+    "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+    "interface_version": "3.0.1",
+    "observation_hash": "014df4e63a5b87694e6a484f475b4e44511cfbfa941fd5c5a7cdaa3f722f2277",
+    "simulator_version": "1.0.3",
+    "spec_hash": "13931e08fb059bff8af97e26a705ebf5d087b439039fb7c3bd816bd3ffb55a50",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_high.tyre_nonlinear.traffic_dense/0002/episode/03/SC/spec"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.northshore.a": "car.fictional.northshore.a|continuation|compound_obligation.v1@1.2.0",
+      "car.fictional.northshore.b": "car.fictional.northshore.b|continuation|compound_obligation.v1@1.2.0"
+    },
+    "checkpoint_event_index": 42,
+    "choice": {
+      "action_id_1": "car.fictional.northshore.a|continuation|compound_obligation.v1@1.2.0",
+      "action_id_2": "car.fictional.northshore.b|continuation|compound_obligation.v1@1.2.0",
+      "i": 0,
+      "j": 0,
+      "n_ties": 1,
+      "value": 7444.026825433839
+    },
+    "decision_time_race_s": 1080.9357471031449,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.northshore.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.northshore.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 1088.260461717,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 10,
+            "pit_lap_index": 10,
+            "reason": "service_complete",
+            "set_id": "car.fictional.northshore.a.set.medium.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.northshore.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 10,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.a.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.northshore.a",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 10,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.a.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      },
+      "car.fictional.northshore.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.northshore.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 1085.760461717,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 10,
+            "pit_lap_index": 10,
+            "reason": "service_complete",
+            "set_id": "car.fictional.northshore.b.set.medium.0",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.northshore.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 10,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.b.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.northshore.b",
+            "compound": "medium",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "committed_service",
+            "pit_lap_index": 10,
+            "reason": "in_progress_commitment",
+            "set_id": "car.fictional.northshore.b.set.medium.0",
+            "source": "commitment"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": null,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "continuation_sequence_checked"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": true,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": true
+  },
+  "timing_s": {
+    "analytical": 0.04149441607296467,
+    "terminal": 1.0814201249741018,
+    "total": 1.1229145410470665
+  }
+}

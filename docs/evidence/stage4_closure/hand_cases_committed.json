@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "wrong_executed_set",
+      "kind": "mutate_executed"
+    },
+    {
+      "id": "extra_unplanned_mount",
+      "kind": "mutate_executed"
+    },
+    {
+      "id": "omitted_expected_mount",
+      "kind": "mutate_executed"
+    },
+    {
+      "id": "late_pit_entry_lap",
+      "kind": "timing_unit"
+    },
+    {
+      "id": "delay_boundary_exact",
+      "kind": "timing_unit"
+    },
+    {
+      "id": "pit_phase_transit_in",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "pit_phase_waiting",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "pit_phase_service",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "pit_phase_transit_out",
+      "kind": "pit_phase"
+    },
+    {
+      "id": "mixed_crew_on_track_in_pit",
+      "kind": "mixed_timing"
+    },
+    {
+      "id": "mixed_crew_already_waiting",
+      "kind": "mixed_timing"
+    },
+    {
+      "id": "historical_invalid_optima_panel",
+      "kind": "reuse_panel"
+    }
+  ],
+  "committed_before_outcomes": true,
+  "payload_sha256": "8ecae749ac346b2dc96a26229eeb0d158511fc0333502d3343675f7b983fdfa7"
+}

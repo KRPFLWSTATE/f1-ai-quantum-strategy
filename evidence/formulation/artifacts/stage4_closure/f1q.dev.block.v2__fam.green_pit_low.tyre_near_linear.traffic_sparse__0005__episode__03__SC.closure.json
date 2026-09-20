@@ -1,0 +1,209 @@
+{
+  "analytical": {
+    "energy_checks": [],
+    "enumeration_exact": 12822.140235572093,
+    "legal_action_count": 361,
+    "milp_agrees": true,
+    "n_ties": 1,
+    "proxy_headroom": {
+      "exact_reference_headroom": 0.0,
+      "exact_value": 12822.140235572093,
+      "greedy_value": 12822.140235572093,
+      "heuristic_proxy_headroom": 0.0
+    }
+  },
+  "config_hashes": {
+    "action_dictionary_hash": "841986c207864b4952722c695345c628bd8253ec77e916c87ecc047b187daf06",
+    "coefficient_hash": "64b1dd90552a220936978d01c4d90df680a00cc6270bb0b209f8d8336a89232a",
+    "qubo_hash": "3ef4c8246c47f60126e6e4d3ee1f77a73ec131e9371d3dac78b65c2208509c37",
+    "record_hash_math_fields_only": "60aae3d717500a05b3f10c923a1890e6f2a02368fdb539877c0950b2006ebb81"
+  },
+  "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/03/SC",
+  "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+  "fresh": true,
+  "ok": true,
+  "pair_validation": {
+    "expected": 361,
+    "round_trip_failed": 0,
+    "round_trip_passed": 361,
+    "validation_failed": 0,
+    "validation_passed": 361
+  },
+  "payload_sha256": "bc42f4ee8b7c9c7686ca92ad37d8100c09006ba67980c55f300761e9ae8a9657",
+  "qubo_ising": {
+    "algebraic_penalty": {
+      "B": 2802.85213480926,
+      "M": 2803.85213480926,
+      "margin": 1.0,
+      "rule": "M = B/v_min + margin (strict), v_min=1 for one-hot binary violation measure",
+      "v_min": 1.0
+    },
+    "exhaustive_or_algebraic": {
+      "algebraic_bound_ok": true,
+      "n": 38,
+      "ok": true,
+      "reason": "n_gt_12_algebraic_bound_only",
+      "skipped_exhaustive": true
+    },
+    "infeasible_fixed_ok": true,
+    "legal_pairs_checked": 361,
+    "n_variables": 38,
+    "ok": true,
+    "qubo_ising_mismatches": []
+  },
+  "reused": false,
+  "scenario_id": null,
+  "schema": "stage4_closure_episode_v1",
+  "source": {
+    "block_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005",
+    "episode_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/03/SC",
+    "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+    "interface_version": "3.0.1",
+    "observation_hash": "7264709cddbff80641af5358ce5ec90650d5be900a179464416f20a3c7a25753",
+    "simulator_version": "1.0.3",
+    "spec_hash": "adc0abbfd0409f5ec8fbc79be30e7f32af1d93978dbf04cff65365b5bf68dc1a",
+    "spec_id": "f1q.dev.block.v2/fam.green_pit_low.tyre_near_linear.traffic_sparse/0005/episode/03/SC/spec"
+  },
+  "terminal_witness": {
+    "action_ids": {
+      "car.fictional.stoneford.a": "car.fictional.stoneford.a|delay_laps|2|soft|car.fictional.stoneford.a.set.soft.1",
+      "car.fictional.stoneford.b": "car.fictional.stoneford.b|delay_laps|2|soft|car.fictional.stoneford.b.set.soft.1"
+    },
+    "checkpoint_event_index": 86,
+    "choice": {
+      "action_id_1": "car.fictional.stoneford.a|delay_laps|2|soft|car.fictional.stoneford.a.set.soft.1",
+      "action_id_2": "car.fictional.stoneford.b|delay_laps|2|soft|car.fictional.stoneford.b.set.soft.1",
+      "i": 12,
+      "j": 12,
+      "n_ties": 1,
+      "value": 12822.140235572093
+    },
+    "decision_time_race_s": 3198.7974133043112,
+    "exact_set_and_compound_match": true,
+    "instructed_versus_executed": {
+      "car.fictional.stoneford.a": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.stoneford.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 3502.558884447,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 35,
+            "pit_lap_index": 35,
+            "reason": "service_complete",
+            "set_id": "car.fictional.stoneford.a.set.soft.1",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.stoneford.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.stoneford.a.set.soft.1",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.stoneford.a",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.stoneford.a.set.soft.1",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": 35,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "delay_laps_exact_entry_lap"
+      },
+      "car.fictional.stoneford.b": {
+        "executed_stops": [
+          {
+            "car_id": "car.fictional.stoneford.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "event_time_race_s": 3490.687613249,
+            "kind": "service_complete",
+            "pit_entry_completed_laps": 35,
+            "pit_lap_index": 35,
+            "reason": "service_complete",
+            "set_id": "car.fictional.stoneford.b.set.soft.1",
+            "source": "simulator",
+            "stop_index": 1,
+            "supporting_kinds_ignored_as_separate_stops": [
+              "pit_entry",
+              "pit_exit",
+              "pit_wait",
+              "service_start"
+            ]
+          }
+        ],
+        "expected_stops": [
+          {
+            "car_id": "car.fictional.stoneford.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.stoneford.b.set.soft.1",
+            "source": "instruction"
+          }
+        ],
+        "instructed": [
+          {
+            "car_id": "car.fictional.stoneford.b",
+            "compound": "soft",
+            "downstream_policy_id": "compound_obligation.v1",
+            "downstream_policy_version": "1.2.0",
+            "kind": "delay_laps",
+            "pit_lap_index": 2,
+            "reason": null,
+            "set_id": "car.fictional.stoneford.b.set.soft.1",
+            "source": "instruction"
+          }
+        ],
+        "instructed_set_compound_ok": true,
+        "pit_entry_completed_laps": 35,
+        "stop_sequence_ok": true,
+        "timing_ok": true,
+        "timing_reason": "delay_laps_exact_entry_lap"
+      }
+    },
+    "reason_codes": [
+      "ok"
+    ],
+    "selection_rule": "lexicographically_first_tied_optimum_by_action_id_pair",
+    "semantic_legal": true,
+    "stop_sequence_match": true,
+    "terminal_obligation_satisfied": true,
+    "timing_window_match": true
+  },
+  "timing_s": {
+    "analytical": 0.14988737495150417,
+    "terminal": 1.5594133749837056,
+    "total": 1.7093007499352098
+  }
+}
