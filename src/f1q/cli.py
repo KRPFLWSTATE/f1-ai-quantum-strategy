@@ -142,6 +142,23 @@ def main(argv: list[str] | None = None) -> int:
                     "qpu_jobs": 0,
                     "qpu_usage_seconds": 0,
                 }
+            elif args.plan == "a4_redesign":
+                from f1q.authorization import authorize_plan, load_project_config
+                from f1q.a4.campaign import execute_campaign
+
+                config, _, _ = load_project_config(root)
+                authorize_plan(config, args.plan)
+                camp = execute_campaign(root)
+                result = {
+                    "status": camp.get("status") or "failed",
+                    "run_id": camp.get("run_id"),
+                    "gate_e": camp.get("gate_e"),
+                    "gate_f": camp.get("gate_f"),
+                    "verify_ok": camp.get("verify_ok"),
+                    "qpu_jobs": 0,
+                    "qpu_usage_seconds": 0,
+                    "final_test_accessed": False,
+                }
             else:
                 from f1q.authorization import authorize_plan, load_project_config
 

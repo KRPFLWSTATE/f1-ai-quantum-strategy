@@ -201,6 +201,11 @@ def authorize_plan(config: ProjectConfig, plan_id: str) -> None:
             raise AuthorizationError("a3_redesign requires active_stage >= 6")
         if config.hardware_execution_enabled:
             raise AuthorizationError("a3_redesign forbids hardware_execution_enabled")
+    elif plan_id == "a4_redesign":
+        if config.active_stage < 6:
+            raise AuthorizationError("a4_redesign requires active_stage >= 6")
+        if config.hardware_execution_enabled:
+            raise AuthorizationError("a4_redesign forbids hardware_execution_enabled")
     else:
         raise AuthorizationError(f"plan {plan_id!r} is not implemented")
     if config.mode != "local":

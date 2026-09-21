@@ -31,6 +31,7 @@ from f1q.stage5.selector import compute_features
 from f1q.stage6.config import Phase6Config
 from f1q.stage6.metrics_pilot import exact_distribution_metrics, pool_sample_metrics
 from f1q.stage6.noisy import (
+    DEPOLARIZING_MIXTURE_CONVENTION,
     HISTORICAL_NOISY_PANEL_CLASS,
     depolarizing_kraus_1q,
     depolarizing_kraus_2q,
@@ -44,12 +45,7 @@ NATIVE_BASIS = ("rz", "sx", "x", "cx")
 VIRTUAL_RZ_GATES = frozenset({"rz", "p", "u1", "id", "barrier"})
 NATIVE_1Q_CHANNEL_GATES = frozenset({"sx", "x"})
 NATIVE_2Q_CHANNEL_GATES = frozenset({"cx"})
-DEPOLARIZING_CONVENTION = (
-    "p is the depolarizing probability in the standard Kraus form used by "
-    "qiskit.quantum_info / Nielsen-Chuang: 1q Λ(ρ)=(1-p)ρ+(p/3)∑_{P∈{X,Y,Z}} PρP "
-    "implemented as (1-3p/4)I + (p/4)∑ Pauli; 2q Λ(ρ)=(1-p)ρ+(p/15)∑_{P≠I} PρP. "
-    "One consistent convention for logical and native panels."
-)
+DEPOLARIZING_CONVENTION = DEPOLARIZING_MIXTURE_CONVENTION
 
 NATIVE_NOISE_SUPERSEDES = (
     "evidence/stage6_corrected/2a3fb275-6c37-4bbc-bdb4-addede80b5c3 noisy panel "
@@ -251,19 +247,19 @@ def verify_native_analytical_fixtures() -> dict[str, Any]:
             "eligible_1q": noisy_x["n_eligible_native_1q"],
         }
     )
-    # Analytical 2q: CX on |00> stays |00>; then p2=1 under the project Pauli-twirl
-    # convention Λ(ρ)=(1-p)ρ+(p/15)∑_{P≠I} PρP. At p=1 this is (4I-ρ)/15, NOT I/4.
+    # Analytical 2q: CX on |00> stays |00>; then p2=1 under E_p(ρ)=(1-p)ρ+p I/4
+    # yields the maximally mixed state I/4 (uniform 0.25). Synthetic ≠ IBM.
     qc_cx = QuantumCircuit(2)
     qc_cx.cx(0, 1)
     noisy_cx = simulate_native_depolarizing(qc_cx, p1=0.0, p2=1.0)
-    expected_p1 = np.array([3.0 / 15.0, 4.0 / 15.0, 4.0 / 15.0, 4.0 / 15.0])
+    expected_p1 = np.array([0.25, 0.25, 0.25, 0.25])
     checks.append(
         {
-            "name": "analytical_2q_p2_1_after_cx_pauli_twirl_closed_form",
+            "name": "analytical_2q_p2_1_after_cx_maximally_mixed_I_over_4",
             "pass": bool(np.allclose(noisy_cx["probs"], expected_p1, atol=1e-8)),
             "n_2q_channels": noisy_cx["n_2q_channels_applied"],
             "eligible_2q": noisy_cx["n_eligible_native_2q"],
-            "convention_note": "p=1 is not I/4 under the 15-nonidentity Pauli twirl; closed form (4I-ρ)/15",
+            "convention_note": "mixture convention p=1 gives I/4 for two qubits",
         }
     )
     checks.append(

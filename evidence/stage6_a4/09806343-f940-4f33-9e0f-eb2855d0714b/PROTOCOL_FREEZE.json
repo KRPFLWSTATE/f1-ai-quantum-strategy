@@ -1,0 +1,76 @@
+{
+  "a3_not_a_continuation": true,
+  "a3_scientific_result": "SUPERSEDED_INVALID_IMPLEMENTATION",
+  "allocator_modes": [
+    "learned",
+    "always_classical",
+    "always_c0",
+    "always_c1",
+    "threshold"
+  ],
+  "architecture": "A4_checkpoint_candidate_generation_downstream_reranking",
+  "bootstrap_seed": 20260921,
+  "classical_comparator": "strongest_deadline_feasible_classical_portfolio",
+  "datetime_utc": "2026-09-21T14:08:18Z",
+  "donor_policy_choices": [
+    "learned",
+    "fixed",
+    "nn",
+    "random"
+  ],
+  "final_test_sealed": true,
+  "gate_e_does_not_require_positive_quantum": true,
+  "gate_f_fails_if_incomplete_or_unfit_minima": true,
+  "interval_method": "stratified_equal_family_weight_block_bootstrap",
+  "max_anchor_evals": 15,
+  "missing_as_failure_in_denominator": true,
+  "n_boot": 2000,
+  "nominal_budgets_s": [
+    5,
+    10,
+    30,
+    60,
+    120
+  ],
+  "partitions_planned": {
+    "anchors": 24,
+    "calibration": 24,
+    "final_test_registered": 80,
+    "training": 120,
+    "tuning": 80
+  },
+  "phase_7_not_started": true,
+  "portfolio_k": 4,
+  "primary_budget_s": 30,
+  "primary_estimand": {
+    "budget_s": 30,
+    "formula": "classical_only_evaluation_loss - safely_dispatched_A4_evaluation_loss",
+    "minimum_worthwhile_effect": 0.02,
+    "name": "paired_parent_block_mean_classical_minus_dispatched_evaluation_loss",
+    "positive_favours": "A4_dispatched",
+    "sensitivity": [
+      0.01,
+      0.05
+    ]
+  },
+  "qpu_execution_authorised": false,
+  "source_commit": "be9e11e3ca0e92d4579f060071e07b44e0932bae",
+  "status": "A4_PROTOCOL_FROZEN_BEFORE_CALIBRATION",
+  "stochastic_policy_seeds_tune_calib": 3,
+  "stop_before_calibration": true,
+  "worlds": {
+    "calibration": {
+      "evaluation": 16,
+      "planning": 8
+    },
+    "training": {
+      "evaluation": 4,
+      "planning": 2
+    },
+    "tuning": {
+      "evaluation": 8,
+      "planning": 4
+    }
+  },
+  "written_before_opening_calibration_outcomes": true
+}

@@ -1,0 +1,76 @@
+{
+  "anchor_time_s_projected": 1256.2244097702205,
+  "arithmetic": "median_case=13.424s at 2-plan/4-eval; scale by (4*n_plan+n_eval)/12; usable=0.8*4500s; anchors=288 starts * 15 evals * avg(c0,c1)",
+  "elapsed_s": 52.81384675006848,
+  "frozen_k": 4,
+  "frozen_max_evals": 15,
+  "frozen_worlds": {
+    "calibration": {
+      "evaluation": 16,
+      "planning": 8
+    },
+    "training": {
+      "evaluation": 4,
+      "planning": 2
+    },
+    "tuning": {
+      "evaluation": 8,
+      "planning": 4
+    }
+  },
+  "headroom_fraction_reserved": 0.2,
+  "median_case_s": 13.423619124980178,
+  "minima_fit": false,
+  "n_blocks": 2,
+  "n_cases": 4,
+  "n_legal": [
+    100,
+    100,
+    100,
+    100
+  ],
+  "n_qubits": [
+    20,
+    20,
+    20,
+    20
+  ],
+  "not_invented_after_seeing_calib": true,
+  "projected_anchor_80_s": 6699.863518774509,
+  "projection": [
+    {
+      "fits": false,
+      "grid": {
+        "calib_e": 32,
+        "calib_p": 16,
+        "train_e": 8,
+        "train_p": 4,
+        "tune_e": 16,
+        "tune_p": 8
+      },
+      "t_proj_s": 21907.34641196765
+    },
+    {
+      "fits": false,
+      "grid": {
+        "calib_e": 16,
+        "calib_p": 8,
+        "train_e": 4,
+        "train_p": 2,
+        "tune_e": 8,
+        "tune_p": 4
+      },
+      "t_proj_s": 10953.673205983825
+    }
+  ],
+  "remain_after_anchor_preflight_s": 2290.961743479711,
+  "t_c0_eval_s": 0.5694294999120757,
+  "t_c1_eval_s": 0.012155874981544912,
+  "timings_s": [
+    11.249676125007682,
+    12.255702374968678,
+    14.591535874991678,
+    14.713639582972974
+  ],
+  "usable_s": 3600.0
+}

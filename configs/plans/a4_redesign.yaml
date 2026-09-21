@@ -1,0 +1,11 @@
+schema_version: "1.0.0"
+plan_id: a4_redesign
+kind: a4_redesign
+description: "Phase 6 A4 scientific supersession. Local classical + local ideal/noisy simulation only. No QPU. No Phase 7. No final-test access."
+hardware_execution_enabled: false
+qpu_execution_authorised: false
+zero_additional_spending: true
+units:
+  - unit_id: a4_redesign_complete
+    kind: a4_pipeline
+    description: "A3 invalidation, noise convention, A4 campaign, independent verify"

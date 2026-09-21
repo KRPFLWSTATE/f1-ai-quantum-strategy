@@ -59,6 +59,21 @@ def _phase6_status(root: Path) -> str:
     return "PASS_WITH_DOCUMENTED_LIMITATIONS" if data.get("ok") else "PARTIAL"
 
 
+def _a4_status(root: Path) -> dict:
+    import json
+
+    runs = sorted((root / "evidence/stage6_a4").glob("*/readiness.json"))
+    if not runs:
+        docs = sorted((root / "docs/evidence/stage6_a4").glob("*/readiness.json"))
+        runs = docs
+    if not runs:
+        return {}
+    try:
+        return json.loads(runs[-1].read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
 def _a3_status(root: Path) -> dict:
     import json
 
@@ -102,14 +117,26 @@ def run_status(root: Path | None = None) -> dict:
         "LEGACY_GATE_ACTION": "ARCHIVED_DO_NOT_RESUME",
         "PROXY_HEADROOM": "ZERO",
         "STAGE_5A": "PASS",
-        "SELECTED_ARCHITECTURE": "A3_causal_operational_rolling_horizon (A2 lineage preserved; A2 not a continuation)",
+        "SELECTED_ARCHITECTURE": (
+            "A4_checkpoint_candidate_generation_downstream_reranking "
+            "(A3 scientific result SUPERSEDED_INVALID_IMPLEMENTATION; A2 lineage preserved)"
+            if _a4_status(root)
+            else "A3_causal_operational_rolling_horizon (A2 lineage preserved; A2 not a continuation)"
+        ),
         "PHASE_5_ENGINEERING": _phase5_status(root),
         "PHASE_6_ENGINEERING": _phase6_status(root),
         "PHASE_6_ACCEPTANCE": _phase6_status(root),
+        "PHASE_6_A4": _a4_status(root).get("GATE_E_SCIENTIFIC_VALUE") or "PENDING",
         "GATE_E_SCIENTIFIC_VALUE": (
-            str(_a3_status(root).get("GATE_E_SCIENTIFIC_VALUE") or _phase6_gate_e(root))
+            str(
+                _a4_status(root).get("GATE_E_SCIENTIFIC_VALUE")
+                or _a3_status(root).get("GATE_E_SCIENTIFIC_VALUE")
+                or _phase6_gate_e(root)
+            )
         ),
+        "A3_SCIENTIFIC_RESULT": "SUPERSEDED_INVALID_IMPLEMENTATION",
         "A3_CAUSAL_OPERATIONAL_INTEGRATION": bool(_a3_status(root).get("CAUSAL_OPERATIONAL_INTEGRATION")),
+        "A4_CAUSAL_OPERATIONAL_INTEGRATION": bool(_a4_status(root).get("CAUSAL_OPERATIONAL_INTEGRATION")),
         "PHASE_7_MECHANISM_READY": False,
         "PHASE_7_BOUNDARY_STUDY_READY": False,
         "PHASE_7_OPERATIONAL_READY": False,
@@ -120,6 +147,10 @@ def run_status(root: Path | None = None) -> dict:
         "legacy_archive": legacy,
     }
     next_work_default = (
+        "A4 scientific supersession recorded. A3 scientific results are SUPERSEDED_INVALID_IMPLEMENTATION. "
+        "Phase 7 NOT authorised. No QPU. Do not open final-test."
+        if _a4_status(root)
+        else (
         "A3 redesign closed as UNRESOLVED Gate E (uninformative quantum marginal on enumerable menu). "
         "Phase 7 NOT authorised. No QPU. Do not open final-test."
         if _a3_status(root)
@@ -136,6 +167,7 @@ def run_status(root: Path | None = None) -> dict:
             "Phase 5 complete pending review; next is Stage 6 local pilot (not hardware) when authorised."
             if _phase5_status(root) in {"PASS", "PARTIAL"}
             else "Run Phase 5: python -m f1q run --plan phase5"
+        )
         )
         )
     )

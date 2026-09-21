@@ -36,51 +36,69 @@ HISTORICAL_NOISY_PANEL_CLASS = (
 )
 
 
-def depolarizing_kraus_1q(p: float) -> Kraus:
-    """Standard single-qubit depolarizing channel Kraus operators."""
+_PAULI_1Q = (
+    np.eye(2, dtype=complex),
+    np.array([[0, 1], [1, 0]], dtype=complex),
+    np.array([[0, -1j], [1j, 0]], dtype=complex),
+    np.array([[1, 0], [0, -1]], dtype=complex),
+)
+
+DEPOLARIZING_MIXTURE_CONVENTION = (
+    "Dimension-independent Qiskit/Nielsen-Chuang mixture: "
+    "E_p(rho)=(1-p) rho + p I/d, d=2**n, 0<=p<=1. "
+    "Equivalent Pauli Kraus: identity probability 1-p*(d**2-1)/d**2; "
+    "each non-identity Pauli probability p/d**2. "
+    "p=1 yields I/2 (1q) and I/4 (2q). Synthetic; not IBM-calibrated noise."
+)
+
+
+def _n_qubit_paulis(n_qubits: int) -> list[np.ndarray]:
+    ops = [np.array([[1.0 + 0.0j]], dtype=complex)]
+    for _ in range(n_qubits):
+        ops = [np.kron(P, Q) for P in ops for Q in _PAULI_1Q]
+    return ops
+
+
+def depolarizing_closed_form(rho: np.ndarray, p: float) -> np.ndarray:
+    """Closed form E_p(rho)=(1-p) rho + p I/d for a density matrix."""
     if p < 0.0 or p > 1.0:
         raise ValueError("p must be in [0,1]")
-    I = np.eye(2, dtype=complex)
-    X = np.array([[0, 1], [1, 0]], dtype=complex)
-    Y = np.array([[0, -1j], [1j, 0]], dtype=complex)
-    Z = np.array([[1, 0], [0, -1]], dtype=complex)
-    return Kraus(
-        [
-            np.sqrt(max(0.0, 1.0 - 3.0 * p / 4.0)) * I,
-            np.sqrt(p / 4.0) * X,
-            np.sqrt(p / 4.0) * Y,
-            np.sqrt(p / 4.0) * Z,
-        ]
-    )
+    rho = np.asarray(rho, dtype=complex)
+    d = int(rho.shape[0])
+    return (1.0 - p) * rho + p * np.eye(d, dtype=complex) / d
+
+
+def depolarizing_kraus(n_qubits: int, p: float) -> Kraus:
+    """General n-qubit depolarizing Kraus operators for the mixture convention."""
+    if n_qubits < 1:
+        raise ValueError("n_qubits must be >= 1")
+    if p < 0.0 or p > 1.0:
+        raise ValueError("p must be in [0,1]")
+    d = 2**n_qubits
+    d2 = d * d
+    paulis = _n_qubit_paulis(n_qubits)
+    assert len(paulis) == d2
+    p_id = 1.0 - p * (d2 - 1) / d2
+    p_ni = p / d2
+    kraus = [np.sqrt(max(0.0, p_id)) * paulis[0]]
+    for op in paulis[1:]:
+        kraus.append(np.sqrt(p_ni) * op)
+    return Kraus(kraus)
+
+
+def depolarizing_kraus_1q(p: float) -> Kraus:
+    """One-qubit depolarizing: E_p(rho)=(1-p)rho + p I/2."""
+    return depolarizing_kraus(1, p)
 
 
 def depolarizing_kraus_2q(p: float) -> Kraus:
-    """Two-qubit depolarizing: (1-p) I + (p/15) sum_{P≠I} P⊗P-family Paulis.
+    """Two-qubit depolarizing: E_p(rho)=(1-p)rho + p I/4.
 
-    Uses the standard Qiskit-compatible construction: Kraus set for
-    ``Λ(ρ)=(1-p)ρ + (p/15)∑_{i=1}^{15} P_i ρ P_i`` over non-identity 2-qubit Paulis.
+    Identity probability 1-15p/16; each of 15 non-identity Paulis p/16.
+    This supersedes the previous total-nonidentity-error convention
+    (identity 1-p, each non-identity p/15) that disagreed with the 1q mixture parameter.
     """
-    if p < 0.0 or p > 1.0:
-        raise ValueError("p must be in [0,1]")
-    paulis_1q = [
-        np.eye(2, dtype=complex),
-        np.array([[0, 1], [1, 0]], dtype=complex),
-        np.array([[0, -1j], [1j, 0]], dtype=complex),
-        np.array([[1, 0], [0, -1]], dtype=complex),
-    ]
-    ops = []
-    labels = []
-    for a, A in enumerate(paulis_1q):
-        for b, B in enumerate(paulis_1q):
-            if a == 0 and b == 0:
-                continue
-            labels.append((a, b))
-            ops.append(np.kron(A, B))
-    assert len(ops) == 15
-    kraus = [np.sqrt(max(0.0, 1.0 - p)) * np.eye(4, dtype=complex)]
-    for op in ops:
-        kraus.append(np.sqrt(p / 15.0) * op)
-    return Kraus(kraus)
+    return depolarizing_kraus(2, p)
 
 
 def _gate_qubit_count(instr) -> int:
