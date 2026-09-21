@@ -1,0 +1,50 @@
+{
+  "schema_version": "phases1to6.requirements_matrix.v1",
+  "corrected_run_id": "2a3fb275-6c37-4bbc-bdb4-addede80b5c3",
+  "source_commit_start": "ab35715fd640d3743b1635d32a09c41a17a1a76e",
+  "phases": {
+    "1": {
+      "acceptance": "PASS",
+      "category_summary": "VERIFIED_NOW + VERIFIED_BY_REUSABLE_EVIDENCE",
+      "authoritative_report": "docs/STAGE_1_REPORT.md"
+    },
+    "2": {
+      "acceptance": "PASS_WITH_DOCUMENTED_LIMITATIONS",
+      "category_summary": "VERIFIED_BY_REUSABLE_EVIDENCE + VERIFIED_NOW split isolation",
+      "authoritative_report": "docs/STAGE_2_REPORT.md"
+    },
+    "3": {
+      "acceptance": "PASS_WITH_DOCUMENTED_LIMITATIONS",
+      "operational_a2": "BLOCKED",
+      "authoritative_report": "docs/STAGE_3_REPORT.md"
+    },
+    "4": {
+      "acceptance": "CLOSED_WITH_DOCUMENTED_LIMITATIONS",
+      "legacy_exhaustive": "PARTIAL_ARCHIVED_DO_NOT_RESUME",
+      "authoritative_report": "docs/STAGE_4_CLOSURE_REPORT.md"
+    },
+    "5": {
+      "acceptance": "PASS_WITH_DOCUMENTED_LIMITATIONS",
+      "corrected_run": "e6b3588b-ab97-48c9-82f4-616785aa3611",
+      "final_acceptance_commit": "1c7631e609a12562155ba978cb50790f3ed2b6f7",
+      "authoritative_report": "docs/STAGE_5_FINAL_ACCEPTANCE_REPORT.md"
+    },
+    "6": {
+      "acceptance": "CORRECTED_WITH_DOCUMENTED_LIMITATIONS",
+      "historical_run_preserved": "bd83cb22-6a38-4d21-9267-3253f52587d7",
+      "corrected_run": "2a3fb275-6c37-4bbc-bdb4-addede80b5c3",
+      "gate_e": "FAIL_FOR_INTENDED_CONTRIBUTION",
+      "gate_f": "PASS_WITH_LIMITATIONS",
+      "authoritative_reports": [
+        "docs/STAGE_6_CORRECTED_REPORT.md",
+        "docs/PHASES_1_TO_6_ACCEPTANCE_REPORT.md"
+      ]
+    }
+  },
+  "phase7": {
+    "mechanism_ready": false,
+    "operational_ready": false,
+    "superiority_ready": false,
+    "started": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "actual_draws": 1024,
+  "features_keys": [
+    "coeff_abs_max",
+    "coeff_abs_mean",
+    "crew_overlap_cost",
+    "depth_p",
+    "family_is_c1",
+    "feature_compute_s",
+    "mean_block_size",
+    "n_blocks",
+    "n_epochs",
+    "n_info_sets",
+    "n_logical_vars",
+    "n_scenarios",
+    "nnz_Q",
+    "penalty_M",
+    "qubo_density",
+    "qubo_n_terms"
+  ],
+  "label": "MEASURED_local_representative_not_full_campaign",
+  "measured_s": {
+    "circuit_c0_p1_evolution": 0.003934707958251238,
+    "circuit_c1_p1_evolution": 0.00846895796712488,
+    "exact_distribution_scan": 0.002991124987602234,
+    "exact_legal_reference_enum": 0.000508124940097332,
+    "features": 0.00016962504014372826,
+    "gate_depolarizing_density_matrix": 0.17989445896819234,
+    "instance_qubo_construction": 0.00025529193226248026,
+    "one_pool_1024_draws": 0.003621957963332534
+  },
+  "n_legal": 16,
+  "n_qubits": 8,
+  "noisy_measure_error": null,
+  "pool_shot_conservation_ok": true
+}

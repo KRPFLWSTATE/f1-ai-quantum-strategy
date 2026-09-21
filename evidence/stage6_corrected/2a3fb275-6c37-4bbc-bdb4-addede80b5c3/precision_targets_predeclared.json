@@ -1,0 +1,25 @@
+{
+  "declared_before_calibration_outcomes": true,
+  "do_not_transfer_operational_margin_to_circuit_probs": true,
+  "mechanism_endpoints": {
+    "best_of_pool_normalised_regret": {
+      "interpretation": "Block-mean best-of-pool normalised regret vs exact classical; saturated-at-zero is informative of exact-incumbent dominance, not superiority.",
+      "justification": "Mechanism boundary endpoint on synthetic A2 loss; looser than operational h=0.01 because estimand is circuit-sample regret not race-outcome delta",
+      "target_halfwidth_per_block_mean": 0.05,
+      "units": "normalised_regret_on_A2_proxy_loss"
+    },
+    "exact_ideal_legal_probability": {
+      "justification": "statevector ideal distribution is deterministic given params",
+      "target": "report exact value; no sampling precision target"
+    },
+    "strict_improvement_vs_exact": {
+      "justification": "When exact incumbent dominates, estimand is structurally zero",
+      "target": "point estimate with declared tolerance",
+      "tolerance": 1e-08
+    }
+  },
+  "operational_endpoints": {
+    "reason": "Causal operational evaluator not integrated; dossier \u03b4/h sizing NOT_APPLICABLE",
+    "status": "NOT_ELIGIBLE"
+  }
+}

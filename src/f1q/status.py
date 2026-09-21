@@ -40,6 +40,15 @@ def _phase5_status(root: Path) -> str:
 def _phase6_status(root: Path) -> str:
     import json
 
+    corrected = root / "docs/evidence/stage6_corrected/STAGE_6_CORRECTED_FINAL_VERIFY.json"
+    if corrected.is_file():
+        try:
+            data = json.loads(corrected.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            data = {}
+        if data.get("ok"):
+            return "CORRECTED_WITH_DOCUMENTED_LIMITATIONS"
+        return "PARTIAL"
     docs = root / "docs/evidence/stage6/STAGE_6_FINAL_VERIFY.json"
     if not docs.is_file():
         return "PENDING"
@@ -48,6 +57,21 @@ def _phase6_status(root: Path) -> str:
     except (OSError, json.JSONDecodeError):
         return "PENDING"
     return "PASS_WITH_DOCUMENTED_LIMITATIONS" if data.get("ok") else "PARTIAL"
+
+
+def _phase6_gate_e(root: Path) -> str:
+    import json
+
+    path = root / "evidence/stage6_corrected"
+    if path.is_dir():
+        runs = sorted(path.glob("*/readiness_matrix.json"))
+        if runs:
+            try:
+                data = json.loads(runs[-1].read_text(encoding="utf-8"))
+                return str(data.get("GATE_E_SCIENTIFIC_VALUE") or "UNKNOWN")
+            except (OSError, json.JSONDecodeError):
+                pass
+    return "UNKNOWN"
 
 
 def run_status(root: Path | None = None) -> dict:
@@ -66,15 +90,25 @@ def run_status(root: Path | None = None) -> dict:
         "SELECTED_ARCHITECTURE": "A2_multi_epoch_scenario_contingent_strategy_policy",
         "PHASE_5_ENGINEERING": _phase5_status(root),
         "PHASE_6_ENGINEERING": _phase6_status(root),
+        "PHASE_6_ACCEPTANCE": _phase6_status(root),
+        "GATE_E_SCIENTIFIC_VALUE": _phase6_gate_e(root),
+        "PHASE_7_MECHANISM_READY": False,
+        "PHASE_7_OPERATIONAL_READY": False,
+        "PHASE_7_SUPERIORITY_READY": False,
         "QPU_EXECUTION_AUTHORISED": False,
         "simulator_version": SIMULATOR_VERSION,
         "interface_version": INTERFACE_VERSION,
         "legacy_archive": legacy,
     }
     next_work_default = (
-        "Phase 6 complete; Phase 7 mechanism only after explicit prompt + dated amendment + review. "
-        "Operational/superiority Phase 7 not ready. No QPU."
-        if _phase6_status(root) in {"PASS_WITH_DOCUMENTED_LIMITATIONS", "PASS", "PARTIAL"}
+        "Phases 1–6 correction closed; Phase 7 NOT authorised. "
+        "Gate E FAIL_FOR_INTENDED_CONTRIBUTION; mechanism/operational/superiority ready flags false. No QPU."
+        if _phase6_status(root) in {
+            "CORRECTED_WITH_DOCUMENTED_LIMITATIONS",
+            "PASS_WITH_DOCUMENTED_LIMITATIONS",
+            "PASS",
+            "PARTIAL",
+        }
         else (
             "Phase 5 complete pending review; next is Stage 6 local pilot (not hardware) when authorised."
             if _phase5_status(root) in {"PASS", "PARTIAL"}

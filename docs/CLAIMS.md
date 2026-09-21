@@ -22,12 +22,15 @@ Every intended contribution is **unsupported** until matching evidence exists. S
 | C2 guarded mixer admitted | `c2_admission.json` | `NOT_ADMITTED_BY_PROTOCOL` (valid negative) |
 | Quantum advantage / first quantum F1 optimiser | Matching evidence | unsupported |
 | Phase 6 operational race-decision pilot ready | Causal simulator integration + evaluator | **false** — `CAUSAL_OPERATIONAL_READINESS: false` |
-| Phase 6 mechanism pilot establishes F1 value | Operational endpoints | unsupported — mechanism/resource scope only |
-| Absolute scientific novelty / first AI–quantum–F1 system | Literature Gate E | unsupported — `GATE_E: PASS_FOR_DEFINED_SCOPE` only |
+| Phase 6 mechanism pilot establishes F1 value | Operational endpoints | unsupported — `F1_CONTRIBUTION_STATUS: INSUFFICIENT` |
+| Absolute scientific novelty / first AI–quantum–F1 system | Literature Gate E | unsupported — `GATE_E: FAIL_FOR_INTENDED_CONTRIBUTION` (prior PASS withdrawn) |
 | Phase 6 calibration implies powered H1 superiority | Headroom gate + sizing | **false** — zero headroom; operational sizing `NOT_APPLICABLE` |
+| Phase 6 1024-shot pools on 8q (historical bd83cb22) | Shot conservation | **false historically** — 256 draws; **corrected** in `2a3fb275-…` |
+| Historical Phase 6 noisy panel = gate-level depolarizing | Gate-channel simulation | **false** — withdrawn; replaced by DensityMatrix gate channels (synthetic ≠ IBM) |
+| Phase 7 mechanism ready | Freeze + Gate E + justified N | **false** |
 
 ## Explicit limits (dossier §27 and master prompt §9.14)
 
-No absolute novelty, guaranteed future quantum advantage, team adoption, actual F1 performance gain, or publication acceptance is established. Phase 5 novelty status remains `PROPOSED_NOT_LITERATURE_VERIFIED`. Phase 6 Gate E pass is **for a defined mechanism/resource scope only**.
+No absolute novelty, guaranteed future quantum advantage, team adoption, actual F1 performance gain, or publication acceptance is established. Phase 5 novelty status remains `PROPOSED_NOT_LITERATURE_VERIFIED`. Phase 6 Gate E is **`FAIL_FOR_INTENDED_CONTRIBUTION`** after correction; narrow engineering artifacts do not satisfy the project AI–quantum–F1 objective.
 
-AI assistance: ChatGPT prepared earlier stage prompts; Cursor agents implemented Stages 1–6. That assistance is development tooling, not the runtime learned AI contribution.
+AI assistance: ChatGPT prepared earlier stage prompts; Cursor agents implemented Stages 1–6 and the Phases 1–6 correction. That assistance is development tooling, not the runtime learned AI contribution.

@@ -1,0 +1,142 @@
+{
+  "issues": [
+    {
+      "correction": "Remove Hilbert cap; record requested/actual/counts; resample",
+      "disposition": "CORRECTED_AND_VERIFIED",
+      "evidence_invalidated": [
+        "evidence/stage6/bd83cb22-6a38-4d21-9267-3253f52587d7/pilot_units/* (8q pools)",
+        "derived pilot summaries / capacity extrapolations depending on those pools"
+      ],
+      "evidence_reused": [
+        "ideal instance construction",
+        "Phase 5 models/donors",
+        "12q pools structurally OK but re-run for consistent schema"
+      ],
+      "files": [
+        "src/f1q/stage6/metrics_pilot.py"
+      ],
+      "id": "P6-SHOT-CAP",
+      "reproduction": "pool_sample_metrics used min(pool_size, 2**n); 8q cases drew 256 not 1024",
+      "scientific_impact": "Best-of-pool / shot-budget claims for 8q arms invalid under 1024 label",
+      "severity": "CRITICAL",
+      "stage": 6,
+      "verification": "test_shot_accounting + corrected pilot shot_conservation_ok"
+    },
+    {
+      "correction": "Withdraw historical class; implement DensityMatrix 1q/2q depolarizing on actual circuits",
+      "disposition": "CORRECTED_AND_VERIFIED",
+      "evidence_invalidated": [
+        "evidence/stage6/bd83cb22-6a38-4d21-9267-3253f52587d7/noisy_panel.json as gate-noise evidence"
+      ],
+      "evidence_reused": [
+        "preserved historical file with accurate class label"
+      ],
+      "files": [
+        "src/f1q/stage6/noisy.py"
+      ],
+      "id": "P6-NOISE-JITTER",
+      "reproduction": "Historical panel mixed ideal probs with uniform + Gaussian jitter",
+      "scientific_impact": "Cannot support gate-level noise resilience or noisy runtime claims",
+      "severity": "CRITICAL",
+      "stage": 6,
+      "verification": "analytical channel checks + zero-noise vs ideal"
+    },
+    {
+      "correction": "measure_component_timings + explicit arithmetic; resolve blocks vs cases",
+      "disposition": "CORRECTED_AND_VERIFIED",
+      "evidence_invalidated": [
+        "evidence/stage6/bd83cb22-6a38-4d21-9267-3253f52587d7/capacity_estimates.json claims"
+      ],
+      "evidence_reused": [
+        "machine inspect method"
+      ],
+      "files": [
+        "src/f1q/stage6/capacity.py"
+      ],
+      "id": "P6-CAPACITY-HARDCODE",
+      "reproduction": "Hard-coded 0.36s/pool etc \u2192 25.46h; seed double-count risk",
+      "scientific_impact": "Reduced matrix / ceiling fit not accepted",
+      "severity": "HIGH",
+      "stage": 6,
+      "verification": "measured pool actual_draws==1024; no double seed multiply"
+    },
+    {
+      "correction": "Execute stratified block bootstrap; derive recommendation; disclose saturation",
+      "disposition": "CORRECTED_AND_VERIFIED",
+      "evidence_invalidated": [
+        "evidence/stage6/bd83cb22-6a38-4d21-9267-3253f52587d7/statistical_sizing.json"
+      ],
+      "evidence_reused": [
+        "pilot block structure"
+      ],
+      "files": [
+        "src/f1q/stage6/sizing.py"
+      ],
+      "id": "P6-SIZING-PLACEHOLDER",
+      "reproduction": "String 'stratified bootstrap' without computation; 80 blocks vs 80 cases conflation",
+      "scientific_impact": "Independent-block recommendation unjustified",
+      "severity": "HIGH",
+      "stage": 6,
+      "verification": "precision_analysis_executed true"
+    },
+    {
+      "correction": "Withdraw Gate E PASS; set mechanism ready false until freeze+justification",
+      "disposition": "CORRECTED_AND_VERIFIED",
+      "evidence_invalidated": [
+        "prior GATE_E PASS_FOR_DEFINED_SCOPE",
+        "PHASE_7_MECHANISM_READY true"
+      ],
+      "evidence_reused": [
+        "literature comparison structure"
+      ],
+      "files": [
+        "src/f1q/stage6/novelty.py",
+        "docs/STAGE_6_PROTOCOL_FREEZE.md"
+      ],
+      "id": "P6-PROTOCOL-GATE-E",
+      "reproduction": "PROTOCOL BLOCKED_DRAFT while MECHANISM_READY true; Gate E PASS with insufficient F1 contribution",
+      "scientific_impact": "Overstated readiness for Phase 7 / scientific value",
+      "severity": "HIGH",
+      "stage": 6,
+      "verification": "novelty v2 + readiness matrix"
+    },
+    {
+      "correction": "Document redesign spec; keep CAUSAL_OPERATIONAL_READINESS false",
+      "disposition": "BLOCKED",
+      "evidence_invalidated": [
+        "any operational F1 claim"
+      ],
+      "evidence_reused": [
+        "Stage 3 simulator checks as simulator validity only"
+      ],
+      "files": [
+        "src/f1q/stage6/causal_adapter.py",
+        "src/f1q/stage5/model.py"
+      ],
+      "id": "P6-A2-CAUSAL",
+      "reproduction": "A2 assumes duration revealed at epoch 1",
+      "scientific_impact": "Not an operational causal race-decision model",
+      "severity": "HIGH",
+      "stage": "5-6",
+      "verification": "causal_adapter readiness false"
+    },
+    {
+      "correction": "Retain ZERO; SUPERIORITY_PATH false",
+      "disposition": "VERIFIED_BY_REUSABLE_EVIDENCE",
+      "evidence_invalidated": [],
+      "evidence_reused": [
+        "headroom finding"
+      ],
+      "files": [
+        "pilot evidence"
+      ],
+      "id": "P6-ZERO-HEADROOM",
+      "reproduction": "Exact classical \u2192 ZERO demonstrated proxy headroom",
+      "scientific_impact": "Superiority path unavailable; must not manufacture difficulty",
+      "severity": "HIGH",
+      "stage": 6,
+      "verification": "strict_improve vs exact == 0 on corrected pilot"
+    }
+  ],
+  "schema_version": "phases1to6.issue_register.v1"
+}

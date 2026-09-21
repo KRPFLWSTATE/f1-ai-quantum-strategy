@@ -1,0 +1,19 @@
+{
+  "deviations": [
+    {
+      "id": "historical_stage6_superseded",
+      "preserved": true,
+      "run": "bd83cb22-6a38-4d21-9267-3253f52587d7"
+    },
+    {
+      "id": "gate_e_prior_pass_withdrawn",
+      "now": "FAIL_FOR_INTENDED_CONTRIBUTION",
+      "prior": "PASS_FOR_DEFINED_SCOPE"
+    },
+    {
+      "id": "phase7_mechanism_ready_revoked",
+      "now": false,
+      "prior": true
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "final_test_accessed": false,
+        "overlap": []
+      },
+      "name": "split_isolation_no_final_test",
+      "pass": true
+    },
+    {
+      "detail": {
+        "failures": [],
+        "n_units_checked": 320
+      },
+      "name": "shot_count_conservation",
+      "pass": true
+    },
+    {
+      "detail": {
+        "actual_draws": 1024,
+        "n_qubits": 8
+      },
+      "name": "pool_api_1024_conservation_recompute",
+      "pass": true
+    },
+    {
+      "detail": {
+        "crosscheck_ok": true,
+        "n": 8
+      },
+      "name": "actual_circuit_consistency_representative",
+      "pass": true
+    },
+    {
+      "detail": {
+        "development_headroom": "ZERO"
+      },
+      "name": "zero_headroom_tie_handling",
+      "pass": true
+    },
+    {
+      "detail": {
+        "completed": 48,
+        "failed": 0,
+        "planned": 48
+      },
+      "name": "denominator_reconciliation",
+      "pass": true
+    },
+    {
+      "detail": {},
+      "name": "finite_outputs",
+      "pass": true
+    },
+    {
+      "detail": {
+        "STAGE_6_MANIFEST.json": {
+          "exists": true,
+          "sha256": "8fc9199126cad5dc1565cd3bb867dd12dcea4c0f5ee40544874de92bd33b56db"
+        },
+        "noisy_panel.json": {
+          "exists": true,
+          "sha256": "5d26fe2eb8cbf45765ab3bce2a314598a86f6b774f769ada273a7fdc6aac0264"
+        },
+        "pilot_receipt.json": {
+          "exists": true,
+          "sha256": "47c19d0409587113c816bcdd94ae79f6806c6e12fe1aa64d87c979b927fbfcff"
+        },
+        "run_receipt.json": {
+          "exists": true,
+          "sha256": "becc1970e25c76e3486f24f757ddc072d76e111cf41b7b8c31d2d72b97ae8f03"
+        }
+      },
+      "name": "protected_historical_inventory",
+      "pass": true
+    },
+    {
+      "detail": {
+        "freeze_sha256": "c1761c2ac6c9305b920b400a2f1e2fb872ca242e2666f756bc5dee38ab6b7880"
+      },
+      "name": "freeze_before_calibration_flag",
+      "pass": true
+    },
+    {
+      "detail": {
+        "analytical_ok": true,
+        "class": "synthetic_gate_depolarizing_sensitivity_model",
+        "status": "COMPLETED",
+        "zn_pass": 32,
+        "zn_total": 32
+      },
+      "name": "noise_gate_channel_evidence_class",
+      "pass": true
+    },
+    {
+      "detail": {
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n_blocks": 24,
+        "status": "EXECUTED"
+      },
+      "name": "precision_stratified_bootstrap_executed",
+      "pass": true
+    },
+    {
+      "detail": {
+        "actual_draws": 1024,
+        "pool_s": 0.003621957963332534
+      },
+      "name": "resource_estimates_measurement_backed",
+      "pass": true
+    },
+    {
+      "detail": {
+        "gate_e": "FAIL_FOR_INTENDED_CONTRIBUTION",
+        "mech_ready": false,
+        "shot": "CORRECTED"
+      },
+      "name": "readiness_conditions_independent",
+      "pass": true
+    },
+    {
+      "detail": {
+        "manifest_sha256_actual": "e3d7e8eb1202bf59e561f2439f46664441729a18cd18886cc06edda4dd9fef19",
+        "manifest_sha256_recorded": "e3d7e8eb1202bf59e561f2439f46664441729a18cd18886cc06edda4dd9fef19",
+        "n_checked": 19,
+        "ok": true,
+        "rerun_campaign": false,
+        "verify_ok_flag": true
+      },
+      "name": "phase5_final_acceptance_manifest",
+      "pass": true
+    },
+    {
+      "detail": {
+        "norm": 1.0000000000000009
+      },
+      "name": "representative_c0_norm",
+      "pass": true
+    }
+  ],
+  "manifest_entries_ok": true,
+  "manifest_entry_failures": [],
+  "manifest_path": "evidence/stage6_corrected/2a3fb275-6c37-4bbc-bdb4-addede80b5c3/STAGE_6_CORRECTED_MANIFEST.json",
+  "manifest_sha256": "9ea06e0e9df7f3f2fc761c45688674251b618caac74773de69242ee5bb2354d4",
+  "n_checks": 15,
+  "n_pass": 15,
+  "note": "Verifier recomputes conservation, analytical noise, bootstrap status, measurement-backed capacity flags, and readiness conditions. Manifest entry existence/hash checked after manifest write.",
+  "ok": true,
+  "schema_version": "stage6.corrected.final_verify.v1",
+  "verified_at_unix": 1789967932.2856152
+}

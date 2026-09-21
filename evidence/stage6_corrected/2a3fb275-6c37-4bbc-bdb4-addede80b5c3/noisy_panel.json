@@ -1,0 +1,1511 @@
+{
+  "analytical_self_check": {
+    "checks": [
+      {
+        "max_abs_diff": 1.1102230246251565e-16,
+        "name": "zero_noise_matches_statevector",
+        "pass": true
+      },
+      {
+        "name": "p1_1_after_X_near_maximally_mixed",
+        "pass": true,
+        "probs": [
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "name": "probs_finite_nonneg_norm",
+        "pass": true
+      }
+    ],
+    "ok": true
+  },
+  "elapsed_s": 12.227055291994475,
+  "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+  "historical_panel_class": "WITHDRAWN_AS_GATE_LEVEL_NOISE_EVIDENCE:probability_mix_toward_uniform_plus_gaussian_jitter_not_gate_channels",
+  "historical_panel_path": "evidence/stage6/bd83cb22-6a38-4d21-9267-3253f52587d7/noisy_panel.json",
+  "max_qubits": 10,
+  "n_completed": 32,
+  "n_rows": 32,
+  "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+  "panel_hash": "a29e147210c083f678e639f0066d107d3eaea1514ec6b5d5012531d906c27a91",
+  "predeclared_depth": "p1",
+  "rows": [
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 915,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 935,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 911,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9405343172311814,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9010123066225378,
+      "noisy_exact_one_hot_prob": 0.9010123066225378,
+      "noisy_exact_optimal_mass": 0.05793120264672365,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "b4859bf3e1bbdf0d42adf8b2a06161fcb50b29aedfb78f90125e8e0889425390",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 918,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 938,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 902,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9428796621959961,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9032471355246497,
+      "noisy_exact_one_hot_prob": 0.9032471355246497,
+      "noisy_exact_optimal_mass": 0.05723131026505096,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 874,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 864,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 843,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999997,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346984,
+      "noisy_exact_one_hot_prob": 0.8447381759346984,
+      "noisy_exact_optimal_mass": 0.1385163980429054,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 876,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 862,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 842,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999992,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346981,
+      "noisy_exact_one_hot_prob": 0.8447381759346981,
+      "noisy_exact_optimal_mass": 0.13613465412448356,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 928,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 934,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 917,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9454284213624504,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.905650642645927,
+      "noisy_exact_one_hot_prob": 0.905650642645927,
+      "noisy_exact_optimal_mass": 0.05686993473807566,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "7eb027e2842d8ca01d4e976f59d512c271afa28b908f69aff29ae63c942881c3",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 932,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 944,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 917,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9510119796615892,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9109449541290815,
+      "noisy_exact_one_hot_prob": 0.9109449541290815,
+      "noisy_exact_optimal_mass": 0.0574845228853086,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 878,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 870,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 855,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999996,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346986,
+      "noisy_exact_one_hot_prob": 0.8447381759346986,
+      "noisy_exact_optimal_mass": 0.12021649530720009,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 878,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 870,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 855,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999996,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346986,
+      "noisy_exact_one_hot_prob": 0.8447381759346986,
+      "noisy_exact_optimal_mass": 0.12021649530720009,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 915,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 908,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 888,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9217271522484096,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8832130485050137,
+      "noisy_exact_one_hot_prob": 0.8832130485050137,
+      "noisy_exact_optimal_mass": 0.05557085017158967,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "330428a90de6b51f123955b74a61bd28530445e2e188fb43df054016c7046b87",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 920,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 926,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 900,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9359493258111824,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8966893587010317,
+      "noisy_exact_one_hot_prob": 0.8966893587010317,
+      "noisy_exact_optimal_mass": 0.05645786802755598,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 854,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 885,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 841,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999998,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346984,
+      "noisy_exact_one_hot_prob": 0.8447381759346984,
+      "noisy_exact_optimal_mass": 0.07652068252526169,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 857,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 876,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 837,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999994,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346984,
+      "noisy_exact_one_hot_prob": 0.8447381759346984,
+      "noisy_exact_optimal_mass": 0.07805449526490822,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 920,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 927,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 906,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9384454522816522,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8990374316668933,
+      "noisy_exact_one_hot_prob": 0.8990374316668933,
+      "noisy_exact_optimal_mass": 0.05634602521313323,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "7eb027e2842d8ca01d4e976f59d512c271afa28b908f69aff29ae63c942881c3",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 926,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 938,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 910,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9433492819848368,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9036907284049656,
+      "noisy_exact_one_hot_prob": 0.9036907284049656,
+      "noisy_exact_optimal_mass": 0.05657575985103317,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 875,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 855,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 841,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 1.0000000000000007,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346984,
+      "noisy_exact_one_hot_prob": 0.8447381759346984,
+      "noisy_exact_optimal_mass": 0.06386592262280835,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "adefca585c4f5f2ad7c247a8d8669983f7506be8944024c4fbbc11ab51effe9f",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 875,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 865,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 840,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999994,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346984,
+      "noisy_exact_one_hot_prob": 0.8447381759346984,
+      "noisy_exact_optimal_mass": 0.07026775421821828,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 937,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 934,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 922,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9485405834229812,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9085911034215065,
+      "noisy_exact_one_hot_prob": 0.9085911034215065,
+      "noisy_exact_optimal_mass": 0.05758604241565654,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "b4859bf3e1bbdf0d42adf8b2a06161fcb50b29aedfb78f90125e8e0889425390",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 935,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 949,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 917,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9519258577685186,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9118102047416297,
+      "noisy_exact_one_hot_prob": 0.9118102047416297,
+      "noisy_exact_optimal_mass": 0.057544969892676566,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 859,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 877,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 840,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999997,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346981,
+      "noisy_exact_one_hot_prob": 0.8447381759346981,
+      "noisy_exact_optimal_mass": 0.08594372404645508,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 858,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 884,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 844,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999994,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346985,
+      "noisy_exact_one_hot_prob": 0.8447381759346985,
+      "noisy_exact_optimal_mass": 0.088969622182974,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 946,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 940,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 937,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9589344204037106,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9184367331584257,
+      "noisy_exact_one_hot_prob": 0.9184367331584257,
+      "noisy_exact_optimal_mass": 0.05777264121822213,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "8088818c2eaae1fcb3e0414d814a8a68955307018dcceef5c662c1182567bc83",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 941,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 946,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 926,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9582009200836759,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9177485094674046,
+      "noisy_exact_one_hot_prob": 0.9177485094674046,
+      "noisy_exact_optimal_mass": 0.05763133767576059,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 865,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 869,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 836,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999993,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346984,
+      "noisy_exact_one_hot_prob": 0.8447381759346984,
+      "noisy_exact_optimal_mass": 0.07067421618355271,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 865,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 869,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 836,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999993,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346984,
+      "noisy_exact_one_hot_prob": 0.8447381759346984,
+      "noisy_exact_optimal_mass": 0.07067421618355271,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 928,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 932,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 907,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9390500432185821,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8995980304953765,
+      "noisy_exact_one_hot_prob": 0.8995980304953765,
+      "noisy_exact_optimal_mass": 0.05641705109719328,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "b4859bf3e1bbdf0d42adf8b2a06161fcb50b29aedfb78f90125e8e0889425390",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 926,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 930,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 908,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9407138132250641,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9011871499883977,
+      "noisy_exact_one_hot_prob": 0.9011871499883977,
+      "noisy_exact_optimal_mass": 0.056234063993270904,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 861,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 855,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 842,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999999,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346985,
+      "noisy_exact_one_hot_prob": 0.8447381759346985,
+      "noisy_exact_optimal_mass": 0.06785289334991816,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 865,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 852,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 852,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999993,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346981,
+      "noisy_exact_one_hot_prob": 0.8447381759346981,
+      "noisy_exact_optimal_mass": 0.06635798939902433,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 920,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 923,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 907,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9402551975019081,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.900731873623275,
+      "noisy_exact_one_hot_prob": 0.900731873623275,
+      "noisy_exact_optimal_mass": 0.05669394853935663,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "7eb027e2842d8ca01d4e976f59d512c271afa28b908f69aff29ae63c942881c3",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 927,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 937,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 913,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9454244248769864,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 24,
+      "n_2q_channels": 6,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.9056373506781152,
+      "noisy_exact_one_hot_prob": 0.9056373506781152,
+      "noisy_exact_optimal_mass": 0.05667024223246443,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 869,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 852,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 846,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999994,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346982,
+      "noisy_exact_one_hot_prob": 0.8447381759346982,
+      "noisy_exact_optimal_mass": 0.0860297907562226,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "learned",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_gate_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 869,
+          "seed": 0,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 852,
+          "seed": 1,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "best_of_pool_normalised_regret": 0.0,
+          "n_legal": 846,
+          "seed": 2,
+          "shot_conservation_ok": true
+        }
+      ],
+      "ideal_legal_prob": 0.9999999999999994,
+      "method": "qiskit.quantum_info.DensityMatrix_gate_depolarizing",
+      "n_1q_channels": 12,
+      "n_2q_channels": 30,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_exact_legal_prob": 0.8447381759346982,
+      "noisy_exact_one_hot_prob": 0.8447381759346982,
+      "noisy_exact_optimal_mass": 0.0860297907562226,
+      "p": 1,
+      "p1": 0.001,
+      "p2": 0.01,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "probs_finite_norm_ok": true,
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_vs_ideal_ok": true
+    }
+  ],
+  "status": "COMPLETED",
+  "zero_noise_pass": 32,
+  "zero_noise_total": 32
+}

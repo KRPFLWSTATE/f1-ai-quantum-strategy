@@ -1,0 +1,165 @@
+{
+  "GATE_E_NARROW_MECHANISM_ARTIFACTS": "PASS_WITH_DOCUMENTED_LIMITATIONS",
+  "GATE_E_SCIENTIFIC_VALUE": "FAIL_FOR_INTENDED_CONTRIBUTION",
+  "comparisons": [
+    {
+      "evidence_needed": "Operational evaluator under live causal simulator + nonzero headroom OR a clearly scoped mechanism result that changes team practice (latency/yield/fallback).",
+      "id": "f1_dp_classical",
+      "our_proposed_difference": "Deadline-aware AI/quantum allocation over QUBO encodings with learned donor selection and auditable causal checkpoint interfaces \u2014 not a claim to replace DP race optimisation.",
+      "sources": [
+        {
+          "access": "abstract_metadata_and_secondary_summaries",
+          "authors": "Carrasco Heine, O.F.; Thraves, C.",
+          "title": "On the optimization of pit stop strategies via dynamic programming",
+          "url": "https://doi.org/10.1007/s10100-022-00806-4",
+          "venue": "Central European Journal of Operations Research, 2023",
+          "verified_bib": true
+        },
+        {
+          "access": "abstract_metadata",
+          "authors": "Aguad, F.; Thraves, C.",
+          "title": "Optimizing pit stop strategies in Formula 1 with dynamic programming and game theory",
+          "url": "https://doi.org/10.1016/j.ejor.2024.06.020",
+          "venue": "European Journal of Operational Research, 2024, 319(3), 908\u2013919",
+          "verified_bib": true
+        }
+      ],
+      "their_contribution": "Classical DP/SDP and Stackelberg-game pit-stop/compound strategies with yellow-flag uncertainty and competitor interaction; race-time / win-probability objectives.",
+      "theme": "F1 DP / classical race optimisation",
+      "unresolved_overlap": "Both address SC/VSC-aware strategy; classical DP remains the stronger F1-ops baseline."
+    },
+    {
+      "evidence_needed": "Held-out mechanism usefulness vs classical discrete solvers under matched budgets.",
+      "id": "f1_qubo_annealing",
+      "our_proposed_difference": "Explicit C0/C1 circuit families + learned parameter-bank donor selection under split discipline, with headroom gate before superiority claims. Dossier already disclaims 'first F1 QUBO'.",
+      "sources": [
+        {
+          "access": "dossier_bibliographic_entry",
+          "note": "Cited in dossier; full text not independently re-fetched in Phase 6 (unavailable sources remain unavailable).",
+          "title": "Kolstee, S. (2026). Optimizing Formula 1 Pit Stop Strategies Using QUBO and Quantum Annealing \u2014 dossier [3]",
+          "url": "docs/protocol/F1_AI_Quantum_Research_Dossier_v3_1.pdf",
+          "verified_bib": true
+        },
+        {
+          "access": "full_text_pdf_fetched",
+          "authors": "Borruso, M.; Avella, P.; Marino, M.",
+          "note": "MILP/simulation framework with ERS \u2014 not a quantum QUBO paper.",
+          "title": "A simulation framework for Formula 1 race strategy based on pit-stop optimization",
+          "url": "https://optimization-online.org/2026/02/a-simulation-framework-for-formula-1-race-strategy-based-on-pit-stop-optimization/",
+          "venue": "Optimization Online preprint, 2026",
+          "verified_bib": true
+        },
+        {
+          "access": "full_text_docs",
+          "title": "D-Wave Ocean docs: QUBO / BQM models",
+          "url": "https://docs.dwavequantum.com/en/latest/concepts/models.html",
+          "verified_bib": true
+        }
+      ],
+      "their_contribution": "Discrete F1 strategy as MILP/simulation; dossier cites Kolstee (2026) QUBO/annealing F1 work; generic QUBO tooling for annealers.",
+      "theme": "F1 QUBO / annealing",
+      "unresolved_overlap": "QUBO/Ising encoding of combinatorial race decisions is not novel by itself."
+    },
+    {
+      "evidence_needed": "Held-out H2 intervals on eligible operational or mechanism endpoints.",
+      "id": "learned_race_strategy",
+      "our_proposed_difference": "Inspectable ridge donor ranking over a frozen parameter bank (not angle averaging).",
+      "sources": [
+        {
+          "access": "full_text_dossier_v3_1",
+          "title": "Dossier \u00a711/\u00a716 runtime AI comparisons; dossier [4][5] RL race-strategy citations",
+          "url": "docs/protocol/F1_AI_Quantum_Research_Dossier_v3_1.pdf",
+          "verified_bib": true
+        }
+      ],
+      "their_contribution": "Broad RL/ML race-strategy literature exists; dossier requires fixed/NN/random comparators.",
+      "theme": "Learned race strategy / AI",
+      "unresolved_overlap": "Learned policy selection over classical features is standard ML practice."
+    },
+    {
+      "evidence_needed": "Improvement over fixed/NN/random on held-out eligible endpoints.",
+      "id": "quantum_param_transfer",
+      "our_proposed_difference": "Application framing: audited bank + selector under motorsport split/causal constraints.",
+      "sources": [
+        {
+          "access": "abstract_metadata",
+          "title": "Farhi et al. QAOA (arXiv:1411.4028) \u2014 dossier [7]",
+          "url": "https://arxiv.org/abs/1411.4028",
+          "verified_bib": true
+        },
+        {
+          "access": "abstract_metadata",
+          "title": "Egger et al. Warm-starting quantum optimization \u2014 dossier [9]",
+          "url": "https://quantum-journal.org/papers/q-2021-06-17-479/",
+          "verified_bib": true
+        },
+        {
+          "access": "abstract_metadata",
+          "title": "Nguyen et al. Cross-Problem Parameter Transfer in QAOA \u2014 dossier [11]",
+          "url": "https://arxiv.org/abs/2504.10733",
+          "verified_bib": true
+        }
+      ],
+      "their_contribution": "QAOA and parameter reuse / warm-start / cross-problem transfer methods are established.",
+      "theme": "Quantum parameter transfer / learned donor selection",
+      "unresolved_overlap": "Parameter transfer itself is not a new quantum algorithm."
+    },
+    {
+      "evidence_needed": "N/A for novelty; legality/yield is engineering evidence only.",
+      "id": "constraint_mixers",
+      "our_proposed_difference": "None claimed as algorithmic novelty; C1 uses standard ring XY exchanges.",
+      "sources": [
+        {
+          "access": "abstract_metadata",
+          "note": "Dossier \u00a713 attributes XY/guarded exchanges to prior art; no mixer invention claimed here.",
+          "title": "Hadfield et al. Quantum approximate optimization with hard and soft constraints \u2014 dossier [8]",
+          "url": "https://arxiv.org/abs/1709.03489",
+          "verified_bib": true
+        }
+      ],
+      "their_contribution": "XY and related mixers preserve one-hot / feasible subspaces.",
+      "theme": "Constraint-preserving mixers",
+      "unresolved_overlap": "C1 is a standard constraint-preserving construction."
+    },
+    {
+      "evidence_needed": "Implemented runtime allocator + measured end-to-end latency on operational evaluator.",
+      "id": "algorithm_selection_deadline",
+      "our_proposed_difference": "Proposed contribution is integration with F1 causal checkpoint + quantum package under spend constraints.",
+      "sources": [
+        {
+          "access": "full_text_dossier_v3_1",
+          "title": "Dossier \u00a714\u2013\u00a715 runtime allocator / deadlines; metareasoning and algorithm-selection citations",
+          "url": "docs/protocol/F1_AI_Quantum_Research_Dossier_v3_1.pdf",
+          "verified_bib": true
+        }
+      ],
+      "their_contribution": "Algorithm-selection and anytime/deadline literature is mature outside F1.",
+      "theme": "Algorithm selection / deadline-aware computation",
+      "unresolved_overlap": "Without allocator evidence, deadline-aware claim remains unimplemented."
+    }
+  ],
+  "contribution_assessment": {
+    "a2_revealed_duration_not_operational_causal": true,
+    "adequacy_for_ai_quantum_f1_objective": "INSUFFICIENT",
+    "circuit_legality_alone_insufficient": true,
+    "classical_comparators_strong": true,
+    "negative_result_alone_insufficient_for_advantage": true,
+    "practical_relevance": "Practical relevance today is negative/engineering: corrected shot accounting, withdrawn fake gate-noise panel, measurement-backed resource arithmetic, and explicit operational unreadiness. Does not establish F1 performance value, quantum advantage, or the intended AI\u2013quantum\u2013F1 research contribution.",
+    "redesign_required_before_full_campaign": "Before any superiority campaign: do NOT manufacture classical failure. Either abandon H1 or redesign the decision model from a justified motorsport requirement that retains strong classical comparators and causal observation\u2192policy\u2192commitment paths. Do not permanently replace the project's F1 objective with an unrelated toy benchmark.",
+    "renamed_standard_method_insufficient": true,
+    "restricted_synthetic_observability": true,
+    "sc_vsc_tyre_traffic_labels_influence_mechanism": "Labels select generator families; mechanism outcomes remain dominated by exact classical on checked microcases \u2014 not validated motorsport coverage.",
+    "standard_C0_C1": true,
+    "surviving_research_question": "Open engineering question only (not Gate E pass): within restricted synthetic A2, document corrected shot-accurate legality yields and resource envelopes vs exact/uniform baselines. This does not establish motorsport decision value or novelty.",
+    "surviving_scoped_contribution": false,
+    "zero_demonstrated_proxy_headroom": true
+  },
+  "no_absolute_novelty_claims": true,
+  "no_first_claims": true,
+  "novelty_sha256": "da343ab5abfc205a2516626c72bb8c8b980f889a1012f7fd2639d1998f9de854",
+  "prior_gate_e_label": "PASS_FOR_DEFINED_SCOPE",
+  "prior_gate_e_pass_withdrawn": true,
+  "schema_version": "stage6.novelty.v2",
+  "search_method": "dossier_references_plus_targeted_WebSearch_and_reassessment_2026-09-21",
+  "unavailable_sources_remain_unavailable": true
+}

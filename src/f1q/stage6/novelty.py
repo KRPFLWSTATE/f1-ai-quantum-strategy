@@ -162,32 +162,37 @@ def build_novelty_comparison(*, pilot_headroom: str, causal_operational_ready: b
         },
     ]
 
+    # Gate E reassessment (Phase 6 correction): engineering cleanliness / zero-headroom /
+    # standard XY legality alone do NOT satisfy the project's AI–quantum–F1 objective.
     if pilot_headroom == "ZERO" and not causal_operational_ready:
-        gate = "PASS_FOR_DEFINED_SCOPE"
-        survives = True
+        gate = "FAIL_FOR_INTENDED_CONTRIBUTION"
+        narrow = "PASS_WITH_DOCUMENTED_LIMITATIONS"
+        survives = False
         surviving_question = (
-            "Within a restricted synthetic A2 circuit-mechanism scope: what are the legality yields, "
-            "sample regrets, and resource envelopes of frozen C0/C1 + donor policies versus exact/uniform "
-            "classical baselines under matched shot budgets — and which integration blockers prevent an "
-            "operational F1 race-decision claim?"
+            "Open engineering question only (not Gate E pass): within restricted synthetic A2, "
+            "document corrected shot-accurate legality yields and resource envelopes vs exact/uniform "
+            "baselines. This does not establish motorsport decision value or novelty."
         )
         practical_relevance = (
-            "Practical relevance today is engineering: an auditable negative headroom result, repaired "
-            "circuit provenance, and a blocked operational path until causal integration. This does not "
-            "establish F1 performance value or quantum advantage."
+            "Practical relevance today is negative/engineering: corrected shot accounting, withdrawn "
+            "fake gate-noise panel, measurement-backed resource arithmetic, and explicit operational "
+            "unreadiness. Does not establish F1 performance value, quantum advantage, or the intended "
+            "AI–quantum–F1 research contribution."
         )
     else:
         gate = "UNRESOLVED"
+        narrow = "UNRESOLVED"
         survives = False
         surviving_question = None
-        practical_relevance = "Insufficient Phase 6 evidence to close Gate E."
+        practical_relevance = "Insufficient evidence to close Gate E."
 
     redesign = None
     if pilot_headroom == "ZERO":
         redesign = (
-            "Before any superiority campaign: enlarge model until exact classical is not timely, or "
-            "abandon H1 for a mechanism/boundary protocol amendment. Do not permanently replace the "
-            "project's F1 objective with an unrelated toy benchmark."
+            "Before any superiority campaign: do NOT manufacture classical failure. Either abandon H1 "
+            "or redesign the decision model from a justified motorsport requirement that retains strong "
+            "classical comparators and causal observation→policy→commitment paths. Do not permanently "
+            "replace the project's F1 objective with an unrelated toy benchmark."
         )
 
     contribution_assessment = {
@@ -198,20 +203,29 @@ def build_novelty_comparison(*, pilot_headroom: str, causal_operational_ready: b
         "renamed_standard_method_insufficient": True,
         "circuit_legality_alone_insufficient": True,
         "negative_result_alone_insufficient_for_advantage": True,
+        "sc_vsc_tyre_traffic_labels_influence_mechanism": (
+            "Labels select generator families; mechanism outcomes remain dominated by exact classical "
+            "on checked microcases — not validated motorsport coverage."
+        ),
+        "a2_revealed_duration_not_operational_causal": True,
         "surviving_scoped_contribution": survives,
         "surviving_research_question": surviving_question,
         "practical_relevance": practical_relevance,
         "redesign_required_before_full_campaign": redesign,
+        "adequacy_for_ai_quantum_f1_objective": "INSUFFICIENT",
     }
 
     out = {
-        "schema_version": "stage6.novelty.v1",
+        "schema_version": "stage6.novelty.v2",
         "GATE_E_SCIENTIFIC_VALUE": gate,
+        "GATE_E_NARROW_MECHANISM_ARTIFACTS": narrow,
+        "prior_gate_e_pass_withdrawn": True,
+        "prior_gate_e_label": "PASS_FOR_DEFINED_SCOPE",
         "no_absolute_novelty_claims": True,
         "no_first_claims": True,
         "comparisons": comparisons,
         "contribution_assessment": contribution_assessment,
-        "search_method": "dossier_references_plus_targeted_WebSearch_2026-09-21",
+        "search_method": "dossier_references_plus_targeted_WebSearch_and_reassessment_2026-09-21",
         "unavailable_sources_remain_unavailable": True,
     }
     out["novelty_sha256"] = sha256_json({k: v for k, v in out.items() if k != "novelty_sha256"})

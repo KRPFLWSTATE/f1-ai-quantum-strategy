@@ -28,5 +28,10 @@ No invented deviations. Record only genuine discrepancies.
 | 2026-09-21 | Phase 6 protocol BLOCKED_DRAFT | freeze limitation | Mechanism freeze recorded; full scientific FROZEN blocked pending causal operational fields + Phase 7 amendment before final-test; hardware deferred to Phase 8. |
 | 2026-09-21 | Noisy zero-noise jitter | implementation defect fix | Initial synthetic noisy panel used 1e-6 jitter at p1=p2=0 (30/32 zn). Fixed to exact identity; noisy panel regenerated only; mechanism pilot unchanged. |
 | 2026-09-21 | Full dossier Phase 7 vs 24h ceiling | resource limitation | Extrapolated full dossier matrix exceeds provisional 24 CPU-h ceiling; reduced mechanism matrix (~1.76 CPU-h) proposed with dated amendment required before final-test. |
+| 2026-09-21 | Phase 6 Hilbert shot cap | critical defect (corrected) | `pool_sample_metrics` used `min(pool_size, 2**n)`; 8q pools labelled 1024 drew 256. Corrected run `2a3fb275-…`; historical `bd83cb22-…` preserved. |
+| 2026-09-21 | Phase 6 noise panel class | critical defect (withdrawn) | Historical panel was probability mix + jitter, not gate channels. Withdrawn as gate-noise evidence; replaced by DensityMatrix 1q/2q depolarizing sensitivity model. |
+| 2026-09-21 | Phase 6 capacity hard-codes | high defect (corrected) | Unsupported 25.46h constants withdrawn; measurement-backed arithmetic; 80 blocks ≠ 80 cases. |
+| 2026-09-21 | Phase 6 sizing placeholder | high defect (corrected) | Stratified bootstrap now executed; zero-variance does not power superiority. |
+| 2026-09-21 | Gate E / Phase 7 ready | scientific correction | Prior `PASS_FOR_DEFINED_SCOPE` and `PHASE_7_MECHANISM_READY=true` withdrawn; Gate E `FAIL_FOR_INTENDED_CONTRIBUTION`; mechanism ready false. |
 
-No protocol amendments that reopen final-test. `frozen: false` (BLOCKED_DRAFT).
+No protocol amendments that reopen final-test. Protocol status: `MECHANISM_SCOPE_DRAFT_V2_NOT_FINAL_TEST_AUTHORISED`.

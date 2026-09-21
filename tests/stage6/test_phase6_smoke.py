@@ -27,6 +27,7 @@ def test_precision_targets_predeclared():
 
 def test_gate_e_zero_headroom_scope():
     n = build_novelty_comparison(pilot_headroom="ZERO", causal_operational_ready=False)
-    assert n["GATE_E_SCIENTIFIC_VALUE"] == "PASS_FOR_DEFINED_SCOPE"
-    assert n["no_absolute_novelty_claims"] is True
+    assert n["GATE_E_SCIENTIFIC_VALUE"] == "FAIL_FOR_INTENDED_CONTRIBUTION"
+    assert n["prior_gate_e_pass_withdrawn"] is True
+    assert n["contribution_assessment"]["adequacy_for_ai_quantum_f1_objective"] == "INSUFFICIENT"
     assert n["contribution_assessment"]["surviving_research_question"]
