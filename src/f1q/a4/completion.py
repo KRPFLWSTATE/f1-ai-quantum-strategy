@@ -201,18 +201,71 @@ MINIATURE_WORLDS = {
     "offline": {"planning": 2, "evaluation": 4},
 }
 
+# Last-resort resource pilot when even the minimum 120/80/24 ladder cannot fit measured per-world cost.
+# Keeps 2,048-world calibration start, four family/depths, and matched K. Drops parent counts and extra budgets/seeds.
+LIMITED_PILOT_SPEC = {
+    "train_parents": 4,
+    "tune_parents": 4,
+    "calib_parents": 2,
+    "budgets": [30],
+    "n_policy_seeds": 1,
+    "option_count": 3,
+    "worlds": {
+        "training": {"planning": 2, "evaluation": 16},
+        "tuning": {"planning": 4, "evaluation": 64},
+        "calibration": {"planning": 16, "evaluation": 2048},
+        "offline": {"planning": 16, "evaluation": 64},
+    },
+    "offline_cases": 1,
+    "latency_cases": 2,
+    "mech_cases": 4,
+    "calibration_eval_worlds_kept": 2048,
+    "family_depths_kept": ["C0_p1", "C0_p2", "C1_p1", "C1_p2"],
+    "portfolio_k_kept": 4,
+    "pool_draws_kept": 1024,
+    "denominators_not_executed": ["120_train_parents", "80_tune_parents", "24_calib_parents", "budgets_5_10_60_120", "policy_seeds_2_and_3"],
+    "reason": "measured per-world evaluation cost cannot fit the minimum complete 120/80/24 corpus inside 86,400 CPU-s and 11,520 wall-s",
+}
 
-def operation_ledger(*, ladder: str, worlds: dict[str, Any], miniature: bool = False, n_legal: int = 100) -> dict[str, Any]:
+
+def operation_ledger(
+    *,
+    ladder: str,
+    worlds: dict[str, Any],
+    miniature: bool = False,
+    n_legal: int = 100,
+    train_parents: int | None = None,
+    tune_parents: int | None = None,
+    calib_parents: int | None = None,
+    n_off: int | None = None,
+    n_lat: int | None = None,
+    n_mech: int | None = None,
+    seeds: int | None = None,
+    budgets: int | None = None,
+    options: int | None = None,
+) -> dict[str, Any]:
     n_train_p, n_tune_p, n_cal_p = (2, 2, 2) if miniature else (120, 80, 24)
+    if train_parents is not None:
+        n_train_p = int(train_parents)
+    if tune_parents is not None:
+        n_tune_p = int(tune_parents)
+    if calib_parents is not None:
+        n_cal_p = int(calib_parents)
     n_train_c, n_tune_c, n_cal_c = n_train_p * 2, n_tune_p * 2, n_cal_p * 2
-    n_mech = 8 if miniature else 120
+    if n_mech is None:
+        n_mech = 8 if miniature else 120
     n_noisy = 0 if miniature else 40
-    n_off = 2 if miniature else 8
-    n_lat = 2 if miniature else 6
+    if n_off is None:
+        n_off = 2 if miniature else 8
+    if n_lat is None:
+        n_lat = 2 if miniature else 6
     w = worlds
-    seeds = 1 if miniature else N_POLICY_SEEDS
-    budgets = 2 if miniature else len(NOMINAL_BUDGETS_S)
-    options = 3 if miniature else (1 + 4)  # classical + 4 circuits before freeze
+    if seeds is None:
+        seeds = 1 if miniature else N_POLICY_SEEDS
+    if budgets is None:
+        budgets = 2 if miniature else len(NOMINAL_BUDGETS_S)
+    if options is None:
+        options = 3 if miniature else (1 + 4)
     n_legal = max(1, int(n_legal))
     prepared = n_train_c + n_tune_c + n_cal_c + n_off + n_lat + n_mech
     distributions = n_mech * len(FAMILY_DEPTH_KEYS) * 8  # per donor

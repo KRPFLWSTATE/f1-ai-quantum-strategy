@@ -31,6 +31,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--run-id", default=None)
     parser.add_argument("--config", default="configs/stage6_a4_closure.yaml")
     parser.add_argument("--miniature", action="store_true", help="engineering miniature only")
+    parser.add_argument("--skip-full-tests", action="store_true", help="skip full pytest inside admission")
     args = parser.parse_args(argv)
     assert_local_only()
     root = resolve_project_root()
@@ -39,7 +40,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2, sort_keys=True, default=str))
         return 0 if result.get("ok") else 1
     if args.admission_check or args.preflight:
-        result = run_admission_check(root, args.config, miniature=args.miniature)
+        result = run_admission_check(root, args.config, miniature=args.miniature, skip_full_tests=args.skip_full_tests)
         print(json.dumps({k: v for k, v in result.items() if k != "receipt"}, indent=2, sort_keys=True, default=str))
         return 0 if result.get("admitted") or result.get("limited_resource_pilot") else 2
     if args.execute_phase6:

@@ -31,10 +31,11 @@ from f1q.a4.campaign_support import (
 )
 from f1q.a4.completion import (
     COMPLETED_STATES,
+    LIMITED_PILOT_SPEC,
+    MINIATURE_WORLDS,
     PRIOR_ADMISSION,
     START_COMMIT_EXPECTED,
     WORLD_LADDERS,
-    MINIATURE_WORLDS,
     _git_head,
     _heartbeat,
     _project_from_probes,
@@ -402,10 +403,42 @@ def run_admission_check(
             selected_level = level
     admitted = selected_level is not None
     limited_pilot = False
+    limited_spec: dict[str, Any] | None = None
     if not admitted:
-        # last-resort limited resource pilot still requires implementation validity
         limited_pilot = True
         selected_level = "minimum"
+        spec = dict(LIMITED_PILOT_SPEC)
+        led = operation_ledger(
+            ladder="limited_resource_pilot",
+            worlds=spec["worlds"],
+            miniature=False,
+            n_legal=int((next((p for p in probes if p.get("kind") == "offline"), {}) or {}).get("n_legal") or 100),
+            train_parents=spec["train_parents"],
+            tune_parents=spec["tune_parents"],
+            calib_parents=spec["calib_parents"],
+            n_off=spec["offline_cases"],
+            n_lat=spec["latency_cases"],
+            n_mech=spec["mech_cases"],
+            seeds=spec["n_policy_seeds"],
+            budgets=len(spec["budgets"]),
+            options=spec["option_count"],
+        )
+        proj = _project_from_probes(led, probes, workers, efficiency)
+        chk = independent_projection_checksum(proj)
+        fit = projection_fits(
+            conservative_cpu_s=proj["serial_cpu_s"]["conservative"],
+            conservative_wall_s=proj["parallel_wall_s"]["conservative"],
+            peak_rss_bytes=int(proj["peak_aggregate_rss_bytes"]),
+            storage_bytes=int(proj["storage_bytes"]),
+            free_disk_bytes=int(disk.free),
+            ram_limit_bytes=int(workers["ram_limit_bytes"]),
+        )
+        spec["projection"] = proj
+        spec["fit"] = fit
+        spec["checksum_ok"] = chk == proj["checksum"]
+        spec["ledger"] = led
+        limited_spec = spec
+        projections["limited_resource_pilot"] = {"ledger": led, "projection": proj, "fit": fit, "checksum_ok": chk == proj["checksum"]}
     receipt = {
         "run_id": run_id,
         "reviewed_source_commit": head,
@@ -421,6 +454,7 @@ def run_admission_check(
         "rejected_ladders": [k for k, rec in projections.items() if not rec["fit"]["fits"]],
         "admitted": admitted,
         "limited_resource_pilot": limited_pilot and not admitted,
+        "limited_pilot_spec": None if limited_spec is None else {k: v for k, v in limited_spec.items() if k != "ledger"},
         "reason": None if admitted else "no ladder projected under CPU 86400 / wall 11520 / 60% RAM / disk reserve; limited pilot authorised as last resort",
         "focused_tests": focused,
         "full_tests": full,
@@ -441,7 +475,8 @@ def run_admission_check(
     }
     for p in probes:
         append_jsonl(ev / "ADMISSION_PROBES.jsonl", p)
-    write_json(ev / "OPERATION_LEDGER.json", projections[selected_level or "minimum"]["ledger"])
+    ledger_key = "limited_resource_pilot" if (limited_pilot and not admitted and "limited_resource_pilot" in projections) else (selected_level or "minimum")
+    write_json(ev / "OPERATION_LEDGER.json", projections[ledger_key]["ledger"])
     write_json(ev / "ADMISSION_RECEIPT.json", receipt)
     write_json(docs / "ADMISSION_RECEIPT.json", receipt)
     write_json(docs / "START_STATE.json", start)
@@ -484,7 +519,8 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         raise StructuralError("ADMISSION", "config hash mismatch")
     miniature = bool(cfg.get("miniature") or receipt.get("miniature"))
     level = receipt["selected_world_level"]
-    worlds = dict(MINIATURE_WORLDS) if miniature else WORLD_LADDERS[level]
+    pilot = receipt.get("limited_pilot_spec") if receipt.get("limited_resource_pilot") and not miniature else None
+    worlds = dict(MINIATURE_WORLDS) if miniature else (dict(pilot["worlds"]) if pilot else WORLD_LADDERS[level])
     bank = json.loads((ev / "DONOR_BANK_V2.json").read_text())
     parts = json.loads((ev / "PARTITIONS.json").read_text())
     if not isinstance(parts.get("train"), list) or not isinstance(parts.get("tune"), list) or not isinstance(parts.get("calib"), list):
@@ -493,6 +529,31 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     write_json(receipt_path, receipt)
     t_deadline = time.perf_counter() + CAMPAIGN_WALL_CAP_S
     cpu_deadline = cpu_seconds() + CAMPAIGN_CPU_CAP_S
+    workers_spec = receipt.get("machine") or choose_workers()
+    if miniature:
+        train_blocks = parts["train"][:2]
+        tune_blocks = parts["tune"][:2]
+        calib_blocks = parts["calib"][:2]
+        budgets = [5, 30]
+        n_seeds = 1
+        specs = option_specs_all()[:3]
+        mech_n = 1
+    elif pilot:
+        train_blocks = parts["train"][: int(pilot["train_parents"])]
+        tune_blocks = parts["tune"][: int(pilot["tune_parents"])]
+        calib_blocks = parts["calib"][: int(pilot["calib_parents"])]
+        budgets = list(pilot["budgets"])
+        n_seeds = int(pilot["n_policy_seeds"])
+        specs = option_specs_all()[: int(pilot["option_count"])]
+        mech_n = int(pilot.get("mech_cases") or len(train_blocks))
+    else:
+        train_blocks = parts["train"]
+        tune_blocks = parts["tune"]
+        calib_blocks = parts["calib"]
+        budgets = list(NOMINAL_BUDGETS_S)
+        n_seeds = N_POLICY_SEEDS
+        specs = option_specs_all()
+        mech_n = len(train_blocks)
     write_json(
         ev / "PROTOCOL_FREEZE.json",
         {
@@ -500,25 +561,18 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
             "datetime_utc": _utc(),
             "selected_world_level": level,
             "worlds": worlds,
-            "n_stochastic_seeds": 1 if miniature else N_POLICY_SEEDS,
+            "n_stochastic_seeds": n_seeds,
             "portfolio_k": PORTFOLIO_K,
-            "pool_draws": POOL_DRAWS,
-            "nominal_budgets_s": [5, 30] if miniature else list(NOMINAL_BUDGETS_S),
+            "pool_draws": POOL_DRAWS if not miniature else 64,
+            "nominal_budgets_s": budgets,
             "primary_budget_s": PRIMARY_BUDGET_S,
             "reviewed_source_commit": head,
             "config_hash": cfg_hash,
             "seed_hierarchy": SEED_HIERARCHY,
             "limited_resource_pilot": bool(receipt.get("limited_resource_pilot")),
+            "limited_pilot_spec": pilot,
         },
     )
-
-    workers_spec = receipt.get("machine") or choose_workers()
-    train_blocks = parts["train"][:2] if miniature else parts["train"]
-    tune_blocks = parts["tune"][:2] if miniature else parts["tune"]
-    calib_blocks = parts["calib"][:2] if miniature else parts["calib"]
-    budgets = [5, 30] if miniature else list(NOMINAL_BUDGETS_S)
-    n_seeds = 1 if miniature else N_POLICY_SEEDS
-    specs = option_specs_all()[:3] if miniature else option_specs_all()
 
     # --- donor selector training on sampled regret ---
     X_by: dict[str, list] = {k: [] for k in FAMILY_DEPTH_KEYS}
@@ -527,7 +581,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     reset_prepare_counters()
     reset_distribution_counters()
     dist_cache: dict[str, Any] = {}
-    mech_cases = train_blocks[:1] if miniature else train_blocks
+    mech_cases = train_blocks[:mech_n]
     for bi, block in enumerate(mech_cases):
         if time.perf_counter() > t_deadline or cpu_seconds() > cpu_deadline:
             break
