@@ -1,0 +1,41 @@
+{
+  "calib_ids": [
+    "a3.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+    "a3.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+    "a3.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+    "a3.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0000",
+    "a3.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0000",
+    "a3.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000",
+    "a3.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0000",
+    "a3.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000"
+  ],
+  "eight_family_balanced": true,
+  "shortfall": {
+    "anchors": 16,
+    "calibration": 16,
+    "phase7_implication": "Phase 7 must execute remaining blocks under freeze; do not relabel reduced as full",
+    "reason": "aggregate local compute ceiling 45 min; machinery implements full plan",
+    "training": 112,
+    "tuning": 72
+  },
+  "train_ids": [
+    "a3.train.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+    "a3.train.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+    "a3.train.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+    "a3.train.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0000",
+    "a3.train.fam.green_pit_low.tyre_near_linear.traffic_dense.0000",
+    "a3.train.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000",
+    "a3.train.fam.green_pit_low.tyre_nonlinear.traffic_dense.0000",
+    "a3.train.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000"
+  ],
+  "tune_ids": [
+    "a3.tune.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+    "a3.tune.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+    "a3.tune.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+    "a3.tune.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0000",
+    "a3.tune.fam.green_pit_low.tyre_near_linear.traffic_dense.0000",
+    "a3.tune.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000",
+    "a3.tune.fam.green_pit_low.tyre_nonlinear.traffic_dense.0000",
+    "a3.tune.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000"
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "a3_run_id": "a5fdb488-9a90-47f9-a4f5-7f77a74180a6",
+  "checks": [
+    {
+      "n_checked": 12,
+      "n_pools": 192,
+      "name": "sparse_histogram_conservation",
+      "pass": true
+    },
+    {
+      "n_ok": 13,
+      "name": "distribution_hashes_recomputed",
+      "pass": true
+    },
+    {
+      "n_checks": 6,
+      "name": "native_basis_analytical_fixtures",
+      "pass": true
+    },
+    {
+      "n_rows": 16,
+      "name": "native_channel_counts_match_eligible",
+      "pass": true
+    },
+    {
+      "name": "noiseless_transpiled_vs_ideal",
+      "pass": true
+    },
+    {
+      "name": "a3_freeze_exists_before_outcomes",
+      "pass": true
+    },
+    {
+      "cases": {
+        "accepted_actions_use_actual_simulator_continuation": true,
+        "evaluator_from_continuation_not_proxy_qubo": true,
+        "future_duration_leakage_rejected": true,
+        "identical_observables_different_hidden_same_policy": true,
+        "late_results_frozen_classical_fallback": true,
+        "pit_entry_commitment_and_expiry_enforced": true,
+        "two_car_shared_crew_conflicts_represented": true
+      },
+      "name": "causal_hidden_future_invariance",
+      "pass": true
+    },
+    {
+      "name": "split_isolation",
+      "pass": true
+    },
+    {
+      "max_abs_diff": 7.216449660063518e-16,
+      "name": "direct_cost_qubo_agreement",
+      "pass": true
+    },
+    {
+      "n_blocks": 8,
+      "name": "paired_denominators",
+      "pass": true
+    },
+    {
+      "name": "recomputed_representative_stats",
+      "pass": true,
+      "recomputed": 0.0,
+      "reported": 0.0
+    },
+    {
+      "name": "model_feature_provenance",
+      "pass": true
+    },
+    {
+      "n_bad": 0,
+      "n_files": 15,
+      "name": "manifest_contents_hashes",
+      "pass": true
+    },
+    {
+      "PHASE_7_BOUNDARY_STUDY_READY": false,
+      "PHASE_7_OPERATIONAL_READY": false,
+      "PHASE_7_SUPERIORITY_READY": false,
+      "QPU_EXECUTION_AUTHORISED": false,
+      "name": "readiness_conditions_inspected",
+      "pass": true
+    },
+    {
+      "name": "superiority_not_silently_true",
+      "pass": true
+    },
+    {
+      "name": "actual_simulator_continuation",
+      "pass": true
+    }
+  ],
+  "n_checks": 16,
+  "n_pass": 16,
+  "not_hardcoded_booleans": true,
+  "ok": true,
+  "residual_run_id": "e437fa3d-c29c-43c3-9a55-708c1b36f5e6"
+}

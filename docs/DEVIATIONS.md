@@ -34,4 +34,13 @@ No invented deviations. Record only genuine discrepancies.
 | 2026-09-21 | Phase 6 sizing placeholder | high defect (corrected) | Stratified bootstrap now executed; zero-variance does not power superiority. |
 | 2026-09-21 | Gate E / Phase 7 ready | scientific correction | Prior `PASS_FOR_DEFINED_SCOPE` and `PHASE_7_MECHANISM_READY=true` withdrawn; Gate E `FAIL_FOR_INTENDED_CONTRIBUTION`; mechanism ready false. |
 
-No protocol amendments that reopen final-test. Protocol status: `MECHANISM_SCOPE_DRAFT_V2_NOT_FINAL_TEST_AUTHORISED`.
+| 2026-09-21 | A3 protocol amendment | pre-final-test redesign | `docs/PROTOCOL_AMENDMENT_A3.md`. A3 is not an A2 continuation; A2 models/calibration cannot confirm A3. Final-test remains sealed. |
+| 2026-09-21 | A3 reserved-partition fixture labels | software | First A3 campaign `e12246d1-…` crashed: `ScenarioSpec` rejects `partition=training\|calibration`. Fixtures now use `partition=development` + namespace `a3.{split}`. Interrupted freeze retained. |
+| 2026-09-21 | A3 bounded calibration N | resource limitation | Full 24/120/80/24 not executed under 45 min ceiling. Reduced 8-family balanced: 8/24 anchors, 8/120 train, 8/80 tune, 8/24 calib. Shortfall recorded; machinery present. |
+| 2026-09-21 | A3 enumerable menu | measured limitation | Classical matched offline evaluator on 16/16 calib rows. Dispatcher `classical_only` 16/16. Experiment `UNINFORMATIVE_FOR_QUANTUM_MARGINAL`. Difficulty not manufactured. |
+| 2026-09-21 | Native 2q p=1 closed form | modelling clarification | Completely depolarizing CX is Pauli-twirl \((4I-\rho)/15\), not \(I/4\). Fixture updated; tests pass. |
+| 2026-09-21 | 10q residual resource cell | measurement scope | 10q is not a native A2 size; not padded. Grid used 8q + 12q (force_branching). |
+| 2026-09-21 | A2 residual histograms | superseding evidence | New package `e437fa3d-…`; does not rewrite `2a3fb275` or `bd83cb22`. 192/192 pools × 1024 draws. |
+| 2026-09-21 | Logical vs native noise relabel | evidence class | 2a3fb275 noisy panel retained as logical-gate-level sensitivity; native-basis panel is the residual package. |
+
+No protocol amendments that reopen final-test. A2 protocol status remains `MECHANISM_SCOPE_DRAFT_V2_NOT_FINAL_TEST_AUTHORISED`. A3 protocol status: `A3_CALIBRATION_PILOT_PREDECLARED` (not final-test authorised).

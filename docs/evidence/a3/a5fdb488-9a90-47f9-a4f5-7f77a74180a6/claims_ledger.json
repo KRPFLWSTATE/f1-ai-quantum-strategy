@@ -1,0 +1,13 @@
+{
+  "a2_headroom_zero_retained": true,
+  "a3_primary_estimand": {
+    "formula": "classical_only_loss - safely_dispatched_hybrid_loss",
+    "name": "mean_paired_block_level_difference_in_independent_simulator_loss",
+    "negative_boundary_acceptable": true,
+    "positive_favours": "dispatched_hybrid"
+  },
+  "labels": "proposed/implemented/verified_by_named_check/simulated \u2014 not physically measured",
+  "no_first_claim": true,
+  "no_quantum_advantage": true,
+  "no_real_team_performance": true
+}

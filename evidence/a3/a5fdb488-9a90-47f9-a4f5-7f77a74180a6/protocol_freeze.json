@@ -1,0 +1,70 @@
+{
+  "a2_not_a_continuation": true,
+  "architecture": "A3_causal_operational_rolling_horizon",
+  "arms": [
+    "classical_only",
+    "safely_dispatched_hybrid",
+    "always_hybrid_c0",
+    "threshold_rule"
+  ],
+  "datetime_utc": "2026-09-21T05:58:06Z",
+  "event_keyed_crn": true,
+  "final_test_sealed": true,
+  "gate_e_does_not_require_positive_quantum": true,
+  "partitions_planned": {
+    "anchors": 24,
+    "calibration": 24,
+    "final_test_registered": 80,
+    "training": 120,
+    "tuning": 80
+  },
+  "phase_7_not_started": true,
+  "primary_estimand": {
+    "formula": "classical_only_loss - safely_dispatched_hybrid_loss",
+    "name": "mean_paired_block_level_difference_in_independent_simulator_loss",
+    "negative_boundary_acceptable": true,
+    "positive_favours": "dispatched_hybrid"
+  },
+  "qpu_execution_authorised": false,
+  "random_banks": {
+    "evaluation": "a3.evaluation",
+    "fitting": "a3.fitting",
+    "online_scoring": "a3.online_scoring"
+  },
+  "reduced_execution": {
+    "n_anchors": 8,
+    "n_calib": 8,
+    "n_train": 8,
+    "n_tune": 8,
+    "shortfall": {
+      "anchors": 16,
+      "calibration": 16,
+      "phase7_implication": "Phase 7 must execute remaining blocks under freeze; do not relabel reduced as full",
+      "reason": "aggregate local compute ceiling 45 min; machinery implements full plan",
+      "training": 112,
+      "tuning": 72
+    }
+  },
+  "secondary": [
+    "harm_frequency_magnitude",
+    "deadline_success",
+    "fallback_rate",
+    "dispatcher_choices",
+    "calibration_of_predicted_marginal_utility",
+    "marginal_useful_candidate_yield",
+    "legality",
+    "duplicates",
+    "portfolio_diversity",
+    "C0_C1_separately",
+    "latency_components",
+    "classical_and_offline_reference_gaps"
+  ],
+  "source_commit": "d05f9d3099eddd693b244c0258ca5a185c8201a1",
+  "status": "A3_CALIBRATION_PILOT_PREDECLARED",
+  "worlds_predeclared": {
+    "assess_8192_32768_by_extrapolation_only": true,
+    "not_chosen_from_favourable_sign": true,
+    "start": 8
+  },
+  "written_before_opening_calibration_outcomes": true
+}

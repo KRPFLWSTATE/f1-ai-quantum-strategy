@@ -1,0 +1,378 @@
+{
+  "analytical_native": {
+    "checks": [
+      {
+        "max_abs_diff": 1.1102230246251565e-16,
+        "name": "noiseless_transpiled_h_matches_independent_ideal",
+        "pass": true
+      },
+      {
+        "eligible_1q": 1,
+        "n_1q_channels": 1,
+        "name": "analytical_1q_p1_1_after_x_maximally_mixed",
+        "pass": true
+      },
+      {
+        "convention_note": "p=1 is not I/4 under the 15-nonidentity Pauli twirl; closed form (4I-\u03c1)/15",
+        "eligible_2q": 1,
+        "n_2q_channels": 1,
+        "name": "analytical_2q_p2_1_after_cx_pauli_twirl_closed_form",
+        "pass": true
+      },
+      {
+        "name": "finite_nonneg_normalised",
+        "pass": true
+      },
+      {
+        "name": "native_channel_count_equals_eligible_gates",
+        "pass": true
+      },
+      {
+        "logical_2q_channels_on_cry": 1,
+        "name": "negative_control_undecomposed_cry_is_not_native",
+        "native_2q_channels": 2,
+        "native_cx_after_transpile": 2,
+        "note": "Fails if a caller attaches depolarizing to CRY and claims native-basis. Native CX count after decomposition is the correct 2q channel count.",
+        "pass": true
+      }
+    ],
+    "depolarizing_convention": "p is the depolarizing probability in the standard Kraus form used by qiskit.quantum_info / Nielsen-Chuang: 1q \u039b(\u03c1)=(1-p)\u03c1+(p/3)\u2211_{P\u2208{X,Y,Z}} P\u03c1P implemented as (1-3p/4)I + (p/4)\u2211 Pauli; 2q \u039b(\u03c1)=(1-p)\u03c1+(p/15)\u2211_{P\u2260I} P\u03c1P. One consistent convention for logical and native panels.",
+    "ok": true,
+    "qiskit_version": "1.4.6"
+  },
+  "historical_0.5h_excluded": true,
+  "n_10q_native_a2_size": false,
+  "native_noisy_on_8q_only": true,
+  "one_8q_p1_not_used_for_all": true,
+  "reason_10q_absent": "A2 circuit_unit native sizes observed are 8 (standard) and 12 (force_branching); 10q would require dummy padding \u2014 not used",
+  "rows": [
+    {
+      "cpu_s": {
+        "max": 0.003875000000000739,
+        "median": 0.0036380000000022505,
+        "min": 0.003583999999996479,
+        "n_reps": 5,
+        "p95": 0.0038496000000002085
+      },
+      "exact_enum_s": 0.0004568330477923155,
+      "family": "C0",
+      "label": "8q_standard",
+      "n_qubits": 8,
+      "native_noisy_s": {
+        "max": 0.3691949589410797,
+        "median": 0.3691949589410797,
+        "min": 0.3691949589410797,
+        "n_reps": 1,
+        "p95": 0.3691949589410797
+      },
+      "one_complete_run_unit": true,
+      "p": 1,
+      "variational_objective_eval_s": {
+        "max": 7.50063918530941e-07,
+        "median": 3.7497375160455704e-07,
+        "min": 1.6693957149982452e-07,
+        "n_reps": 5,
+        "p95": 7.000518962740898e-07
+      },
+      "wall_s": {
+        "max": 0.0039054580265656114,
+        "median": 0.0036550830118358135,
+        "min": 0.0035810829140245914,
+        "n_reps": 5,
+        "p95": 0.0038802164373919366
+      },
+      "warm": false
+    },
+    {
+      "cpu_s": {
+        "max": 0.0037670000000034065,
+        "median": 0.003669999999999618,
+        "min": 0.0035130000000016537,
+        "n_reps": 5,
+        "p95": 0.003760000000002606
+      },
+      "exact_enum_s": 0.0004568330477923155,
+      "family": "C0",
+      "label": "8q_standard",
+      "n_qubits": 8,
+      "native_noisy_s": {
+        "max": 0.34347095899283886,
+        "median": 0.34347095899283886,
+        "min": 0.34347095899283886,
+        "n_reps": 1,
+        "p95": 0.34347095899283886
+      },
+      "one_complete_run_unit": true,
+      "p": 1,
+      "variational_objective_eval_s": {
+        "max": 4.5797787606716156e-07,
+        "median": 4.169996827840805e-07,
+        "min": 1.6693957149982452e-07,
+        "n_reps": 5,
+        "p95": 4.4978223741054534e-07
+      },
+      "wall_s": {
+        "max": 0.0037745420122519135,
+        "median": 0.003695750026963651,
+        "min": 0.003522958024404943,
+        "n_reps": 5,
+        "p95": 0.003773625195026398
+      },
+      "warm": true
+    },
+    {
+      "cpu_s": {
+        "max": 0.0044540000000026225,
+        "median": 0.0044419999999973925,
+        "min": 0.004407000000000494,
+        "n_reps": 5,
+        "p95": 0.004453400000002006
+      },
+      "exact_enum_s": 0.0004568330477923155,
+      "family": "C0",
+      "label": "8q_standard",
+      "n_qubits": 8,
+      "native_noisy_s": null,
+      "one_complete_run_unit": true,
+      "p": 2,
+      "variational_objective_eval_s": {
+        "max": 4.5797787606716156e-07,
+        "median": 2.919696271419525e-07,
+        "min": 1.25030055642128e-07,
+        "n_reps": 5,
+        "p95": 4.3297186493873594e-07
+      },
+      "wall_s": {
+        "max": 0.004458790994249284,
+        "median": 0.004450790933333337,
+        "min": 0.004408416920341551,
+        "n_reps": 5,
+        "p95": 0.0044580662157386545
+      },
+      "warm": false
+    },
+    {
+      "cpu_s": {
+        "max": 0.00884100000000032,
+        "median": 0.00862499999999855,
+        "min": 0.008399000000000711,
+        "n_reps": 5,
+        "p95": 0.008820800000000161
+      },
+      "exact_enum_s": 0.0004568330477923155,
+      "family": "C1",
+      "label": "8q_standard",
+      "n_qubits": 8,
+      "native_noisy_s": {
+        "max": 1.0097635830752552,
+        "median": 1.0097635830752552,
+        "min": 1.0097635830752552,
+        "n_reps": 1,
+        "p95": 1.0097635830752552
+      },
+      "one_complete_run_unit": true,
+      "p": 1,
+      "variational_objective_eval_s": {
+        "max": 5.830079317092896e-07,
+        "median": 3.33995558321476e-07,
+        "min": 1.6705598682165146e-07,
+        "n_reps": 5,
+        "p95": 5.580019205808639e-07
+      },
+      "wall_s": {
+        "max": 0.008929790928959846,
+        "median": 0.008668207912705839,
+        "min": 0.008425332955084741,
+        "n_reps": 5,
+        "p95": 0.00889774113893509
+      },
+      "warm": false
+    },
+    {
+      "cpu_s": {
+        "max": 0.009411000000000058,
+        "median": 0.009026000000002199,
+        "min": 0.008810000000000429,
+        "n_reps": 5,
+        "p95": 0.009334800000000597
+      },
+      "exact_enum_s": 0.0004568330477923155,
+      "family": "C1",
+      "label": "8q_standard",
+      "n_qubits": 8,
+      "native_noisy_s": null,
+      "one_complete_run_unit": true,
+      "p": 2,
+      "variational_objective_eval_s": {
+        "max": 5.00003807246685e-07,
+        "median": 3.7497375160455704e-07,
+        "min": 2.9103830456733704e-07,
+        "n_reps": 5,
+        "p95": 4.917848855257034e-07
+      },
+      "wall_s": {
+        "max": 0.009496415965259075,
+        "median": 0.009084583958610892,
+        "min": 0.008825666969642043,
+        "n_reps": 5,
+        "p95": 0.009416624577715993
+      },
+      "warm": false
+    },
+    {
+      "cpu_s": {
+        "max": 0.10549800000000076,
+        "median": 0.10500800000000154,
+        "min": 0.1041230000000013,
+        "n_reps": 5,
+        "p95": 0.10547960000000103
+      },
+      "exact_enum_s": 0.0019377910066395998,
+      "family": "C0",
+      "label": "12q_force_branching",
+      "n_qubits": 12,
+      "native_noisy_s": null,
+      "one_complete_run_unit": true,
+      "p": 1,
+      "variational_objective_eval_s": {
+        "max": 9.170034900307655e-07,
+        "median": 5.830079317092896e-07,
+        "min": 5.419133231043816e-07,
+        "n_reps": 5,
+        "p95": 8.670147508382797e-07
+      },
+      "wall_s": {
+        "max": 0.10609429201576859,
+        "median": 0.10555983299855143,
+        "min": 0.10455849999561906,
+        "n_reps": 5,
+        "p95": 0.10608980022370815
+      },
+      "warm": false
+    },
+    {
+      "cpu_s": {
+        "max": 0.10803299999999894,
+        "median": 0.10489399999999804,
+        "min": 0.10439400000000276,
+        "n_reps": 5,
+        "p95": 0.10749719999999882
+      },
+      "exact_enum_s": 0.0019377910066395998,
+      "family": "C0",
+      "label": "12q_force_branching",
+      "n_qubits": 12,
+      "native_noisy_s": null,
+      "one_complete_run_unit": true,
+      "p": 1,
+      "variational_objective_eval_s": {
+        "max": 8.330680429935455e-07,
+        "median": 7.499475032091141e-07,
+        "min": 5.830079317092896e-07,
+        "n_reps": 5,
+        "p95": 8.164439350366592e-07
+      },
+      "wall_s": {
+        "max": 0.10921312496066093,
+        "median": 0.1054677499923855,
+        "min": 0.10480700002517551,
+        "n_reps": 5,
+        "p95": 0.10853008336853236
+      },
+      "warm": true
+    },
+    {
+      "cpu_s": {
+        "max": 0.13655800000000085,
+        "median": 0.12359499999999812,
+        "min": 0.12305800000000389,
+        "n_reps": 5,
+        "p95": 0.13473160000000065
+      },
+      "exact_enum_s": 0.0019377910066395998,
+      "family": "C0",
+      "label": "12q_force_branching",
+      "n_qubits": 12,
+      "native_noisy_s": null,
+      "one_complete_run_unit": true,
+      "p": 2,
+      "variational_objective_eval_s": {
+        "max": 7.079215720295906e-07,
+        "median": 6.670597940683365e-07,
+        "min": 3.7497375160455704e-07,
+        "n_reps": 5,
+        "p95": 6.997492164373398e-07
+      },
+      "wall_s": {
+        "max": 0.1701157910283655,
+        "median": 0.12404012505430728,
+        "min": 0.12363229098264128,
+        "n_reps": 5,
+        "p95": 0.1619099244242534
+      },
+      "warm": false
+    },
+    {
+      "cpu_s": {
+        "max": 0.2084009999999985,
+        "median": 0.2035979999999995,
+        "min": 0.2029229999999984,
+        "n_reps": 5,
+        "p95": 0.20747439999999884
+      },
+      "exact_enum_s": 0.0019377910066395998,
+      "family": "C1",
+      "label": "12q_force_branching",
+      "n_qubits": 12,
+      "native_noisy_s": null,
+      "one_complete_run_unit": true,
+      "p": 1,
+      "variational_objective_eval_s": {
+        "max": 7.499475032091141e-07,
+        "median": 5.420297384262085e-07,
+        "min": 4.1606836020946503e-07,
+        "n_reps": 5,
+        "p95": 7.249647751450538e-07
+      },
+      "wall_s": {
+        "max": 0.2092709579737857,
+        "median": 0.20428070810157806,
+        "min": 0.20371616701595485,
+        "n_reps": 5,
+        "p95": 0.20832766636740416
+      },
+      "warm": false
+    },
+    {
+      "cpu_s": {
+        "max": 0.2206749999999964,
+        "median": 0.21880900000000025,
+        "min": 0.21787800000000246,
+        "n_reps": 5,
+        "p95": 0.22057619999999717
+      },
+      "exact_enum_s": 0.0019377910066395998,
+      "family": "C1",
+      "label": "12q_force_branching",
+      "n_qubits": 12,
+      "native_noisy_s": null,
+      "one_complete_run_unit": true,
+      "p": 2,
+      "variational_objective_eval_s": {
+        "max": 7.0908572524786e-07,
+        "median": 6.669433787465096e-07,
+        "min": 5.420297384262085e-07,
+        "n_reps": 5,
+        "p95": 7.006805390119553e-07
+      },
+      "wall_s": {
+        "max": 0.22230070794466883,
+        "median": 0.21954770805314183,
+        "min": 0.21873195806983858,
+        "n_reps": 5,
+        "p95": 0.22208676633890717
+      },
+      "warm": false
+    }
+  ]
+}

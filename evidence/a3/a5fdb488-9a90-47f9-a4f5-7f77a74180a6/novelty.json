@@ -1,0 +1,166 @@
+{
+  "F1_CONTRIBUTION_STATUS": "BOUNDARY_STUDY_IMPLEMENTED",
+  "GATE_E_SCIENTIFIC_VALUE": "UNRESOLVED",
+  "access_levels_disclosed": true,
+  "comparisons": [
+    {
+      "a3_precise_difference": "A3 is a causal checkpoint decision with two-car shared-crew constraints and a deadline-aware hybrid candidate portfolio, scored by an independent simulator evaluator. It does not replace DP race optimisation and does not claim better race times.",
+      "id": "f1_dp",
+      "implemented_evidence": "A3 rolling-horizon menu + simulator continuation evaluator",
+      "sources": [
+        {
+          "access": "abstract_metadata_and_secondary_full_record",
+          "authors": "Carrasco Heine, O.F.; Thraves, C.",
+          "title": "On the optimization of pit stop strategies via dynamic programming",
+          "url": "https://doi.org/10.1007/s10100-022-00806-4",
+          "venue": "Central European Journal of Operations Research 31(1):239\u2013268, 2023",
+          "verified_this_campaign": true
+        }
+      ],
+      "their_contribution": "DP/SDP for pit lap and compound under tyre wear, yellow flags, and weather; SDP delays stops to exploit possible yellow flags.",
+      "theme": "F1 DP / classical race optimisation",
+      "unresolved_overlap": "Both treat SC/VSC-aware pit timing; classical DP remains the stronger ops baseline."
+    },
+    {
+      "a3_precise_difference": "A3 models one team's two cars vs a frozen non-reactive rival field in a Stage 3 simulator, not an equilibrium game against a strategic opponent.",
+      "id": "f1_game",
+      "implemented_evidence": "hand/spec rival.policy.frozen_nonreactive.v1",
+      "sources": [
+        {
+          "access": "abstract_metadata",
+          "authors": "Aguad, F.; Thraves, C.",
+          "doi_note": "RePEc/EJOR record; earlier SSRN preprint 4470115. Abstract access, not paywalled full text.",
+          "title": "Optimizing pit stop strategies in Formula 1 with dynamic programming and game theory",
+          "url": "https://doi.org/10.1016/j.ejor.2024.07.011",
+          "venue": "European Journal of Operational Research 319(3):908\u2013919, 2024",
+          "verified_this_campaign": true
+        }
+      ],
+      "their_contribution": "Two-driver zero-sum feedback Stackelberg pit/compound game with overtaking and yellow flags.",
+      "theme": "F1 game-theoretic optimisation",
+      "unresolved_overlap": "Competitive interaction is present in both; A3 does not solve a Stackelberg game."
+    },
+    {
+      "a3_precise_difference": "A3 uses small inspectable ridge models for donor/dispatch only; policies are enumerated rolling-horizon plans, not an RL policy network. No claim to outperform RSRL.",
+      "id": "f1_rl",
+      "implemented_evidence": "RidgeRuntime fit receipts; no neural race policy",
+      "sources": [
+        {
+          "access": "abstract_metadata",
+          "title": "Race Strategy Reinforcement Learning: Optimising Pitstop Strategy with Emergent Tactics in Formula One",
+          "url": "https://doi.org/10.1007/s10994-026-07081-3",
+          "venue": "Machine Learning (Springer), 2026 record",
+          "verified_this_campaign": true
+        }
+      ],
+      "their_contribution": "RL race-strategy agent with post-hoc explanations vs hard-coded/MC baselines.",
+      "theme": "Multi-agent / learning F1 strategy",
+      "unresolved_overlap": "Both learn something about when to pit; methods and estimands differ."
+    },
+    {
+      "a3_precise_difference": "A3 QUBO is a candidate generator inside a causal simulator loop; value is marginal simulator loss after strong classical candidates, not annealer energy.",
+      "id": "f1_qubo",
+      "implemented_evidence": "direct-cost/QUBO agreement + continuation evaluator",
+      "sources": [
+        {
+          "access": "repository_listing_metadata",
+          "authors": "Kolstee, S.",
+          "note": "Full thesis body not independently fetched; listing confirms topic.",
+          "title": "Optimizing Formula 1 Pit Stop Strategies Using QUBO and Annealing-Based Methods",
+          "url": "https://theses.liacs.nl/bachelori",
+          "venue": "LIACS bachelor thesis listing 2025\u201326",
+          "verified_this_campaign": true
+        }
+      ],
+      "their_contribution": "QUBO/annealing encoding of F1 pit-stop strategies (thesis-scale).",
+      "theme": "F1 QUBO / annealing",
+      "unresolved_overlap": "Discrete pit/compound QUBO encodings; A3 does not claim a new QUBO family."
+    },
+    {
+      "a3_precise_difference": "A3 donor selection is on causal F1 observables + QUBO structure for C0/C1, not graph-lightcone MaxCut transfer. No new mixer/QAOA claimed.",
+      "id": "qaoa_transfer",
+      "implemented_evidence": "new A3 ridge selector features; A2 donors not reused as A3 models",
+      "sources": [
+        {
+          "access": "full_text_arxiv",
+          "authors": "Brand\u00e3o et al.",
+          "title": "For Fixed Control Parameters the QAOA Objective Function Value Concentrates for Typical Instances",
+          "url": "https://doi.org/10.48550/arxiv.1812.04170",
+          "verified_this_campaign": true
+        },
+        {
+          "access": "abstract_and_conference_record",
+          "authors": "Galda et al.",
+          "title": "Transferability of optimal QAOA parameters between random graphs",
+          "url": "https://doi.org/10.1109/qce52317.2021.00034",
+          "venue": "IEEE QCE 2021",
+          "verified_this_campaign": true
+        }
+      ],
+      "their_contribution": "QAOA angle concentration/transfer on MaxCut-like graphs.",
+      "theme": "QAOA parameter transfer",
+      "unresolved_overlap": "Both reuse variational angles; problem class differs."
+    },
+    {
+      "a3_precise_difference": "C1 reuses XY one-hot mixers as a candidate generator; not claimed as a new mixer.",
+      "id": "xy_mixers",
+      "implemented_evidence": "existing Stage 5 C1 circuits invoked from A3",
+      "sources": [
+        {
+          "access": "full_text_arxiv",
+          "authors": "Hadfield et al.",
+          "title": "From the Quantum Approximate Optimization Algorithm to a Quantum Alternating Operator Ansatz",
+          "url": "https://arxiv.org/abs/1709.03489",
+          "verified_this_campaign": true
+        },
+        {
+          "access": "full_text",
+          "title": "Constraint Preserving Mixers for the Quantum Approximate Optimization Algorithm",
+          "url": "https://doi.org/10.3390/a15060202",
+          "verified_this_campaign": true
+        }
+      ],
+      "their_contribution": "XY / feasibility-preserving mixers for one-hot subspaces.",
+      "theme": "Constraint-preserving mixers",
+      "unresolved_overlap": "Identical mixer class; application and causal loop are the difference, not the mixer."
+    },
+    {
+      "a3_precise_difference": "A3 dispatcher predicts marginal simulator utility and latency for C0/C1 vs classical-only at a causal F1 checkpoint with mandatory fallback. Not a general SAT/CSP selector.",
+      "id": "algo_select",
+      "implemented_evidence": "RidgeRuntime + dispatch_choice with fallback",
+      "sources": [
+        {
+          "access": "bibliographic_plus_survey_secondary",
+          "authors": "Rice, J.R.",
+          "title": "The Algorithm Selection Problem",
+          "venue": "Advances in Computers, 1976",
+          "verified_this_campaign": true
+        },
+        {
+          "access": "full_text_pdf",
+          "authors": "Kotthoff, L.",
+          "title": "Algorithm Selection for Combinatorial Search Problems: A Survey",
+          "url": "http://www.cs.uwyo.edu/~larsko/papers/kotthoff_algorithm_2012-1.pdf",
+          "verified_this_campaign": true
+        },
+        {
+          "access": "full_text_arxiv",
+          "authors": "Hay, N. et al. / related BMPS line (Lieder, Russell)",
+          "note": "Metareasoning / value-of-computation; not F1-specific.",
+          "title": "Learning to select computations",
+          "url": "https://arxiv.org/pdf/1711.06892v3.pdf",
+          "verified_this_campaign": true
+        }
+      ],
+      "their_contribution": "Map instance features to algorithms; metareason about computation under limits.",
+      "theme": "Algorithm selection / metareasoning / deadline-aware hybrid opt",
+      "unresolved_overlap": "Same meta-problem class (choose an algorithm under a deadline)."
+    }
+  ],
+  "dossier_is_not_verification_of_cited_papers": true,
+  "hash": "ee3b53841f46f13633f64d27315b27a87bfa2e00570c0a3999da3a4fc9e493f9",
+  "no_first_claim": true,
+  "no_quantum_advantage_claim": true,
+  "no_real_team_performance_claim": true,
+  "operational_headroom": "ZERO_ON_CHECKED_CALIBRATION_MENU_FULLY_ENUMERABLE"
+}

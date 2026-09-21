@@ -21,16 +21,17 @@ Every intended contribution is **unsupported** until matching evidence exists. S
 | Learned donor selector improves useful regret on held-out test | Exact held-out comparison | unsupported (tuning-only results recorded; not held-out claims) |
 | C2 guarded mixer admitted | `c2_admission.json` | `NOT_ADMITTED_BY_PROTOCOL` (valid negative) |
 | Quantum advantage / first quantum F1 optimiser | Matching evidence | unsupported |
-| Phase 6 operational race-decision pilot ready | Causal simulator integration + evaluator | **false** — `CAUSAL_OPERATIONAL_READINESS: false` |
-| Phase 6 mechanism pilot establishes F1 value | Operational endpoints | unsupported — `F1_CONTRIBUTION_STATUS: INSUFFICIENT` |
-| Absolute scientific novelty / first AI–quantum–F1 system | Literature Gate E | unsupported — `GATE_E: FAIL_FOR_INTENDED_CONTRIBUTION` (prior PASS withdrawn) |
-| Phase 6 calibration implies powered H1 superiority | Headroom gate + sizing | **false** — zero headroom; operational sizing `NOT_APPLICABLE` |
-| Phase 6 1024-shot pools on 8q (historical bd83cb22) | Shot conservation | **false historically** — 256 draws; **corrected** in `2a3fb275-…` |
-| Historical Phase 6 noisy panel = gate-level depolarizing | Gate-channel simulation | **false** — withdrawn; replaced by DensityMatrix gate channels (synthetic ≠ IBM) |
-| Phase 7 mechanism ready | Freeze + Gate E + justified N | **false** |
+| Phase 6 operational race-decision pilot ready | Causal simulator integration + evaluator | **false** for A2 — `CAUSAL_OPERATIONAL_READINESS: false`; **true** for A3 causal integration (`CAUSAL_OPERATIONAL_INTEGRATION: true`, named 7/7 adversarial checks) |
+| Phase 6 mechanism pilot establishes F1 value | Operational endpoints | unsupported — A2 `F1_CONTRIBUTION_STATUS: INSUFFICIENT`; A3 `BOUNDARY_STUDY_IMPLEMENTED` with uninformative quantum marginal |
+| Absolute scientific novelty / first AI–quantum–F1 system | Literature Gate E | unsupported — A2 `GATE_E: FAIL_FOR_INTENDED_CONTRIBUTION`; A3 `GATE_E: UNRESOLVED` |
+| Phase 6 calibration implies powered H1 superiority | Headroom gate + sizing | **false** — A2 zero proxy headroom; A3 calibration menu fully enumerable |
+| Phase 6 1024-shot pools on 8q (historical bd83cb22) | Shot conservation | **false historically** — 256 draws; **corrected** in `2a3fb275-…`; residual histograms `e437fa3d-…` 192/192 pools × 1024 |
+| Historical Phase 6 noisy panel = native-basis depolarizing | Native transpiled channels | **false** — 2a3fb275 panel is logical-gate-level; native-basis residual `e437fa3d-…` |
+| A3 dispatched hybrid improves simulator loss vs classical-only | Paired block-level primary estimand | **unsupported on checked calib** — mean difference 0.0; dispatcher classical_only 16/16; experiment `UNINFORMATIVE_FOR_QUANTUM_MARGINAL` |
+| Phase 7 boundary / operational / superiority ready | Freeze + Gate E + Gate F + sealed final-test + comparators | **false** / **false** / **false** |
 
 ## Explicit limits (dossier §27 and master prompt §9.14)
 
-No absolute novelty, guaranteed future quantum advantage, team adoption, actual F1 performance gain, or publication acceptance is established. Phase 5 novelty status remains `PROPOSED_NOT_LITERATURE_VERIFIED`. Phase 6 Gate E is **`FAIL_FOR_INTENDED_CONTRIBUTION`** after correction; narrow engineering artifacts do not satisfy the project AI–quantum–F1 objective.
+No absolute novelty, guaranteed future quantum advantage, team adoption, actual F1 performance gain, or publication acceptance is established. Phase 5 novelty status remains `PROPOSED_NOT_LITERATURE_VERIFIED`. A2 Phase 6 Gate E remains **`FAIL_FOR_INTENDED_CONTRIBUTION`**. A3 Gate E is **`UNRESOLVED`** (causal path implemented; quantum marginal uninformative on the enumerable calibration menu). Narrow engineering artifacts do not satisfy the project AI–quantum–F1 objective.
 
-AI assistance: ChatGPT prepared earlier stage prompts; Cursor agents implemented Stages 1–6 and the Phases 1–6 correction. That assistance is development tooling, not the runtime learned AI contribution.
+AI assistance: ChatGPT prepared earlier stage prompts; Cursor agents implemented Stages 1–6, the Phases 1–6 correction, and the Phase 5–6 A3 redesign. That assistance is development tooling, not the runtime learned AI contribution.

@@ -1,0 +1,40 @@
+{
+  "issues": [
+    {
+      "disposition": "ADDRESSED_BY_A3_NOT_BY_PATCHING_A2",
+      "id": "P6-A2-CAUSAL",
+      "stage": "5-6-A3"
+    },
+    {
+      "disposition": "RETAINED_FOR_A2; A3_MENU_MAY_BE_UNINFORMATIVE_IF_ENUMERABLE",
+      "id": "P6-ZERO-HEADROOM",
+      "stage": "5-6-A3"
+    },
+    {
+      "disposition": "CORRECTED_IN_RESIDUAL",
+      "id": "P6-SHOT-HISTOGRAM",
+      "stage": 6
+    },
+    {
+      "disposition": "CORRECTED_IN_RESIDUAL",
+      "id": "P6-NATIVE-NOISE",
+      "stage": 6
+    },
+    {
+      "disposition": "DOCUMENTED_SHORTFALL",
+      "id": "A3-REDUCED-N",
+      "stage": "A3"
+    },
+    {
+      "disposition": "PREDECLARED_BOUNDED; 8192_NOT_RUN",
+      "id": "A3-WORLDS-8",
+      "stage": "A3"
+    },
+    {
+      "disposition": "UNOPENED",
+      "id": "FINAL-TEST-SEALED",
+      "stage": "A3"
+    }
+  ],
+  "schema": "p1to6_plus_a3.issue_register.v1"
+}

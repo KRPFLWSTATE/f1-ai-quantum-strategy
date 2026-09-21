@@ -1,0 +1,16 @@
+{
+  "cases": {
+    "accepted_actions_use_actual_simulator_continuation": true,
+    "evaluator_from_continuation_not_proxy_qubo": true,
+    "future_duration_leakage_rejected": true,
+    "identical_observables_different_hidden_same_policy": true,
+    "late_results_frozen_classical_fallback": true,
+    "pit_entry_commitment_and_expiry_enforced": true,
+    "two_car_shared_crew_conflicts_represented": true
+  },
+  "interface": "RaceSimulator.observe/validate_plan/consider_recommendation/continue_to_finish",
+  "not_flag_only_wrapper": true,
+  "ok": true,
+  "same_obs_before_reveal": true,
+  "same_policy_before_reveal": true
+}

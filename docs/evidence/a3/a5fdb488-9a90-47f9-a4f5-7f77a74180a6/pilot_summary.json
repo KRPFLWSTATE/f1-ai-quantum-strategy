@@ -1,0 +1,63 @@
+{
+  "classical_matches_offline_case_rows": 16,
+  "dispatcher_choices": {
+    "classical_only": 16
+  },
+  "experiment_status": "UNINFORMATIVE_FOR_QUANTUM_MARGINAL",
+  "fallback_rate_mean": 0.0,
+  "final_test_accessed": false,
+  "gate_e": "UNRESOLVED",
+  "mc": {
+    "extrapolation_8192": null,
+    "note": "Bounded 8 worlds/checkpoint; 8192/32768 not run; extrapolate SE ~ 1/sqrt(N)",
+    "se_scale_to_32768": 0.015625,
+    "se_scale_to_8192": 0.03125,
+    "start_predeclared": 8,
+    "worlds_used": 8
+  },
+  "n_calib_blocks": 8,
+  "n_calib_case_rows": 16,
+  "n_train_case_rows": 16,
+  "n_tune_case_rows": 16,
+  "operational_headroom": "ZERO_ON_CHECKED_CALIBRATION_MENU_FULLY_ENUMERABLE",
+  "paired": {
+    "bootstrap": {
+      "blocks_per_family": {
+        "fam.green_pit_high.tyre_near_linear.traffic_dense": 1,
+        "fam.green_pit_high.tyre_near_linear.traffic_sparse": 1,
+        "fam.green_pit_high.tyre_nonlinear.traffic_dense": 1,
+        "fam.green_pit_high.tyre_nonlinear.traffic_sparse": 1,
+        "fam.green_pit_low.tyre_near_linear.traffic_dense": 1,
+        "fam.green_pit_low.tyre_near_linear.traffic_sparse": 1,
+        "fam.green_pit_low.tyre_nonlinear.traffic_dense": 1,
+        "fam.green_pit_low.tyre_nonlinear.traffic_sparse": 1
+      },
+      "bootstrap_mean": 0.0,
+      "bootstrap_std": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "equal_family_weight": true,
+      "halfwidth_ci95": 0.0,
+      "missing_excluded_handling": "blocks_without_effect_omitted_before_call",
+      "n_blocks": 8,
+      "n_boot": 2000,
+      "n_families": 8,
+      "pairing_preserved": true,
+      "point_estimate": 0.0,
+      "seed": 20260921,
+      "status": "EXECUTED"
+    },
+    "harm_frequency": 0.0,
+    "mean_difference": 0.0,
+    "n_blocks": 8,
+    "n_blocks_negative": 0,
+    "n_blocks_positive": 0,
+    "n_case_rows": 16,
+    "primary_estimand": "classical_only_loss - safely_dispatched_hybrid_loss"
+  },
+  "timely_rate_mean": 1.0,
+  "worlds_calib": 8,
+  "worlds_train": 4
+}

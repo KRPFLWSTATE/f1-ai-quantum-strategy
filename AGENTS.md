@@ -1,6 +1,6 @@
 # Project instructions (always load)
 
-Active stage: **6 — Phase 6 corrected closure (audit/correction complete; Phase 7 not authorised)**. Architecture **A2** selected at Stage 5A. Phase 5 final acceptance: `PASS_WITH_DOCUMENTED_LIMITATIONS` (commit `1c7631e…`; corrected run `e6b3588b-…`). Phase 6 historical run `bd83cb22-…` **preserved but superseded** for shot/noise/capacity/sizing/Gate E claims by corrected run `2a3fb275-6c37-4bbc-bdb4-addede80b5c3`: shot accounting corrected (1024 draws); gate-channel noisy panel replaces withdrawn jitter panel; `DEVELOPMENT_HEADROOM: ZERO`; `GATE_E: FAIL_FOR_INTENDED_CONTRIBUTION`; `PROTOCOL_STATUS: MECHANISM_SCOPE_DRAFT_V2_NOT_FINAL_TEST_AUTHORISED`; `CAUSAL_OPERATIONAL_READINESS: false`; `PHASE_7_MECHANISM_READY: false`. Authoritative reports: `docs/PHASES_1_TO_6_ACCEPTANCE_REPORT.md`, `docs/STAGE_6_CORRECTED_REPORT.md`. After a valid bounded Stage 4 closure: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`. Legacy exhaustive Gate C remains `LEGACY_EXHAUSTIVE_GATE: PARTIAL` with `LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME` (e85ee977 40/64; 41c28597 21 archived files — see `docs/STAGE_4_CLOSURE_ERRATUM.md`). Stage 4.1 is not independently accepted. Stage 4 evidence is **frozen** — do not resume `e85ee977` / `41c28597` or invoke `formulation_gate_c_closure_check`. `QPU_EXECUTION_AUTHORISED: false`. Development headroom on checked A2 instances: **ZERO** (superiority path disabled). Next authorised stage: **NONE automatic — Phase 7 only after explicit prompt**.
+Active stage: **6 — Phase 5–6 scientific redesign complete (A3 causal path implemented; Phase 7 not authorised)**. Architecture **A3** is the operational amendment; **A2 lineage is preserved** and is **not** an unchanged continuation. Phase 5 final acceptance: `PASS_WITH_DOCUMENTED_LIMITATIONS` (commit `1c7631e…`; corrected run `e6b3588b-…`). Phase 6 historical `bd83cb22-…` and corrected `2a3fb275-…` **preserved, not overwritten**. A2 residual (histograms, native-basis noise) `e437fa3d-…`. A3 run `a5fdb488-…`: `GATE_E: UNRESOLVED`; `OPERATIONAL_DECISION_HEADROOM: ZERO_ON_CHECKED_CALIBRATION_MENU_FULLY_ENUMERABLE`; `CAUSAL_OPERATIONAL_INTEGRATION: true`; `PHASE_7_*_READY: false`. Authoritative report: `docs/PHASE_5_6_SCIENTIFIC_REDESIGN_REPORT.md`. After a valid bounded Stage 4 closure: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`. Legacy exhaustive Gate C remains `LEGACY_EXHAUSTIVE_GATE: PARTIAL` with `LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME`. `QPU_EXECUTION_AUTHORISED: false`. Next authorised stage: **NONE automatic — Phase 7 only after explicit prompt**.
 
 ## Authority
 
@@ -10,6 +10,7 @@ Active stage: **6 — Phase 6 corrected closure (audit/correction complete; Phas
 - Legacy count erratum: `docs/STAGE_4_CLOSURE_ERRATUM.md`.
 - Phase 5 contract lineage: `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`.
 - Phase 6 freeze / novelty: `docs/STAGE_6_PROTOCOL_FREEZE_V2.md`, `docs/STAGE_6_NOVELTY_COMPARISON.md` (v1 freeze/report preserved historically).
+- A3 amendment / freeze / novelty: `docs/PROTOCOL_AMENDMENT_A3.md`, `docs/A3_PROTOCOL_FREEZE.md`, `docs/A3_NOVELTY_AND_VALUE.md`.
 
 ## Project boundary
 
@@ -32,6 +33,7 @@ Label claims as: proposed, implemented, verified by a named check, simulated, ph
 - Do not resume `e85ee977-…` or `41c28597-…`.
 - Do not alter frozen Phase 5 evidence under `evidence/stage5/<run_id>/` after publication.
 - Do not alter historical Phase 6 evidence under `evidence/stage6/bd83cb22-…/` (superseded by `evidence/stage6_corrected/`).
+- Do not alter A2 residual evidence under `evidence/stage6_a2_residual/` or A3 evidence under `evidence/a3/` after publication.
 - Do not begin Phase 7 automatically; feasibility ≠ permission.
 
 ## Commands
@@ -48,9 +50,11 @@ python -m f1q run --plan formulation_check
 python -m f1q run --plan formulation_repair_check
 python -m f1q run --plan phase5
 python -m f1q run --plan phase6
+python -m f1q run --plan a3_redesign
 python -m f1q.stage5
 python -m f1q.stage6
 python -m f1q.stage6.corrected_run
+python -m f1q.a3
 python -m f1q.formulation.stage4_closure
 python -m f1q resume --run-id <id>
 python -m f1q receipt --run-id <id>
@@ -76,14 +80,14 @@ A `run` is an execution container, not automatically one scientific observation.
 
 Preserved Stage 4 identifiers: `e8b87881-…`, `c4d0a199-…`, `e85ee977-…` (40 archived / 64 PARTIAL), `41c28597-…` (21 archived files; interrupted; no completed receipt). Do not overwrite them.
 
-Preserved Stage 5/6 identifiers: Phase 5 `6ad68021-…` (historical), `e6b3588b-…` (corrected), final_acceptance_repair; Phase 6 historical `bd83cb22-…`; Phase 6 corrected `2a3fb275-…`.
+Preserved Stage 5/6 identifiers: Phase 5 `6ad68021-…` (historical), `e6b3588b-…` (corrected), final_acceptance_repair; Phase 6 historical `bd83cb22-…`; Phase 6 corrected `2a3fb275-…`; A2 residual `e437fa3d-…`; A3 `a5fdb488-…`.
 
 ## Simulator versions (current tree)
 
 - `simulator_version`: **1.0.4**
 - `interface_version`: **3.1.0**
 
-Package constants, YAML configs, and engine state must agree (`load_simulator_config` fails closed on mismatch). Package version: **0.5.0** (Stage 6 module `0.6.1`).
+Package constants, YAML configs, and engine state must agree (`load_simulator_config` fails closed on mismatch). Package version: **0.7.0** (Stage 6 module `0.6.2`; A3 module `0.7.0`).
 
 ## GitHub
 

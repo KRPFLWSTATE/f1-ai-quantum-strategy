@@ -1,0 +1,1361 @@
+{
+  "analytical": {
+    "checks": [
+      {
+        "max_abs_diff": 1.1102230246251565e-16,
+        "name": "noiseless_transpiled_h_matches_independent_ideal",
+        "pass": true
+      },
+      {
+        "eligible_1q": 1,
+        "n_1q_channels": 1,
+        "name": "analytical_1q_p1_1_after_x_maximally_mixed",
+        "pass": true
+      },
+      {
+        "convention_note": "p=1 is not I/4 under the 15-nonidentity Pauli twirl; closed form (4I-\u03c1)/15",
+        "eligible_2q": 1,
+        "n_2q_channels": 1,
+        "name": "analytical_2q_p2_1_after_cx_pauli_twirl_closed_form",
+        "pass": true
+      },
+      {
+        "name": "finite_nonneg_normalised",
+        "pass": true
+      },
+      {
+        "name": "native_channel_count_equals_eligible_gates",
+        "pass": true
+      },
+      {
+        "logical_2q_channels_on_cry": 1,
+        "name": "negative_control_undecomposed_cry_is_not_native",
+        "native_2q_channels": 2,
+        "native_cx_after_transpile": 2,
+        "note": "Fails if a caller attaches depolarizing to CRY and claims native-basis. Native CX count after decomposition is the correct 2q channel count.",
+        "pass": true
+      }
+    ],
+    "depolarizing_convention": "p is the depolarizing probability in the standard Kraus form used by qiskit.quantum_info / Nielsen-Chuang: 1q \u039b(\u03c1)=(1-p)\u03c1+(p/3)\u2211_{P\u2208{X,Y,Z}} P\u03c1P implemented as (1-3p/4)I + (p/4)\u2211 Pauli; 2q \u039b(\u03c1)=(1-p)\u03c1+(p/15)\u2211_{P\u2260I} P\u03c1P. One consistent convention for logical and native panels.",
+    "ok": true,
+    "qiskit_version": "1.4.6"
+  },
+  "depolarizing_convention": "p is the depolarizing probability in the standard Kraus form used by qiskit.quantum_info / Nielsen-Chuang: 1q \u039b(\u03c1)=(1-p)\u03c1+(p/3)\u2211_{P\u2208{X,Y,Z}} P\u03c1P implemented as (1-3p/4)I + (p/4)\u2211 Pauli; 2q \u039b(\u03c1)=(1-p)\u03c1+(p/15)\u2211_{P\u2260I} P\u03c1P. One consistent convention for logical and native panels.",
+  "elapsed_s": 16.047053250018507,
+  "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+  "historical_jitter_class": "WITHDRAWN_AS_GATE_LEVEL_NOISE_EVIDENCE:probability_mix_toward_uniform_plus_gaussian_jitter_not_gate_channels",
+  "logical_panel_relabel": "Prior corrected panel (2a3fb275) is logical-gate-level sensitivity, not native-basis.",
+  "n_completed": 16,
+  "n_rows": 16,
+  "panel_hash": "6ade6121752bad05783931f2780818d45e06ba5ea7c49e0c628bf4d46693ffa0",
+  "rows": [
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "b99f68d800a2331eed75cacc3cc6fd39d33c83efe6b8dc069b2737a4aa23dc11",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "b99f68d800a2331eed75cacc3cc6fd39d33c83efe6b8dc069b2737a4aa23dc11",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "b99f68d800a2331eed75cacc3cc6fd39d33c83efe6b8dc069b2737a4aa23dc11",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.870229106497197,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "3d1400c34eb77b34d862015ed3f33d95a6479b401869afe8c4fc53ec16b02f91",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "3d1400c34eb77b34d862015ed3f33d95a6479b401869afe8c4fc53ec16b02f91",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "3d1400c34eb77b34d862015ed3f33d95a6479b401869afe8c4fc53ec16b02f91",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.7261935559331557,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d369d0b4b2269411d68124a1fa063a3bc9d1ddc21b92749a15f2ce13f7ff5cc3",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d369d0b4b2269411d68124a1fa063a3bc9d1ddc21b92749a15f2ce13f7ff5cc3",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d369d0b4b2269411d68124a1fa063a3bc9d1ddc21b92749a15f2ce13f7ff5cc3",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.8746700660049729,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d856e9140a72198ba566d29dbcd09bd377aee9ee6d2b8ad9d4787fe93fe51fbd",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d856e9140a72198ba566d29dbcd09bd377aee9ee6d2b8ad9d4787fe93fe51fbd",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d856e9140a72198ba566d29dbcd09bd377aee9ee6d2b8ad9d4787fe93fe51fbd",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.7261935559331556,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "4da5a8582f41114bf147e0e8f68c5be2e51eafbb9fbde588d07d2a97125a23a8",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "4da5a8582f41114bf147e0e8f68c5be2e51eafbb9fbde588d07d2a97125a23a8",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "4da5a8582f41114bf147e0e8f68c5be2e51eafbb9fbde588d07d2a97125a23a8",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.8531746835582327,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ea35b5a67749cf6e18dc16418bb9fcfbcd333706c1927c71e29304fd1b3faa78",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ea35b5a67749cf6e18dc16418bb9fcfbcd333706c1927c71e29304fd1b3faa78",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ea35b5a67749cf6e18dc16418bb9fcfbcd333706c1927c71e29304fd1b3faa78",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.7261935559331557,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ccdee69f9a2def1545eeafb243cdbbdc5be84be656749c55f817b273fcd2cd4e",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ccdee69f9a2def1545eeafb243cdbbdc5be84be656749c55f817b273fcd2cd4e",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ccdee69f9a2def1545eeafb243cdbbdc5be84be656749c55f817b273fcd2cd4e",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.8683141839122965,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "8bd3983f4b5af65bca8b86c01918458b3331bd42993b195a82111d5f2e11cc38",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "8bd3983f4b5af65bca8b86c01918458b3331bd42993b195a82111d5f2e11cc38",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "8bd3983f4b5af65bca8b86c01918458b3331bd42993b195a82111d5f2e11cc38",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.7261935559331557,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "c8e0093087238a092930d28305a859792fd02579c0844a9278b782126e27635f",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "c8e0093087238a092930d28305a859792fd02579c0844a9278b782126e27635f",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "c8e0093087238a092930d28305a859792fd02579c0844a9278b782126e27635f",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.8774641762506135,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "1250b8d6ab705cf54acf7dad196c2bc0a28da623f48f382f261c79a764e3b995",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "1250b8d6ab705cf54acf7dad196c2bc0a28da623f48f382f261c79a764e3b995",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "1250b8d6ab705cf54acf7dad196c2bc0a28da623f48f382f261c79a764e3b995",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.726193555933156,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "74aa4a27266e1e1b255996523fe60fa708ba81b4e268aec7b17be7d4ba29bf39",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "74aa4a27266e1e1b255996523fe60fa708ba81b4e268aec7b17be7d4ba29bf39",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "74aa4a27266e1e1b255996523fe60fa708ba81b4e268aec7b17be7d4ba29bf39",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.8868829347997623,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d308b60120d49f155bcafd874879f3b293b5eb6fa7b7c52a8847169038da5cdf",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d308b60120d49f155bcafd874879f3b293b5eb6fa7b7c52a8847169038da5cdf",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "d308b60120d49f155bcafd874879f3b293b5eb6fa7b7c52a8847169038da5cdf",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.7261935559331558,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ca10075f97b6fa37802f496789013a02e0a35081b7619a8893b86679de776d17",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ca10075f97b6fa37802f496789013a02e0a35081b7619a8893b86679de776d17",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "ca10075f97b6fa37802f496789013a02e0a35081b7619a8893b86679de776d17",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.8688324805448836,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "a9c6a1a680c798ed35b4d5c748d5186581398093a89e6fcfa562c1f0d5f21723",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "a9c6a1a680c798ed35b4d5c748d5186581398093a89e6fcfa562c1f0d5f21723",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "a9c6a1a680c798ed35b4d5c748d5186581398093a89e6fcfa562c1f0d5f21723",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.7261935559331556,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 24,
+        "2q_after_cx": 12
+      },
+      "circuit_family": "C0",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "5590a26756ffc8f3476f11aa0ecd6ae327996315cac9e17d72b6db76d7f92a3c",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "5590a26756ffc8f3476f11aa0ecd6ae327996315cac9e17d72b6db76d7f92a3c",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "5590a26756ffc8f3476f11aa0ecd6ae327996315cac9e17d72b6db76d7f92a3c",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "h": 8,
+          "p": 8,
+          "rx": 8
+        },
+        "logical_1q": 24,
+        "logical_2q": 6,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 24,
+      "n_2q_channels_applied": 12,
+      "n_eligible_native_1q": 24,
+      "n_eligible_native_2q": 12,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 12,
+        "rz": 50,
+        "sx": 24,
+        "x": 0
+      },
+      "noisy_exact_legal_prob": 0.8699035668156836,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 12,
+        "native_rz": 50,
+        "native_sx": 24,
+        "native_x": 0,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    },
+    {
+      "channel_count_matches_eligible": true,
+      "channel_counts": {
+        "1q_after_sx_x": 60,
+        "2q_after_cx": 56
+      },
+      "circuit_family": "C1",
+      "evidence_class": "synthetic_native_basis_depolarizing_sensitivity_model",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "finite_shot_pools": [
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "db5c4e983ccad6cb4868c7482a5bf34d43c02775ffd507015e964b9e33c2fdc2",
+          "histogram_sum": 1024,
+          "seed": 2000,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "db5c4e983ccad6cb4868c7482a5bf34d43c02775ffd507015e964b9e33c2fdc2",
+          "histogram_sum": 1024,
+          "seed": 2001,
+          "shot_conservation_ok": true
+        },
+        {
+          "actual_draws": 1024,
+          "distribution_hash": "db5c4e983ccad6cb4868c7482a5bf34d43c02775ffd507015e964b9e33c2fdc2",
+          "histogram_sum": 1024,
+          "seed": 2002,
+          "shot_conservation_ok": true
+        }
+      ],
+      "logical_gate_counts": {
+        "by_name": {
+          "cp": 6,
+          "cry": 4,
+          "cx": 4,
+          "p": 8,
+          "rxx": 8,
+          "ryy": 8,
+          "x": 4
+        },
+        "logical_1q": 12,
+        "logical_2q": 30,
+        "logical_gt2q": 0
+      },
+      "n_1q_channels_applied": 60,
+      "n_2q_channels_applied": 56,
+      "n_eligible_native_1q": 60,
+      "n_eligible_native_2q": 56,
+      "n_qubits": 8,
+      "native_gate_counts": {
+        "cx": 56,
+        "rz": 110,
+        "sx": 56,
+        "x": 4
+      },
+      "noisy_exact_legal_prob": 0.7261935559331558,
+      "p": 1,
+      "status": "completed",
+      "synthetic_not_ibm": true,
+      "transpile": {
+        "basis_gates": [
+          "rz",
+          "sx",
+          "x",
+          "cx"
+        ],
+        "coupling_map": null,
+        "native_cx": 56,
+        "native_rz": 110,
+        "native_sx": 56,
+        "native_x": 4,
+        "optimization_level": 1,
+        "qiskit_version": "1.4.6",
+        "routing_claimed": false,
+        "seed_transpiler": 0,
+        "transpiler": "qiskit.compiler.transpile",
+        "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz"
+      },
+      "virtual_rz_assumption": "rz is virtual (zero duration); 1q depolarizing is NOT applied after rz",
+      "zero_noise_vs_ideal_ok": true
+    }
+  ],
+  "status": "COMPLETED",
+  "supersedes": "evidence/stage6_corrected/2a3fb275-6c37-4bbc-bdb4-addede80b5c3 noisy panel is logical-gate-level sensitivity (undecomposed CRY/CPhase/RXX/RYY channels), not native-basis IBM-like noise. This module is the native-basis replacement.",
+  "zero_noise_pass": 16,
+  "zero_noise_total": 16
+}
