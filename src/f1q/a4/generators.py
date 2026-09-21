@@ -19,17 +19,23 @@ from f1q.hashing import sha256_json
 from f1q.stage6.metrics_pilot import distribution_hash
 
 
-def greedy_plan(instance: A4Instance) -> dict[str, Any]:
-    rows = enumerate_legal_policies(instance)
+def _legal_rows(instance: A4Instance, legal_table: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    if legal_table is not None:
+        return legal_table
+    return enumerate_legal_policies(instance)
+
+
+def greedy_plan(instance: A4Instance, legal_table: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    rows = _legal_rows(instance, legal_table)
     if not rows:
         return {"plan": {c: {"kind": "continuation"} for c in instance.car_ids}, "method": "empty_fallback", "proxy_cost": 0.0}
     return {**rows[0], "method": "exact_proxy_ranking"}
 
 
-def local_improve(instance: A4Instance, seed: int = 0) -> dict[str, Any]:
-    rows = enumerate_legal_policies(instance)
+def local_improve(instance: A4Instance, seed: int = 0, legal_table: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    rows = _legal_rows(instance, legal_table)
     if not rows:
-        return greedy_plan(instance)
+        return greedy_plan(instance, legal_table)
     rng = np.random.default_rng(seed)
     cur = dict(rows[0])
     for _ in range(min(12, len(rows))):
@@ -40,10 +46,10 @@ def local_improve(instance: A4Instance, seed: int = 0) -> dict[str, Any]:
     return cur
 
 
-def simulated_annealing(instance: A4Instance, seed: int, steps: int = 40) -> dict[str, Any]:
-    rows = enumerate_legal_policies(instance)
+def simulated_annealing(instance: A4Instance, seed: int, steps: int = 40, legal_table: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    rows = _legal_rows(instance, legal_table)
     if not rows:
-        return greedy_plan(instance)
+        return greedy_plan(instance, legal_table)
     rng = np.random.default_rng(seed)
     idx = int(rng.integers(0, len(rows)))
     cur = dict(rows[idx])
@@ -60,8 +66,8 @@ def simulated_annealing(instance: A4Instance, seed: int, steps: int = 40) -> dic
     return best
 
 
-def uniform_legal(instance: A4Instance, k: int, seed: int) -> list[dict[str, Any]]:
-    rows = enumerate_legal_policies(instance)
+def uniform_legal(instance: A4Instance, k: int, seed: int, legal_table: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    rows = _legal_rows(instance, legal_table)
     if not rows:
         return []
     rng = np.random.default_rng(seed)
@@ -75,8 +81,8 @@ def uniform_legal(instance: A4Instance, k: int, seed: int) -> list[dict[str, Any
     return out
 
 
-def diversity_topk(instance: A4Instance, k: int) -> list[dict[str, Any]]:
-    rows = enumerate_legal_policies(instance)
+def diversity_topk(instance: A4Instance, k: int, legal_table: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    rows = _legal_rows(instance, legal_table)
     if not rows:
         return []
     selected = [dict(rows[0])]
@@ -87,7 +93,11 @@ def diversity_topk(instance: A4Instance, k: int) -> list[dict[str, Any]]:
         for r in rows:
             if any(r["plan_hash"] == s["plan_hash"] for s in selected):
                 continue
-            d = min(float(np.sum(np.abs(r["x"] - s["x"]))) for s in selected)
+            d = min(
+                float(np.sum(np.abs(np.asarray(r["x"], dtype=float) - np.asarray(s["x"], dtype=float))))
+                for s in selected
+                if s.get("x") is not None
+            )
             if d > best_d:
                 best_d = d
                 best = dict(r)
@@ -120,19 +130,26 @@ def _unique_add(out: list[dict[str, Any]], seen: set[str], row: dict[str, Any]) 
     return True
 
 
-def classical_ranked(instance: A4Instance, *, seed: int = 0, n_stochastic_seeds: int = 1) -> list[dict[str, Any]]:
+def classical_ranked(
+    instance: A4Instance,
+    *,
+    seed: int = 0,
+    n_stochastic_seeds: int = 1,
+    legal_table: list[dict[str, Any]] | None = None,
+) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     seen: set[str] = set()
-    _unique_add(out, seen, greedy_plan(instance))
-    _unique_add(out, seen, local_improve(instance, seed=seed))
+    _unique_add(out, seen, greedy_plan(instance, legal_table))
+    _unique_add(out, seen, local_improve(instance, seed=seed, legal_table=legal_table))
     for s in range(max(1, n_stochastic_seeds)):
-        _unique_add(out, seen, simulated_annealing(instance, seed=seed + 17 + 101 * s))
-        for r in uniform_legal(instance, k=4, seed=seed + 3 + 53 * s):
+        _unique_add(out, seen, simulated_annealing(instance, seed=seed + 17 + 101 * s, legal_table=legal_table))
+        for r in uniform_legal(instance, k=4, seed=seed + 3 + 53 * s, legal_table=legal_table):
             _unique_add(out, seen, r)
-    for r in diversity_topk(instance, k=8):
+    for r in diversity_topk(instance, k=8, legal_table=legal_table):
         _unique_add(out, seen, r)
     for r in out:
         r["origin"] = "classical"
+        r["found_by"] = sorted(set(list(r.get("found_by") or []) + ["classical"]))
     return out
 
 
@@ -182,6 +199,7 @@ def quantum_candidates(
             "reason": repaired["reason"],
             "method": f"quantum_{family}_p{p}",
             "origin": "quantum",
+            "found_by": ["quantum"],
             "family": family,
             "p": p,
             "x": x,
@@ -237,64 +255,147 @@ def assemble_portfolio(
     p_depth: int,
     equal_k: int,
     n_stochastic_seeds: int = 1,
+    legal_table: list[dict[str, Any]] | None = None,
+    donor_id: str | None = None,
 ) -> dict[str, Any]:
-    """Matched K unique downstream slots including mandatory fallback.
+    """Matched K unique downstream slots.
 
-    Hybrid *replaces* classical slots with quantum-origin candidates; it does not
-    append an extra quantum budget.
+    Hybrid never removes the fallback or the strongest classical incumbent.
+    Quantum competes only for remaining slots. Duplicate hashes merge found_by.
     """
-    classical = classical_ranked(instance, seed=seed, n_stochastic_seeds=n_stochastic_seeds)
+    classical = classical_ranked(instance, seed=seed, n_stochastic_seeds=n_stochastic_seeds, legal_table=legal_table)
     fallback = mandatory_fallback(instance)
+    fallback["found_by"] = ["classical"]
     qrec = None
     quantum_unique: list[dict[str, Any]] = []
-    if choice in {"hybrid_c0", "hybrid_c1", "always_c0", "always_c1"} and params is not None and family is not None:
-        qrec = quantum_candidates(
-            instance,
-            qubo,
-            family=family,
-            p=p_depth,
-            params=params,
-            pool_size=pool_size,
-            seed=seed,
-            sim_validate=sim_validate,
-        )
+    quantumish = {
+        "hybrid_c0",
+        "hybrid_c1",
+        "always_c0",
+        "always_c1",
+        "C0_p1",
+        "C0_p2",
+        "C1_p1",
+        "C1_p2",
+    }
+    if choice in quantumish and params is not None and family is not None:
+        seed_receipts: list[dict[str, Any]] = []
         seen_q: set[str] = set()
-        for row in qrec["decoded"]:
-            if row["plan_hash"] in seen_q:
-                continue
-            seen_q.add(row["plan_hash"])
-            quantum_unique.append(row)
+        qrec = None
+        n_seeds = max(1, int(n_stochastic_seeds))
+        for s_i in range(n_seeds):
+            qrec_s = quantum_candidates(
+                instance,
+                qubo,
+                family=family,
+                p=p_depth,
+                params=params,
+                pool_size=pool_size,
+                seed=seed + 10007 * s_i,
+                sim_validate=sim_validate,
+            )
+            seed_receipts.append(
+                {
+                    **qrec_s["pool"],
+                    "policy_seed": seed + 10007 * s_i,
+                    "seed_index": s_i,
+                }
+            )
+            qrec = qrec_s
+            for row in qrec_s["decoded"]:
+                if row["plan_hash"] in seen_q:
+                    continue
+                seen_q.add(row["plan_hash"])
+                row = dict(row)
+                row["donor_id"] = donor_id
+                quantum_unique.append(row)
+        if qrec is not None:
+            qrec = dict(qrec)
+            qrec["seed_receipts"] = seed_receipts
+            qrec["n_stochastic_seeds"] = n_seeds
+            qrec["pool"] = seed_receipts[0]
 
-    slots: list[dict[str, Any]] = []
-    seen: set[str] = set()
-    # Mandatory fallback occupies one slot.
-    _unique_add(slots, seen, fallback)
+    def _merge(existing: dict[str, Any], incoming: dict[str, Any]) -> dict[str, Any]:
+        fb = sorted(set(list(existing.get("found_by") or []) + list(incoming.get("found_by") or [])))
+        existing["found_by"] = fb
+        if "quantum" in fb and "classical" in fb:
+            existing["origin"] = "merged"
+        return existing
 
-    if choice in {"classical_only", "always_classical"}:
-        for row in classical:
-            if len(slots) >= equal_k:
-                break
-            _unique_add(slots, seen, row)
-    else:
+    by_hash: dict[str, dict[str, Any]] = {}
+
+    def _put(row: dict[str, Any]) -> None:
+        ph = row.get("plan_hash") or plan_fingerprint(row["plan"])
+        row = dict(row)
+        row["plan_hash"] = ph
+        row["found_by"] = sorted(set(list(row.get("found_by") or [row.get("origin") or "classical"])))
+        if ph in by_hash:
+            _merge(by_hash[ph], row)
+        else:
+            by_hash[ph] = row
+
+    _put(fallback)
+    incumbent = None
+    for row in classical:
+        if row["plan_hash"] != fallback["plan_hash"]:
+            incumbent = row
+            break
+    if incumbent is not None:
+        _put(incumbent)
+
+    classical_k_hashes: list[str] = [fallback["plan_hash"]]
+    if incumbent is not None:
+        classical_k_hashes.append(incumbent["plan_hash"])
+    for row in classical:
+        if len(classical_k_hashes) >= equal_k:
+            break
+        if row["plan_hash"] not in classical_k_hashes:
+            classical_k_hashes.append(row["plan_hash"])
+            if choice in {"classical_only", "always_classical", "stop_fallback"}:
+                _put(row)
+
+    if choice not in {"classical_only", "always_classical", "stop_fallback"}:
         for row in quantum_unique:
-            if len(slots) >= equal_k:
+            _put(row)
+        # Fill remaining slots: quantum incremental first, then classical, never dropping fallback/incumbent.
+        protected = {fallback["plan_hash"]}
+        if incumbent is not None:
+            protected.add(incumbent["plan_hash"])
+        slots_order = [fallback["plan_hash"]]
+        if incumbent is not None:
+            slots_order.append(incumbent["plan_hash"])
+        for row in quantum_unique:
+            if len(slots_order) >= equal_k:
                 break
-            _unique_add(slots, seen, row)
-        n_q_origin = sum(1 for s in slots if s.get("origin") == "quantum")
+            if row["plan_hash"] not in slots_order:
+                _put(row)
+                slots_order.append(row["plan_hash"])
         for row in classical:
-            if len(slots) >= equal_k:
+            if len(slots_order) >= equal_k:
                 break
-            _unique_add(slots, seen, row)
-        _ = n_q_origin
+            if row["plan_hash"] not in slots_order:
+                _put(row)
+                slots_order.append(row["plan_hash"])
+        slots = [by_hash[h] for h in slots_order if h in by_hash]
+    else:
+        slots_order = list(classical_k_hashes)
+        slots = [by_hash[h] for h in slots_order if h in by_hash]
 
-    # If still short, cycle remaining classical then fallback already present.
-    if len(slots) < equal_k:
-        for row in classical:
-            if len(slots) >= equal_k:
-                break
-            _unique_add(slots, seen, row)
+    if len(slots) > equal_k:
+        slots = slots[:equal_k]
+    legal_n = len(_legal_rows(instance, legal_table))
+    matched = (len(slots) == equal_k) or (legal_n < equal_k and len(slots) == legal_n)
 
-    n_quantum_origin = sum(1 for s in slots if s.get("origin") == "quantum")
+    classical_set = set(classical_k_hashes[:equal_k])
+    hybrid_set = {s["plan_hash"] for s in slots}
+    for s in slots:
+        fb = set(s.get("found_by") or [])
+        s["quantum_generated"] = "quantum" in fb
+        s["classical_generated"] = "classical" in fb
+        s["quantum_incremental_at_k"] = s["plan_hash"] in hybrid_set and s["plan_hash"] not in classical_set
+
+    n_quantum_origin = sum(1 for s in slots if s.get("quantum_generated"))
+    n_incremental = sum(1 for s in slots if s.get("quantum_incremental_at_k"))
     return {
         "choice": choice,
         "classical_ranked": classical,
@@ -302,13 +403,18 @@ def assemble_portfolio(
         "downstream_candidates": slots,
         "n_downstream": len(slots),
         "fairness_equal_k": equal_k,
-        "portfolio_budget_matched": len(slots) == equal_k,
+        "portfolio_budget_matched": bool(matched) and len(slots) <= equal_k,
         "n_quantum_origin_in_k": n_quantum_origin,
+        "n_quantum_incremental_at_k": n_incremental,
         "quantum_origin_fraction": n_quantum_origin / max(len(slots), 1),
         "mandatory_classical_fallback": True,
+        "strongest_classical_incumbent_retained": incumbent is None or (incumbent["plan_hash"] in {s["plan_hash"] for s in slots}),
         "replaced_not_appended": True,
         "n_classical_ranked": len(classical),
         "n_quantum_unique": len(quantum_unique),
+        "classical_k_hashes": list(classical_set),
+        "legal_plan_count": legal_n,
+        "n_unique_hashes": len({s["plan_hash"] for s in slots}),
     }
 
 

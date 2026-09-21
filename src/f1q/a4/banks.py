@@ -7,6 +7,8 @@ from typing import Any
 
 import numpy as np
 
+from f1q import INTERFACE_VERSION, SIMULATOR_VERSION
+from f1q.a4.contracts import CONTINUATION_POLICY_VERSION, EVALUATOR_POLICY_VERSION, StructuralError
 from f1q.hashing import sha256_json
 from f1q.simulator.interface import RaceSimulator
 
@@ -62,16 +64,46 @@ def cache_key(
     plan_hash: str,
     bank: str,
     world_seed: int,
+    nominal_budget_s: float,
+    arrival_delay_s: float,
+    commitment_epoch_race_s: float,
+    simulator_version: str = SIMULATOR_VERSION,
+    interface_version: str = INTERFACE_VERSION,
+    evaluator_policy_version: str = EVALUATOR_POLICY_VERSION,
+    latency_scenario_id: str | None = None,
 ) -> str:
-    return sha256_json(
-        {
-            "spec_hash": spec_hash,
-            "checkpoint_hash": checkpoint_hash,
-            "plan_hash": plan_hash,
-            "bank": bank,
-            "world_seed": int(world_seed),
-        }
-    )
+    if bank in {EVALUATION_BANK, OFFLINE_EVALUATION_BANK}:
+        # Evaluation outcomes must never be addressable from a planning helper
+        # using an incomplete key; every field is still hashed.
+        pass
+    payload = {
+        "spec_hash": spec_hash,
+        "checkpoint_hash": checkpoint_hash,
+        "plan_hash": plan_hash,
+        "bank": bank,
+        "world_seed": int(world_seed),
+        "nominal_budget_s": float(nominal_budget_s),
+        "arrival_delay_s": float(arrival_delay_s),
+        "commitment_epoch_race_s": float(commitment_epoch_race_s),
+        "simulator_version": str(simulator_version),
+        "interface_version": str(interface_version),
+        "evaluator_policy_version": str(evaluator_policy_version),
+        "continuation_policy_version": CONTINUATION_POLICY_VERSION,
+        "latency_scenario_id": latency_scenario_id,
+    }
+    return sha256_json(payload)
+
+
+def forbid_evaluation_payload(payload: Any, *, path: str = "planning") -> None:
+    if payload is None:
+        return
+    blob = str(payload)
+    if EVALUATION_BANK in blob or OFFLINE_EVALUATION_BANK in blob or "evaluation_world" in blob:
+        raise StructuralError(
+            "BANK_LEAKAGE",
+            "evaluation-bank data passed into a planning helper",
+            path=path,
+        )
 
 
 def reject_evaluation_in_planning(bank: str) -> None:

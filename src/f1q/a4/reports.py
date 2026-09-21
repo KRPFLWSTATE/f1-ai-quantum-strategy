@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from f1q.hashing import atomic_write_text, sha256_file
+from f1q.hashing import atomic_write_text, sha256_file, sha256_json
 
 
 def _load(path: Path) -> Any:
@@ -21,21 +21,27 @@ def _jsonl(path: Path) -> list[dict[str, Any]]:
 
 def write_a4_reports(root: Path, run_id: str, *, start_commit: str, reviewed_commit: str | None = None) -> dict[str, str]:
     ev = root / "evidence/stage6_a4" / run_id
-    rec = _load(ev / "RUN_RECEIPT.json")
-    freeze = _load(ev / "PROTOCOL_FREEZE.json")
-    primary = _load(ev / "PRIMARY_ANALYSIS.json")
-    readiness = _load(ev / "readiness.json")
-    pre = _load(ev / "PREFLIGHT.json")
-    parts = _load(ev / "PARTITIONS.json")
-    a3inv = _load(ev / "A3_INVALIDATION.json")
-    verify = _load(ev / "FINAL_VERIFY.json") if (ev / "FINAL_VERIFY.json").is_file() else {}
-    noise = _load(ev / "NATIVE_NOISE_CORRECTION.json") if (ev / "NATIVE_NOISE_CORRECTION.json").is_file() else {}
-    claims = _load(ev / "CLAIMS_LEDGER.json")
-    mech = _load(ev / "MECHANISM_RESULTS.json") if (ev / "MECHANISM_RESULTS.json").is_file() else {}
-    sizing = _load(ev / "PRECISION_AND_SIZING.json") if (ev / "PRECISION_AND_SIZING.json").is_file() else {}
-    resource = _load(ev / "RESOURCE_ACCOUNTING.json") if (ev / "RESOURCE_ACCOUNTING.json").is_file() else {}
-    amendment = _load(ev / "PROTOCOL_AMENDMENT_A4.json") if (ev / "PROTOCOL_AMENDMENT_A4.json").is_file() else {}
-    manifest_doc = _load(ev / "MANIFEST.json") if (ev / "MANIFEST.json").is_file() else {}
+
+    def _maybe(name: str) -> dict[str, Any]:
+        p = ev / name
+        return _load(p) if p.is_file() else {}
+
+    rec = _maybe("RUN_RECEIPT.json")
+    freeze = _maybe("PROTOCOL_FREEZE.json")
+    primary = _maybe("PRIMARY_ANALYSIS.json")
+    readiness = _maybe("readiness.json")
+    pre = _maybe("ADMISSION_RECEIPT.json") or _maybe("PREFLIGHT.json")
+    parts = _maybe("PARTITIONS.json")
+    a3inv = _maybe("A3_INVALIDATION_LIVE.json") or _maybe("A3_INVALIDATION.json")
+    verify = _maybe("PRE_REPORT_VERIFY.json") or _maybe("FINAL_VERIFY.json")
+    noise = _maybe("NATIVE_NOISE_CORRECTION.json")
+    claims = _maybe("CLAIMS_LEDGER.json")
+    mech = _maybe("MECHANISM_RESULTS.json")
+    sizing = _maybe("PRECISION_AND_STAGE7_SIZING.json") or _maybe("PRECISION_AND_SIZING.json")
+    resource = _maybe("CAMPAIGN_RESOURCES.json") or _maybe("RESOURCE_ACCOUNTING.json")
+    amendment = _maybe("PROTOCOL_AMENDMENT_A4.json")
+    manifest_doc = _maybe("MANIFEST.json")
+    quarantine = _maybe("PRESTART_QUARANTINE.json")
     amendment_q = amendment.get("question") or "see PROTOCOL_AMENDMENT_A4.json"
     inventory_sha = manifest_doc.get("inventory_sha256") or "n/a"
     offline = _jsonl(ev / "OFFLINE_REFERENCE.jsonl")
@@ -52,7 +58,7 @@ def write_a4_reports(root: Path, run_id: str, *, start_commit: str, reviewed_com
         else "NA"
     )
     mean_diff = primary.get("mean_difference")
-    report = f"""# Phase 6 A4 final report — scientific supersession and closure
+    report = f"""# Phase 6 A4 closure report — scientific supersession and closure
 
 **Document class:** A4 causal checkpoint candidate-generation and downstream-reranking benchmark.  
 **Starting commit:** `{start_commit}`  
@@ -233,6 +239,7 @@ A4 is implemented local methodology for checkpoint candidate generation under a 
 
 ## 15. Failures / deviations
 
+- Pre-start worktree diagnostic only: Stage 4 residue for `41c28597-…` / `fcbb3e38-…` was quarantined by named stash before Phase 6 source repair. Class `{quarantine.get("blocked_attempt_class")}`; stash OID `{quarantine.get("stash_oid")}`; sibling basename `{quarantine.get("quarantine_directory_basename")}`. Not a scientific Phase 6 run and not Phase 6 input.
 - A3 scientific results superseded as invalid implementation.
 - If Gate F is FAIL, at least one required split did not complete every parent block or minima did not fit the 75-minute ceiling after preflight.
 - Native 2q convention change: historical A2 residual panel used a different 2q `p` meaning; A4 panel uses I/4 at p=1.
@@ -258,10 +265,10 @@ Prohibited: quantum advantage; first/novel without literature work; physically m
 
 QPU/final-test statements are verified from executable boundaries (`f1q.a4.qpu_guard`, sealed partitions), not merely JSON flags.
 """
-    path = root / "docs/PHASE_6_A4_FINAL_REPORT.md"
+    path = root / "docs/PHASE_6_A4_CLOSURE_REPORT.md"
     atomic_write_text(path, report if report.endswith("\n") else report + "\n")
 
-    rows_16 = """# Phases 1–6 final acceptance report v2
+    rows_16 = """# Phases 1–6 final acceptance report v3
 
 This table records accepted vs superseded evidence after A4. Phases 1–4 are not reopened.
 
@@ -278,9 +285,133 @@ This table records accepted vs superseded evidence after A4. Phases 1–4 are no
 
 Phase 7 is not authorised.
 """.format(run_id=run_id)
-    path2 = root / "docs/PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v2.md"
+    path2 = root / "docs/PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v3.md"
     atomic_write_text(path2, rows_16 if rows_16.endswith("\n") else rows_16 + "\n")
     return {
-        "PHASE_6_A4_FINAL_REPORT.md": sha256_file(path),
-        "PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v2.md": sha256_file(path2),
+        "PHASE_6_A4_CLOSURE_REPORT.md": sha256_file(path),
+        "PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v3.md": sha256_file(path2),
     }
+
+
+def _run_files(ev: Path) -> list[Path]:
+    skip = {"MANIFEST.json", "FINAL_VERIFY.json", "FINAL_PACKAGE_VERIFY.json"}
+    return [p for p in sorted(ev.rglob("*")) if p.is_file() and p.name not in skip]
+
+
+def write_run_manifest(root: Path, run_id: str) -> dict[str, Any]:
+    ev = root / "evidence/stage6_a4" / run_id
+    entries: list[dict[str, Any]] = []
+    for p in _run_files(ev):
+        entries.append({"path": str(p.relative_to(ev)), "sha256": sha256_file(p), "bytes": p.stat().st_size})
+    for extra in (
+        root / "docs/PHASE_6_A4_CLOSURE_REPORT.md",
+        root / "docs/PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v3.md",
+    ):
+        if extra.is_file():
+            entries.append(
+                {
+                    "path": str(extra.relative_to(root)),
+                    "sha256": sha256_file(extra),
+                    "bytes": extra.stat().st_size,
+                    "scope": "docs",
+                }
+            )
+    man = {
+        "run_id": run_id,
+        "exclusions": ["MANIFEST.json", "FINAL_VERIFY.json", "FINAL_PACKAGE_VERIFY.json"],
+        "entries": entries,
+        "n_entries": len(entries),
+        "inventory_sha256": sha256_json(entries),
+    }
+    atomic_write_text(ev / "MANIFEST.json", json.dumps(man, indent=2, sort_keys=True) + "\n")
+    return man
+
+
+def finalize_phase6_evidence(
+    root: Path,
+    run_id: str,
+    *,
+    start_commit: str,
+    reviewed_commit: str | None,
+    phase6_status: str,
+    engineering: str,
+    gate_e: str,
+    gate_f: str,
+) -> dict[str, Any]:
+    """Non-circular closeout: derived artifacts → PRE_REPORT_VERIFY → reports → MANIFEST → FINAL_VERIFY → package."""
+    from f1q.a4.verify import run_independent_verify
+
+    ev = root / "evidence/stage6_a4" / run_id
+    claims = {
+        "allowed": [
+            "software implemented",
+            "named checks",
+            "simulated losses on synthetic checkpoints",
+        ],
+        "prohibited": [
+            "quantum advantage",
+            "literature-first",
+            "IBM measurement",
+            "F1 team performance",
+            "Phase 7 execution",
+        ],
+        "novelty_status": "PROPOSED_NOT_LITERATURE_VERIFIED",
+        "calibration_is_primary": False,
+        "calibration_label": "DEVELOPMENT_PILOT_ONLY",
+    }
+    atomic_write_text(ev / "CLAIMS_LEDGER.json", json.dumps(claims, indent=2, sort_keys=True) + "\n")
+    readiness = {
+        "GATE_E_SCIENTIFIC_VALUE": gate_e,
+        "GATE_F_PRECISION_AND_RESOURCES": gate_f,
+        "GATE_F_LOCAL_PRECISION_AND_RESOURCES": gate_f,
+        "PHASE_6_ENGINEERING": engineering,
+        "PHASE_6_STATUS": phase6_status,
+        "OPERATIONAL_DOWNSTREAM_HEADROOM": "ZERO",
+        "PHASE_7_BOUNDARY_STUDY_READY": False,
+        "PHASE_7_OPERATIONAL_READY": False,
+        "PHASE_7_SUPERIORITY_READY": False,
+        "PHASE_7_AUTHORISED": False,
+        "QPU_EXECUTION_AUTHORISED": False,
+        "SUPERIORITY_PATH_AVAILABLE": False,
+        "PROXY_HEADROOM": "ZERO",
+    }
+    atomic_write_text(ev / "readiness.json", json.dumps(readiness, indent=2, sort_keys=True) + "\n")
+    admission = _load(ev / "ADMISSION_RECEIPT.json") if (ev / "ADMISSION_RECEIPT.json").is_file() else {}
+    pre = run_independent_verify(root, run_id, mode="auto")
+    atomic_write_text(ev / "PRE_REPORT_VERIFY.json", json.dumps(pre, indent=2, sort_keys=True, default=str) + "\n")
+    receipt = {
+        "run_id": run_id,
+        "start_commit": start_commit,
+        "reviewed_source_commit": reviewed_commit,
+        "phase6_status": phase6_status,
+        "engineering": engineering,
+        "gate_e": gate_e,
+        "gate_f": gate_f,
+        "admitted": admission.get("admitted"),
+        "selected_world_level": admission.get("selected_world_level"),
+        "qpu_jobs": 0,
+        "qpu_usage_seconds": 0,
+        "qpu_execution_authorised": False,
+        "final_test_accessed": False,
+        "pre_report_verify_ok": pre.get("ok"),
+        "n_anchor_blocks": 24,
+        "n_train_blocks": admission.get("n_train_ok"),
+        "n_tune_blocks": admission.get("n_tune_ok"),
+        "n_calib_blocks": admission.get("n_calib_ok"),
+    }
+    atomic_write_text(ev / "RUN_RECEIPT.json", json.dumps(receipt, indent=2, sort_keys=True, default=str) + "\n")
+    write_a4_reports(root, run_id, start_commit=start_commit, reviewed_commit=reviewed_commit)
+    man = write_run_manifest(root, run_id)
+    final_v = run_independent_verify(root, run_id, mode="final" if admission.get("admitted") else "auto")
+    atomic_write_text(ev / "FINAL_VERIFY.json", json.dumps(final_v, indent=2, sort_keys=True, default=str) + "\n")
+    pkg_hashes = {
+        "MANIFEST.json": sha256_file(ev / "MANIFEST.json"),
+        "FINAL_VERIFY.json": sha256_file(ev / "FINAL_VERIFY.json"),
+        "PHASE_6_A4_CLOSURE_REPORT.md": sha256_file(root / "docs/PHASE_6_A4_CLOSURE_REPORT.md")
+        if (root / "docs/PHASE_6_A4_CLOSURE_REPORT.md").is_file()
+        else None,
+        "RUN_RECEIPT.json": sha256_file(ev / "RUN_RECEIPT.json"),
+    }
+    pkg = {"hashes": pkg_hashes, "ok": all(bool(v) for v in pkg_hashes.values())}
+    atomic_write_text(ev / "FINAL_PACKAGE_VERIFY.json", json.dumps(pkg, indent=2, sort_keys=True) + "\n")
+    return {"pre": pre, "final": final_v, "manifest": man, "package": pkg}

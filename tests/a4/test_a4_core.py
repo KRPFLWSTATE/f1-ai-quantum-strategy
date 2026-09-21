@@ -115,8 +115,26 @@ def test_planning_evaluation_banks_disjoint():
     p = bank_world_seeds("b", "SC", PLANNING_BANK, 8)
     e = bank_world_seeds("b", "SC", EVALUATION_BANK, 16)
     assert banks_disjoint(p, e)
-    k1 = cache_key(spec_hash="a", checkpoint_hash="c", plan_hash="p", bank=PLANNING_BANK, world_seed=1)
-    k2 = cache_key(spec_hash="a", checkpoint_hash="c", plan_hash="p", bank=EVALUATION_BANK, world_seed=1)
+    k1 = cache_key(
+        spec_hash="a",
+        checkpoint_hash="c",
+        plan_hash="p",
+        bank=PLANNING_BANK,
+        world_seed=1,
+        nominal_budget_s=30.0,
+        arrival_delay_s=0.1,
+        commitment_epoch_race_s=100.0,
+    )
+    k2 = cache_key(
+        spec_hash="a",
+        checkpoint_hash="c",
+        plan_hash="p",
+        bank=EVALUATION_BANK,
+        world_seed=1,
+        nominal_budget_s=30.0,
+        arrival_delay_s=0.1,
+        commitment_epoch_race_s=100.0,
+    )
     assert k1 != k2
 
 
@@ -153,17 +171,18 @@ def test_forced_quantum_best_and_worse_fixtures():
         params=None, family=None, p_depth=1, equal_k=4,
     )
     cands = copy.deepcopy(port["downstream_candidates"])
-    q = copy.deepcopy(cands[0])
-    q["origin"] = "quantum"
-    q["plan_hash"] = "quantum-best-hash"
-    cands.append(q)
-    means = {c["plan_hash"]: 1.0 for c in cands}
-    means["quantum-best-hash"] = 0.0
+    assert len(cands) == 4
+    hashes = [c["plan_hash"] for c in cands]
+    assert len(set(hashes)) == 4
+    means = {c["plan_hash"]: float(i) for i, c in enumerate(cands)}
+    best = cands[1]["plan_hash"]
+    means[best] = -1.0
     sel = select_by_planning_mean(cands, means)
-    assert sel["selected_plan_hash"] == "quantum-best-hash"
-    means["quantum-best-hash"] = 9.0
+    assert sel["selected_plan_hash"] == best
+    means[best] = 9.0
     sel2 = select_by_planning_mean(cands, means)
-    assert sel2["selected_plan_hash"] != "quantum-best-hash"
+    assert sel2["selected_plan_hash"] != best
+    assert sel2["selected_plan_hash"] in hashes
 
 
 def test_classical_hybrid_can_differ_and_offline_not_copied():
@@ -189,9 +208,10 @@ def test_classical_hybrid_can_differ_and_offline_not_copied():
 
 
 def test_cache_keys_do_not_cross_checkpoints():
-    a = cache_key(spec_hash="s1", checkpoint_hash="c1", plan_hash="p", bank="planning_bank", world_seed=0)
-    b = cache_key(spec_hash="s1", checkpoint_hash="c2", plan_hash="p", bank="planning_bank", world_seed=0)
-    c = cache_key(spec_hash="s2", checkpoint_hash="c1", plan_hash="p", bank="planning_bank", world_seed=0)
+    kw = dict(plan_hash="p", bank="planning_bank", world_seed=0, nominal_budget_s=30.0, arrival_delay_s=0.1, commitment_epoch_race_s=10.0)
+    a = cache_key(spec_hash="s1", checkpoint_hash="c1", **kw)
+    b = cache_key(spec_hash="s1", checkpoint_hash="c2", **kw)
+    c = cache_key(spec_hash="s2", checkpoint_hash="c1", **kw)
     assert len({a, b, c}) == 3
 
 

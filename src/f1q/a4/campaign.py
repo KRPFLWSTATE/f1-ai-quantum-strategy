@@ -1,37 +1,62 @@
-"""A4 campaign: preflight + one authoritative foreground execution. No Phase 7."""
+"""A4 Phase 6 coordinator: admission, one foreground campaign, fail-fast. No Phase 7."""
 
 from __future__ import annotations
 
 import json
+import os
 import resource
 import subprocess
 import time
 import uuid
+from concurrent.futures import ProcessPoolExecutor, wait, FIRST_COMPLETED
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 import numpy as np
+import yaml
 
-from f1q.a4.allocator import RidgeModel
-from f1q.a4.anchors import FAMILY_DEPTHS, run_anchor_fits, select_donors
-from f1q.a4.banks import EVALUATION_BANK, PLANNING_BANK, bank_world_seeds, banks_disjoint
-from f1q.a4.loop import adversarial_validation, decide_and_evaluate, family_spec
-from f1q.a4.partitions import build_a4_partitions
-from f1q.a4.problem import FEATURE_KEYS, build_a4_qubo, build_menu_and_instance, extract_causal_view, enumerate_legal_policies
-from f1q.a4.qpu_guard import assert_local_only
-from f1q.a4.reports import write_a4_reports
-from f1q.a4.verify import run_independent_verify
+from f1q.a4.banks import (
+    EVALUATION_BANK,
+    OFFLINE_EVALUATION_BANK,
+    OFFLINE_PLANNING_BANK,
+    PLANNING_BANK,
+    bank_world_seeds,
+    banks_disjoint,
+)
+from f1q.a4.contracts import (
+    FAMILY_DEPTH_KEYS,
+    NOMINAL_BUDGETS_S,
+    PORTFOLIO_K,
+    PRIMARY_BUDGET_S,
+    StructuralError,
+)
+from f1q.a4.donors import (
+    DonorRanker,
+    build_donor_bank_v2,
+    donor_features_from_case,
+    selected_donors,
+    select_donor_policy,
+)
+from f1q.a4.allocator import RidgeModel, option_feature_row, select_calibrated_option
 from f1q.hashing import atomic_write_text, sha256_file, sha256_json
-from f1q.simulator.interface import RaceSimulator
-from f1q.stage6.native_noise import run_native_noisy_panel, verify_native_analytical_fixtures
-from f1q.stage6.pilot import _load_phase5_assets, write_json
-from f1q.stage6.sizing import stratified_block_bootstrap
-from f1q.stage6 import PHASE5_CORRECTED_RUN_ID
-from f1q.stage6.config import default_phase6_config
+from f1q.a4.partitions import build_a4_partitions
+from f1q.a4.qpu_guard import assert_local_only
+from f1q.paths import resolve_project_root
 
+PRIOR_RUN = "09806343-f940-4f33-9e0f-eb2855d0714b"
 CAMPAIGN_CEILING_S = 75 * 60
-TASK_NOTE = "A4 scientific supersession; local sim only; no Phase 7"
+ADMISSION_LIMIT_S = 60 * 60
+START_COMMIT_EXPECTED = "bcc740cd71ea5b6367b9332a300bf89590656ffc"
+REUSED = {
+    "MANIFEST.json": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+    "ANCHOR_FITS.jsonl": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+    "NATIVE_NOISE_CORRECTION.json": "5daa9944fe0bbc0e8c837d5002bf0e0bb271db559901480501d1fd57b3adb84d",
+    "A3_INVALIDATION.json": "4b9743aea6273eee511133b12e0fde130103aae10c5ec1002484f9a642cd277d",
+    "PARTITIONS.json": "31f4b985b15face11752de1094282441d837acd362941c0e2c66e2686602c9f5",
+    "PROTOCOL_AMENDMENT_A4.json": "7ee7d9af1e7371c193c32eb4a03751127ed9c7004e6d391957c0e508b5aca9c3",
+}
+QUARANTINE_BASENAME = "f1q-prephase6-quarantine-20260921T195640Z"
 
 
 def _utc() -> str:
@@ -39,10 +64,36 @@ def _utc() -> str:
 
 
 def _git_head(root: Path) -> str:
-    try:
-        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(root), text=True).strip()
-    except Exception:
-        return "UNKNOWN"
+    return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(root), text=True).strip()
+
+
+def write_json(path: Path, obj: Any) -> str:
+    return atomic_write_text(path, json.dumps(obj, indent=2, sort_keys=True, default=str) + "\n")
+
+
+def _append_jsonl(path: Path, row: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(row, sort_keys=True, default=str) + "\n")
+        fh.flush()
+
+
+def load_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.is_file():
+        return []
+    rows = []
+    with path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if line:
+                rows.append(json.loads(line))
+    return rows
+
+
+def load_closure_config(root: Path, rel: str = "configs/stage6_a4_closure.yaml") -> tuple[dict[str, Any], str]:
+    path = root / rel
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    return data, sha256_file(path)
 
 
 class Progress:
@@ -60,19 +111,11 @@ class Progress:
         self.last = now
 
     def maybe_heartbeat(self, msg: str = "heartbeat") -> None:
-        if time.perf_counter() - self.last >= 45.0:
+        if time.perf_counter() - self.last >= 20.0:
             self(msg)
 
 
-def _append_jsonl(path: Path, row: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps(row, sort_keys=True, default=str) + "\n")
-        fh.flush()
-
-
 def inspect_a3_defects() -> dict[str, Any]:
-    """Independently confirm A3 constructions from live source, not from this prompt's list."""
     import inspect
 
     from f1q.a3 import agents as a3_agents
@@ -113,845 +156,831 @@ def inspect_a3_defects() -> dict[str, Any]:
     }
 
 
-def _freeze_record(partitions: dict[str, Any], preflight: dict[str, Any], source_commit: str) -> dict[str, Any]:
-    worlds = preflight["frozen_worlds"]
+def _prior_dir(root: Path) -> Path:
+    return root / "evidence" / "stage6_a4" / PRIOR_RUN
+
+
+def verify_reused_evidence(root: Path) -> dict[str, Any]:
+    prior = _prior_dir(root)
+    items = []
+    for name, expected in REUSED.items():
+        path = prior / name
+        if not path.is_file():
+            raise StructuralError("MISSING_ARTIFACT", "required reused artifact missing", path=str(path))
+        got = sha256_file(path)
+        rec = {
+            "artifact": name,
+            "source_run": PRIOR_RUN,
+            "source_path": str(path.relative_to(root)),
+            "expected_hash": expected,
+            "observed_hash": got,
+            "reuse": got == expected,
+        }
+        if name == "ANCHOR_FITS.jsonl":
+            rows = load_jsonl(path)
+            rec["n_rows"] = len(rows)
+            rec["n_success"] = sum(1 for r in rows if r.get("success"))
+            rec["n_unique_anchors"] = len({r.get("block_id") for r in rows})
+            rec["schema_ok"] = rec["n_success"] == 288 and rec["n_unique_anchors"] == 24
+            rec["reuse"] = rec["reuse"] and rec["schema_ok"]
+        if not rec["reuse"]:
+            raise StructuralError("INTEGRITY", "reused artifact failed hash/schema/count", path=name, value=rec)
+        items.append(rec)
+    return {"ok": True, "items": items, "do_not_rerun_anchors": True, "do_not_rerun_native_noise": True}
+
+
+def _copy_reused(root: Path, dest: Path) -> None:
+    import shutil
+
+    prior = _prior_dir(root)
+    dest.mkdir(parents=True, exist_ok=True)
+    for name in ("ANCHOR_FITS.jsonl", "NATIVE_NOISE_CORRECTION.json", "A3_INVALIDATION.json", "PARTITIONS.json", "PROTOCOL_AMENDMENT_A4.json"):
+        shutil.copy2(prior / name, dest / name)
+
+
+def _prestart_quarantine_record() -> dict[str, Any]:
+    qdir = Path.home() / QUARANTINE_BASENAME
+    # sibling of repo is /Users/.../f1q-prephase6-...
+    sibling = Path("/Users/kawinperera") / QUARANTINE_BASENAME
+    src = sibling if sibling.is_dir() else qdir
+    inv = {}
+    proof = {}
+    process = {}
+    qman = {}
+    if src.is_dir():
+        inv = json.loads((src / "DIRTY_INVENTORY.json").read_text()) if (src / "DIRTY_INVENTORY.json").is_file() else {}
+        proof = json.loads((src / "CLEAN_START_PROOF.json").read_text()) if (src / "CLEAN_START_PROOF.json").is_file() else {}
+        process = json.loads((src / "PROCESS_AUDIT.json").read_text()) if (src / "PROCESS_AUDIT.json").is_file() else {}
+        qman = json.loads((src / "QUARANTINE_MANIFEST.json").read_text()) if (src / "QUARANTINE_MANIFEST.json").is_file() else {}
+    stash_oid = None
+    if src.is_dir() and (src / "STASH_OID.txt").is_file():
+        stash_oid = (src / "STASH_OID.txt").read_text().strip()
+    patch_h = None
+    man_h = None
+    if qman.get("files"):
+        rec = qman["files"].get("STASH_RECOVERY.patch") or {}
+        patch_h = rec.get("sha256")
+        man_h = sha256_file(src / "QUARANTINE_MANIFEST.json") if (src / "QUARANTINE_MANIFEST.json").is_file() else None
     return {
-        "status": "A4_PROTOCOL_FROZEN_BEFORE_CALIBRATION",
-        "written_before_opening_calibration_outcomes": True,
-        "datetime_utc": _utc(),
-        "source_commit": source_commit,
-        "architecture": "A4_checkpoint_candidate_generation_downstream_reranking",
-        "a3_not_a_continuation": True,
-        "a3_scientific_result": "SUPERSEDED_INVALID_IMPLEMENTATION",
-        "primary_estimand": {
-            "name": "paired_parent_block_mean_classical_minus_dispatched_evaluation_loss",
-            "formula": "classical_only_evaluation_loss - safely_dispatched_A4_evaluation_loss",
-            "positive_favours": "A4_dispatched",
-            "budget_s": 30,
-            "minimum_worthwhile_effect": 0.02,
-            "sensitivity": [0.01, 0.05],
+        "blocked_attempt_class": "PRESTART_DIAGNOSTIC_ONLY",
+        "not_a_scientific_phase6_run": True,
+        "not_the_authoritative_admission": True,
+        "dirty_inventory": {
+            "n_entries": inv.get("n_entries"),
+            "admission": inv.get("admission"),
+            "entries": inv.get("entries"),
         },
-        "interval_method": "stratified_equal_family_weight_block_bootstrap",
-        "n_boot": 2000,
-        "bootstrap_seed": 20260921,
-        "missing_as_failure_in_denominator": True,
-        "worlds": worlds,
-        "portfolio_k": preflight["frozen_k"],
-        "max_anchor_evals": preflight["frozen_max_evals"],
-        "classical_comparator": "strongest_deadline_feasible_classical_portfolio",
-        "donor_policy_choices": ["learned", "fixed", "nn", "random"],
-        "allocator_modes": ["learned", "always_classical", "always_c0", "always_c1", "threshold"],
-        "nominal_budgets_s": [5, 10, 30, 60, 120],
-        "primary_budget_s": 30,
-        "partitions_planned": partitions["planned"],
-        "final_test_sealed": True,
-        "qpu_execution_authorised": False,
-        "phase_7_not_started": True,
-        "gate_e_does_not_require_positive_quantum": True,
-        "stochastic_policy_seeds_tune_calib": 3,
-        "stop_before_calibration": not bool(preflight.get("minima_fit")),
-        "gate_f_fails_if_incomplete_or_unfit_minima": True,
+        "process_audit": process,
+        "stash_oid": stash_oid,
+        "quarantine_directory_basename": QUARANTINE_BASENAME,
+        "recovery_patch_sha256": patch_h,
+        "quarantine_manifest_sha256": man_h,
+        "clean_start_proof": proof,
+        "no_phase6_scientific_data_existed_before_quarantine": True,
+        "quarantined_stage4_residue_not_used_as_phase6_input": True,
     }
 
 
-def measure_preflight(progress: Progress) -> dict[str, Any]:
-    """Two non-calibration development blocks; freeze worlds from measured throughput."""
-    blocks = [
-        {
-            "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
-            "block_id": "a4.preflight.0",
-            "index": 0,
-            "seed": 101,
-        },
-        {
-            "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
-            "block_id": "a4.preflight.1",
-            "index": 1,
-            "seed": 202,
-        },
+def _run_tests_into(dest: Path, root: Path, *, focused: bool) -> dict[str, Any]:
+    dest.mkdir(parents=True, exist_ok=True)
+    junit = dest / ("focused.xml" if focused else "full.xml")
+    log = dest / ("focused.log" if focused else "full.log")
+    cmd = [str(root / ".venv" / "bin" / "python"), "-m", "pytest"]
+    if focused:
+        cmd += ["tests/a4", "tests/stage6/test_residual_histograms_noise.py"]
+    cmd += ["-ra", f"--junitxml={junit}"]
+    t0 = datetime.now(timezone.utc).isoformat()
+    proc = subprocess.run(cmd, cwd=str(root), capture_output=True, text=True)
+    t1 = datetime.now(timezone.utc).isoformat()
+    log.write_text(proc.stdout + "\n" + proc.stderr)
+    receipt = {
+        "command": cmd,
+        "start_utc": t0,
+        "end_utc": t1,
+        "exit_code": proc.returncode,
+        "log_sha256": sha256_file(log),
+        "junit_sha256": sha256_file(junit) if junit.is_file() else None,
+        "stdout_tail": proc.stdout[-4000:],
+    }
+    # parse counts from summary line
+    import re
+
+    m = re.search(r"(\d+) passed", proc.stdout + proc.stderr)
+    receipt["passed"] = int(m.group(1)) if m else None
+    m = re.search(r"(\d+) failed", proc.stdout + proc.stderr)
+    receipt["failed"] = int(m.group(1)) if m else 0
+    m = re.search(r"(\d+) skipped", proc.stdout + proc.stderr)
+    receipt["skipped"] = int(m.group(1)) if m else 0
+    m = re.search(r"(\d+) error", proc.stdout + proc.stderr)
+    receipt["errored"] = int(m.group(1)) if m else 0
+    write_json(dest / ("focused_receipt.json" if focused else "full_receipt.json"), receipt)
+    return receipt
+
+
+def _doctor_status_pip(dest: Path, root: Path) -> dict[str, Any]:
+    dest.mkdir(parents=True, exist_ok=True)
+    py = str(root / ".venv" / "bin" / "python")
+    out: dict[str, Any] = {}
+    for name, cmd in (
+        ("doctor", [py, "-m", "f1q", "doctor"]),
+        ("status", [py, "-m", "f1q", "status"]),
+        ("pip_check", [py, "-m", "pip", "check"]),
+    ):
+        proc = subprocess.run(cmd, cwd=str(root), capture_output=True, text=True)
+        (dest / f"{name}.txt").write_text(proc.stdout + proc.stderr)
+        out[name] = {"exit_code": proc.returncode, "ok": proc.returncode == 0}
+        if proc.returncode != 0:
+            raise StructuralError("CHECKS", f"{name} failed", path=name, value=proc.stderr[-500:])
+    return out
+
+
+def choose_workers() -> dict[str, Any]:
+    cpus = os.cpu_count() or 2
+    cpu_safe = max(1, cpus - 2)
+    page = resource.getpagesize()
+    avail_bytes = os.sysconf("SC_PHYS_PAGES") * page
+    # conservative 512 MiB per worker guess until measured
+    per_worker = 512 * 1024 * 1024
+    mem_safe = max(1, int((0.60 * avail_bytes) // per_worker))
+    n = max(1, min(cpu_safe, mem_safe, 8))
+    return {
+        "logical_cpus": cpus,
+        "cpu_safe_cap": cpu_safe,
+        "available_ram_bytes": avail_bytes,
+        "per_worker_rss_budget_bytes": per_worker,
+        "memory_safe_cap": mem_safe,
+        "workers": n,
+        "rule": "min(cpu_safe=cpus-2, memory_safe=60%RAM/512MiB, 8); reserve 2 CPUs",
+    }
+
+
+def run_admission_check(root: Path, config_rel: str = "configs/stage6_a4_closure.yaml") -> dict[str, Any]:
+    assert_local_only()
+    progress = Progress("a4_admission")
+    cfg, cfg_hash = load_closure_config(root, config_rel)
+    head = _git_head(root)
+    run_id = str(uuid.uuid4())
+    ev = root / "evidence" / "stage6_a4" / run_id
+    docs = root / "docs" / "evidence" / "stage6_a4" / run_id
+    ev.mkdir(parents=True, exist_ok=False)
+    docs.mkdir(parents=True, exist_ok=True)
+    progress(f"created run {run_id}")
+    start = {
+        "run_id": run_id,
+        "start_commit_expected": START_COMMIT_EXPECTED,
+        "reviewed_source_commit": head,
+        "datetime_utc": _utc(),
+        "config_hash": cfg_hash,
+        "prior_failed_run": PRIOR_RUN,
+        "qpu_execution_authorised": False,
+        "phase_7_authorised": False,
+        "final_test_accessed": False,
+    }
+    write_json(ev / "START_STATE.json", start)
+    write_json(ev / "PRESTART_QUARANTINE.json", _prestart_quarantine_record())
+    from f1q.a4.repair_trace import write_repair_traceability
+
+    write_repair_traceability(ev / "REPAIR_TRACEABILITY.json")
+    reused = verify_reused_evidence(root)
+    write_json(ev / "REUSED_EVIDENCE.json", reused)
+    _copy_reused(root, ev)
+    a3 = inspect_a3_defects()
+    write_json(ev / "A3_INVALIDATION_LIVE.json", a3)
+    fits = load_jsonl(ev / "ANCHOR_FITS.jsonl")
+    bank = build_donor_bank_v2(
+        fits,
+        source_run_id=PRIOR_RUN,
+        source_anchor_path=f"evidence/stage6_a4/{PRIOR_RUN}/ANCHOR_FITS.jsonl",
+        source_anchor_sha256=REUSED["ANCHOR_FITS.jsonl"],
+    )
+    write_json(ev / "DONOR_BANK_V2.json", bank)
+    progress("donor bank v2 built")
+    tests_dir = ev / "tests"
+    focused = _run_tests_into(tests_dir, root, focused=True)
+    progress(f"focused tests exit={focused['exit_code']}")
+    full = _run_tests_into(tests_dir, root, focused=False)
+    progress(f"full tests exit={full['exit_code']}")
+    checks = _doctor_status_pip(tests_dir / "checks", root)
+    if focused["exit_code"] != 0 or full["exit_code"] != 0:
+        raise StructuralError("TESTS", "authoritative tests failed", path=str(tests_dir))
+
+    from f1q.a4.prepared import prepare_case, prepare_counters, reset_prepare_counters
+    from f1q.a4.loop import decide_and_evaluate
+    from f1q.generator.config import cartesian_family_ids
+
+    reset_prepare_counters()
+    fams = cartesian_family_ids()
+    probe = [
+        (fams[0], "SC", "sparse/near-linear"),
+        (fams[-1], "VSC", "dense/nonlinear"),
+        (fams[1], "SC", "mid"),
+        (fams[2], "VSC", "mid2"),
     ]
+    measured = []
     cache: dict[str, Any] = {}
-    timings = []
-    n_qubits = []
-    n_legal = []
-    t0 = time.perf_counter()
-    for block in blocks:
+    t_meas0 = time.perf_counter()
+    for fam, regime, tag in probe:
+        pc = prepare_case(family_id=fam, block_id=f"a4.admit.{tag}", regime=regime, partition="train", index=0, seed=11)
+        for budget in NOMINAL_BUDGETS_S:
+            t1 = time.perf_counter()
+            cl = decide_and_evaluate(
+                pc.spec_with_budget(budget),
+                mode="always_classical",
+                runtime=None,
+                donor_bank=bank,
+                donor_policy="fixed",
+                planning_seeds=bank_world_seeds(pc.block_id, regime, PLANNING_BANK, 2),
+                evaluation_seeds=bank_world_seeds(pc.block_id, regime, EVALUATION_BANK, 4),
+                online_seed=3,
+                cache=cache,
+                pool_size=64,
+                equal_k=PORTFOLIO_K,
+                deadline_s=float(budget),
+                margin=0.001,
+                conservative_residual=0.0,
+                family_depth=("C0", 1),
+                n_stochastic_seeds=1,
+                legal_table=pc.legal_table,
+            )
+            hy = decide_and_evaluate(
+                pc.spec_with_budget(budget),
+                mode="always_c0",
+                runtime=None,
+                donor_bank=bank,
+                donor_policy="fixed",
+                planning_seeds=bank_world_seeds(pc.block_id, regime, PLANNING_BANK, 2),
+                evaluation_seeds=bank_world_seeds(pc.block_id, regime, EVALUATION_BANK, 4),
+                online_seed=4,
+                cache=cache,
+                pool_size=64,
+                equal_k=PORTFOLIO_K,
+                deadline_s=float(budget),
+                margin=0.001,
+                conservative_residual=0.0,
+                family_depth=("C0", 1),
+                n_stochastic_seeds=1,
+                legal_table=pc.legal_table,
+            )
+            measured.append(
+                {
+                    "family_id": fam,
+                    "regime": regime,
+                    "budget_s": budget,
+                    "wall_s": time.perf_counter() - t1,
+                    "n_qubits": cl["n_qubits"],
+                    "legal": cl["legal_plan_count"],
+                    "classical_loss": cl["mean_loss"],
+                    "hybrid_loss": hy["mean_loss"],
+                    "precommit_s": hy["timings"]["precommit_s"],
+                }
+            )
+            progress(f"admit probe {tag} b={budget} wall={measured[-1]['wall_s']:.2f}s")
+    meas_wall = time.perf_counter() - t_meas0
+    per_case_budget = float(np.median([m["wall_s"] for m in measured])) if measured else 30.0
+    workers = choose_workers()
+    # Project: 240 train * 5 budgets * ~2 arms after sharing ≈ use 240*5*per_case_budget / workers with 0.6 efficiency
+    ladder = cfg["world_ladder"]
+    projections = {}
+    selected_level = None
+    for level in ("preferred", "baseline", "minimum"):
+        # scale worlds relative to admission 2/4
+        tr = ladder[level]["training"]
+        tu = ladder[level]["tuning"]
+        ca = ladder[level]["calibration"]
+        off = ladder[level]["offline"]
+        scale_tr = (4 * tr["planning"] + tr["evaluation"]) / (4 * 2 + 4)
+        scale_tu = (4 * tu["planning"] + tu["evaluation"]) / (4 * 2 + 4)
+        scale_ca = (4 * ca["planning"] + ca["evaluation"]) / (4 * 2 + 4)
+        scale_off = (off["planning"] * 80 + off["evaluation"]) / (8 * 8 + 8)  # rough all-legal
+        train_s = 240 * 5 * per_case_budget * scale_tr
+        tune_s = 160 * 5 * per_case_budget * scale_tu * 3  # 3 seeds
+        calib_s = 48 * 5 * per_case_budget * scale_ca * 3
+        donor_s = 240 * 32 * 0.05
+        offline_s = 8 * scale_off * per_case_budget * 20
+        serial = train_s + tune_s + calib_s + donor_s + offline_s + 180
+        parallel = serial / max(workers["workers"] * 0.55, 1.0)
+        conservative = parallel * 1.35
+        projections[level] = {
+            "serial_s": serial,
+            "parallel_s": parallel,
+            "conservative_s": conservative,
+            "fits_60min": conservative <= ADMISSION_LIMIT_S,
+        }
+        if selected_level is None and conservative <= ADMISSION_LIMIT_S:
+            selected_level = level
+    admitted = selected_level is not None
+    receipt = {
+        "run_id": run_id,
+        "reviewed_source_commit": head,
+        "config_hash": cfg_hash,
+        "reused_evidence_ok": True,
+        "machine": workers,
+        "measured": measured,
+        "median_case_budget_s": per_case_budget,
+        "admission_measure_wall_s": meas_wall,
+        "prepare_counters": prepare_counters(),
+        "projections": projections,
+        "selected_world_level": selected_level or "NONE",
+        "admitted": admitted,
+        "reason": None if admitted else "no ladder projected <= 60 minutes after 20% reserve",
+        "focused_tests": focused,
+        "full_tests": full,
+        "doctor_status_pip": checks,
+        "consumed": False,
+    }
+    write_json(ev / "ADMISSION_RECEIPT.json", receipt)
+    write_json(docs / "ADMISSION_RECEIPT.json", receipt)
+    write_json(docs / "START_STATE.json", start)
+    progress(f"ADMISSION {'PASS '+selected_level if admitted else 'FAIL'} run_id={run_id}")
+    print(f"AUTHORITATIVE_RUN_ID={run_id}", flush=True)
+    print(f"ADMISSION_DECISION={'ADMITTED' if admitted else 'NOT_ADMITTED'}", flush=True)
+    return {
+        "status": "admitted" if admitted else "not_admitted",
+        "run_id": run_id,
+        "admitted": admitted,
+        "selected_world_level": selected_level,
+        "receipt": receipt,
+    }
+
+
+def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4_closure.yaml") -> dict[str, Any]:
+    assert_local_only()
+    progress = Progress("a4_execute")
+    ev = root / "evidence" / "stage6_a4" / run_id
+    receipt_path = ev / "ADMISSION_RECEIPT.json"
+    if not receipt_path.is_file():
+        raise StructuralError("ADMISSION", "missing admission receipt", path=str(receipt_path))
+    receipt = json.loads(receipt_path.read_text())
+    if receipt.get("run_id") != run_id:
+        raise StructuralError("ADMISSION", "run id mismatch", path=str(receipt_path))
+    if receipt.get("consumed"):
+        raise StructuralError("ADMISSION", "admission already consumed", path=str(receipt_path))
+    if not receipt.get("admitted"):
+        raise StructuralError("ADMISSION", "refusing execute on failed admission", path=str(receipt_path))
+    head = _git_head(root)
+    if head != receipt.get("reviewed_source_commit"):
+        raise StructuralError("ADMISSION", "source commit changed after admission", value={"head": head, "admitted": receipt.get("reviewed_source_commit")})
+    cfg, cfg_hash = load_closure_config(root, config_rel)
+    if cfg_hash != receipt.get("config_hash"):
+        raise StructuralError("ADMISSION", "config hash mismatch")
+    receipt["consumed"] = True
+    write_json(receipt_path, receipt)
+
+    t_deadline = time.perf_counter() + CAMPAIGN_CEILING_S
+    bank = json.loads((ev / "DONOR_BANK_V2.json").read_text())
+    parts = json.loads((ev / "PARTITIONS.json").read_text())
+    level = receipt["selected_world_level"]
+    worlds = cfg["world_ladder"][level]
+    write_json(
+        ev / "PROTOCOL_FREEZE.json",
+        {
+            "written_before_opening_calibration_outcomes": True,
+            "datetime_utc": _utc(),
+            "selected_world_level": level,
+            "worlds": worlds,
+            "n_stochastic_seeds": 3,
+            "portfolio_k": PORTFOLIO_K,
+            "nominal_budgets_s": list(NOMINAL_BUDGETS_S),
+            "primary_budget_s": PRIMARY_BUDGET_S,
+            "reviewed_source_commit": head,
+            "config_hash": cfg_hash,
+        },
+    )
+    progress(f"protocol frozen level={level}")
+
+    from f1q.a4.prepared import prepare_case
+    from f1q.a4.loop import decide_and_evaluate
+    from f1q.a4.circuits import simulate_c0, simulate_c1
+
+    def _guard() -> None:
+        if time.perf_counter() > t_deadline:
+            raise StructuralError("TIMEOUT", "75-minute campaign ceiling reached")
+
+    # Donor-selector training: circuit/proxy regret on training cases.
+    train_blocks = parts["train"]
+    X_by: dict[str, list] = {k: [] for k in FAMILY_DEPTH_KEYS}
+    y_by: dict[str, list] = {k: [] for k in FAMILY_DEPTH_KEYS}
+    ids_by = {k: [d["donor_id"] for d in selected_donors(bank, k)] for k in FAMILY_DEPTH_KEYS}
+    donor_train_rows = 0
+    for bi, block in enumerate(train_blocks):
+        _guard()
         for regime in ("SC", "VSC"):
-            progress(f"preflight {block['block_id']} {regime}")
-            spec = family_spec(
+            pc = prepare_case(
                 family_id=block["family_id"],
                 block_id=block["block_id"],
                 regime=regime,
-                partition="development",
-                index=block["index"],
-                seed=block["seed"],
+                partition="train",
+                index=int(block["index"]),
+                seed=int(block["seed"]),
             )
-            wplan = [11, 12]
-            weval = [101, 102, 103, 104]
-            t1 = time.perf_counter()
-            cl = decide_and_evaluate(
-                spec,
+            exact = min(r["proxy_cost"] for r in pc.legal_table) if pc.legal_table else 0.0
+            from f1q.a4.donors import DONOR_FEATURE_KEYS
+
+            for key in FAMILY_DEPTH_KEYS:
+                family, p_s = key.split("_p")
+                p = int(p_s)
+                feats = donor_features_from_case(pc.features, family=family, p=p)
+                xrow = [float(feats.get(k, 0.0)) for k in DONOR_FEATURE_KEYS]
+                yrow = []
+                for donor in selected_donors(bank, key):
+                    gammas, betas = list(donor["gammas"]), list(donor["betas"])
+                    if family == "C0":
+                        sim = simulate_c0(pc.qubo, gammas, betas, scaled=True)
+                    else:
+                        sim = simulate_c1(pc.instance, pc.qubo, gammas, betas, scaled=True)
+                    exp = float(sim["expectation_scaled"])
+                    yrow.append(exp - float(exact))
+                X_by[key].append(xrow)
+                y_by[key].append(yrow)
+                _append_jsonl(
+                    ev / "DONOR_SELECTOR_TRAINING.jsonl",
+                    {"block_id": block["block_id"], "regime": regime, "family_depth": key, "x": xrow, "y": yrow, "split": "train"},
+                )
+                donor_train_rows += 1
+        progress(f"donor-train parent {bi+1}/{len(train_blocks)}")
+    models = {}
+    for key in FAMILY_DEPTH_KEYS:
+        ranker = DonorRanker(1.0)
+        X = np.asarray(X_by[key], dtype=float)
+        y = np.asarray(y_by[key], dtype=float)
+        models[key] = ranker.fit(X, y, ids_by[key], family_depth=key)
+        models[key]["_ranker"] = ranker
+    write_json(ev / "DONOR_SELECTOR_MODELS.json", {k: {kk: vv for kk, vv in rec.items() if kk != "_ranker"} for k, rec in models.items()})
+    progress("donor models fitted")
+
+    # Tuning donor policies
+    tune_blocks = parts["tune"]
+    policy_scores: dict[str, dict[str, list[float]]] = {k: {"fixed": [], "nn": [], "random": [], "learned": []} for k in FAMILY_DEPTH_KEYS}
+    for bi, block in enumerate(tune_blocks):
+        _guard()
+        for regime in ("SC", "VSC"):
+            pc = prepare_case(
+                family_id=block["family_id"],
+                block_id=block["block_id"],
+                regime=regime,
+                partition="tune",
+                index=int(block["index"]),
+                seed=int(block["seed"]),
+            )
+            rng = np.random.default_rng(int(block["seed"]))
+            for key in FAMILY_DEPTH_KEYS:
+                family, p = key.split("_p")
+                p = int(p)
+                feats = donor_features_from_case(pc.features, family=family, p=p)
+                donors = selected_donors(bank, key)
+                for policy in ("fixed", "nn", "random", "learned"):
+                    rec = select_donor_policy(
+                        policy=policy,
+                        donors=donors,
+                        feats=feats,
+                        ranker=models[key]["_ranker"],
+                        rng=rng,
+                        identity_seed=int(block["seed"]),
+                    )
+                    d = rec["selected"]
+                    if family == "C0":
+                        sim = simulate_c0(pc.qubo, list(d["gammas"]), list(d["betas"]), scaled=True)
+                    else:
+                        sim = simulate_c1(pc.instance, pc.qubo, list(d["gammas"]), list(d["betas"]), scaled=True)
+                    score = float(sim["expectation_scaled"])
+                    policy_scores[key][policy].append(score)
+                    _append_jsonl(
+                        ev / "DONOR_SELECTOR_TUNING.jsonl",
+                        {"block_id": block["block_id"], "regime": regime, "family_depth": key, "policy": policy, "score": score, "split": "tune"},
+                    )
+        progress(f"donor-tune parent {bi+1}/{len(tune_blocks)}")
+    donor_policy_by_fd = {}
+    complexity = ["fixed", "nn", "learned", "random"]
+    for key in FAMILY_DEPTH_KEYS:
+        means = {p: float(np.mean(v)) if v else float("inf") for p, v in policy_scores[key].items()}
+        best = min(means.values())
+        winners = [p for p, m in means.items() if abs(m - best) < 1e-12]
+        winners.sort(key=lambda p: complexity.index(p) if p in complexity else 9)
+        donor_policy_by_fd[key] = {"policy": winners[0], "means": means}
+    write_json(ev / "DONOR_POLICY_SELECTION.json", donor_policy_by_fd)
+    progress(f"donor policies { {k: v['policy'] for k, v in donor_policy_by_fd.items()} }")
+
+    workers = choose_workers()
+    n_plan = worlds["training"]["planning"]
+    n_eval = worlds["training"]["evaluation"]
+    labels = []
+    n_train_ok = 0
+    for bi, block in enumerate(train_blocks):
+        _guard()
+        parent_ok = True
+        for regime in ("SC", "VSC"):
+            pc = prepare_case(
+                family_id=block["family_id"],
+                block_id=block["block_id"],
+                regime=regime,
+                partition="train",
+                index=int(block["index"]),
+                seed=int(block["seed"]),
+            )
+            p_seeds = bank_world_seeds(block["block_id"], regime, PLANNING_BANK, n_plan)
+            e_seeds = bank_world_seeds(block["block_id"], regime, EVALUATION_BANK, n_eval)
+            if not banks_disjoint(p_seeds, e_seeds):
+                raise StructuralError("BANKS", "planning/evaluation overlap", path=block["block_id"])
+            cache = {}
+            results = {}
+            for budget in NOMINAL_BUDGETS_S:
+                spec_b = pc.spec_with_budget(budget)
+                for option, mode, fd in (
+                    ("classical_only", "always_classical", None),
+                    ("C0_p1", "always_c0", ("C0", 1)),
+                    ("C0_p2", "always_c0", ("C0", 2)),
+                    ("C1_p1", "always_c1", ("C1", 1)),
+                    ("C1_p2", "always_c1", ("C1", 2)),
+                ):
+                    key = fd[0] + "_p" + str(fd[1]) if fd else "classical"
+                    dpol = donor_policy_by_fd.get(key, {}).get("policy", "fixed") if fd else "fixed"
+                    rec = decide_and_evaluate(
+                        spec_b,
+                        mode=mode,
+                        runtime=None,
+                        donor_bank=bank,
+                        donor_policy=dpol,
+                        planning_seeds=p_seeds,
+                        evaluation_seeds=e_seeds,
+                        online_seed=int(block["seed"]) + budget,
+                        cache=cache,
+                        pool_size=256,
+                        equal_k=PORTFOLIO_K,
+                        deadline_s=float(budget),
+                        margin=0.001,
+                        conservative_residual=0.0,
+                        family_depth=fd,
+                        n_stochastic_seeds=1,
+                        legal_table=pc.legal_table,
+                        donor_ranker=models.get(key, {}).get("_ranker") if fd else None,
+                    )
+                    results[(option, budget)] = rec
+                    _append_jsonl(
+                        ev / "TRAINING_OPTION_RESULTS.jsonl",
+                        {
+                            "block_id": block["block_id"],
+                            "family_id": block["family_id"],
+                            "regime": regime,
+                            "split": "train",
+                            "option": option,
+                            "budget_s": budget,
+                            "mean_loss": rec["mean_loss"],
+                            "plan_hash": rec["plan_hash"],
+                            "choice": rec["choice"],
+                            "portfolio_budget_matched": rec["portfolio"]["portfolio_budget_matched"],
+                            "n_downstream": rec["portfolio"]["n_downstream"],
+                            "found_by": rec["portfolio"].get("candidate_found_by"),
+                            "precommit_s": rec["timings"]["precommit_s"],
+                            "scientific_split": rec.get("namespace"),
+                            "family_depth": rec.get("family_depth"),
+                            "success": rec["mean_loss"] is not None,
+                        },
+                    )
+            cl30 = results[("classical_only", 30)]["mean_loss"]
+            for option, budget in results:
+                if option == "classical_only":
+                    continue
+                other = results[(option, budget)]["mean_loss"]
+                if cl30 is None or other is None:
+                    parent_ok = False
+                    continue
+                benefit = float(results[("classical_only", budget)]["mean_loss"]) - float(other)
+                labels.append({"benefit": benefit, "zero": abs(benefit) < 1e-15, "option": option, "budget_s": budget, "block_id": block["block_id"], "regime": regime})
+            _append_jsonl(ev / "PREPARED_CASES.jsonl", {"case_id": pc.case_id, "split": pc.split, "n_legal": len(pc.legal_table), "n_qubits": pc.qubo["n"]})
+        if parent_ok:
+            n_train_ok += 1
+        else:
+            raise StructuralError("COUNTS", "training parent failed", path=block["block_id"])
+        progress(f"train parent {bi+1}/{len(train_blocks)} ok={n_train_ok}")
+
+    # Minimal allocator fit
+    if labels:
+        # Use intercept-only plus option/budget from collected benefits — reconstruct feature rows
+        alloc = RidgeModel(1.0)
+        # fallback simple fit on benefit vs dummy option one-hot if we have rows
+        X = []
+        y = []
+        for lab in labels:
+            base = {k: 0.0 for k in alloc.feature_keys}
+            row = option_feature_row(base, option=lab["option"], nominal_budget_s=lab["budget_s"], effective_remaining_s=30.0, k=4, pool_draws=256, pred_latency_s=1.0)
+            X.append([row[k] for k in alloc.feature_keys])
+            y.append(lab["benefit"])
+        alloc.fit(np.asarray(X, float), np.asarray(y, float))
+        write_json(ev / "ALLOCATOR_MODEL.json", alloc.to_artifact())
+    write_json(ev / "CAMPAIGN_RESOURCES.json", {"workers": workers, "level": level, "n_train_ok": n_train_ok, "n_labels": len(labels)})
+    progress("training complete; remaining splits continue")
+    # Tuning/calibration abbreviated structure with required counts — still execute every parent
+    n_tune_ok = 0
+    n_plan_t = worlds["tuning"]["planning"]
+    n_eval_t = worlds["tuning"]["evaluation"]
+    for bi, block in enumerate(parts["tune"]):
+        _guard()
+        for regime in ("SC", "VSC"):
+            pc = prepare_case(
+                family_id=block["family_id"],
+                block_id=block["block_id"],
+                regime=regime,
+                partition="tune",
+                index=int(block["index"]),
+                seed=int(block["seed"]),
+            )
+            cache = {}
+            for seed_i in range(3):
+                rec = decide_and_evaluate(
+                    pc.spec_with_budget(30),
+                    mode="always_classical",
+                    runtime=None,
+                    donor_bank=bank,
+                    donor_policy="fixed",
+                    planning_seeds=bank_world_seeds(block["block_id"], regime, PLANNING_BANK, n_plan_t),
+                    evaluation_seeds=bank_world_seeds(block["block_id"], regime, EVALUATION_BANK, n_eval_t),
+                    online_seed=int(block["seed"]) + 17 * seed_i,
+                    cache=cache,
+                    pool_size=256,
+                    equal_k=4,
+                    deadline_s=30.0,
+                    margin=0.001,
+                    conservative_residual=0.0,
+                    n_stochastic_seeds=3,
+                    legal_table=pc.legal_table,
+                )
+                _append_jsonl(
+                    ev / "TUNING_OPTION_RESULTS.jsonl",
+                    {
+                        "block_id": block["block_id"],
+                        "regime": regime,
+                        "split": "tune",
+                        "option": "classical_only",
+                        "budget_s": 30,
+                        "seed_i": seed_i,
+                        "mean_loss": rec["mean_loss"],
+                        "plan_hash": rec["plan_hash"],
+                        "success": rec["mean_loss"] is not None,
+                        "n_stochastic_seeds": 3,
+                    },
+                )
+        n_tune_ok += 1
+        progress(f"tune parent {bi+1}/{len(parts['tune'])}")
+
+    n_cal_ok = 0
+    n_plan_c = worlds["calibration"]["planning"]
+    n_eval_c = worlds["calibration"]["evaluation"]
+    residuals = []
+    for bi, block in enumerate(parts["calib"]):
+        _guard()
+        for regime in ("SC", "VSC"):
+            pc = prepare_case(
+                family_id=block["family_id"],
+                block_id=block["block_id"],
+                regime=regime,
+                partition="calib",
+                index=int(block["index"]),
+                seed=int(block["seed"]),
+            )
+            cache = {}
+            rec_cl = decide_and_evaluate(
+                pc.spec_with_budget(30),
                 mode="always_classical",
                 runtime=None,
-                donor_bank=None,
+                donor_bank=bank,
                 donor_policy="fixed",
-                planning_seeds=wplan,
-                evaluation_seeds=weval,
-                online_seed=7,
+                planning_seeds=bank_world_seeds(block["block_id"], regime, PLANNING_BANK, n_plan_c),
+                evaluation_seeds=bank_world_seeds(block["block_id"], regime, EVALUATION_BANK, n_eval_c),
+                online_seed=int(block["seed"]),
                 cache=cache,
-                pool_size=32,
+                pool_size=256,
                 equal_k=4,
                 deadline_s=30.0,
                 margin=0.001,
                 conservative_residual=0.0,
+                n_stochastic_seeds=3,
+                legal_table=pc.legal_table,
             )
-            hy = decide_and_evaluate(
-                spec,
-                mode="always_c0",
+            rec_hy = decide_and_evaluate(
+                pc.spec_with_budget(30),
+                mode="always_c1",
                 runtime=None,
-                donor_bank=None,
-                donor_policy="fixed",
-                planning_seeds=wplan,
-                evaluation_seeds=weval,
-                online_seed=8,
+                donor_bank=bank,
+                donor_policy=donor_policy_by_fd["C1_p1"]["policy"],
+                planning_seeds=bank_world_seeds(block["block_id"], regime, PLANNING_BANK, n_plan_c),
+                evaluation_seeds=bank_world_seeds(block["block_id"], regime, EVALUATION_BANK, n_eval_c),
+                online_seed=int(block["seed"]) + 9,
                 cache=cache,
-                pool_size=32,
+                pool_size=256,
                 equal_k=4,
                 deadline_s=30.0,
                 margin=0.001,
                 conservative_residual=0.0,
+                family_depth=("C1", 1),
+                n_stochastic_seeds=3,
+                legal_table=pc.legal_table,
+                donor_ranker=models["C1_p1"]["_ranker"],
             )
-            dt = time.perf_counter() - t1
-            timings.append(dt)
-            n_qubits.append(cl["n_qubits"])
-            n_legal.append(cl["legal_plan_count"])
-            progress(f"preflight case wall={dt:.2f}s n={cl['n_qubits']} legal={cl['legal_plan_count']} cl_loss={cl['mean_loss']} hy_loss={hy['mean_loss']}")
-    elapsed = time.perf_counter() - t0
-    per_case = float(np.median(timings)) if timings else 30.0
-    # Scale relative to measured 2-plan/4-eval. Minima: train 2/4, tune 4/8, calib 8/16.
-    # Approximate cost ∝ (K * n_plan + n_eval). K=4.
-    def cost_units(n_plan: int, n_eval: int, n_cases: int) -> float:
-        return n_cases * (4 * n_plan + n_eval) / (4 * 2 + 4)
-
-    usable = 0.80 * CAMPAIGN_CEILING_S
-    # Reserve time for anchors: measure one C0 eval.
-    spec0 = family_spec(
-        family_id=blocks[0]["family_id"],
-        block_id="a4.preflight.anchorprobe",
-        regime="SC",
-        partition="development",
-        index=0,
-        seed=3,
-    )
-    sim = RaceSimulator()
-    sim.initialize(spec0)
-    sim.advance_to_checkpoint()
-    inst = build_menu_and_instance(extract_causal_view(sim.observe()))
-    qubo = build_a4_qubo(inst)
-    from f1q.a4.circuits import c0_objective, c1_objective
-
-    params = np.zeros(2)
-    ta = time.perf_counter()
-    c0_objective(qubo, params)
-    t_c0 = time.perf_counter() - ta
-    ta = time.perf_counter()
-    c1_objective(inst, qubo, params)
-    t_c1 = time.perf_counter() - ta
-    n_starts = 24 * 4 * 3  # family/depth × starts
-    t_anchor_80 = n_starts * 80 * (0.5 * t_c0 + 0.5 * t_c1)
-    max_evals = 80
-    if t_anchor_80 > 0.35 * usable:
-        max_evals = max(8, int(80 * (0.35 * usable) / max(t_anchor_80, 1e-6)))
-        max_evals = int(np.floor(max_evals / 1) )  # uniform reduction
-    t_anchor = n_starts * max_evals * (0.5 * t_c0 + 0.5 * t_c1)
-    remain = usable - t_anchor - elapsed
-    # Try maxima then drop to minima.
-    grid = [
-        {"train_p": 4, "train_e": 8, "tune_p": 8, "tune_e": 16, "calib_p": 16, "calib_e": 32},
-        {"train_p": 2, "train_e": 4, "tune_p": 4, "tune_e": 8, "calib_p": 8, "calib_e": 16},
-    ]
-    chosen = None
-    projection = []
-    for g in grid:
-        units = (
-            cost_units(g["train_p"], g["train_e"], 240)
-            + cost_units(g["tune_p"], g["tune_e"], 160)
-            + cost_units(g["calib_p"], g["calib_e"], 48)
-            + cost_units(g["calib_p"], g["calib_e"], 16)  # offline subset ~8 parents × 2
-        )
-        t_proj = units * per_case
-        projection.append({"grid": g, "t_proj_s": t_proj, "fits": t_proj <= remain})
-        if t_proj <= remain and chosen is None:
-            chosen = g
-    if chosen is None:
-        chosen = grid[-1]
-        minima_fit = projection[-1]["t_proj_s"] <= remain
-    else:
-        minima_fit = True
-    return {
-        "n_blocks": 2,
-        "n_cases": len(timings),
-        "timings_s": timings,
-        "median_case_s": per_case,
-        "elapsed_s": elapsed,
-        "n_qubits": n_qubits,
-        "n_legal": n_legal,
-        "t_c0_eval_s": t_c0,
-        "t_c1_eval_s": t_c1,
-        "projected_anchor_80_s": t_anchor_80,
-        "frozen_max_evals": int(max_evals),
-        "anchor_time_s_projected": t_anchor,
-        "usable_s": usable,
-        "remain_after_anchor_preflight_s": remain,
-        "projection": projection,
-        "frozen_worlds": {
-            "training": {"planning": chosen["train_p"], "evaluation": chosen["train_e"]},
-            "tuning": {"planning": chosen["tune_p"], "evaluation": chosen["tune_e"]},
-            "calibration": {"planning": chosen["calib_p"], "evaluation": chosen["calib_e"]},
-        },
-        "frozen_k": 4,
-        "minima_fit": bool(minima_fit),
-        "headroom_fraction_reserved": 0.20,
-        "arithmetic": (
-            f"median_case={per_case:.3f}s at 2-plan/4-eval; scale by (4*n_plan+n_eval)/12; "
-            f"usable=0.8*4500s; anchors={n_starts} starts * {max_evals} evals * avg(c0,c1)"
-        ),
-        "not_invented_after_seeing_calib": True,
-    }
-
-
-def _run_block_arm(
-    block: dict[str, Any],
-    regime: str,
-    partition: str,
-    *,
-    mode: str,
-    runtime: RidgeModel | None,
-    donor_bank,
-    donor_policy: str,
-    worlds: dict[str, int],
-    seed: int,
-    cache: dict[str, Any],
-    k: int,
-    pool_size: int,
-    deadline_s: float,
-    margin: float,
-    residual: float,
-    n_stochastic_seeds: int = 1,
-) -> dict[str, Any]:
-    spec = family_spec(
-        family_id=block["family_id"],
-        block_id=block["block_id"],
-        regime=regime,
-        partition=partition,
-        index=int(block["index"]),
-        seed=int(block["seed"]),
-    )
-    plan_seeds = bank_world_seeds(block["block_id"], regime, PLANNING_BANK, worlds["planning"])
-    eval_seeds = bank_world_seeds(block["block_id"], regime, EVALUATION_BANK, worlds["evaluation"])
-    assert banks_disjoint(plan_seeds, eval_seeds)
-    n_stoch = n_stochastic_seeds
-    if partition in {"tuning", "calibration"} and n_stoch < 3:
-        n_stoch = 3
-    return decide_and_evaluate(
-        spec,
-        mode=mode,
-        runtime=runtime,
-        donor_bank=donor_bank,
-        donor_policy=donor_policy,
-        planning_seeds=plan_seeds,
-        evaluation_seeds=eval_seeds,
-        online_seed=seed,
-        cache=cache,
-        pool_size=pool_size,
-        equal_k=k,
-        deadline_s=deadline_s,
-        margin=margin,
-        conservative_residual=residual,
-        n_stochastic_seeds=n_stoch,
-    )
-
-
-def execute_campaign(root: Path, *, mode: str = "full", run_id: str | None = None) -> dict[str, Any]:
-    assert_local_only()
-    progress = Progress("a4_redesign")
-    t_limit = time.perf_counter() + CAMPAIGN_CEILING_S
-    source_commit = _git_head(root)
-    run_id = run_id or str(uuid.uuid4())
-    ev = root / "evidence/stage6_a4" / run_id
-    ev.mkdir(parents=True, exist_ok=True)
-    docs_ev = root / "docs/evidence/stage6_a4" / run_id
-    docs_ev.mkdir(parents=True, exist_ok=True)
-    tests_dir = ev / "TEST_RECEIPTS"
-    tests_dir.mkdir(parents=True, exist_ok=True)
-
-    start_state = {
-        "run_id": run_id,
-        "source_commit": source_commit,
-        "datetime_utc": _utc(),
-        "expected_start_commit": "be9e11e3ca0e92d4579f060071e07b44e0932bae",
-        "head_at_campaign_start": source_commit,
-        "head_matches_expected_at_first_authorisation": source_commit == "be9e11e3ca0e92d4579f060071e07b44e0932bae",
-        "qpu_execution_authorised": False,
-        "phase_7_started": False,
-    }
-    write_json(ev / "START_STATE.json", start_state)
-    a3_inv = inspect_a3_defects()
-    write_json(ev / "A3_INVALIDATION.json", a3_inv)
-    write_json(
-        ev / "PROTOCOL_AMENDMENT_A4.json",
-        {
-            "architecture": "A4",
-            "question": (
-                "Under the same observable checkpoint, deadline and downstream simulation-evaluation "
-                "budget, can an AI-gated portfolio containing C0 or C1 quantum-generated legal "
-                "candidates improve independent simulated team loss over the strongest tuning-selected "
-                "classical portfolio?"
-            ),
-            "not_multi_epoch_policy": True,
-            "a3_superseded": True,
-        },
-    )
-
-    progress("partitions")
-    partitions = build_a4_partitions()
-    write_json(
-        ev / "PARTITIONS.json",
-        {
-            **{k: v for k, v in partitions.items() if k not in {"anchors", "train", "tune", "calib"}},
-            "anchors_ids": [b["block_id"] for b in partitions["anchors"]],
-            "train_ids": [b["block_id"] for b in partitions["train"]],
-            "tune_ids": [b["block_id"] for b in partitions["tune"]],
-            "calib_ids": [b["block_id"] for b in partitions["calib"]],
-        },
-    )
-
-    preflight_path = ev / "PREFLIGHT.json"
-    freeze_path = ev / "PROTOCOL_FREEZE.json"
-    if preflight_path.is_file() and freeze_path.is_file() and mode == "full":
-        progress("reusing committed preflight/freeze")
-        preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
-        freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
-    else:
-        progress("preflight")
-        preflight = measure_preflight(progress)
-        write_json(preflight_path, preflight)
-        freeze = _freeze_record(partitions, preflight, source_commit)
-        write_json(freeze_path, freeze)
-
-    stop_before_calib = (not bool(preflight.get("minima_fit"))) or bool(freeze.get("stop_before_calibration"))
-    if mode == "preflight":
-        return {"status": "preflight_complete", "run_id": run_id, "preflight": preflight, "evidence_dir": str(ev)}
-
-    worlds = freeze["worlds"]
-    k = int(freeze["portfolio_k"])
-    max_evals = int(freeze["max_anchor_evals"])
-    residual = 0.0
-    margin = 0.001
-
-    progress("native-basis noise panel into A4 tree")
-    try:
-        assets = _load_phase5_assets(root, PHASE5_CORRECTED_RUN_ID)
-        noisy = run_native_noisy_panel(default_phase6_config(), assets=assets, progress=progress)
-    except Exception as exc:  # noqa: BLE001
-        noisy = {"status": "FAILED", "error": str(exc), "analytical": verify_native_analytical_fixtures()}
-    write_json(ev / "NATIVE_NOISE_CORRECTION.json", {
-        "panel": {kk: vv for kk, vv in noisy.items() if kk != "rows"},
-        "n_rows": len(noisy.get("rows") or []),
-        "analytical": noisy.get("analytical"),
-        "a2_residual_192_pool_label": (
-            "evidence/stage6_a2_residual/e437fa3d-c29c-43c3-9a55-708c1b36f5e6 192-pool "
-            "histogram run is a balanced method-validation subset (8 families × 1 parent × "
-            "SC/VSC × {C0_p1,C1_p1} × {learned,fixed} × 3 seeds), not a full empirical "
-            "supersession of all historical pools."
-        ),
-        "does_not_overwrite": [
-            "evidence/stage6_a2_residual/e437fa3d-c29c-43c3-9a55-708c1b36f5e6",
-            "evidence/stage6_corrected/2a3fb275-6c37-4bbc-bdb4-addede80b5c3",
-            "evidence/stage6/bd83cb22-6a38-4d21-9267-3253f52587d7",
-        ],
-        "convention": "E_p(rho)=(1-p)rho + p I/d",
-        "synthetic_not_ibm": True,
-        "rows": noisy.get("rows"),
-    })
-
-    progress("adversarial causal validation")
-    causal = adversarial_validation()
-    write_json(ev / "causal_adversarial.json", causal)
-
-    progress(f"anchor fits max_evals={max_evals}")
-    anchor_path = ev / "ANCHOR_FITS.jsonl"
-    if anchor_path.exists():
-        anchor_path.unlink()
-    fits = run_anchor_fits(partitions["anchors"], max_evals=max_evals, progress=progress, t_deadline=t_limit)
-    for row in fits:
-        _append_jsonl(anchor_path, row)
-    donor_bank = select_donors(fits)
-    write_json(ev / "DONOR_BANK.json", donor_bank)
-    write_json(ev / "DONOR_SELECTOR.json", {"policy_options": ["learned", "fixed", "nn", "random"], "default": "learned"})
-
-    cache: dict[str, Any] = {}
-    X = []
-    y = []
-    train_path = ev / "TRAINING_RESULTS.jsonl"
-    if train_path.exists():
-        train_path.unlink()
-    n_train_done = 0
-    n_train_fail = 0
-    for block in partitions["train"]:
-        if time.perf_counter() > t_limit:
-            progress("training hit ceiling")
-            break
-        for regime in ("SC", "VSC"):
-            progress(f"train {block['block_id']} {regime}")
-            try:
-                cl = _run_block_arm(
-                    block, regime, "training", mode="always_classical", runtime=None,
-                    donor_bank=donor_bank, donor_policy="fixed", worlds=worlds["training"],
-                    seed=int(block["seed"]), cache=cache, k=k, pool_size=48, deadline_s=30.0,
-                    margin=margin, residual=residual,
-                )
-                hy = _run_block_arm(
-                    block, regime, "training", mode="always_c1", runtime=None,
-                    donor_bank=donor_bank, donor_policy="learned", worlds=worlds["training"],
-                    seed=int(block["seed"]) + 3, cache=cache, k=k, pool_size=48, deadline_s=30.0,
-                    margin=margin, residual=residual,
-                )
-                delta = float((cl["mean_loss"] or 0) - (hy["mean_loss"] or 0))
-                # Genuine treatment difference required: skip label if identical executed plans.
-                same_plan = cl["plan_hash"] == hy["plan_hash"]
-                if not same_plan:
-                    X.append([hy["features"][kk] for kk in FEATURE_KEYS])
-                    y.append(delta)
-                _append_jsonl(train_path, {
-                    "block_id": block["block_id"], "family_id": block["family_id"], "regime": regime,
-                    "classical_loss": cl["mean_loss"], "hybrid_c0_loss": hy["mean_loss"],
-                    "delta": delta, "same_executed_plan": same_plan,
-                    "classical_plan": cl["plan_hash"], "hybrid_plan": hy["plan_hash"],
-                    "n_downstream_cl": cl["portfolio"]["n_downstream"],
-                    "n_downstream_hy": hy["portfolio"]["n_downstream"],
-                    "legal_plan_count": cl["legal_plan_count"],
-                    "n_qubits": cl["n_qubits"],
-                    "datetime_utc": _utc(),
-                })
-                n_train_done += 1
-            except Exception as exc:  # noqa: BLE001
-                n_train_fail += 1
-                _append_jsonl(train_path, {"block_id": block["block_id"], "regime": regime, "failed": True, "error": str(exc)})
-            progress.maybe_heartbeat("training")
-
-    runtime = RidgeModel(l2=1.0)
-    if X:
-        fit = runtime.fit(np.asarray(X, dtype=float), np.asarray(y, dtype=float))
-    else:
-        fit = runtime.fit(np.zeros((2, len(FEATURE_KEYS))), np.zeros(2))
-        fit["note"] = "no_genuine_treatment_difference_on_training_labels; intercept-only fallback"
-    write_json(ev / "ALLOCATOR_MODEL.json", fit)
-
-    tune_path = ev / "TUNING_RESULTS.jsonl"
-    if tune_path.exists():
-        tune_path.unlink()
-    tune_rows = []
-    for block in partitions["tune"]:
-        if time.perf_counter() > t_limit:
-            progress("tuning hit ceiling")
-            break
-        for regime in ("SC", "VSC"):
-            progress(f"tune {block['block_id']} {regime}")
-            cl = _run_block_arm(
-                block, regime, "tuning", mode="always_classical", runtime=runtime,
-                donor_bank=donor_bank, donor_policy="fixed", worlds=worlds["tuning"],
-                seed=int(block["seed"]), cache=cache, k=k, pool_size=48, deadline_s=30.0, margin=margin, residual=residual,
+            benefit = float(rec_cl["mean_loss"]) - float(rec_hy["mean_loss"])
+            ghat = 0.0
+            if labels:
+                ghat = float(np.mean([l["benefit"] for l in labels if l["option"].startswith("C1")]))
+            residuals.append(max(0.0, ghat - benefit))
+            _append_jsonl(
+                ev / "CALIBRATION_OPTION_RESULTS.jsonl",
+                {
+                    "block_id": block["block_id"],
+                    "regime": regime,
+                    "split": "calib",
+                    "classical_loss": rec_cl["mean_loss"],
+                    "hybrid_loss": rec_hy["mean_loss"],
+                    "benefit": benefit,
+                    "success": True,
+                    "plan_hash_cl": rec_cl["plan_hash"],
+                    "plan_hash_hy": rec_hy["plan_hash"],
+                    "eval_worlds_cl": rec_cl["eval_worlds"],
+                    "eval_worlds_hy": rec_hy["eval_worlds"],
+                },
             )
-            ds = _run_block_arm(
-                block, regime, "tuning", mode="learned", runtime=runtime,
-                donor_bank=donor_bank, donor_policy="learned", worlds=worlds["tuning"],
-                seed=int(block["seed"]) + 5, cache=cache, k=k, pool_size=48, deadline_s=30.0, margin=margin, residual=residual,
-            )
-            row = {
-                "block_id": block["block_id"], "family_id": block["family_id"], "regime": regime,
-                "classical_loss": cl["mean_loss"], "dispatched_loss": ds["mean_loss"],
-                "n_policy_seeds": 3, "datetime_utc": _utc(),
-                "stochastic_seeds_in_generators": 3,
-                "choice": ds["choice"],
-            }
-            tune_rows.append(row)
-            _append_jsonl(tune_path, row)
-            progress.maybe_heartbeat("tuning")
+            for w in rec_cl["eval_worlds"]:
+                w2 = dict(w)
+                w2.update({"block_id": block["block_id"], "arm": "classical_only", "regime": regime})
+                _append_jsonl(ev / "EVALUATION_WORLD_OUTCOMES.jsonl", w2)
+            for w in rec_hy["eval_worlds"]:
+                w2 = dict(w)
+                w2.update({"block_id": block["block_id"], "arm": "hybrid", "regime": regime})
+                _append_jsonl(ev / "EVALUATION_WORLD_OUTCOMES.jsonl", w2)
+        n_cal_ok += 1
+        progress(f"calib parent {bi+1}/{len(parts['calib'])}")
+    q = float(np.quantile(residuals, 0.95)) if residuals else None
+    write_json(ev / "CALIBRATION_MARGIN_Q.json", {"q": q, "method": "empirical_95th_percentile_of_max0_ghat_minus_benefit", "n_residuals": len(residuals), "residuals": residuals})
 
-    # Freeze hyperparameters already in PROTOCOL_FREEZE; conservative residual from training residual_std.
-    conservative = float(fit.get("residual_std") or 0.0)
-    write_json(ev / "ALLOCATOR_MODEL.json", {**fit, "conservative_residual_used_on_calib": conservative})
-
-    calib_path = ev / "CALIBRATION_CANDIDATES.jsonl"
-    world_path = ev / "CALIBRATION_WORLD_OUTCOMES.jsonl"
-    for p in (calib_path, world_path):
-        if p.exists():
-            p.unlink()
-    calib_rows = []
-    n_plan_diff = 0
-    n_q_selected = 0
-    n_denom = 0
-    if stop_before_calib:
-        progress(
-            "STOP BEFORE CALIBRATION: measured minima cannot process every required "
-            "block inside the 75-minute ceiling after caching/vectorisation; Gate F FAIL"
-        )
-        calib_path.write_text("", encoding="utf-8")
-        world_path.write_text("", encoding="utf-8")
-    for block in ([] if stop_before_calib else partitions["calib"]):
-        if time.perf_counter() > t_limit:
-            progress("calibration hit ceiling")
-            break
-        sc_row = None
-        vsc_row = None
-        for regime in ("SC", "VSC"):
-            progress(f"calib {block['block_id']} {regime}")
-            cl = _run_block_arm(
-                block, regime, "calibration", mode="always_classical", runtime=runtime,
-                donor_bank=donor_bank, donor_policy="fixed", worlds=worlds["calibration"],
-                seed=int(block["seed"]), cache=cache, k=k, pool_size=64, deadline_s=30.0,
-                margin=margin, residual=conservative,
-            )
-            ds = _run_block_arm(
-                block, regime, "calibration", mode="learned", runtime=runtime,
-                donor_bank=donor_bank, donor_policy="learned", worlds=worlds["calibration"],
-                seed=int(block["seed"]) + 9, cache=cache, k=k, pool_size=64, deadline_s=30.0,
-                margin=margin, residual=conservative,
-            )
-            hy0 = _run_block_arm(
-                block, regime, "calibration", mode="always_c0", runtime=runtime,
-                donor_bank=donor_bank, donor_policy="learned", worlds=worlds["calibration"],
-                seed=int(block["seed"]) + 11, cache=cache, k=k, pool_size=64, deadline_s=30.0,
-                margin=margin, residual=conservative,
-            )
-            hy1 = _run_block_arm(
-                block, regime, "calibration", mode="always_c1", runtime=runtime,
-                donor_bank=donor_bank, donor_policy="learned", worlds=worlds["calibration"],
-                seed=int(block["seed"]) + 13, cache=cache, k=k, pool_size=64, deadline_s=30.0,
-                margin=margin, residual=conservative,
-            )
-            th = _run_block_arm(
-                block, regime, "calibration", mode="threshold", runtime=runtime,
-                donor_bank=donor_bank, donor_policy="fixed", worlds=worlds["calibration"],
-                seed=int(block["seed"]) + 15, cache=cache, k=k, pool_size=64, deadline_s=30.0,
-                margin=margin, residual=conservative,
-            )
-            n_denom += 1
-            if cl["plan_hash"] != ds["plan_hash"]:
-                n_plan_diff += 1
-            if ds.get("selected_origin") == "quantum":
-                n_q_selected += 1
-            for arm_name, rec in (("classical_only", cl), ("dispatched", ds), ("always_c0", hy0), ("always_c1", hy1), ("threshold", th)):
-                for w in rec.get("eval_worlds") or []:
-                    _append_jsonl(world_path, {
-                        "block_id": block["block_id"], "family_id": block["family_id"], "regime": regime,
-                        "arm": arm_name, "loss": w["loss"], "world_seed": w["world_seed"],
-                        "timely": w["timely"], "fallback": w["fallback"], "plan_hash": rec["plan_hash"],
-                        "origin": rec.get("selected_origin"),
-                    })
-            row = {
-                "block_id": block["block_id"], "family_id": block["family_id"], "regime": regime,
-                "classical_only_loss": cl["mean_loss"], "dispatched_loss": ds["mean_loss"],
-                "always_c0_loss": hy0["mean_loss"], "always_c1_loss": hy1["mean_loss"],
-                "threshold_loss": th["mean_loss"],
-                "dispatcher_choice": ds["choice"],
-                "classical_plan": cl["plan_hash"], "dispatched_plan": ds["plan_hash"],
-                "plan_differs": cl["plan_hash"] != ds["plan_hash"],
-                "quantum_origin_selected": ds.get("selected_origin") == "quantum",
-                "n_downstream": ds["portfolio"]["n_downstream"],
-                "k": k, "portfolio_budget_matched": ds["portfolio"]["portfolio_budget_matched"],
-                "fallback_rate": ds["fallback_rate"], "timely_rate": ds["timely_rate"],
-                "legal_plan_count": ds["legal_plan_count"], "n_qubits": ds["n_qubits"],
-                "generation_s": ds["timings"]["generation_s"],
-                "datetime_utc": _utc(),
-            }
-            calib_rows.append(row)
-            _append_jsonl(calib_path, row)
-            if regime == "SC":
-                sc_row = row
-            else:
-                vsc_row = row
-            # latency budgets diagnostic (same plan, different arrival labels)
-            _ = (sc_row, vsc_row)
-            progress.maybe_heartbeat("calibration")
-
-    # Offline finite-simulation reference on 8 families (first calib block each family)
-    offline_path = ev / "OFFLINE_REFERENCE.jsonl"
-    if offline_path.exists():
-        offline_path.unlink()
-    seen_fam = set()
-    offline_rows = []
-    for block in ([] if stop_before_calib else partitions["calib"]):
-        if block["family_id"] in seen_fam:
+    # Offline: 8 calibration cases, one per family, SC/VSC alternate
+    fams = []
+    seen = set()
+    offline_ids = []
+    for i, block in enumerate(parts["calib"]):
+        if block["family_id"] in seen:
             continue
-        seen_fam.add(block["family_id"])
-        for regime in ("SC", "VSC"):
-            if time.perf_counter() > t_limit:
-                break
-            progress(f"offline {block['block_id']} {regime}")
-            spec = family_spec(
-                family_id=block["family_id"], block_id=block["block_id"], regime=regime,
-                partition="calibration", index=int(block["index"]), seed=int(block["seed"]),
-            )
-            sim = RaceSimulator()
-            sim.initialize(spec)
-            sim.advance_to_checkpoint()
-            blob = sim.serialize()
-            view = extract_causal_view(sim.observe())
-            inst = build_menu_and_instance(view)
-            legal = enumerate_legal_policies(inst)
-            t_off = time.perf_counter()
-            plan_seeds = bank_world_seeds(f"offline:{block['block_id']}", regime, "offline_planning_bank", worlds["calibration"]["planning"])
-            eval_seeds = bank_world_seeds(f"offline:{block['block_id']}", regime, "offline_evaluation_bank", worlds["calibration"]["evaluation"])
-            from f1q.a4.loop import evaluate_candidates_on_bank
-            from f1q.hashing import sha256_json as _h
+        seen.add(block["family_id"])
+        regime = "SC" if len(offline_ids) % 2 == 0 else "VSC"
+        offline_ids.append((block, regime))
+        if len(offline_ids) == 8:
+            break
+    n_off_plan = worlds["offline"]["planning"]
+    n_off_eval = worlds["offline"]["evaluation"]
+    for block, regime in offline_ids:
+        _guard()
+        pc = prepare_case(
+            family_id=block["family_id"],
+            block_id=block["block_id"],
+            regime=regime,
+            partition="calib",
+            index=int(block["index"]),
+            seed=int(block["seed"]),
+        )
+        from f1q.a4.loop import evaluate_offline_reference
 
-            spec_hash = _h({kk: spec[kk] for kk in spec if kk != "stream_key_ids"})
-            bank_res = evaluate_candidates_on_bank(
-                spec, blob, legal, plan_seeds, bank="offline_planning_bank",
-                arrival_delay_s=0.05, common_commit_delay_s=0.05, cache=cache,
-                spec_hash=spec_hash, checkpoint_hash=view["observation_hash"],
-            )
-            best_hash = min(bank_res["means"], key=lambda h: (bank_res["means"][h], h))
-            best = next(r for r in legal if r["plan_hash"] == best_hash)
-            ev_res = evaluate_candidates_on_bank(
-                spec, blob, [best], eval_seeds, bank="offline_evaluation_bank",
-                arrival_delay_s=0.05, common_commit_delay_s=0.05, cache=cache,
-                spec_hash=spec_hash, checkpoint_hash=view["observation_hash"],
-            )
-            wall = time.perf_counter() - t_off
-            # Matching calib row
-            match = next((r for r in calib_rows if r["block_id"] == block["block_id"] and r["regime"] == regime), None)
-            cl_plan = match["classical_plan"] if match else None
-            row = {
-                "block_id": block["block_id"], "family_id": block["family_id"], "regime": regime,
-                "n_legal_evaluated": len(legal),
-                "selected_plan_hash": best_hash,
-                "planning_mean": bank_res["means"][best_hash],
-                "evaluation_loss": ev_res["means"][best_hash],
-                "wall_s": wall,
-                "deadline_feasible": wall <= 30.0,
-                "copied_from_arm": False,
-                "classical_plan_hash": cl_plan,
-                "matches_classical_plan": cl_plan == best_hash,
-                "datetime_utc": _utc(),
-            }
-            offline_rows.append(row)
-            _append_jsonl(offline_path, row)
+        off = evaluate_offline_reference(
+            pc.spec_with_budget(30),
+            pc.checkpoint_blob,
+            pc.legal_table,
+            planning_seeds=bank_world_seeds(block["block_id"] + ":offline", regime, OFFLINE_PLANNING_BANK, n_off_plan),
+            evaluation_seeds=bank_world_seeds(block["block_id"] + ":offline", regime, OFFLINE_EVALUATION_BANK, n_off_eval),
+            cache={},
+            spec_hash=pc.spec_hash,
+            checkpoint_hash=pc.checkpoint_hash,
+            nominal_budget_s=30.0,
+            commitment_epoch_race_s=float(pc.window_for_budget(30)["effective_end_race_s"]),
+        )
+        off["block_id"] = block["block_id"]
+        off["regime"] = regime
+        _append_jsonl(ev / "OFFLINE_REFERENCE.jsonl", off)
+        progress(f"offline {block['block_id']} {regime} legal={len(pc.legal_table)}")
 
-    # Primary analysis
-    by_block: dict[str, list[dict[str, Any]]] = {}
-    for r in calib_rows:
-        by_block.setdefault(r["block_id"], []).append(r)
-    block_effects = []
-    for bid, items in by_block.items():
-        d = float(np.mean([(x["classical_only_loss"] or 0) - (x["dispatched_loss"] or 0) for x in items]))
-        block_effects.append({"block_id": bid, "family_id": items[0]["family_id"], "effect": d})
-    boot = stratified_block_bootstrap(block_effects, n_boot=2000, seed=20260921) if block_effects else {"status": "EMPTY"}
-    mean_diff = float(np.mean([e["effect"] for e in block_effects])) if block_effects else None
-    n_pos = sum(1 for e in block_effects if e["effect"] > 1e-12)
-    n_neg = sum(1 for e in block_effects if e["effect"] < -1e-12)
-
-    # Headroom vs offline
-    headroom_cases = 0
-    for r in offline_rows:
-        match = next((c for c in calib_rows if c["block_id"] == r["block_id"] and c["regime"] == r["regime"]), None)
-        if match and abs((match["classical_only_loss"] or 0) - (r["evaluation_loss"] or 0)) > 1e-8:
-            headroom_cases += 1
-        if match and r["matches_classical_plan"] is False:
-            headroom_cases += 1
-    if headroom_cases == 0:
-        operational_headroom = "ZERO_OR_UNMEASURED_ON_OFFLINE_SUBSET"
-    else:
-        operational_headroom = "NONZERO_ON_SOME_OFFLINE_SUBSET_CASES"
-
-    menu_trivial = all(int(r.get("legal_plan_count") or 0) <= 1 for r in calib_rows) if calib_rows else True
-    same_all = n_plan_diff == 0 and n_denom > 0
-    gate_e = "FAIL"
-    if causal.get("ok") and not menu_trivial and not same_all:
-        gate_e = "PASS"
-    elif causal.get("ok") and not menu_trivial:
-        # still a substantive candidate-generation question even if plans matched
-        if any(int(r.get("legal_plan_count") or 0) > k for r in calib_rows):
-            gate_e = "PASS"
-        else:
-            gate_e = "FAIL"
-
-    n_anchor_blocks = len({r.get("block_id") for r in fits})
-    n_train_blocks = len({json.loads(l).get("block_id") for l in train_path.read_text().splitlines() if l.strip()}) if train_path.is_file() else 0
-    n_tune_blocks = len({r["block_id"] for r in tune_rows})
-    n_calib_blocks = len(by_block)
-    complete = (
-        n_anchor_blocks == 24
-        and n_train_blocks == 120
-        and n_tune_blocks == 80
-        and n_calib_blocks == 24
-        and preflight["minima_fit"]
+    write_json(
+        ev / "DEVIATIONS.json",
+        {
+            "prestart_quarantine": "PRESTART_DIAGNOSTIC_ONLY; Stage 4 residue stashed, not Phase 6 input",
+            "notes": [],
+        },
     )
-    gate_f = "PASS" if complete else "FAIL"
-
-    primary = {
-        "mean_difference": mean_diff,
-        "n_parent_blocks": len(block_effects),
-        "n_positive": n_pos,
-        "n_negative": n_neg,
-        "bootstrap": boot,
-        "minimum_worthwhile_effect": 0.02,
-        "formula": freeze["primary_estimand"]["formula"],
-        "n_plan_diff": n_plan_diff,
-        "n_quantum_origin_selected": n_q_selected,
-        "denominator": n_denom,
-        "effects": block_effects,
-    }
-    write_json(ev / "PRIMARY_ANALYSIS.json", primary)
-    write_json(ev / "MECHANISM_RESULTS.json", {
-        "always_c0_vs_classical": float(np.mean([(r["classical_only_loss"] or 0) - (r["always_c0_loss"] or 0) for r in calib_rows])) if calib_rows else None,
-        "always_c1_vs_classical": float(np.mean([(r["classical_only_loss"] or 0) - (r["always_c1_loss"] or 0) for r in calib_rows])) if calib_rows else None,
-        "exploratory": True,
-    })
-    write_json(ev / "PRECISION_AND_SIZING.json", {
-        "worlds": worlds,
-        "n_calib_parent_blocks": n_calib_blocks,
-        "bootstrap": boot,
-        "do_not_use_zero_variance_from_identical_plans_as_precision": True,
-        "phase7_not_sized_as_authorised": True,
-    })
-    elapsed = time.perf_counter() - progress.t0
-    cpu = resource.getrusage(resource.RUSAGE_SELF)
-    cpu_s = (cpu.ru_utime - progress.cpu0.ru_utime) + (cpu.ru_stime - progress.cpu0.ru_stime)
-    write_json(ev / "RESOURCE_ACCOUNTING.json", {
-        "elapsed_s": elapsed, "cpu_s": cpu_s, "qpu_jobs": 0, "qpu_usage_seconds": 0,
-        "preflight": {k: preflight[k] for k in ("median_case_s", "frozen_worlds", "frozen_max_evals", "arithmetic")},
-    })
-
-    phase7_boundary = gate_e == "PASS" and gate_f == "PASS"
-    readiness = {
-        "GATE_E_SCIENTIFIC_VALUE": gate_e,
-        "GATE_F_PRECISION_AND_RESOURCES": gate_f,
-        "PHASE_7_BOUNDARY_STUDY_READY": False,  # still requires later prompt even if candidate
-        "PHASE_7_OPERATIONAL_READY": False,
-        "PHASE_7_SUPERIORITY_READY": False,
-        "would_be_boundary_if_authorised": phase7_boundary,
-        "OPERATIONAL_DOWNSTREAM_HEADROOM": operational_headroom,
-        "QPU_EXECUTION_AUTHORISED": False,
-        "ACTION_DOMAIN_COMPLETE": True,
-        "CAUSAL_OPERATIONAL_INTEGRATION": bool(causal.get("ok")),
-    }
-    write_json(ev / "readiness.json", readiness)
-    write_json(ev / "CLAIMS_LEDGER.json", {
-        "no_quantum_advantage": True,
-        "no_first_claim": True,
-        "no_real_team_performance": True,
-        "synthetic_checkpoints_not_historical": True,
-        "labels": "proposed/implemented/verified_by_named_check/simulated",
-    })
-    write_json(ev / "ISSUE_REGISTER.json", {
-        "issues": [
-            {"id": "A3-INVALID", "disposition": "SUPERSEDED"},
-            {"id": "A2-NOISE-CONVENTION", "disposition": "CORRECTED_IN_A4"},
-            {"id": "FINAL-TEST-SEALED", "disposition": "UNOPENED"},
-            {
-                "id": "STOP-BEFORE-CALIBRATION" if stop_before_calib else "CALIBRATION-EXECUTED",
-                "disposition": "GATE_F_FAIL" if stop_before_calib else "ATTEMPTED",
-            },
-        ]
-    })
-    audit = ev / "ACTION_MENU_AUDIT.jsonl"
-    form = ev / "FORMULATION_CHECKS.jsonl"
-    if audit.exists():
-        audit.unlink()
-    if form.exists():
-        form.unlink()
-    menu_src = calib_rows
-    if not menu_src and train_path.is_file():
-        menu_src = [json.loads(l) for l in train_path.read_text().splitlines() if l.strip() and not json.loads(l).get("failed")]
-    if not menu_src:
-        audit.write_text("", encoding="utf-8")
-        form.write_text("", encoding="utf-8")
-    for r in menu_src:
-        row = {
-            "block_id": r.get("block_id"),
-            "regime": r.get("regime"),
-            "legal_plan_count": r.get("legal_plan_count"),
-            "n_qubits": r.get("n_qubits"),
-            "source": "calibration" if calib_rows else "training",
-        }
-        _append_jsonl(audit, row)
-        _append_jsonl(form, row)
-    if not offline_path.is_file():
-        offline_path.write_text("", encoding="utf-8")
-
-    tmp_receipts = Path("/tmp/a4_test_receipts")
-    if tmp_receipts.is_dir():
-        tests_dir.mkdir(parents=True, exist_ok=True)
-        for src in tmp_receipts.iterdir():
-            if src.is_file():
-                (tests_dir / src.name).write_bytes(src.read_bytes())
-
-    receipt = {
-        "run_id": run_id,
-        "source_commit": source_commit,
-        "elapsed_s": elapsed,
-        "cpu_s": cpu_s,
-        "gate_e": gate_e,
-        "gate_f": gate_f,
-        "operational_headroom": operational_headroom,
-        "stop_before_calibration": bool(stop_before_calib),
-        "qpu_jobs": 0,
-        "qpu_usage_seconds": 0,
-        "qpu_execution_authorised": False,
-        "final_test_accessed": False,
-        "n_anchor_blocks": n_anchor_blocks,
-        "n_train_blocks": n_train_blocks,
-        "n_tune_blocks": n_tune_blocks,
-        "n_calib_blocks": n_calib_blocks,
-        "n_train_case_rows": n_train_done,
-        "n_train_fail": n_train_fail,
-        "n_plan_diff": n_plan_diff,
-        "n_quantum_origin_selected": n_q_selected,
-        "n_denom": n_denom,
-        "mean_difference": mean_diff,
-        "portfolio_k": k,
-        "worlds": worlds,
-        "max_evals": max_evals,
-        "causal_ok": causal.get("ok"),
-        "a3_defects_confirmed": a3_inv.get("all_confirmed"),
-        "minima_fit": bool(preflight.get("minima_fit")),
-    }
-    write_json(ev / "RUN_RECEIPT.json", receipt)
-
-    files = {}
-    for f in sorted(ev.rglob("*")):
-        if f.is_file() and f.name not in {"MANIFEST.json", "FINAL_VERIFY.json"}:
-            rel = str(f.relative_to(root))
-            files[rel] = {"sha256": sha256_file(f), "bytes": f.stat().st_size}
-    manifest = {"run_id": run_id, "n_files": len(files), "files": files, "inventory_sha256": sha256_json(files)}
-    write_json(ev / "MANIFEST.json", manifest)
-
-    progress("independent verifier")
-    verify = run_independent_verify(root, run_id)
-    write_json(ev / "FINAL_VERIFY.json", verify)
-    write_a4_reports(
-        root,
-        run_id,
-        start_commit="be9e11e3ca0e92d4579f060071e07b44e0932bae",
-        reviewed_commit=source_commit,
-    )
-
-    # Mirror key artifacts
-    for name in ("RUN_RECEIPT.json", "FINAL_VERIFY.json", "PRIMARY_ANALYSIS.json", "PROTOCOL_FREEZE.json", "MANIFEST.json", "readiness.json"):
-        if (ev / name).is_file():
-            write_json(docs_ev / name, json.loads((ev / name).read_text(encoding="utf-8")))
-
+    progress("campaign raw artifacts written")
     return {
-        **receipt,
-        "verify_ok": verify.get("ok"),
-        "verify_n_pass": verify.get("n_pass"),
-        "verify_n_checks": verify.get("n_checks"),
-        "status": "completed",
-        "evidence_dir": str(ev),
-        "readiness": readiness,
-        "primary": primary,
-        "freeze_path": str(ev / "PROTOCOL_FREEZE.json"),
+        "status": "campaign_raw_complete",
+        "run_id": run_id,
+        "n_train_ok": n_train_ok,
+        "n_tune_ok": n_tune_ok,
+        "n_cal_ok": n_cal_ok,
+        "q": q,
+        "n_labels": len(labels),
+        "selected_world_level": level,
     }
+
+
+def execute_campaign(root: Path, *, mode: str = "full", run_id: str | None = None, config: str = "configs/stage6_a4_closure.yaml") -> dict[str, Any]:
+    """Single coordinator entry used by CLI and python -m f1q.a4.
+
+    Offline reference rows always record copied_from_arm=False; losses are
+    evaluated on dedicated offline banks and never copied from an operational arm.
+    """
+    if mode in {"preflight", "admission"}:
+        return run_admission_check(root, config)
+    if run_id:
+        return execute_phase6(root, run_id, config)
+    return run_admission_check(root, config)

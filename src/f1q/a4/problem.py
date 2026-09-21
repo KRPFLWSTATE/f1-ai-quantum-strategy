@@ -61,13 +61,30 @@ def extract_causal_view(obs) -> dict[str, Any]:
     if len(team_cars) < 2:
         raise RejectionError("A4_MENU", "two selected cars required")
     inventories = data.get("inventories") or {}
+    decision_time_race_s = float(_qty_value(data.get("decision_time")) or 0.0)
+    window = data.get("deadline_window") or {}
+    effective_end_race_s = window.get("effective_end_race_s")
+    if effective_end_race_s is None:
+        effective_end_race_s = _qty_value(data.get("effective_deadline_s"))
+    try:
+        effective_end_race_s = float(effective_end_race_s) if effective_end_race_s is not None else None
+    except (TypeError, ValueError):
+        effective_end_race_s = None
+    if effective_end_race_s is not None:
+        effective_remaining_s = max(0.0, float(effective_end_race_s) - decision_time_race_s)
+    else:
+        remaining_from_window = window.get("remaining_window_s")
+        effective_remaining_s = max(0.0, float(remaining_from_window)) if remaining_from_window is not None else 0.0
     view = {
         "checkpoint_id": data.get("checkpoint_id"),
         "episode_id": data.get("episode_id"),
         "family_id": data.get("family_id"),
         "block_id": data.get("block_id"),
         "partition": data.get("partition"),
-        "decision_time_s": float(_qty_value(data.get("decision_time")) or 0.0),
+        "decision_time_s": decision_time_race_s,
+        "decision_time_race_s": decision_time_race_s,
+        "effective_end_race_s": effective_end_race_s,
+        "effective_remaining_s": float(effective_remaining_s),
         "completed_laps": int(_qty_value(data.get("completed_laps")) or 0),
         "remaining_laps": int(_qty_value(data.get("remaining_laps")) or 0),
         "safety_regime": _qty_value(data.get("safety_regime")),
@@ -747,7 +764,8 @@ def qubo_structural_features(instance: A4Instance, qubo: dict[str, Any]) -> dict
         "mean_tyre_age": float(np.mean([c["tyre_age_laps"] for c in cars])),
         "mean_gap_ahead": float(np.mean([c.get("gap_ahead_s") or 0.0 for c in cars])),
         "crew_overlap_cost": float(instance.crew_overlap_cost),
-        "deadline_s": float(view["effective_deadline_s"] or view["nominal_budget_s"] or 30.0),
+        "deadline_s": float(view.get("effective_remaining_s") if view.get("effective_remaining_s") is not None else (view.get("nominal_budget_s") or 30.0)),
+        "effective_remaining_s": float(view.get("effective_remaining_s") or 0.0),
         "n_expired": float(len(view["expired_actions"])),
         "regime_is_sc": 1.0 if view.get("safety_regime") == "SC" else 0.0,
         "n_pit_now_actions": float(n_pit),
