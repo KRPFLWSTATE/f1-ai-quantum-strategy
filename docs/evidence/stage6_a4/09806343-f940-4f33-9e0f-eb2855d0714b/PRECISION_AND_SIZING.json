@@ -1,0 +1,22 @@
+{
+  "bootstrap": {
+    "status": "EMPTY"
+  },
+  "do_not_use_zero_variance_from_identical_plans_as_precision": true,
+  "n_calib_parent_blocks": 0,
+  "phase7_not_sized_as_authorised": true,
+  "worlds": {
+    "calibration": {
+      "evaluation": 16,
+      "planning": 8
+    },
+    "training": {
+      "evaluation": 4,
+      "planning": 2
+    },
+    "tuning": {
+      "evaluation": 8,
+      "planning": 4
+    }
+  }
+}

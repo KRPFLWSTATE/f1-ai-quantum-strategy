@@ -1,0 +1,25 @@
+{
+  "cpu_s": 4506.20293,
+  "elapsed_s": 4513.297090625041,
+  "preflight": {
+    "arithmetic": "median_case=13.424s at 2-plan/4-eval; scale by (4*n_plan+n_eval)/12; usable=0.8*4500s; anchors=288 starts * 15 evals * avg(c0,c1)",
+    "frozen_max_evals": 15,
+    "frozen_worlds": {
+      "calibration": {
+        "evaluation": 16,
+        "planning": 8
+      },
+      "training": {
+        "evaluation": 4,
+        "planning": 2
+      },
+      "tuning": {
+        "evaluation": 8,
+        "planning": 4
+      }
+    },
+    "median_case_s": 13.423619124980178
+  },
+  "qpu_jobs": 0,
+  "qpu_usage_seconds": 0
+}

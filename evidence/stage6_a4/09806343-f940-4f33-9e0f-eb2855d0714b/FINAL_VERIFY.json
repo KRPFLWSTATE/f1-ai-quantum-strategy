@@ -1,0 +1,153 @@
+{
+  "checks": [
+    {
+      "name": "evidence_dir_exists",
+      "pass": true
+    },
+    {
+      "name": "required_START_STATE.json",
+      "pass": true
+    },
+    {
+      "name": "required_A3_INVALIDATION.json",
+      "pass": true
+    },
+    {
+      "name": "required_PROTOCOL_AMENDMENT_A4.json",
+      "pass": true
+    },
+    {
+      "name": "required_PARTITIONS.json",
+      "pass": true
+    },
+    {
+      "name": "required_PREFLIGHT.json",
+      "pass": true
+    },
+    {
+      "name": "required_PROTOCOL_FREEZE.json",
+      "pass": true
+    },
+    {
+      "name": "required_DONOR_BANK.json",
+      "pass": true
+    },
+    {
+      "name": "required_PRIMARY_ANALYSIS.json",
+      "pass": true
+    },
+    {
+      "name": "required_RESOURCE_ACCOUNTING.json",
+      "pass": true
+    },
+    {
+      "name": "required_CLAIMS_LEDGER.json",
+      "pass": true
+    },
+    {
+      "name": "required_MANIFEST.json",
+      "pass": true
+    },
+    {
+      "name": "required_RUN_RECEIPT.json",
+      "pass": true
+    },
+    {
+      "name": "required_NATIVE_NOISE_CORRECTION.json",
+      "pass": true
+    },
+    {
+      "name": "split_isolation",
+      "pass": true
+    },
+    {
+      "name": "final_test_sealed",
+      "pass": true
+    },
+    {
+      "name": "final_test_count_80",
+      "pass": true
+    },
+    {
+      "name": "anchors_all_executed",
+      "pass": true
+    },
+    {
+      "n": 24,
+      "name": "anchor_block_count",
+      "pass": true
+    },
+    {
+      "n": 120,
+      "name": "train_parent_count",
+      "pass": true
+    },
+    {
+      "n": 47,
+      "name": "tune_parent_count",
+      "pass": false
+    },
+    {
+      "n": 0,
+      "name": "calib_parent_count",
+      "pass": false
+    },
+    {
+      "ks": [],
+      "name": "matched_k_on_calib",
+      "pass": false
+    },
+    {
+      "n_blocks": 0,
+      "name": "paired_mean_recomputed",
+      "pass": true,
+      "recomputed": null,
+      "reported": null
+    },
+    {
+      "name": "offline_actually_evaluated",
+      "pass": false
+    },
+    {
+      "name": "offline_not_copied_from_arm",
+      "pass": false
+    },
+    {
+      "name": "native_analytical",
+      "pass": true
+    },
+    {
+      "name": "kraus_matches_closed_form",
+      "pass": true
+    },
+    {
+      "name": "qpu_jobs_zero",
+      "pass": true
+    },
+    {
+      "name": "qpu_seconds_zero",
+      "pass": true
+    },
+    {
+      "name": "qpu_not_authorised",
+      "pass": true
+    },
+    {
+      "name": "final_test_accessed_false",
+      "pass": true
+    },
+    {
+      "name": "freeze_before_calib",
+      "pass": true
+    },
+    {
+      "n": 33,
+      "name": "manifest_hashes",
+      "pass": true
+    }
+  ],
+  "n_checks": 34,
+  "n_pass": 29,
+  "ok": false,
+  "run_id": "09806343-f940-4f33-9e0f-eb2855d0714b"
+}

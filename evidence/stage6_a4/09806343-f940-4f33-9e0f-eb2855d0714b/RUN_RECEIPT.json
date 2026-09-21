@@ -1,0 +1,43 @@
+{
+  "a3_defects_confirmed": true,
+  "causal_ok": true,
+  "cpu_s": 4506.20293,
+  "elapsed_s": 4513.297090625041,
+  "final_test_accessed": false,
+  "gate_e": "FAIL",
+  "gate_f": "FAIL",
+  "max_evals": 15,
+  "mean_difference": null,
+  "minima_fit": false,
+  "n_anchor_blocks": 24,
+  "n_calib_blocks": 0,
+  "n_denom": 0,
+  "n_plan_diff": 0,
+  "n_quantum_origin_selected": 0,
+  "n_train_blocks": 120,
+  "n_train_case_rows": 0,
+  "n_train_fail": 240,
+  "n_tune_blocks": 47,
+  "operational_headroom": "ZERO_OR_UNMEASURED_ON_OFFLINE_SUBSET",
+  "portfolio_k": 4,
+  "qpu_execution_authorised": false,
+  "qpu_jobs": 0,
+  "qpu_usage_seconds": 0,
+  "run_id": "09806343-f940-4f33-9e0f-eb2855d0714b",
+  "source_commit": "8cc52607a6fabfe35ae9d4d681f8792c39a51176",
+  "stop_before_calibration": true,
+  "worlds": {
+    "calibration": {
+      "evaluation": 16,
+      "planning": 8
+    },
+    "training": {
+      "evaluation": 4,
+      "planning": 2
+    },
+    "tuning": {
+      "evaluation": 8,
+      "planning": 4
+    }
+  }
+}

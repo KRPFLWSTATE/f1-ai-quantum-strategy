@@ -4,9 +4,9 @@ Independent research infrastructure for a **deadline-constrained two-car pit-str
 
 This repository is **not** affiliated with a Formula 1 team. It reports **no experimental results**. Completing software setup, a development preview, or simulator checks does not establish scientific novelty, F1 calibration, or hardware readiness.
 
-## Current scope -- Phase 5 complete (local)
+## Current scope -- Phase 6 A4 attempted (local; Gates E/F FAIL)
 
-Restricted independent race simulator (`simulator.v1` **1.0.4** / interface **3.1.0**), Stage 3.x validation/repair/evidence correction, Stage 4 local formulation closed with documented limitations, and **Phase 5** A2 scenario-contingent strategy-policy pipeline (classical references, C0/C1 ideal circuits, parameter bank, learned donor selector). Engineering status: see `docs/STAGE_5_REPORT.md`. Legacy exhaustive Gate C remains `PARTIAL` / `ARCHIVED_DO_NOT_RESUME` (see `docs/STAGE_4_CLOSURE_ERRATUM.md`). This does **not** establish quantum advantage, F1 calibration, held-out H1/H2/H3 evidence, or hardware readiness. Stage 4 Gate E: `PROXY_HEADROOM: ZERO`. Phase 5 development headroom: `ZERO` (superiority path disabled).
+Restricted independent race simulator (`simulator.v1` **1.0.4** / interface **3.1.0**), Stage 3.x validation/repair/evidence correction, Stage 4 local formulation closed with documented limitations, Phase 5 A2 pipeline, and **Phase 6 A4** checkpoint candidate-generation software. Authoritative A4 report: `docs/PHASE_6_A4_FINAL_REPORT.md`. A3 scientific conclusions are **superseded** (`SUPERSEDED_INVALID_IMPLEMENTATION`). A4 Gates E/F **FAIL** (measured 75-minute minima cannot fit every required block; training hybrid cases failed; calibration not opened). This does **not** establish quantum advantage, F1 calibration, held-out H1/H2/H3 evidence, or hardware readiness. Stage 4: `PROXY_HEADROOM: ZERO`. Legacy exhaustive Gate C remains `PARTIAL` / `ARCHIVED_DO_NOT_RESUME`.
 
 Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. `QPU_EXECUTION_AUTHORISED: false`. `NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`.
 
@@ -39,6 +39,8 @@ python -m f1q run --plan development_preview
 python -m f1q run --plan simulator_check
 python -m f1q run --plan formulation_check
 python -m f1q run --plan phase5
+python -m f1q run --plan a4_redesign
+python -m f1q.a4 --preflight
 python -m f1q.stage5
 python -m f1q resume --run-id <id>    # only if a run was interrupted; never legacy Gate C
 python -m f1q receipt --run-id <id>
@@ -58,6 +60,10 @@ There is no `submit`, hardware, or IBM command. Reserved scientific partitions c
 - Development preview specs/receipts: `evidence/development/`
 - Formulation Stage 4 artifacts/receipts: `evidence/formulation/`
 - Phase 5 evidence: `evidence/stage5/`, summaries `docs/evidence/stage5/`
+- Phase 6 A2 historical/corrected: `evidence/stage6/`, `evidence/stage6_corrected/`
+- A2 residual: `evidence/stage6_a2_residual/`
+- A3 (scientifically superseded): `evidence/a3/a5fdb488-9a90-47f9-a4f5-7f77a74180a6/`
+- A4: `evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/`, report `docs/PHASE_6_A4_FINAL_REPORT.md`
 - Phase 5 report: `docs/STAGE_5_REPORT.md`
 - Private simulator-state seeds (gitignored, not solver-visible): `evidence/development/private/`
 - Dossier and extraction: `docs/protocol/`
@@ -68,4 +74,4 @@ Development outputs, simulator-check admissions, and Phase 5 tuning results are 
 
 ## Next stage
 
-**Stage 6 — local pilot + resource/precision estimation**, only after user review and an explicit Stage 6 prompt. Not hardware. Superiority pilot is not ready while Phase 5 development headroom is zero.
+**NONE automatic.** A4 Gates E/F failed. Phase 7 is not authorised. Not hardware. Do not open final-test.
