@@ -126,6 +126,22 @@ def main(argv: list[str] | None = None) -> int:
                 config, _, _ = load_project_config(root)
                 authorize_plan(config, args.plan)
                 result = run_phase6(root)
+            elif args.plan == "a3_redesign":
+                from f1q.authorization import authorize_plan, load_project_config
+                from f1q.a3.campaign import execute_campaign
+
+                config, _, _ = load_project_config(root)
+                authorize_plan(config, args.plan)
+                camp = execute_campaign(root)
+                result = {
+                    "status": "completed" if camp.get("causal_ok") else "failed",
+                    "run_id": camp.get("a3_run_id"),
+                    "residual_run_id": camp.get("residual_run_id"),
+                    "gate_e": camp.get("gate_e"),
+                    "verify_ok": camp.get("verify_ok"),
+                    "qpu_jobs": 0,
+                    "qpu_usage_seconds": 0,
+                }
             else:
                 from f1q.authorization import authorize_plan, load_project_config
 

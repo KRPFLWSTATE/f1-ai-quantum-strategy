@@ -1,6 +1,6 @@
 """Local research infrastructure for the F1 AI/quantum strategy project."""
 
-__version__ = "0.5.0"
+__version__ = "0.7.0"
 SCHEMA_VERSION = "1.0.0"
 CAUSAL_SCHEMA_VERSION = "2.1.0"
 GENERATOR_VERSION = "2.0.0"

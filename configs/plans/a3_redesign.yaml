@@ -1,0 +1,11 @@
+schema_version: "1.0.0"
+plan_id: a3_redesign
+kind: a3_redesign
+description: "Phase 5–6 scientific redesign: A2 residual package + A3 causal operational pilot. No QPU. No Phase 7. No final-test access."
+hardware_execution_enabled: false
+qpu_execution_authorised: false
+zero_additional_spending: true
+units:
+  - unit_id: a3_redesign_complete
+    kind: a3_pipeline
+    description: "Protocol amendment, A2 residual, A3 partitions/freeze/pilot/verify"
