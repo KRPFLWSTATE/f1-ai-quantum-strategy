@@ -1,0 +1,87 @@
+{
+  "checks": [
+    {
+      "detail": {
+        "final_test_accessed": false,
+        "overlap": []
+      },
+      "name": "split_isolation_no_final_test",
+      "pass": true
+    },
+    {
+      "detail": {
+        "crosscheck_ok": true,
+        "n": 8
+      },
+      "name": "actual_circuit_consistency_representative",
+      "pass": true
+    },
+    {
+      "detail": {
+        "sampled_summaries": 5
+      },
+      "name": "zero_headroom_tie_handling",
+      "pass": true
+    },
+    {
+      "detail": {
+        "completed": 48,
+        "failed": 0,
+        "planned": 48
+      },
+      "name": "denominator_reconciliation",
+      "pass": true
+    },
+    {
+      "detail": {},
+      "name": "finite_outputs",
+      "pass": true
+    },
+    {
+      "detail": {
+        "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/run_receipt.json"
+      },
+      "name": "immutable_historical_phase5",
+      "pass": true
+    },
+    {
+      "detail": {
+        "freeze_sha256": "27191ba16d91802d54f54ab45b42ff3c7948de2d59089a02d5d070a3d4f09c3c"
+      },
+      "name": "freeze_before_calibration_flag",
+      "pass": true
+    },
+    {
+      "detail": {
+        "n_legal": 9
+      },
+      "name": "smoke_enumeration",
+      "pass": true
+    },
+    {
+      "detail": {
+        "manifest_sha256_actual": "e3d7e8eb1202bf59e561f2439f46664441729a18cd18886cc06edda4dd9fef19",
+        "manifest_sha256_recorded": "e3d7e8eb1202bf59e561f2439f46664441729a18cd18886cc06edda4dd9fef19",
+        "n_checked": 19,
+        "ok": true,
+        "rerun_campaign": false,
+        "verify_ok_flag": true
+      },
+      "name": "phase5_final_acceptance_manifest",
+      "pass": true
+    }
+  ],
+  "manifest_path": "evidence/stage6/bd83cb22-6a38-4d21-9267-3253f52587d7/STAGE_6_MANIFEST.json",
+  "manifest_sha256": "8fc9199126cad5dc1565cd3bb867dd12dcea4c0f5ee40544874de92bd33b56db",
+  "manifest_sha256_matches_file": true,
+  "n_checks": 9,
+  "n_pass": 9,
+  "noisy_zero_noise_recheck": {
+    "ok": true,
+    "zn_pass": 32
+  },
+  "note": "final_verify hashes the manifest; does not embed its own file hash in the hashed payload before write",
+  "ok": true,
+  "schema_version": "stage6.final_verify.v1",
+  "verified_at_unix": 1789952281.383586
+}

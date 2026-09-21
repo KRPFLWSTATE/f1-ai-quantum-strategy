@@ -37,6 +37,19 @@ def _phase5_status(root: Path) -> str:
     return str(data.get("PHASE_5_ENGINEERING") or "PENDING")
 
 
+def _phase6_status(root: Path) -> str:
+    import json
+
+    docs = root / "docs/evidence/stage6/STAGE_6_FINAL_VERIFY.json"
+    if not docs.is_file():
+        return "PENDING"
+    try:
+        data = json.loads(docs.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return "PENDING"
+    return "PASS_WITH_DOCUMENTED_LIMITATIONS" if data.get("ok") else "PARTIAL"
+
+
 def run_status(root: Path | None = None) -> dict:
     root = resolve_project_root(root)
     config, config_hash, _ = load_project_config(root)
@@ -52,15 +65,21 @@ def run_status(root: Path | None = None) -> dict:
         "STAGE_5A": "PASS",
         "SELECTED_ARCHITECTURE": "A2_multi_epoch_scenario_contingent_strategy_policy",
         "PHASE_5_ENGINEERING": _phase5_status(root),
+        "PHASE_6_ENGINEERING": _phase6_status(root),
         "QPU_EXECUTION_AUTHORISED": False,
         "simulator_version": SIMULATOR_VERSION,
         "interface_version": INTERFACE_VERSION,
         "legacy_archive": legacy,
     }
     next_work_default = (
-        "Phase 5 complete pending review; next is Stage 6 local pilot (not hardware) when authorised."
-        if _phase5_status(root) in {"PASS", "PARTIAL"}
-        else "Run Phase 5: python -m f1q run --plan phase5"
+        "Phase 6 complete; Phase 7 mechanism only after explicit prompt + dated amendment + review. "
+        "Operational/superiority Phase 7 not ready. No QPU."
+        if _phase6_status(root) in {"PASS_WITH_DOCUMENTED_LIMITATIONS", "PASS", "PARTIAL"}
+        else (
+            "Phase 5 complete pending review; next is Stage 6 local pilot (not hardware) when authorised."
+            if _phase5_status(root) in {"PASS", "PARTIAL"}
+            else "Run Phase 5: python -m f1q run --plan phase5"
+        )
     )
     ledger_state: dict
     if not db.is_file():

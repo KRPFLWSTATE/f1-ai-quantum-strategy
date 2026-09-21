@@ -1,0 +1,87 @@
+{
+  "a2_surrogate": {
+    "causal_duration_assumption": "SC/VSC duration is fully placed into epoch-1 observables; epoch 0 is root-only. Synthetic commitment-epoch check \u2014 not event-timed on-track causal validation.",
+    "causal_duration_model": "restricted_synthetic_revealed_at_epoch_1",
+    "causal_visibility_ok": true,
+    "decisions_cannot_see_hidden_duration_at_epoch0": true,
+    "epoch0_is_root": true,
+    "operational_race_decision_experiment": false,
+    "scope": "restricted_synthetic_revealed_at_epoch_1"
+  },
+  "adapter_cases": {
+    "adversarial_hidden_future_case": true,
+    "continuation_uses_actual_simulator_interface": true,
+    "deadline_and_commitment": true,
+    "identical_observations_hide_future_duration": true,
+    "late_or_invalid_uses_fallback": true,
+    "late_result_case": true,
+    "pit_entry_commitment_respected": true,
+    "policies_use_only_revealed_info": true,
+    "two_car_interactions_represented": true
+  },
+  "adapter_validation_pass": true,
+  "causal_operational_readiness": false,
+  "distinction": {
+    "operational_race_decision_experiment": false,
+    "restricted_A2_circuit_experiment": true
+  },
+  "dossier_component_map": {
+    "independent_evaluator": {
+      "blocker": "Operational independent race-outcome evaluator campaign not affordable/available in Phase 6 ceiling",
+      "evidence": "Stage 3/4 analytical + simulator evaluators exist; not driving Phase 6 operational endpoint",
+      "implemented": "partial"
+    },
+    "required_ablations": {
+      "blocker": "Ablation matrix reserved for Phase 7 after protocol freeze of eligible scope",
+      "evidence": null,
+      "implemented": false
+    },
+    "runtime_allocator": {
+      "blocker": "No deadline-aware AI/quantum runtime allocator wired to live simulator decisions",
+      "evidence": null,
+      "implemented": false
+    },
+    "uncertainty_margin": {
+      "blocker": "Not integrated into A2 circuit pilot scoring",
+      "evidence": "simulator deadline communication_margin in configs/simulator.v1.yaml",
+      "implemented": "partial"
+    }
+  },
+  "elapsed_s": 0.7729122089222074,
+  "interface_version": "3.1.0",
+  "readiness_reason": "Stage 3 interfaces validate on development fixtures, but A2 circuit experiment remains a restricted synthetic revealed-duration surrogate; operational race-decision experiment requires causal model change + retraining (see redesign_spec).",
+  "redesign_spec": {
+    "must_not": [
+      "Patch A2 generator to remove revealed-duration while claiming old training evidence unchanged",
+      "Treat working C0/C1 circuits alone as F1 operational value"
+    ],
+    "required_for_operational_readiness": [
+      "Replace A2 revealed-at-epoch-1 duration assumption with event-timed observation projection from simulator DecisionObservation",
+      "Retrain donor selector / rebuild parameter bank under new feature definitions (do not reuse Phase 5 training evidence as unchanged)",
+      "Validate action expiry and pit-entry commitment on live continuation streams for A2 policies",
+      "Wire independent evaluator with separate random banks (train/online/final) and event-keyed CRN",
+      "Do not open final-test outcomes until Gate E/F and causal readiness pass"
+    ]
+  },
+  "simulator_causality_check": {
+    "after_reveal_diverged": true,
+    "identical_observations_before_reveal": true,
+    "pass": true
+  },
+  "simulator_deadline_check": {
+    "cases": {
+      "boundary": true,
+      "changed_state_revalidated": true,
+      "closed": true,
+      "common_commitment_epoch": true,
+      "intervening_event_was_passing_pit_entry": true,
+      "just_after": true,
+      "just_before": true,
+      "missed_pit_now_not_next_lap": true,
+      "timely": true
+    },
+    "name": "deadline",
+    "pass": true
+  },
+  "simulator_version": "1.0.4"
+}

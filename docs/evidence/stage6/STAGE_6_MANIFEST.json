@@ -1,0 +1,338 @@
+{
+  "config_sha256": "3af34f3d84ebc7fddbe91d69971c0fb318c1e4318dbb01c425b8de118f9a63be",
+  "created_at_utc": "2026-09-21T00:54:59Z",
+  "dirty_tree_patch_hash": "645d4e08e4f9a666f53d32c7fb6c507e1fdc3323c1344723a9763297967dbe5d",
+  "files": {
+    "calibration_splits.json": {
+      "bytes": 20547,
+      "sha256": "9e80a33820b5650a40ecdfef8a5d15d5605ffcda138c923855b8b887cf9fb806"
+    },
+    "capacity_estimates.json": {
+      "bytes": 13336,
+      "sha256": "780e29ac0ca261cf79b3152d9892c56f85ed7c7ac4fa880b38a3a7ccbd59e96f"
+    },
+    "causal_adapter.json": {
+      "bytes": 3816,
+      "sha256": "90f978525bdaf9fa9e38f092c2cd7dc9711e2049c96a52820cee2064262cfbf6"
+    },
+    "development_unit_timing.json": {
+      "bytes": 885,
+      "sha256": "0b09ec243b434144fcc36312d3c559afd5d88b6ea0cf73aee10f6293eae6da3e"
+    },
+    "deviations.json": {
+      "bytes": 923,
+      "sha256": "fd292767c1c6c5fdb8ff88dbe88b0faf38d28c78e838c68717946798a15028bf"
+    },
+    "docs:STAGE_6_NOVELTY_COMPARISON.md": {
+      "bytes": 6845,
+      "path": "docs/STAGE_6_NOVELTY_COMPARISON.md",
+      "sha256": "052459ba101dedc403fe164e05cac757fe7e471a0e1e6b3fa1d1c4aaab365860"
+    },
+    "docs:STAGE_6_PROTOCOL_FREEZE.md": {
+      "bytes": 2498,
+      "path": "docs/STAGE_6_PROTOCOL_FREEZE.md",
+      "sha256": "365ce9fbdde1221c8aabf69cc597e842a60dacc98d636a92550e4668885e36be"
+    },
+    "docs:STAGE_6_REPORT.md": {
+      "bytes": 13647,
+      "path": "docs/STAGE_6_REPORT.md",
+      "sha256": "bd7cd8c3d299b65066c18efdba81e3832795bd6df870d7d2f6886237b6fca18e"
+    },
+    "docs:stage6.pilot.yaml": {
+      "bytes": 1359,
+      "path": "configs/stage6.pilot.yaml",
+      "sha256": "537d7622237fc6a0f370f38073e2c4babe9133f925dafc4651364ee107048122"
+    },
+    "machine_inspect.json": {
+      "bytes": 369,
+      "sha256": "09fc95cf6b82317ff722e954fc1e1e4af90ea8cc0ac5bf76bb1fc6e4d10528bd"
+    },
+    "nn_table_receipt.json": {
+      "bytes": 348,
+      "sha256": "0437e55ab930a8b8ff514d298b18d2a31f12b105bb4a42bfe4f82065cfb79f55"
+    },
+    "noisy_panel.json": {
+      "bytes": 33647,
+      "sha256": "5d26fe2eb8cbf45765ab3bce2a314598a86f6b774f769ada273a7fdc6aac0264"
+    },
+    "novelty_comparison.json": {
+      "bytes": 9218,
+      "sha256": "72cedc2b3beceb98df003707f2e0d85c96d4fdad7225c40481d4ddc99e4a44b2"
+    },
+    "pilot_receipt.json": {
+      "bytes": 68503,
+      "sha256": "47c19d0409587113c816bcdd94ae79f6806c6e12fe1aa64d87c979b927fbfcff"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_dense_0000_SC.json": {
+      "bytes": 83586,
+      "sha256": "1c4a2c16f0fd4b3faefafb1c5a82175367f01ebbc7d7ddb3d9420afac7addbbb"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_dense_0000_VSC.json": {
+      "bytes": 83667,
+      "sha256": "e7bf0941a8298aa81d7170deb630207a858f9001f2235ccad3c1704df32c689a"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_dense_0001_SC.json": {
+      "bytes": 83560,
+      "sha256": "fa3426a861e60596b457fbff06ed60b11ef2df787cca751565852b45499b44c3"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_dense_0001_VSC.json": {
+      "bytes": 83685,
+      "sha256": "0e147c927c22c68a7ca2b663f3f95c93f770876a1d7b532378ad9cc178cd6bb8"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_dense_0002_SC.json": {
+      "bytes": 83621,
+      "sha256": "a98331d6fbf6eae7d34c00fc32df07145816eb65341ff2c6fb73ef0a8ae56d38"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_dense_0002_VSC.json": {
+      "bytes": 83486,
+      "sha256": "87b23b287aa17bf19f289a20e9c512d084ad612557afa00180cf87e73f485329"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_sparse_0000_SC.json": {
+      "bytes": 83461,
+      "sha256": "ea654fec312041b9b04d2bed86c0bac082103a84ec63c0af9be6c2d179c3d286"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_sparse_0000_VSC.json": {
+      "bytes": 83659,
+      "sha256": "150dac624872734052f947ef3c77d1959aef54106a842c5aac9b8450a382790a"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_sparse_0001_SC.json": {
+      "bytes": 83699,
+      "sha256": "3f49d44aeec07f64de357a6607678aab8ccf5d02b31c9cf03ae909612c15c00c"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_sparse_0001_VSC.json": {
+      "bytes": 83625,
+      "sha256": "4865d9566b0823bb4efb17c6e488abd877f260ae0b865aead7d84eac962b705e"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_sparse_0002_SC.json": {
+      "bytes": 83703,
+      "sha256": "0039354119a0c98dfdbe30fdd6dd92f990fb0d987d349c11da900a3131eb9909"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_near_linear_traffic_sparse_0002_VSC.json": {
+      "bytes": 83634,
+      "sha256": "10de03d7713c1de6c55df94f4bdc909bb775456dfd430b8c7dde2916bff6390b"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_dense_0000_SC.json": {
+      "bytes": 83360,
+      "sha256": "e2019d6ecf16f6c9a93b6b915a5dbd52ac4b57de4ad3663587f2e64b4648963f"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_dense_0000_VSC.json": {
+      "bytes": 83502,
+      "sha256": "61862138810992e304034a1e6fcd8ed5f6ed88c837e485562d17c92318cc7afc"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_dense_0001_SC.json": {
+      "bytes": 83607,
+      "sha256": "9ceea24e56dea0bf7cd540cb7d5cafb50735a6b4f9bdcccbd3c111159ac91766"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_dense_0001_VSC.json": {
+      "bytes": 83539,
+      "sha256": "241ff70d6cc43aa2fb66bea945f88a616854f69226cdab7aa9bd48491891538c"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_dense_0002_SC.json": {
+      "bytes": 83606,
+      "sha256": "999fcdb6431524a10b37faa363ec098f39c6a09a10dc95c42b977e46d2c2f8d1"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_dense_0002_VSC.json": {
+      "bytes": 83426,
+      "sha256": "619f204046a2faa81e1be5788c574196c116ac1c8494673e189e9d857a1af4c7"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_sparse_0000_SC.json": {
+      "bytes": 83451,
+      "sha256": "b825f5469f1ca24a9647491e559e6f3e2829c29ff92f38777ca4dd6fa457d243"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_sparse_0000_VSC.json": {
+      "bytes": 83706,
+      "sha256": "8ebb650aad3c057d97b2e483e660bbf680b35d90c770a656d6777eb888c1faec"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_sparse_0001_SC.json": {
+      "bytes": 83490,
+      "sha256": "e2210888224bffb9a2f34bdc17fbd0ee406cf50fb1983bc7e0068a0f1c899b87"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_sparse_0001_VSC.json": {
+      "bytes": 83887,
+      "sha256": "678eacd4d87b39ccdef6aa2a47816f2d16d1fa64c0e7cbf44be2bc2bd15d108d"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_sparse_0002_SC.json": {
+      "bytes": 83782,
+      "sha256": "0cc4a39e161e2f719f0499575dc2262a3b756fc5f5019726a40b5c9c4cd1f842"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_high_tyre_nonlinear_traffic_sparse_0002_VSC.json": {
+      "bytes": 83506,
+      "sha256": "15f9e798b9656cb3093b3dc0dd7ac9e1792a820c70e31f5462e09cdbedce89e5"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_dense_0000_SC.json": {
+      "bytes": 83661,
+      "sha256": "3cdd260e3b0b5258905377ac675bdd4729fe88244e9194ea8cafdc1da81d5c6b"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_dense_0000_VSC.json": {
+      "bytes": 83478,
+      "sha256": "64ef234bd0a3246819f87d1b987c33e598f664f29b8b3950f69cf9218615fb74"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_dense_0001_SC.json": {
+      "bytes": 83648,
+      "sha256": "e487f6bb0a54b212924efd5a902fc507b2f8992b4d48726ae4f6893aaedac486"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_dense_0001_VSC.json": {
+      "bytes": 83483,
+      "sha256": "856d187ae1464b7b97ed8ba92338c3e114eb1b5468c466abad12389eb9859f64"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_dense_0002_SC.json": {
+      "bytes": 83694,
+      "sha256": "350159072f2fc9186cba8e290d95c2a11dd1bc21108073b9db96634210bba6a3"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_dense_0002_VSC.json": {
+      "bytes": 83388,
+      "sha256": "033663bdca8f3ff2bf9f403f28999307a6cd4218b039615d29f2cf9f6759ae16"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_sparse_0000_SC.json": {
+      "bytes": 83725,
+      "sha256": "00217959649066764ecbc068c546b0800ff39cfb41dcda777c65d0fc445672de"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_sparse_0000_VSC.json": {
+      "bytes": 83674,
+      "sha256": "98dc5482c0cc6968b26e25dbcd28794615ceb870427ad14f6456d70210c52e4d"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_sparse_0001_SC.json": {
+      "bytes": 83651,
+      "sha256": "2c6d3df00530608a2874407daae11802bd9108d54747d183e8e170cee96f295d"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_sparse_0001_VSC.json": {
+      "bytes": 83658,
+      "sha256": "ed5fae8e10bcb34fab8b86a7dad0c1f51d9f6deeab1369885c2fc5e9f1a51f9b"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_sparse_0002_SC.json": {
+      "bytes": 83492,
+      "sha256": "20e18723eb970b39459ba79c5e7e6b5aaac4fcd82c67ca3f59465820d371082d"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_near_linear_traffic_sparse_0002_VSC.json": {
+      "bytes": 83419,
+      "sha256": "81a5d1003bc2b4666f6785a8bd1bfe9fcc9da8f342d5de8415b30d42c1a2066f"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_dense_0000_SC.json": {
+      "bytes": 83791,
+      "sha256": "8ce1225040b5650d1e85104b3f522710c690f4a5273bf50aa82a7dcf3ffc935d"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_dense_0000_VSC.json": {
+      "bytes": 83584,
+      "sha256": "d2c604fdb1caf6903be62fa6ca06357ac47e87974edf4c7c885427945f6415bd"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_dense_0001_SC.json": {
+      "bytes": 83830,
+      "sha256": "948cbc3b5931f1694f2b175c02e90013cbd7cd02c00ccd7695f783e534558d4d"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_dense_0001_VSC.json": {
+      "bytes": 83777,
+      "sha256": "e796c76bd8e63d1e876d49bd2d2b6bd3c3e5d8ad069a5b6a2baaed6c65783a9e"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_dense_0002_SC.json": {
+      "bytes": 83849,
+      "sha256": "11008a5d6a65b84f3836e80e3ee24a3eb8fd58c44e6501b6a39376b0dd354dc3"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_dense_0002_VSC.json": {
+      "bytes": 83446,
+      "sha256": "5ffa12db63af509a35aab086f8b99455f4cdf6f9ed08b2afbbe3e72e86be12de"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_sparse_0000_SC.json": {
+      "bytes": 83855,
+      "sha256": "b63ba4bc687e1910651c56516948e421f5c51373b92de2289d30d3af24885167"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_sparse_0000_VSC.json": {
+      "bytes": 83887,
+      "sha256": "55276fc2d5d9bee6660b162f6e6c3824585301b74953f88681aaa0957b0ac91e"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_sparse_0001_SC.json": {
+      "bytes": 83887,
+      "sha256": "44656bc4cc12f703f60f894c185361242e9062d79911ce36b2cd136acd59e112"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_sparse_0001_VSC.json": {
+      "bytes": 83679,
+      "sha256": "94c07f698cf6d72cf9a060fe0ab583235e4e488ad64008f69b8e6770daac6cfd"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_sparse_0002_SC.json": {
+      "bytes": 83929,
+      "sha256": "bbcaacbe5a1e6c44bcfffed448d1d21b2ef4d66605f91040c006492036605080"
+    },
+    "pilot_units/phase6_calib_fam_green_pit_low_tyre_nonlinear_traffic_sparse_0002_VSC.json": {
+      "bytes": 83622,
+      "sha256": "1a457e5bea6ad9e7f061429304a305910085f058a02ecd9cae39b34712b712ff"
+    },
+    "precision_targets_predeclared.json": {
+      "bytes": 989,
+      "sha256": "40aab28a08ddecddacb4dea16e8947575eb5ae91f0a0d0b076eb19f8e5ce856e"
+    },
+    "proposed_workload.json": {
+      "bytes": 278,
+      "sha256": "57bbd3db70f7c78e1676d5daeec2f3c47fcc0402988894b8ce5093bfb492e8f6"
+    },
+    "protocol_freeze.json": {
+      "bytes": 11373,
+      "sha256": "732393a7acca7edb0fca76ccbeec6a68612f9ff64f2a298f7606103ea01b54eb"
+    },
+    "readiness_matrix.json": {
+      "bytes": 1517,
+      "sha256": "e9108fc924a7bc698920ba7e76e7987b8c42062d5e5dab2f533f92de1ba4dbeb"
+    },
+    "requirements_map.json": {
+      "bytes": 2030,
+      "sha256": "5baaf28132903d2fb925912b85be1cac8cf2d1bea3840a0f1273ee318ea33f2a"
+    },
+    "run_receipt.json": {
+      "bytes": 2243,
+      "sha256": "becc1970e25c76e3486f24f757ddc072d76e111cf41b7b8c31d2d72b97ae8f03"
+    },
+    "statistical_sizing.json": {
+      "bytes": 2978,
+      "sha256": "6e5027aa46ba99f25a9c2c7489f8eea31106fa291c05c5a4863cdec9a7dc5e39"
+    },
+    "verify_payload.json": {
+      "bytes": 1877,
+      "sha256": "6c0a6b018563fb4fb4d1f8f2189d8a927afc17a4871b407f13dd1c291124aae9"
+    }
+  },
+  "freeze_sha256": "27191ba16d91802d54f54ab45b42ff3c7948de2d59089a02d5d070a3d4f09c3c",
+  "manifest_sha256": "7abfd00b7837ca7e4989d747f3a1348ac5c802e5f5f161d203d93d195bc57542",
+  "phase5_corrected_run_id": "e6b3588b-ab97-48c9-82f4-616785aa3611",
+  "phase5_final_acceptance_commit": "1c7631e609a12562155ba978cb50790f3ed2b6f7",
+  "qpu_execution_authorised": false,
+  "qpu_jobs": 0,
+  "qpu_usage_seconds": 0,
+  "readiness": {
+    "ADMITTED_SCIENTIFIC_SCOPE": "local_A2_circuit_mechanism_and_resource_estimation;restricted_synthetic_revealed_duration_surrogate;no_operational_race_decision;no_H1_superiority;no_QPU",
+    "CAUSAL_OPERATIONAL_READINESS": false,
+    "DEVELOPMENT_HEADROOM": "ZERO",
+    "ESTIMATED_PHASE_7_CPU_HOURS": 1.758,
+    "FINAL_TEST_ACCESSED": false,
+    "GATE_E_SCIENTIFIC_VALUE": "PASS_FOR_DEFINED_SCOPE",
+    "GATE_F_LOCAL_PRECISION_AND_RESOURCES": "PASS_WITH_LIMITATIONS",
+    "PHASE_6_ENGINEERING": "PASS_WITH_DOCUMENTED_LIMITATIONS",
+    "PHASE_7_MECHANISM_READY": true,
+    "PHASE_7_OPERATIONAL_READY": false,
+    "PHASE_7_SUPERIORITY_READY": false,
+    "PROPOSED_PHASE_7_COUNTS": {
+      "ablations": "deferred_minimal_set_post_mechanism",
+      "conditional_scaling": "excluded",
+      "depths": 2,
+      "families": 2,
+      "held_out_mechanism_cases": 80,
+      "ideal_pools": 12800,
+      "mechanism_calibration_reuse": "forbidden_as_final_test",
+      "noisy_cases": 16,
+      "noisy_pools": 640,
+      "policies": 4,
+      "pool_seeds": 10,
+      "superiority_H1": "NOT_INCLUDED_zero_headroom_gate",
+      "variational_evals": 1600,
+      "variational_max_evals_per_case": 40,
+      "variational_reference_cases": 40
+    },
+    "PROTOCOL_NOTE": "Mechanism/resource scope is specified; full protocol FROZEN blocked pending causal operational redesign fields and dated Phase 7 amendment before final-test access. Hardware fields deferred to Phase 8.",
+    "PROTOCOL_STATUS": "BLOCKED_DRAFT",
+    "QPU_EXECUTION_AUTHORISED": false,
+    "SUPERIORITY_PATH_AVAILABLE": false
+  },
+  "reopened_after_doc_updates": true,
+  "reopened_after_noisy_repair": true,
+  "run_id": "bd83cb22-6a38-4d21-9267-3253f52587d7",
+  "schema_version": "stage6.manifest.v1",
+  "source_commit": "1c7631e609a12562155ba978cb50790f3ed2b6f7",
+  "stage6_version": "0.6.0"
+}

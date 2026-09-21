@@ -1,0 +1,1071 @@
+{
+  "elapsed_s": 0.5576870839577168,
+  "max_qubits": 10,
+  "n_rows": 32,
+  "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+  "panel_hash": "cb26116045515eaf5baa69df9182b290aa7aa034f69bb33784e0b7d24f586249",
+  "predeclared_depth": "p1",
+  "rows": [
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9405343172311814,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9036483210119023,
+          "one_hot_prob": 0.9036483210119023,
+          "optimal_mass": 0.058117664167390774,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9036534129330555,
+          "one_hot_prob": 0.9036534129330555,
+          "optimal_mass": 0.05811770831163958,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9036445055424133,
+          "one_hot_prob": 0.9036445055424133,
+          "optimal_mass": 0.058118395983109056,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "b4859bf3e1bbdf0d42adf8b2a06161fcb50b29aedfb78f90125e8e0889425390",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9428796621959961,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9058951459965161,
+          "one_hot_prob": 0.9058951459965161,
+          "optimal_mass": 0.057406730020691216,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9059002455205234,
+          "one_hot_prob": 0.9059002455205234,
+          "optimal_mass": 0.05740677175926594,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9058913165637348,
+          "one_hot_prob": 0.9058913165637348,
+          "optimal_mass": 0.05740746625463574,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999997,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164927,
+          "one_hot_prob": 0.9606160523164927,
+          "optimal_mass": 0.1631221655923305,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062677,
+          "one_hot_prob": 0.9606213370062677,
+          "optimal_mass": 0.16312256505304654,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.1631222448389662,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999992,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164925,
+          "one_hot_prob": 0.9606160523164925,
+          "optimal_mass": 0.16032615201009942,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.960621337006268,
+          "one_hot_prob": 0.960621337006268,
+          "optimal_mass": 0.16032654200960522,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.16032624863305703,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9454284213624504,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9083368404426921,
+          "one_hot_prob": 0.9083368404426921,
+          "optimal_mass": 0.05704010374584005,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9083419482289572,
+          "one_hot_prob": 0.9083419482289572,
+          "optimal_mass": 0.05704014424381697,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9083329958355677,
+          "one_hot_prob": 0.9083329958355677,
+          "optimal_mass": 0.05704084225824852,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "7eb027e2842d8ca01d4e976f59d512c271afa28b908f69aff29ae63c942881c3",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9510119796615892,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9136858524122583,
+          "one_hot_prob": 0.9136858524122583,
+          "optimal_mass": 0.057662468689421625,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9136909782986241,
+          "one_hot_prob": 0.9136909782986241,
+          "optimal_mass": 0.0576625112933703,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9136819745627515,
+          "one_hot_prob": 0.9136819745627515,
+          "optimal_mass": 0.057663203334032874,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9999999999999996,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164926,
+          "one_hot_prob": 0.9606160523164926,
+          "optimal_mass": 0.14094595650333566,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.960621337006268,
+          "one_hot_prob": 0.960621337006268,
+          "optimal_mass": 0.1409462809237233,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.1409461735679527,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9999999999999996,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164926,
+          "one_hot_prob": 0.9606160523164926,
+          "optimal_mass": 0.14094595650333566,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.960621337006268,
+          "one_hot_prob": 0.960621337006268,
+          "optimal_mass": 0.1409462809237233,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.1409461735679527,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9217271522484096,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.8856311811851405,
+          "one_hot_prob": 0.8856311811851405,
+          "optimal_mass": 0.05572757430307395,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.8856362121395123,
+          "one_hot_prob": 0.8856362121395123,
+          "optimal_mass": 0.0557276103596858,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.8856274776863596,
+          "one_hot_prob": 0.8856274776863596,
+          "optimal_mass": 0.05572832097242926,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "330428a90de6b51f123955b74a61bd28530445e2e188fb43df054016c7046b87",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9359493258111824,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.8992559295167294,
+          "one_hot_prob": 0.8992559295167294,
+          "optimal_mass": 0.056625552658937706,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.899261006574815,
+          "one_hot_prob": 0.899261006574815,
+          "optimal_mass": 0.05662559175414784,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.8992521413445357,
+          "one_hot_prob": 0.8992521413445357,
+          "optimal_mass": 0.05662629374764738,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999998,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164926,
+          "one_hot_prob": 0.9606160523164926,
+          "optimal_mass": 0.08827811113504937,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.960621337006268,
+          "one_hot_prob": 0.960621337006268,
+          "optimal_mass": 0.08827825733686068,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109415,
+          "one_hot_prob": 0.9606118828109415,
+          "optimal_mass": 0.08827865551332505,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999994,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164928,
+          "one_hot_prob": 0.9606160523164928,
+          "optimal_mass": 0.09019739858256232,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062678,
+          "one_hot_prob": 0.9606213370062678,
+          "optimal_mass": 0.09019755127889933,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.09019793103308602,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 0.9384454522816522,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9016472021878064,
+          "one_hot_prob": 0.9016472021878064,
+          "optimal_mass": 0.056510332692217016,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9016522873375312,
+          "one_hot_prob": 0.9016522873375312,
+          "optimal_mass": 0.05651065880219704,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9016433991546249,
+          "one_hot_prob": 0.9016433991546249,
+          "optimal_mass": 0.05651078371527426,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "7eb027e2842d8ca01d4e976f59d512c271afa28b908f69aff29ae63c942881c3",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 0.9433492819848368,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9063450386522516,
+          "one_hot_prob": 0.9063450386522516,
+          "optimal_mass": 0.05674170597999198,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9063501396986157,
+          "one_hot_prob": 0.9063501396986157,
+          "optimal_mass": 0.05674203287289788,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9063412064235328,
+          "one_hot_prob": 0.9063412064235328,
+          "optimal_mass": 0.05674215556513891,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 1.0000000000000007,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164927,
+          "one_hot_prob": 0.9606160523164927,
+          "optimal_mass": 0.07317243703752371,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062681,
+          "one_hot_prob": 0.9606213370062681,
+          "optimal_mass": 0.07317281952908712,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109416,
+          "one_hot_prob": 0.9606118828109416,
+          "optimal_mass": 0.07317278451098068,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "adefca585c4f5f2ad7c247a8d8669983f7506be8944024c4fbbc11ab51effe9f",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 0.9999999999999994,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164927,
+          "one_hot_prob": 0.9606160523164927,
+          "optimal_mass": 0.08083137760212361,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062677,
+          "one_hot_prob": 0.9606213370062677,
+          "optimal_mass": 0.08083178601017314,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109416,
+          "one_hot_prob": 0.9606118828109416,
+          "optimal_mass": 0.08083167747773715,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9485405834229812,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9113182711399556,
+          "one_hot_prob": 0.9113182711399556,
+          "optimal_mass": 0.05777141692907535,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9113233890148494,
+          "one_hot_prob": 0.9113233890148494,
+          "optimal_mass": 0.05777145990168539,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9113144080042022,
+          "one_hot_prob": 0.9113144080042022,
+          "optimal_mass": 0.057772150896608455,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "b4859bf3e1bbdf0d42adf8b2a06161fcb50b29aedfb78f90125e8e0889425390",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9519258577685186,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9145613416022694,
+          "one_hot_prob": 0.9145613416022694,
+          "optimal_mass": 0.05772548662395789,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9145664704511337,
+          "one_hot_prob": 0.9145664704511337,
+          "optimal_mass": 0.057725529441147984,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9145574583118794,
+          "one_hot_prob": 0.9145574583118794,
+          "optimal_mass": 0.05772622087693301,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999997,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164929,
+          "one_hot_prob": 0.9606160523164929,
+          "optimal_mass": 0.09960547473875372,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062681,
+          "one_hot_prob": 0.9606213370062681,
+          "optimal_mass": 0.09960565927033911,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109418,
+          "one_hot_prob": 0.9606118828109418,
+          "optimal_mass": 0.09960594872112087,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999994,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164926,
+          "one_hot_prob": 0.9606160523164926,
+          "optimal_mass": 0.10337128294792355,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062678,
+          "one_hot_prob": 0.9606213370062678,
+          "optimal_mass": 0.10337148022233093,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.10337173352700824,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9589344204037106,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.921275498313211,
+          "one_hot_prob": 0.921275498313211,
+          "optimal_mass": 0.05795893911568819,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9212806498815821,
+          "one_hot_prob": 0.9212806498815821,
+          "optimal_mass": 0.05795898272283979,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9212715732965042,
+          "one_hot_prob": 0.9212715732965042,
+          "optimal_mass": 0.05795967191783142,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "8088818c2eaae1fcb3e0414d814a8a68955307018dcceef5c662c1182567bc83",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9582009200836759,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9205728098515983,
+          "one_hot_prob": 0.9205728098515983,
+          "optimal_mass": 0.05781260446779734,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9205779590421975,
+          "one_hot_prob": 0.9205779590421975,
+          "optimal_mass": 0.05781264757977865,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9205688892018741,
+          "one_hot_prob": 0.9205688892018741,
+          "optimal_mass": 0.05781333817936318,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9999999999999993,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.960616052316493,
+          "one_hot_prob": 0.960616052316493,
+          "optimal_mass": 0.08136753543217214,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062678,
+          "one_hot_prob": 0.9606213370062678,
+          "optimal_mass": 0.08136765824983026,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109416,
+          "one_hot_prob": 0.9606118828109416,
+          "optimal_mass": 0.08136812275744518,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "ideal_legal_prob": 0.9999999999999993,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.960616052316493,
+          "one_hot_prob": 0.960616052316493,
+          "optimal_mass": 0.08136753543217214,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062678,
+          "one_hot_prob": 0.9606213370062678,
+          "optimal_mass": 0.08136765824983026,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109416,
+          "one_hot_prob": 0.9606118828109416,
+          "optimal_mass": 0.08136812275744518,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9390500432185821,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.902226396311889,
+          "one_hot_prob": 0.902226396311889,
+          "optimal_mass": 0.056575519903563895,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9022314834215032,
+          "one_hot_prob": 0.9022314834215032,
+          "optimal_mass": 0.056576532062534324,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9022225896792027,
+          "one_hot_prob": 0.9022225896792027,
+          "optimal_mass": 0.05657529865080319,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "b4859bf3e1bbdf0d42adf8b2a06161fcb50b29aedfb78f90125e8e0889425390",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9407138132250641,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9038202769884182,
+          "one_hot_prob": 0.9038202769884182,
+          "optimal_mass": 0.056394124258451174,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.90382536949144,
+          "one_hot_prob": 0.90382536949144,
+          "optimal_mass": 0.056395135803611156,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9038164604502783,
+          "one_hot_prob": 0.9038164604502783,
+          "optimal_mass": 0.05639390413300585,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999999,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.960616052316493,
+          "one_hot_prob": 0.960616052316493,
+          "optimal_mass": 0.07788525712529311,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.960621337006268,
+          "one_hot_prob": 0.960621337006268,
+          "optimal_mass": 0.07788634139260597,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109418,
+          "one_hot_prob": 0.9606118828109418,
+          "optimal_mass": 0.077884903439394,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "ideal_legal_prob": 0.9999999999999993,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164925,
+          "one_hot_prob": 0.9606160523164925,
+          "optimal_mass": 0.07606669818527291,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.960621337006268,
+          "one_hot_prob": 0.960621337006268,
+          "optimal_mass": 0.07606777629890732,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109418,
+          "one_hot_prob": 0.9606118828109418,
+          "optimal_mass": 0.07606635580113061,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 0.9402551975019081,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9033809261549239,
+          "one_hot_prob": 0.9033809261549239,
+          "optimal_mass": 0.056860594585539624,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9033860171712608,
+          "one_hot_prob": 0.9033860171712608,
+          "optimal_mass": 0.05686192704200802,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9033771123472076,
+          "one_hot_prob": 0.9033771123472076,
+          "optimal_mass": 0.056861172668949134,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "7eb027e2842d8ca01d4e976f59d512c271afa28b908f69aff29ae63c942881c3",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C0",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 0.9454244248769864,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9083330118360156,
+          "one_hot_prob": 0.9083330118360156,
+          "optimal_mass": 0.05683401527218916,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9083381196093253,
+          "one_hot_prob": 0.9083381196093253,
+          "optimal_mass": 0.05683534763871791,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9083291672526849,
+          "one_hot_prob": 0.9083291672526849,
+          "optimal_mass": 0.05683459352078051,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 0.9999999999999994,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164927,
+          "one_hot_prob": 0.9606160523164927,
+          "optimal_mass": 0.09967792031257434,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062681,
+          "one_hot_prob": 0.9606213370062681,
+          "optimal_mass": 0.09967939765522103,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.09967823230012521,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "learned",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    },
+    {
+      "circuit_family": "C1",
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "ideal_legal_prob": 0.9999999999999994,
+      "n_qubits": 8,
+      "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+      "noisy_seeds": [
+        {
+          "legal_prob": 0.9606160523164927,
+          "one_hot_prob": 0.9606160523164927,
+          "optimal_mass": 0.09967792031257434,
+          "seed": 0
+        },
+        {
+          "legal_prob": 0.9606213370062681,
+          "one_hot_prob": 0.9606213370062681,
+          "optimal_mass": 0.09967939765522103,
+          "seed": 1
+        },
+        {
+          "legal_prob": 0.9606118828109417,
+          "one_hot_prob": 0.9606118828109417,
+          "optimal_mass": 0.09967823230012521,
+          "seed": 2
+        }
+      ],
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "status": "completed",
+      "synthetic_noise_not_ibm": true,
+      "zero_noise_consistency_ok": true
+    }
+  ],
+  "status": "COMPLETED",
+  "supersedes_prior_panel": {
+    "prior_panel_hash": "c5209c6536edba072843b84c3c6496f03db37f4db7c925b920c231eb6381d13d",
+    "reason": "zero_noise_control_made_exact_identity_when_p1=p2=0; prior 30/32 zn failures were jitter artifact"
+  }
+}

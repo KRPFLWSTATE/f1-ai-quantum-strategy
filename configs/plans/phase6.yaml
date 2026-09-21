@@ -1,0 +1,11 @@
+schema_version: "1.0.0"
+plan_id: phase6
+kind: phase6
+description: "Phase 6 local mechanism pilot, precision/resources, Gate E — no QPU, no Phase 7."
+hardware_execution_enabled: false
+qpu_execution_authorised: false
+zero_additional_spending: true
+units:
+  - unit_id: phase6_complete
+    kind: phase6_pipeline
+    description: "Freeze, calibration cohort, mechanism pilot, causal gap, sizing, capacity, novelty, verify, report"

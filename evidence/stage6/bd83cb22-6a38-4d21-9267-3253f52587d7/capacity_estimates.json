@@ -1,0 +1,471 @@
+{
+  "distinctions": {
+    "amortised": "Pool seeds are repeated measurements not independent cases",
+    "cached_vs_cold": "Ideal distribution computed once per (case,family,depth,params); pools resample",
+    "native_basis_decomp_not_routing": true,
+    "no_30_40q_practical_claim": true
+  },
+  "dossier_full_matrix": {
+    "ablations": "required_by_dossier_not_executed_in_phase6",
+    "ceiling_is_constraint_not_assumption_matrix_fits": true,
+    "conditional_scaling": {
+      "instances": 1200,
+      "status": "separately_excluded_unless_admitted"
+    },
+    "ideal_circuit_panel": {
+      "cases": 120,
+      "depths": 2,
+      "families": 2,
+      "ideal_policy_pools": 57600,
+      "policies_learned_fixed_nn_random": 4,
+      "pool_seeds": 30,
+      "pools_per_parameter_policy": 14400,
+      "total_ideal_pools": 72000,
+      "variational_fitting_expectation_evals_cap": 115200,
+      "variational_reference_pools": 14400
+    },
+    "main_decision_panel": {
+      "cases": 80,
+      "note": "held-out test floor; SC/VSC checkpoints; blocks independent units"
+    },
+    "noisy_panel": {
+      "cases": 40,
+      "depths": 2,
+      "families": 2,
+      "learned_plus_simple": 3200,
+      "pool_seeds": 10,
+      "pools_per_parameter_policy": 1600
+    },
+    "provisional_cpu_hour_ceiling": 24.0,
+    "shots_per_pool": 1024,
+    "stochastic_policy_seeds": 10
+  },
+  "extrapolation_full_dossier_cpu_hours": {
+    "classical": 0.0003333333333333333,
+    "fits_ceiling": false,
+    "ideal_amortised": 21.685333333333332,
+    "label": "EXTRAPOLATION_not_measured_campaign",
+    "noisy": 1.6711111111111112,
+    "offline_reuse_training": 0.5,
+    "total": 25.456777777777777,
+    "variational_fitting_cap": 1.6,
+    "vs_24h_ceiling": 1.060699074074074
+  },
+  "feasible_proposed_phase7_matrix": {
+    "amendment_required_before_final_test": true,
+    "arithmetic_cpu_hours": {
+      "classical_enum_80_x_0_01s": 0.00022222222222222223,
+      "ideal_pools_12800_x_amortised_0_36s": 1.28,
+      "noisy_640_x_2_0s": 0.35555555555555557,
+      "report_packaging": 0.1,
+      "sum": 1.758,
+      "variational_1600_x_0_05s": 0.022222222222222223
+    },
+    "fits_24h_ceiling": true,
+    "proposed_counts": {
+      "ablations": "deferred_minimal_set_post_mechanism",
+      "conditional_scaling": "excluded",
+      "depths": 2,
+      "families": 2,
+      "held_out_mechanism_cases": 80,
+      "ideal_pools": 12800,
+      "mechanism_calibration_reuse": "forbidden_as_final_test",
+      "noisy_cases": 16,
+      "noisy_pools": 640,
+      "policies": 4,
+      "pool_seeds": 10,
+      "superiority_H1": "NOT_INCLUDED_zero_headroom_gate",
+      "variational_evals": 1600,
+      "variational_max_evals_per_case": 40,
+      "variational_reference_cases": 40
+    },
+    "rationale": "Full dossier ideal 72k pools \u2248 21.7 CPU-h cold/amortised mix; plus variational cap \u2248 1.6 h exceeds provisional 24.0 CPU-h ceiling when combined with noisy/classical/offline. Reduce pool seeds and variational evals first."
+  },
+  "machine": {
+    "disk_free_bytes": 134908841984,
+    "disk_total_bytes": 494384795648,
+    "hostname_hash_note": "host identity not required for scientific claims",
+    "mem_bytes": 25769803776,
+    "mem_gib": 24.0,
+    "ncpu": 10,
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13",
+    "ram_budget_bytes": 15461882265,
+    "rusage_maxrss_kb": 81690624
+  },
+  "measured": {
+    "development_unit": {
+      "enum_s": 0.0005464579444378614,
+      "est_48_cases_four_policies_s": 59.25091166049242,
+      "est_48_cases_one_policy_s": 14.812727915123105,
+      "n_legal": 16,
+      "n_qubits": 8,
+      "one_case_four_fd_s": 0.30859849823173136,
+      "per_family_depth": {
+        "C0_p1": {
+          "exact_s": 0.003087374963797629,
+          "n": 8,
+          "pools_s": 0.027235999004915357,
+          "sim_s": 0.0037581250071525574
+        },
+        "C0_p2": {
+          "exact_s": 0.002939416910521686,
+          "n": 8,
+          "pools_s": 0.02642750006634742,
+          "sim_s": 0.0044810420367866755
+        },
+        "C1_p1": {
+          "exact_s": 0.0009144999785348773,
+          "n": 8,
+          "pools_s": 0.11394408193882555,
+          "sim_s": 0.008949749986641109
+        },
+        "C1_p2": {
+          "exact_s": 0.0006938750157132745,
+          "n": 8,
+          "pools_s": 0.10725237429141998,
+          "sim_s": 0.00891445903107524
+        }
+      },
+      "qubo_s": 0.00020774989388883114
+    },
+    "pilot_completed_cases": 48,
+    "pilot_elapsed_s": 321.4427644580137,
+    "pilot_per_case_s": 6.696724259541952
+  },
+  "qubit_memory_table": [
+    {
+      "local_dense_statevector_practical_claim": true,
+      "n_qubits": 8,
+      "note_30_40q": null,
+      "statevector_bytes_complex128": 4096
+    },
+    {
+      "local_dense_statevector_practical_claim": true,
+      "n_qubits": 10,
+      "note_30_40q": null,
+      "statevector_bytes_complex128": 16384
+    },
+    {
+      "local_dense_statevector_practical_claim": true,
+      "n_qubits": 12,
+      "note_30_40q": null,
+      "statevector_bytes_complex128": 65536
+    },
+    {
+      "local_dense_statevector_practical_claim": true,
+      "n_qubits": 16,
+      "note_30_40q": null,
+      "statevector_bytes_complex128": 1048576
+    },
+    {
+      "local_dense_statevector_practical_claim": true,
+      "n_qubits": 20,
+      "note_30_40q": null,
+      "statevector_bytes_complex128": 16777216
+    },
+    {
+      "local_dense_statevector_practical_claim": false,
+      "n_qubits": 30,
+      "note_30_40q": "No claim that 30\u201340q execution is practical; native-basis decomp \u2260 topology routing; no backend-duration claim without identified target",
+      "statevector_bytes_complex128": 17179869184
+    },
+    {
+      "local_dense_statevector_practical_claim": false,
+      "n_qubits": 40,
+      "note_30_40q": "No claim that 30\u201340q execution is practical; native-basis decomp \u2260 topology routing; no backend-duration claim without identified target",
+      "statevector_bytes_complex128": 17592186044416
+    }
+  ],
+  "repaired_circuit_resource_rows": [
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        2
+      ],
+      "cost_interaction_gates": 6,
+      "coupling_map": null,
+      "depth": 19,
+      "family": "C0",
+      "logical_2q_est": 6,
+      "mixer_gates": 8,
+      "n": 8,
+      "n_1q": 74,
+      "n_2q_cx": 12,
+      "native_basis_decomposition_cx_excess": 6,
+      "p": 1,
+      "prep_1q_gates": 0,
+      "prep_2q_gates": 0,
+      "prep_gates": 0,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        3
+      ],
+      "cost_interaction_gates": 10,
+      "coupling_map": null,
+      "depth": 39,
+      "family": "C0",
+      "logical_2q_est": 10,
+      "mixer_gates": 6,
+      "n": 6,
+      "n_1q": 72,
+      "n_2q_cx": 20,
+      "native_basis_decomposition_cx_excess": 10,
+      "p": 1,
+      "prep_1q_gates": 0,
+      "prep_2q_gates": 0,
+      "prep_gates": 0,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        4
+      ],
+      "cost_interaction_gates": 21,
+      "coupling_map": null,
+      "depth": 55,
+      "family": "C0",
+      "logical_2q_est": 21,
+      "mixer_gates": 8,
+      "n": 8,
+      "n_1q": 119,
+      "n_2q_cx": 42,
+      "native_basis_decomposition_cx_excess": 21,
+      "p": 1,
+      "prep_1q_gates": 0,
+      "prep_2q_gates": 0,
+      "prep_gates": 0,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        2
+      ],
+      "cost_interaction_gates": 12,
+      "coupling_map": null,
+      "depth": 31,
+      "family": "C0",
+      "logical_2q_est": 12,
+      "mixer_gates": 16,
+      "n": 8,
+      "n_1q": 124,
+      "n_2q_cx": 24,
+      "native_basis_decomposition_cx_excess": 12,
+      "p": 2,
+      "prep_1q_gates": 0,
+      "prep_2q_gates": 0,
+      "prep_gates": 0,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        3
+      ],
+      "cost_interaction_gates": 20,
+      "coupling_map": null,
+      "depth": 63,
+      "family": "C0",
+      "logical_2q_est": 20,
+      "mixer_gates": 12,
+      "n": 6,
+      "n_1q": 126,
+      "n_2q_cx": 40,
+      "native_basis_decomposition_cx_excess": 20,
+      "p": 2,
+      "prep_1q_gates": 0,
+      "prep_2q_gates": 0,
+      "prep_gates": 0,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        4
+      ],
+      "cost_interaction_gates": 42,
+      "coupling_map": null,
+      "depth": 87,
+      "family": "C0",
+      "logical_2q_est": 42,
+      "mixer_gates": 16,
+      "n": 8,
+      "n_1q": 214,
+      "n_2q_cx": 84,
+      "native_basis_decomposition_cx_excess": 42,
+      "p": 2,
+      "prep_1q_gates": 0,
+      "prep_2q_gates": 0,
+      "prep_gates": 0,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        2
+      ],
+      "cost_interaction_gates": 6,
+      "coupling_map": null,
+      "depth": 48,
+      "family": "C1",
+      "logical_2q_est": 30,
+      "mixer_gates": 16,
+      "n": 8,
+      "n_1q": 170,
+      "n_2q_cx": 56,
+      "native_basis_decomposition_cx_excess": 26,
+      "p": 1,
+      "prep_1q_gates": 4,
+      "prep_2q_gates": 8,
+      "prep_gates": 12,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        3
+      ],
+      "cost_interaction_gates": 10,
+      "coupling_map": null,
+      "depth": 85,
+      "family": "C1",
+      "logical_2q_est": 30,
+      "mixer_gates": 12,
+      "n": 6,
+      "n_1q": 150,
+      "n_2q_cx": 56,
+      "native_basis_decomposition_cx_excess": 26,
+      "p": 1,
+      "prep_1q_gates": 2,
+      "prep_2q_gates": 8,
+      "prep_gates": 10,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        4
+      ],
+      "cost_interaction_gates": 21,
+      "coupling_map": null,
+      "depth": 114,
+      "family": "C1",
+      "logical_2q_est": 49,
+      "mixer_gates": 16,
+      "n": 8,
+      "n_1q": 227,
+      "n_2q_cx": 92,
+      "native_basis_decomposition_cx_excess": 43,
+      "p": 1,
+      "prep_1q_gates": 2,
+      "prep_2q_gates": 12,
+      "prep_gates": 14,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        2
+      ],
+      "cost_interaction_gates": 12,
+      "coupling_map": null,
+      "depth": 80,
+      "family": "C1",
+      "logical_2q_est": 52,
+      "mixer_gates": 32,
+      "n": 8,
+      "n_1q": 300,
+      "n_2q_cx": 100,
+      "native_basis_decomposition_cx_excess": 48,
+      "p": 2,
+      "prep_1q_gates": 4,
+      "prep_2q_gates": 8,
+      "prep_gates": 12,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        3
+      ],
+      "cost_interaction_gates": 20,
+      "coupling_map": null,
+      "depth": 139,
+      "family": "C1",
+      "logical_2q_est": 52,
+      "mixer_gates": 24,
+      "n": 6,
+      "n_1q": 264,
+      "n_2q_cx": 100,
+      "native_basis_decomposition_cx_excess": 48,
+      "p": 2,
+      "prep_1q_gates": 2,
+      "prep_2q_gates": 8,
+      "prep_gates": 10,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    },
+    {
+      "actual_circuit": true,
+      "block_sizes": [
+        4
+      ],
+      "cost_interaction_gates": 42,
+      "coupling_map": null,
+      "depth": 186,
+      "family": "C1",
+      "logical_2q_est": 86,
+      "mixer_gates": 32,
+      "n": 8,
+      "n_1q": 402,
+      "n_2q_cx": 166,
+      "native_basis_decomposition_cx_excess": 80,
+      "p": 2,
+      "prep_1q_gates": 2,
+      "prep_2q_gates": 12,
+      "prep_gates": 14,
+      "proxy": false,
+      "routing_used": false,
+      "swap_routing_overhead_cx": 0,
+      "target_assumptions": "all-to-all_generic_local_no_device_coupling_map"
+    }
+  ]
+}

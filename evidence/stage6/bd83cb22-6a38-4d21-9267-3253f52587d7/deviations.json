@@ -1,0 +1,17 @@
+{
+  "deviations": [
+    {
+      "action": "use_feasible_reduced_matrix_with_dated_amendment",
+      "id": "full_dossier_phase7_exceeds_24h_ceiling"
+    },
+    {
+      "disclosure": "Parameter-bank fit records prove bank training fits retained parameter vectors. They do NOT prove that separate per-instance variational-reference fits from Phase 5 retained full parameter vectors in published evidence beyond summarised regrets. Phase 6 does not campaign-rerun historical variational references solely to fill gaps; new fits (if any) save params + eval histories.",
+      "id": "historical_variational_param_vectors_not_fully_archived"
+    },
+    {
+      "id": "noisy_zero_noise_jitter_repair",
+      "kind": "implementation_defect_fix",
+      "note": "Initial noisy panel zero-noise control used 1e-6 jitter even at p1=p2=0 (30/32). Fixed to exact identity; panel regenerated only (mechanism pilot unchanged)."
+    }
+  ]
+}

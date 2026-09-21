@@ -1,0 +1,574 @@
+{
+  "audit": {
+    "calibration_blocks": 24,
+    "cases_total": 48,
+    "expected_blocks": 24,
+    "expected_cases": 48,
+    "final_test_accessed": false,
+    "final_test_materialized": false,
+    "n_families": 8,
+    "ok": true,
+    "overlap_with_phase5_train_tune": [],
+    "per_family": 3,
+    "phase5_source_hash": "67a864433b7134fc5f5534fcd71d518e4e5642ca438c2634ab21aef0e8cf9e75",
+    "salt": "phase6.calibration.v1",
+    "shift_materialized": false,
+    "source_hash": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+    "split_hash": "a45a1c09b0280c296b3eccfdc1cf58e6199673e51665a72985dd3ef8746793b6"
+  },
+  "calibration": [
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 2105699704
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 1690483718
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 1808305403
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 1430342036
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 1738737620
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_sparse.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 238461382
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 1420099324
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 1063822922
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_dense.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 1623247305
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 532599074
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 2033795863
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 960470481
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 413706017
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 622763024
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_dense.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 793389902
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 1654678944
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 354820392
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_near_linear.traffic_sparse.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 585028012
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 1251168170
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 293505465
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_dense.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 310194818
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "index": 0,
+      "partition": "calibration",
+      "seed": 44726721
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0001",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0001.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0001.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "index": 1,
+      "partition": "calibration",
+      "seed": 1101370859
+    },
+    {
+      "block_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0002",
+      "cases": [
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0002.SC",
+          "microcase": "force_branching",
+          "note": "restricted-menu SC-labelled branching case",
+          "regime": "SC",
+          "seed_offset": 0
+        },
+        {
+          "case_id": "phase6.calib.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0002.VSC",
+          "microcase": "standard",
+          "note": "restricted-menu VSC-labelled shared-duration case",
+          "regime": "VSC",
+          "seed_offset": 10007
+        }
+      ],
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "index": 2,
+      "partition": "calibration",
+      "seed": 2051033607
+    }
+  ],
+  "phase5_forbidden_n": 224
+}

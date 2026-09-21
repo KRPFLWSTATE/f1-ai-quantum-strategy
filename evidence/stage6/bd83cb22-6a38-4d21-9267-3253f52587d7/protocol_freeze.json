@@ -1,0 +1,318 @@
+{
+  "artifacts": {
+    "c1_repaired_definition": {
+      "bytes": 11831,
+      "path": "evidence/stage5/final_acceptance_repair/c1_repaired_circuit_definition.json",
+      "present": true,
+      "sha256": "d2a3ce965230758c780eed2300a1375b52344beee78f0d980772f32dbf5fe433"
+    },
+    "donor_inventory": {
+      "bytes": 16731,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/donor_inventory.json",
+      "present": true,
+      "sha256": "12c637be3046cd34aacad9a54c4dc72b893baa4cdc00158e55652b23e8aeeeb7"
+    },
+    "final_acceptance_manifest": {
+      "bytes": 5568,
+      "path": "docs/evidence/stage5_final_acceptance/STAGE_5_FINAL_ACCEPTANCE_MANIFEST.json",
+      "present": true,
+      "sha256": "e3d7e8eb1202bf59e561f2439f46664441729a18cd18886cc06edda4dd9fef19"
+    },
+    "final_acceptance_verify": {
+      "bytes": 461,
+      "path": "docs/evidence/stage5_final_acceptance/STAGE_5_FINAL_ACCEPTANCE_FINAL_VERIFY.json",
+      "present": true,
+      "sha256": "c50c6fd49652107cb0536ea47b3738e203fce3c163efe071f775da95a75df58a"
+    },
+    "headroom_results": {
+      "bytes": 9206,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/headroom_results.json",
+      "present": true,
+      "sha256": "571f8049e5d8879999e4841f526024e1c396af01c2ece759dad4c14b94b3a8ee"
+    },
+    "parameter_bank_receipt": {
+      "bytes": 3384,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/parameter_bank_receipt.json",
+      "present": true,
+      "sha256": "7d238181e7b80e50afa2bd400ede714dfdbe350a19e01f84b37886b4268d878e"
+    },
+    "phase5_corrected_frozen_config": {
+      "bytes": 1527,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/frozen_config.json",
+      "present": true,
+      "sha256": "3cefded2c9ac67b5d753e631aae20ea264a0eb37d272fda5c8cb73fed4b3f96d"
+    },
+    "repaired_c1_resources": {
+      "bytes": 7473,
+      "path": "evidence/stage5/final_acceptance_repair/actual_circuit_resources.json",
+      "present": true,
+      "sha256": "78812fc3556f1c9ad1b85bcde8c48a7ef55a7f068281762e4e753bea9679eef6"
+    },
+    "selector_model_artifacts": {
+      "bytes": 20485,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_model_artifacts.json",
+      "present": true,
+      "sha256": "1490f96b6d00cea297bae6faf06fde67ea788a5a167463ec9945eb72635fbc41"
+    },
+    "selector_train_usage": {
+      "bytes": 216167,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_train_usage.json",
+      "present": true,
+      "sha256": "62d4751eb620b8e9f1b1483512a6ec974851465cbb5fdf2cfb8002adf6d06fc4"
+    },
+    "selector_tuning_results": {
+      "bytes": 32717,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/selector_tuning_results.json",
+      "present": true,
+      "sha256": "d1d18af1f47a287e2310fef8b5124efb32f7ed728b1eb6e8750d3aef223d9221"
+    },
+    "split_block_ids": {
+      "bytes": 27290,
+      "path": "evidence/stage5/e6b3588b-ab97-48c9-82f4-616785aa3611/split_block_ids.json",
+      "present": true,
+      "sha256": "8c4bd01f57490d7a62ecc0abefce41642fafccc9ec7ed893e4f5e89b44c6b399"
+    }
+  },
+  "bank_vs_variational_reference_audit": {
+    "bank_fit_identities": 288,
+    "bank_fits_retained": 288,
+    "disclosure": "Parameter-bank fit records prove bank training fits retained parameter vectors. They do NOT prove that separate per-instance variational-reference fits from Phase 5 retained full parameter vectors in published evidence beyond summarised regrets. Phase 6 does not campaign-rerun historical variational references solely to fill gaps; new fits (if any) save params + eval histories.",
+    "historical_variational_param_vectors_in_corrected_evidence": "summarised_regrets_only_not_full_vectors",
+    "phase6_fresh_variational_fits_planned": false,
+    "reason_no_fresh_var_campaign": "30-minute pilot ceiling; reuse bank donors; document gap"
+  },
+  "circuits": {
+    "c1_source": "repaired final_acceptance_repair executable prep",
+    "c2": "NOT_ADMITTED_BY_PROTOCOL",
+    "depths": [
+      1,
+      2
+    ],
+    "families": [
+      "C0",
+      "C1"
+    ]
+  },
+  "classical_comparators": {
+    "exact_legal_enumeration": true,
+    "greedy_safe_fallback": true,
+    "milp_when_inside_deadline": true,
+    "strongest_timely": "exact_enumeration_when_inside_deadline_else_best_timely_heuristic",
+    "uniform_legal_sampling": true
+  },
+  "corrected_dir_present": true,
+  "development_unit_timing": {
+    "enum_s": 0.0005464579444378614,
+    "est_48_cases_four_policies_s": 59.25091166049242,
+    "est_48_cases_one_policy_s": 14.812727915123105,
+    "n_legal": 16,
+    "n_qubits": 8,
+    "one_case_four_fd_s": 0.30859849823173136,
+    "per_family_depth": {
+      "C0_p1": {
+        "exact_s": 0.003087374963797629,
+        "n": 8,
+        "pools_s": 0.027235999004915357,
+        "sim_s": 0.0037581250071525574
+      },
+      "C0_p2": {
+        "exact_s": 0.002939416910521686,
+        "n": 8,
+        "pools_s": 0.02642750006634742,
+        "sim_s": 0.0044810420367866755
+      },
+      "C1_p1": {
+        "exact_s": 0.0009144999785348773,
+        "n": 8,
+        "pools_s": 0.11394408193882555,
+        "sim_s": 0.008949749986641109
+      },
+      "C1_p2": {
+        "exact_s": 0.0006938750157132745,
+        "n": 8,
+        "pools_s": 0.10725237429141998,
+        "sim_s": 0.00891445903107524
+      }
+    },
+    "qubo_s": 0.00020774989388883114
+  },
+  "dirty_tree_patch_hash": "645d4e08e4f9a666f53d32c7fb6c507e1fdc3323c1344723a9763297967dbe5d",
+  "endpoints_and_exclusions": {
+    "analysis_rules": [
+      "independent_units_are_blocks",
+      "preserve_SC_VSC_pairing_and_policy_seeds",
+      "equal_family_weight_stratified_block_bootstrap",
+      "do_not_expand_n_after_viewing_effects",
+      "calibration_is_not_independent_final_test_evidence"
+    ],
+    "exclusions": [
+      "final_test_blocks",
+      "QPU",
+      "C2",
+      "paid_resources",
+      "retraining_selector"
+    ],
+    "operational_race_outcome": "NOT_ELIGIBLE_without_causal_simulator_integration",
+    "primary_mechanism": [
+      "exact_ideal_probabilities",
+      "one_hot_vs_legal_yield",
+      "normalised_regret_best_of_pool",
+      "strict_improvement_vs_exact_and_weak"
+    ]
+  },
+  "final_acceptance_dir_present": true,
+  "fixed_donors_by_family_depth": {
+    "C0_p1": {
+      "donor_present_in_bank": true,
+      "family": "C0",
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "selection_rule": "argmin_mean_training_normalised_regret"
+    },
+    "C0_p2": {
+      "donor_present_in_bank": true,
+      "family": "C0",
+      "p": 2,
+      "params_hash": "a18881b55a7ca4e83243ea4330cf872bdc32f642ac89df86d72acb90936b9ebe",
+      "selection_rule": "argmin_mean_training_normalised_regret"
+    },
+    "C1_p1": {
+      "donor_present_in_bank": true,
+      "family": "C1",
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "selection_rule": "argmin_mean_training_normalised_regret"
+    },
+    "C1_p2": {
+      "donor_present_in_bank": true,
+      "family": "C1",
+      "p": 2,
+      "params_hash": "a6ec7cb10f146708a6547b4d1bedcc364e402fc83de0ff44f02ab231e1e23811",
+      "selection_rule": "argmin_mean_training_normalised_regret"
+    }
+  },
+  "freeze_sha256": "27191ba16d91802d54f54ab45b42ff3c7948de2d59089a02d5d070a3d4f09c3c",
+  "frozen_before_calibration_outcomes": true,
+  "frozen_policies": {
+    "fixed": "tuning-selected argmin_mean_training_normalised_regret donor per family-depth",
+    "learned": "RidgeDonorSelector from selector_model_artifacts.json (corrected run)",
+    "nn": "nearest training-block donor by feature L2 using train_usage best_donor_params_hash",
+    "random": "seeded_random_donor over frozen bank selected donors"
+  },
+  "machine_at_freeze": {
+    "disk_free_bytes": 134908841984,
+    "disk_total_bytes": 494384795648,
+    "hostname_hash_note": "host identity not required for scientific claims",
+    "mem_bytes": 25769803776,
+    "mem_gib": 24.0,
+    "ncpu": 10,
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13",
+    "ram_budget_bytes": 15461882265,
+    "rusage_maxrss_kb": 81690624
+  },
+  "noisy_panel_predeclared": {
+    "depth_choice": "p1",
+    "enabled": true,
+    "families": [
+      "C0",
+      "C1"
+    ],
+    "freeze_basis": "development_timing_only_before_calibration_outcomes",
+    "max_qubits": 10,
+    "noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+    "one_case_per_family": true,
+    "policies": [
+      "learned",
+      "fixed"
+    ],
+    "synthetic_noise_is_not_ibm_measurement": true,
+    "zero_noise_consistency_control": true
+  },
+  "objective": {
+    "improvement_tolerance": 1e-08,
+    "legality": "one_hot_vs_complete_semantic_legal_separated",
+    "normalisation": "dossier_normalised_regret_(f-f*)/(f_max-f*)",
+    "tie_tolerance": 1e-08,
+    "ties_are_not_improvements": true,
+    "units": "synthetic_expected_team_loss_A2"
+  },
+  "phase5_corrected_run_id": "e6b3588b-ab97-48c9-82f4-616785aa3611",
+  "phase5_final_acceptance_commit": "1c7631e609a12562155ba978cb50790f3ed2b6f7",
+  "pilot_config": {
+    "calibration_blocks_per_family": 3,
+    "calibration_blocks_total": 24,
+    "cases_per_block": 2,
+    "causal_model_scope": "restricted_synthetic_revealed_at_epoch_1",
+    "circuit_unit_n_actions": 2,
+    "circuit_unit_n_epochs": 2,
+    "circuit_unit_n_scenarios": 2,
+    "config_sha256": "3af34f3d84ebc7fddbe91d69971c0fb318c1e4318dbb01c425b8de118f9a63be",
+    "deadline_s": 5.0,
+    "dossier_cpu_hour_ceiling": 24.0,
+    "family_depths": [
+      "C0_p1",
+      "C0_p2",
+      "C1_p1",
+      "C1_p2"
+    ],
+    "hardware_execution_enabled": false,
+    "improvement_tol": 1e-08,
+    "max_pilot_compute_s": 1800.0,
+    "max_ram_fraction": 0.6,
+    "max_subprocess_s": 300.0,
+    "max_verify_s": 600.0,
+    "max_workers": 2,
+    "mc_world_candidates": [
+      2048,
+      8192,
+      32768
+    ],
+    "n_families": 8,
+    "noisy_depth_choice": "p1",
+    "noisy_max_qubits": 10,
+    "noisy_noise_model": "depolarizing_1q_1e-3_2q_1e-2",
+    "noisy_panel_enabled": true,
+    "noisy_seeds": 3,
+    "noisy_shots": 1024,
+    "one_hot_amp_tol": 1e-08,
+    "phase5_corrected_run_id": "e6b3588b-ab97-48c9-82f4-616785aa3611",
+    "phase5_final_acceptance_commit": "1c7631e609a12562155ba978cb50790f3ed2b6f7",
+    "policies": [
+      "learned",
+      "fixed",
+      "nn",
+      "random"
+    ],
+    "pool_seeds": 10,
+    "pool_shots": 1024,
+    "precision_halfwidth": 0.01,
+    "progress_interval_s": 30.0,
+    "qpu_execution_authorised": false,
+    "ridge_lambda": 1.0,
+    "schema_version": "stage6.config.v1",
+    "selected_architecture": "A2_multi_epoch_scenario_contingent_strategy_policy",
+    "split_source_salt": "phase6.calibration.v1",
+    "stage6_version": "0.6.0",
+    "superiority_delta": 0.02,
+    "test_block_floor": 80,
+    "test_block_max": 160,
+    "tie_tol": 1e-08
+  },
+  "proposed_workload": {
+    "calibration_blocks": 24,
+    "cases": 48,
+    "ceiling_s": 1800.0,
+    "distribution_evals": 768,
+    "est_seconds_from_dev_unit": 59.25091166049242,
+    "family_depths": 4,
+    "fits_ceiling_estimate": true,
+    "policies": 4,
+    "pool_seeds": 10,
+    "pool_shots": 1024,
+    "workers": 2
+  },
+  "schema_version": "stage6.freeze.v1",
+  "source_commit": "1c7631e609a12562155ba978cb50790f3ed2b6f7"
+}

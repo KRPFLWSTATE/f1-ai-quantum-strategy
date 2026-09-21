@@ -1,0 +1,2342 @@
+{
+  "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+  "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001.SC",
+  "exact_cost": 1.7150483246069235,
+  "f_max": 4.776649320211058,
+  "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+  "microcase": "force_branching",
+  "n_legal": 64,
+  "n_qubits": 12,
+  "policy_results": {
+    "C0_p1:fixed": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9526295418975533,
+        "exact_scan_s": 0.05026558297686279,
+        "expected_cost_on_legal_support": 3.1167304969313703,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9526295418975533,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9526295418975533,
+        "optimal_sample_probability": 0.015071550169344902,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.015071550169344902
+      },
+      "expectation_scaled": 0.23688497994187932,
+      "family": "C0",
+      "feature_compute_s": 6.53750030323863e-05,
+      "norm": 1.0000000000000004,
+      "p": 1,
+      "params_hash": "cff2c2461bf91b730cd03db87de48c95b2f566fbf48f8cf856e2630c399f8dd7",
+      "policy": "fixed",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 975,
+          "pool_s": 0.05088304204400629,
+          "pool_size": 1024,
+          "seed": 1759779342
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 979,
+          "pool_s": 0.05062354099936783,
+          "pool_size": 1024,
+          "seed": 1759779343
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 979,
+          "pool_s": 0.05061370809562504,
+          "pool_size": 1024,
+          "seed": 1759779344
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 962,
+          "pool_s": 0.05034008307848126,
+          "pool_size": 1024,
+          "seed": 1759779345
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 973,
+          "pool_s": 0.053524917108006775,
+          "pool_size": 1024,
+          "seed": 1759779346
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 963,
+          "pool_s": 0.057614500052295625,
+          "pool_size": 1024,
+          "seed": 1759779347
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 979,
+          "pool_s": 0.0530892089009285,
+          "pool_size": 1024,
+          "seed": 1759779348
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 973,
+          "pool_s": 0.050247375038452446,
+          "pool_size": 1024,
+          "seed": 1759779349
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 980,
+          "pool_s": 0.050387750030495226,
+          "pool_size": 1024,
+          "seed": 1759779350
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 976,
+          "pool_s": 0.050145666929893196,
+          "pool_size": 1024,
+          "seed": 1759779351
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 973.9,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "rule": "tuning_selected_fixed"
+      },
+      "sim_s": 0.10311808297410607,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C0_p1:learned": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9576208478358641,
+        "exact_scan_s": 0.05034695891663432,
+        "expected_cost_on_legal_support": 3.1184065597455803,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9576208478358641,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9576208478358641,
+        "optimal_sample_probability": 0.015075580974136927,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.015075580974136927
+      },
+      "expectation_scaled": 0.23485184651897176,
+      "family": "C0",
+      "feature_compute_s": 6.53750030323863e-05,
+      "norm": 1.0000000000000002,
+      "p": 1,
+      "params_hash": "d379ebc7cbc1af99a95445810b561039b4ae4a648ea2e0bdc5f37e6725f43664",
+      "policy": "learned",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 984,
+          "pool_s": 0.050928917014971375,
+          "pool_size": 1024,
+          "seed": 879886966
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 980,
+          "pool_s": 0.05023945798166096,
+          "pool_size": 1024,
+          "seed": 879886967
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 978,
+          "pool_s": 0.05103479197714478,
+          "pool_size": 1024,
+          "seed": 879886968
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 980,
+          "pool_s": 0.050722207990475,
+          "pool_size": 1024,
+          "seed": 879886969
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 979,
+          "pool_s": 0.05057216691784561,
+          "pool_size": 1024,
+          "seed": 879886970
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 990,
+          "pool_s": 0.05116504104807973,
+          "pool_size": 1024,
+          "seed": 879886971
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 981,
+          "pool_s": 0.05111854209098965,
+          "pool_size": 1024,
+          "seed": 879886972
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 974,
+          "pool_s": 0.051700541051104665,
+          "pool_size": 1024,
+          "seed": 879886973
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 985,
+          "pool_s": 0.051307791960425675,
+          "pool_size": 1024,
+          "seed": 879886974
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 973,
+          "pool_s": 0.050947415991686285,
+          "pool_size": 1024,
+          "seed": 879886975
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 980.4,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 2,
+        "rule": "argmin_predicted_regret_no_angle_average"
+      },
+      "sim_s": 0.10483666602522135,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C0_p1:nn": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9523789892058292,
+        "exact_scan_s": 0.051381625002250075,
+        "expected_cost_on_legal_support": 3.126334409097438,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9523789892058292,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9523789892058292,
+        "optimal_sample_probability": 0.014580684768114693,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.014580684768114693
+      },
+      "expectation_scaled": 0.2392645985695691,
+      "family": "C0",
+      "feature_compute_s": 6.53750030323863e-05,
+      "norm": 0.9999999999999989,
+      "p": 1,
+      "params_hash": "29722b36b6521a82d900098b2210875eefd37a27751c085644f319665c734bf6",
+      "policy": "nn",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 972,
+          "pool_s": 0.05117187509313226,
+          "pool_size": 1024,
+          "seed": 855800844
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 977,
+          "pool_s": 0.05067741696257144,
+          "pool_size": 1024,
+          "seed": 855800845
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 980,
+          "pool_s": 0.050636749947443604,
+          "pool_size": 1024,
+          "seed": 855800846
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 985,
+          "pool_s": 0.0504159169504419,
+          "pool_size": 1024,
+          "seed": 855800847
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 961,
+          "pool_s": 0.04950166691560298,
+          "pool_size": 1024,
+          "seed": 855800848
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 979,
+          "pool_s": 0.05026899999938905,
+          "pool_size": 1024,
+          "seed": 855800849
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 971,
+          "pool_s": 0.05021012504585087,
+          "pool_size": 1024,
+          "seed": 855800850
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 979,
+          "pool_s": 0.05057445797137916,
+          "pool_size": 1024,
+          "seed": 855800851
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 971,
+          "pool_s": 0.050037958077155054,
+          "pool_size": 1024,
+          "seed": 855800852
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 975,
+          "pool_s": 0.05076654092408717,
+          "pool_size": 1024,
+          "seed": 855800853
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 975.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "distance": 0.04246902418854805,
+        "nearest_train_index": 38,
+        "rule": "nn_feature_l2"
+      },
+      "sim_s": 0.10328366688918322,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C0_p1:random": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9523789892058292,
+        "exact_scan_s": 0.051103124977089465,
+        "expected_cost_on_legal_support": 3.126334409097438,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9523789892058292,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9523789892058292,
+        "optimal_sample_probability": 0.014580684768114693,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.014580684768114693
+      },
+      "expectation_scaled": 0.2392645985695691,
+      "family": "C0",
+      "feature_compute_s": 6.53750030323863e-05,
+      "norm": 0.9999999999999989,
+      "p": 1,
+      "params_hash": "29722b36b6521a82d900098b2210875eefd37a27751c085644f319665c734bf6",
+      "policy": "random",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 984,
+          "pool_s": 0.05117574997711927,
+          "pool_size": 1024,
+          "seed": 719913780
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 980,
+          "pool_s": 0.050619375077076256,
+          "pool_size": 1024,
+          "seed": 719913781
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 961,
+          "pool_s": 0.049923457903787494,
+          "pool_size": 1024,
+          "seed": 719913782
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 978,
+          "pool_s": 0.05048104200977832,
+          "pool_size": 1024,
+          "seed": 719913783
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 977,
+          "pool_s": 0.050974416080862284,
+          "pool_size": 1024,
+          "seed": 719913784
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 975,
+          "pool_s": 0.05094529106281698,
+          "pool_size": 1024,
+          "seed": 719913785
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 972,
+          "pool_s": 0.05074020894244313,
+          "pool_size": 1024,
+          "seed": 719913786
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 972,
+          "pool_s": 0.05045849992893636,
+          "pool_size": 1024,
+          "seed": 719913787
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 978,
+          "pool_s": 0.050662499968893826,
+          "pool_size": 1024,
+          "seed": 719913788
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 971,
+          "pool_s": 0.050776499905623496,
+          "pool_size": 1024,
+          "seed": 719913789
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 974.8,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 1,
+        "rule": "seeded_random"
+      },
+      "sim_s": 0.10344470804557204,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C0_p2:fixed": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9760549644739883,
+        "exact_scan_s": 0.047347874962724745,
+        "expected_cost_on_legal_support": 3.091033111529922,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9760549644739883,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9760549644739883,
+        "optimal_sample_probability": 0.01674329554190074,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.01674329554190074
+      },
+      "expectation_scaled": 0.2238092843700241,
+      "family": "C0",
+      "feature_compute_s": 5.0083035603165627e-05,
+      "norm": 0.9999999999999998,
+      "p": 2,
+      "params_hash": "a18881b55a7ca4e83243ea4330cf872bdc32f642ac89df86d72acb90936b9ebe",
+      "policy": "fixed",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1003,
+          "pool_s": 0.051284207962453365,
+          "pool_size": 1024,
+          "seed": 1124228670
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1001,
+          "pool_s": 0.05107595806475729,
+          "pool_size": 1024,
+          "seed": 1124228671
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1003,
+          "pool_s": 0.05146262492053211,
+          "pool_size": 1024,
+          "seed": 1124228672
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1006,
+          "pool_s": 0.05141408299095929,
+          "pool_size": 1024,
+          "seed": 1124228673
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 991,
+          "pool_s": 0.050799749908037484,
+          "pool_size": 1024,
+          "seed": 1124228674
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1006,
+          "pool_s": 0.05136612500064075,
+          "pool_size": 1024,
+          "seed": 1124228675
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 997,
+          "pool_s": 0.05071141594089568,
+          "pool_size": 1024,
+          "seed": 1124228676
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 993,
+          "pool_s": 0.051130417035892606,
+          "pool_size": 1024,
+          "seed": 1124228677
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1001,
+          "pool_s": 0.050936583080329,
+          "pool_size": 1024,
+          "seed": 1124228678
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 993,
+          "pool_s": 0.05080470803659409,
+          "pool_size": 1024,
+          "seed": 1124228679
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 999.4,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "rule": "tuning_selected_fixed"
+      },
+      "sim_s": 0.12219175009522587,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C0_p2:learned": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9793720626226968,
+        "exact_scan_s": 0.05049254198092967,
+        "expected_cost_on_legal_support": 3.127622929058217,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9793720626226968,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9793720626226968,
+        "optimal_sample_probability": 0.014848543107382005,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.014848543107382005
+      },
+      "expectation_scaled": 0.22431621051472495,
+      "family": "C0",
+      "feature_compute_s": 5.0083035603165627e-05,
+      "norm": 1.0000000000000018,
+      "p": 2,
+      "params_hash": "a07babb7450c65a225634aa550c8a23fe644d4b08b4c8614076e778fcca23a81",
+      "policy": "learned",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1008,
+          "pool_s": 0.05145670799538493,
+          "pool_size": 1024,
+          "seed": 1585060185
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1001,
+          "pool_s": 0.05156995798461139,
+          "pool_size": 1024,
+          "seed": 1585060186
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1004,
+          "pool_s": 0.05146362504456192,
+          "pool_size": 1024,
+          "seed": 1585060187
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 993,
+          "pool_s": 0.05078833410516381,
+          "pool_size": 1024,
+          "seed": 1585060188
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 996,
+          "pool_s": 0.051363916019909084,
+          "pool_size": 1024,
+          "seed": 1585060189
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1007,
+          "pool_s": 0.05184595799073577,
+          "pool_size": 1024,
+          "seed": 1585060190
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1002,
+          "pool_s": 0.051268208073452115,
+          "pool_size": 1024,
+          "seed": 1585060191
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1004,
+          "pool_s": 0.051260040956549346,
+          "pool_size": 1024,
+          "seed": 1585060192
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1005,
+          "pool_s": 0.051496208063326776,
+          "pool_size": 1024,
+          "seed": 1585060193
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1002,
+          "pool_s": 0.051718125003390014,
+          "pool_size": 1024,
+          "seed": 1585060194
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1002.2,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 1,
+        "rule": "argmin_predicted_regret_no_angle_average"
+      },
+      "sim_s": 0.12103249994106591,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C0_p2:nn": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9774801802735648,
+        "exact_scan_s": 0.047430999926291406,
+        "expected_cost_on_legal_support": 3.1399488062721437,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9774801802735648,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9774801802735648,
+        "optimal_sample_probability": 0.014133736332302855,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.014133736332302855
+      },
+      "expectation_scaled": 0.22602400120265057,
+      "family": "C0",
+      "feature_compute_s": 5.0083035603165627e-05,
+      "norm": 1.0000000000000018,
+      "p": 2,
+      "params_hash": "9475564dc0a3339e5bc53ed3b72dec36432d62b10167551ec4ababe811a01163",
+      "policy": "nn",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1003,
+          "pool_s": 0.051652290974743664,
+          "pool_size": 1024,
+          "seed": 216574376
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 989,
+          "pool_s": 0.05064087500795722,
+          "pool_size": 1024,
+          "seed": 216574377
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 997,
+          "pool_s": 0.051369666936807334,
+          "pool_size": 1024,
+          "seed": 216574378
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 992,
+          "pool_s": 0.05091404204722494,
+          "pool_size": 1024,
+          "seed": 216574379
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 989,
+          "pool_s": 0.050571917090564966,
+          "pool_size": 1024,
+          "seed": 216574380
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 995,
+          "pool_s": 0.051488665980286896,
+          "pool_size": 1024,
+          "seed": 216574381
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 997,
+          "pool_s": 0.05164354096632451,
+          "pool_size": 1024,
+          "seed": 216574382
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 998,
+          "pool_s": 0.05140837503131479,
+          "pool_size": 1024,
+          "seed": 216574383
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 997,
+          "pool_s": 0.05164941702969372,
+          "pool_size": 1024,
+          "seed": 216574384
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1001,
+          "pool_s": 0.05155241710599512,
+          "pool_size": 1024,
+          "seed": 216574385
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 995.8,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "distance": 0.04246902418854805,
+        "nearest_train_index": 38,
+        "rule": "nn_feature_l2"
+      },
+      "sim_s": 0.12181754200719297,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C0_p2:random": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9793720626226968,
+        "exact_scan_s": 0.05041670904029161,
+        "expected_cost_on_legal_support": 3.127622929058217,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9793720626226968,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9793720626226968,
+        "optimal_sample_probability": 0.014848543107382005,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.014848543107382005
+      },
+      "expectation_scaled": 0.22431621051472495,
+      "family": "C0",
+      "feature_compute_s": 5.0083035603165627e-05,
+      "norm": 1.0000000000000018,
+      "p": 2,
+      "params_hash": "a07babb7450c65a225634aa550c8a23fe644d4b08b4c8614076e778fcca23a81",
+      "policy": "random",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1006,
+          "pool_s": 0.05153141601476818,
+          "pool_size": 1024,
+          "seed": 1255631911
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 997,
+          "pool_s": 0.051007832982577384,
+          "pool_size": 1024,
+          "seed": 1255631912
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1012,
+          "pool_s": 0.05178099998738617,
+          "pool_size": 1024,
+          "seed": 1255631913
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1003,
+          "pool_s": 0.05121679091826081,
+          "pool_size": 1024,
+          "seed": 1255631914
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1010,
+          "pool_s": 0.05209220899268985,
+          "pool_size": 1024,
+          "seed": 1255631915
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1004,
+          "pool_s": 0.051637375028803945,
+          "pool_size": 1024,
+          "seed": 1255631916
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1009,
+          "pool_s": 0.05167279206216335,
+          "pool_size": 1024,
+          "seed": 1255631917
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1002,
+          "pool_s": 0.05124083405826241,
+          "pool_size": 1024,
+          "seed": 1255631918
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 997,
+          "pool_s": 0.05114283401053399,
+          "pool_size": 1024,
+          "seed": 1255631919
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1008,
+          "pool_s": 0.0516780000180006,
+          "pool_size": 1024,
+          "seed": 1255631920
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1004.8,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 1,
+        "rule": "seeded_random"
+      },
+      "sim_s": 0.12558079208247364,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p1:fixed": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9999999999999993,
+        "exact_scan_s": 0.0037812090013176203,
+        "expected_cost_on_legal_support": 2.8208810755371783,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9999999999999993,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9999999999999993,
+        "optimal_sample_probability": 0.04351204934624294,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.04351204934624294
+      },
+      "expectation_scaled": 0.1930509160005388,
+      "family": "C1",
+      "feature_compute_s": 5.904200952500105e-05,
+      "norm": 0.999999999999999,
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "fixed",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05151941697113216,
+          "pool_size": 1024,
+          "seed": 2129899902
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05159833293873817,
+          "pool_size": 1024,
+          "seed": 2129899903
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051986124948598444,
+          "pool_size": 1024,
+          "seed": 2129899904
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05152174993418157,
+          "pool_size": 1024,
+          "seed": 2129899905
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051709666964598,
+          "pool_size": 1024,
+          "seed": 2129899906
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05173570802435279,
+          "pool_size": 1024,
+          "seed": 2129899907
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051500124973244965,
+          "pool_size": 1024,
+          "seed": 2129899908
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05155979096889496,
+          "pool_size": 1024,
+          "seed": 2129899909
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05140704207587987,
+          "pool_size": 1024,
+          "seed": 2129899910
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051423124969005585,
+          "pool_size": 1024,
+          "seed": 2129899911
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "rule": "tuning_selected_fixed"
+      },
+      "sim_s": 0.20453316706698388,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p1:learned": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 1.0,
+        "exact_scan_s": 0.0037747910246253014,
+        "expected_cost_on_legal_support": 2.7982312979406214,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 1.0,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 1.0,
+        "optimal_sample_probability": 0.044159434280713034,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.044159434280713034
+      },
+      "expectation_scaled": 0.191500846998998,
+      "family": "C1",
+      "feature_compute_s": 5.904200952500105e-05,
+      "norm": 0.9999999999999996,
+      "p": 1,
+      "params_hash": "1393fc4a255a8c1f2bacf7efc4a2acb6b86301a0db35923bbf358e3d6605a32f",
+      "policy": "learned",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05205075000412762,
+          "pool_size": 1024,
+          "seed": 316496864
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05104258400388062,
+          "pool_size": 1024,
+          "seed": 316496865
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05107895808760077,
+          "pool_size": 1024,
+          "seed": 316496866
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051159583032131195,
+          "pool_size": 1024,
+          "seed": 316496867
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051564082968980074,
+          "pool_size": 1024,
+          "seed": 316496868
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05284258397296071,
+          "pool_size": 1024,
+          "seed": 316496869
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.06200174998957664,
+          "pool_size": 1024,
+          "seed": 316496870
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05283233290538192,
+          "pool_size": 1024,
+          "seed": 316496871
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05082858307287097,
+          "pool_size": 1024,
+          "seed": 316496872
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.050879416055977345,
+          "pool_size": 1024,
+          "seed": 316496873
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 6,
+        "rule": "argmin_predicted_regret_no_angle_average"
+      },
+      "sim_s": 0.2058649999089539,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p1:nn": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 1.0000000000000004,
+        "exact_scan_s": 0.003782999934628606,
+        "expected_cost_on_legal_support": 2.845445081572008,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 1.0000000000000004,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 1.0000000000000004,
+        "optimal_sample_probability": 0.03604592741764537,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.03604592741764537
+      },
+      "expectation_scaled": 0.19473198788506138,
+      "family": "C1",
+      "feature_compute_s": 5.904200952500105e-05,
+      "norm": 1.0000000000000002,
+      "p": 1,
+      "params_hash": "98bdf952bf439f34872e49bd9b78c424591dbc35f9e9393b6c754a546c409512",
+      "policy": "nn",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05301787506323308,
+          "pool_size": 1024,
+          "seed": 1103822195
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05100833298638463,
+          "pool_size": 1024,
+          "seed": 1103822196
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05204916698858142,
+          "pool_size": 1024,
+          "seed": 1103822197
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05231866694521159,
+          "pool_size": 1024,
+          "seed": 1103822198
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05118833400774747,
+          "pool_size": 1024,
+          "seed": 1103822199
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.052640541922301054,
+          "pool_size": 1024,
+          "seed": 1103822200
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05191816692240536,
+          "pool_size": 1024,
+          "seed": 1103822201
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05194045801181346,
+          "pool_size": 1024,
+          "seed": 1103822202
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05187845800537616,
+          "pool_size": 1024,
+          "seed": 1103822203
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05180258397012949,
+          "pool_size": 1024,
+          "seed": 1103822204
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "distance": 0.04246902418854805,
+        "nearest_train_index": 38,
+        "rule": "nn_feature_l2"
+      },
+      "sim_s": 0.2044327079784125,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p1:random": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9999999999999993,
+        "exact_scan_s": 0.0036831250181421638,
+        "expected_cost_on_legal_support": 2.8208810755371783,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9999999999999993,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9999999999999993,
+        "optimal_sample_probability": 0.04351204934624294,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.04351204934624294
+      },
+      "expectation_scaled": 0.1930509160005388,
+      "family": "C1",
+      "feature_compute_s": 5.904200952500105e-05,
+      "norm": 0.999999999999999,
+      "p": 1,
+      "params_hash": "9bcbcd8fe1461e203e5448653396b3e9c61a1ddb5e9fe79de873f965ea9faa2c",
+      "policy": "random",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05199625005479902,
+          "pool_size": 1024,
+          "seed": 815897636
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05171412497293204,
+          "pool_size": 1024,
+          "seed": 815897637
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05163833394180983,
+          "pool_size": 1024,
+          "seed": 815897638
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05202875006943941,
+          "pool_size": 1024,
+          "seed": 815897639
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05162454198580235,
+          "pool_size": 1024,
+          "seed": 815897640
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05145066697150469,
+          "pool_size": 1024,
+          "seed": 815897641
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.0515329580521211,
+          "pool_size": 1024,
+          "seed": 815897642
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05165799998212606,
+          "pool_size": 1024,
+          "seed": 815897643
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051743166986852884,
+          "pool_size": 1024,
+          "seed": 815897644
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05171691707801074,
+          "pool_size": 1024,
+          "seed": 815897645
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 1,
+        "rule": "seeded_random"
+      },
+      "sim_s": 0.20529512502253056,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p2:fixed": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9999999999999992,
+        "exact_scan_s": 0.0036182079929858446,
+        "expected_cost_on_legal_support": 2.823465901433751,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9999999999999992,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9999999999999992,
+        "optimal_sample_probability": 0.03999580607710993,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.03999580607710993
+      },
+      "expectation_scaled": 0.19322781215236973,
+      "family": "C1",
+      "feature_compute_s": 5.000003147870302e-05,
+      "norm": 0.9999999999999989,
+      "p": 2,
+      "params_hash": "a6ec7cb10f146708a6547b4d1bedcc364e402fc83de0ff44f02ab231e1e23811",
+      "policy": "fixed",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05149824998807162,
+          "pool_size": 1024,
+          "seed": 503991812
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05149350001011044,
+          "pool_size": 1024,
+          "seed": 503991813
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05169441597536206,
+          "pool_size": 1024,
+          "seed": 503991814
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.052183832973241806,
+          "pool_size": 1024,
+          "seed": 503991815
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.0518230419838801,
+          "pool_size": 1024,
+          "seed": 503991816
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051336708944290876,
+          "pool_size": 1024,
+          "seed": 503991817
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05188229202758521,
+          "pool_size": 1024,
+          "seed": 503991818
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051537790917791426,
+          "pool_size": 1024,
+          "seed": 503991819
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051213999977335334,
+          "pool_size": 1024,
+          "seed": 503991820
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051822541980072856,
+          "pool_size": 1024,
+          "seed": 503991821
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "rule": "tuning_selected_fixed"
+      },
+      "sim_s": 0.21782533393707126,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p2:learned": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 1.0,
+        "exact_scan_s": 0.0037032910622656345,
+        "expected_cost_on_legal_support": 2.706135499254766,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 1.0,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 1.0,
+        "optimal_sample_probability": 0.05645762628654388,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.05645762628654388
+      },
+      "expectation_scaled": 0.18519814304941015,
+      "family": "C1",
+      "feature_compute_s": 5.000003147870302e-05,
+      "norm": 1.0000000000000002,
+      "p": 2,
+      "params_hash": "96a91e6143eb5a126e52e1bd1350d9632199701572ef3c6b8275753b0848fadf",
+      "policy": "learned",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05113370798062533,
+          "pool_size": 1024,
+          "seed": 116554456
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.050991915981285274,
+          "pool_size": 1024,
+          "seed": 116554457
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.0512548330007121,
+          "pool_size": 1024,
+          "seed": 116554458
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.0512296250090003,
+          "pool_size": 1024,
+          "seed": 116554459
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05151075008325279,
+          "pool_size": 1024,
+          "seed": 116554460
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05148412496782839,
+          "pool_size": 1024,
+          "seed": 116554461
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05122708296403289,
+          "pool_size": 1024,
+          "seed": 116554462
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051204791059717536,
+          "pool_size": 1024,
+          "seed": 116554463
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051485209027305245,
+          "pool_size": 1024,
+          "seed": 116554464
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05189762497320771,
+          "pool_size": 1024,
+          "seed": 116554465
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 5,
+        "rule": "argmin_predicted_regret_no_angle_average"
+      },
+      "sim_s": 0.2180996669922024,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p2:nn": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9999999999999992,
+        "exact_scan_s": 0.003868709085509181,
+        "expected_cost_on_legal_support": 2.823465901433751,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9999999999999992,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9999999999999992,
+        "optimal_sample_probability": 0.03999580607710993,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.03999580607710993
+      },
+      "expectation_scaled": 0.19322781215236973,
+      "family": "C1",
+      "feature_compute_s": 5.000003147870302e-05,
+      "norm": 0.9999999999999989,
+      "p": 2,
+      "params_hash": "a6ec7cb10f146708a6547b4d1bedcc364e402fc83de0ff44f02ab231e1e23811",
+      "policy": "nn",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05109037505462766,
+          "pool_size": 1024,
+          "seed": 953509587
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05136454093735665,
+          "pool_size": 1024,
+          "seed": 953509588
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.0539903329918161,
+          "pool_size": 1024,
+          "seed": 953509589
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05082400003448129,
+          "pool_size": 1024,
+          "seed": 953509590
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05108550004661083,
+          "pool_size": 1024,
+          "seed": 953509591
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.050284374970942736,
+          "pool_size": 1024,
+          "seed": 953509592
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.0503694589715451,
+          "pool_size": 1024,
+          "seed": 953509593
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05159895808901638,
+          "pool_size": 1024,
+          "seed": 953509594
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.052407125011086464,
+          "pool_size": 1024,
+          "seed": 953509595
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.0536645419197157,
+          "pool_size": 1024,
+          "seed": 953509596
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "distance": 0.04246902418854805,
+        "nearest_train_index": 38,
+        "rule": "nn_feature_l2"
+      },
+      "sim_s": 0.21890812495257705,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    },
+    "C1_p2:random": {
+      "amp_outside_one_hot": 0.0,
+      "encode_s": 0.00015795801300555468,
+      "exact": {
+        "complete_legal_policy_probability": 0.9999999999999998,
+        "exact_scan_s": 0.003656459040939808,
+        "expected_cost_on_legal_support": 2.8245095759813825,
+        "f_max": 4.776649320211058,
+        "f_star": 1.7150483246069235,
+        "legal_sample_yield": 0.9999999999999998,
+        "note_exact_incumbent": "When incumbent is exact, strictly positive proxy improvement probability is zero within declared tolerance; ties are not improvements.",
+        "one_hot_probability": 0.9999999999999998,
+        "optimal_sample_probability": 0.04117961410456029,
+        "strictly_improving_vs_exact_probability": 0.0,
+        "strictly_improving_vs_weak_probability": 0.0,
+        "tie_optimum_mass": 0.04117961410456029
+      },
+      "expectation_scaled": 0.19329923747021605,
+      "family": "C1",
+      "feature_compute_s": 5.000003147870302e-05,
+      "norm": 1.0,
+      "p": 2,
+      "params_hash": "18b7c0f790906283fa935678d28d81f353597435f08b38d37a4cc98d5cd6a492",
+      "policy": "random",
+      "pools": [
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051204291987232864,
+          "pool_size": 1024,
+          "seed": 1647014818
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05107329098973423,
+          "pool_size": 1024,
+          "seed": 1647014819
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05156079202424735,
+          "pool_size": 1024,
+          "seed": 1647014820
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05086887499783188,
+          "pool_size": 1024,
+          "seed": 1647014821
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05141879105940461,
+          "pool_size": 1024,
+          "seed": 1647014822
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.051204832969233394,
+          "pool_size": 1024,
+          "seed": 1647014823
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05087762500625104,
+          "pool_size": 1024,
+          "seed": 1647014824
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.050773459021002054,
+          "pool_size": 1024,
+          "seed": 1647014825
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05095408298075199,
+          "pool_size": 1024,
+          "seed": 1647014826
+        },
+        {
+          "all_infeasible_pool": false,
+          "best_of_pool_cost": 1.7150483246069235,
+          "best_of_pool_normalised_regret": 0.0,
+          "best_of_pool_unnormalised_gap": 0.0,
+          "n_feasible_in_pool": 1024,
+          "pool_s": 0.05111308395862579,
+          "pool_size": 1024,
+          "seed": 1647014827
+        }
+      ],
+      "pools_agg": {
+        "all_infeasible_pool_rate": 0.0,
+        "mean_feasible_in_pool": 1024.0,
+        "mean_normalised_regret": 0.0,
+        "n_pool_seeds": 10,
+        "std_normalised_regret": 0.0
+      },
+      "selection_detail": {
+        "index": 1,
+        "rule": "seeded_random"
+      },
+      "sim_s": 0.2791181670036167,
+      "strict_improvement_vs_exact": 0.0,
+      "zero_headroom_declared": true
+    }
+  },
+  "regime": "SC",
+  "status": "completed",
+  "strongest_classical": {
+    "cost": 1.7150483246069235,
+    "enum_s": 0.001901332987472415,
+    "exact_inside_deadline": true,
+    "method": "exact_enumeration",
+    "milp_cost": 1.7150483246069235,
+    "milp_s": 0.008513416978530586,
+    "milp_success": true,
+    "note": "Exact incumbent \u21d2 strictly positive proxy improvement probability is zero within tolerance; ties are not improvements.",
+    "objective_headroom_vs_exact": 0.0
+  },
+  "summary": {
+    "block_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+    "case_id": "phase6.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001.SC",
+    "exact_inside_deadline": true,
+    "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+    "mean_regret_by_arm": {
+      "C0_p1:fixed": 0.0,
+      "C0_p1:learned": 0.0,
+      "C0_p1:nn": 0.0,
+      "C0_p1:random": 0.0,
+      "C0_p2:fixed": 0.0,
+      "C0_p2:learned": 0.0,
+      "C0_p2:nn": 0.0,
+      "C0_p2:random": 0.0,
+      "C1_p1:fixed": 0.0,
+      "C1_p1:learned": 0.0,
+      "C1_p1:nn": 0.0,
+      "C1_p1:random": 0.0,
+      "C1_p2:fixed": 0.0,
+      "C1_p2:learned": 0.0,
+      "C1_p2:nn": 0.0,
+      "C1_p2:random": 0.0
+    },
+    "n_legal": 64,
+    "n_qubits": 12,
+    "objective_headroom": 0.0,
+    "regime": "SC",
+    "strict_improve_vs_exact_by_arm": {
+      "C0_p1:fixed": 0.0,
+      "C0_p1:learned": 0.0,
+      "C0_p1:nn": 0.0,
+      "C0_p1:random": 0.0,
+      "C0_p2:fixed": 0.0,
+      "C0_p2:learned": 0.0,
+      "C0_p2:nn": 0.0,
+      "C0_p2:random": 0.0,
+      "C1_p1:fixed": 0.0,
+      "C1_p1:learned": 0.0,
+      "C1_p1:nn": 0.0,
+      "C1_p1:random": 0.0,
+      "C1_p2:fixed": 0.0,
+      "C1_p2:learned": 0.0,
+      "C1_p2:nn": 0.0,
+      "C1_p2:random": 0.0
+    },
+    "unit_s": 11.437892833026126
+  },
+  "timings": {
+    "encode_s": 0.00015795801300555468,
+    "unit_s": 11.437892833026126
+  },
+  "uniform_legal": {
+    "best_of_pool_cost": 1.7150483246069235,
+    "best_of_pool_normalised_regret": 0.0,
+    "mean_legal_cost": 3.1208488224089903,
+    "method": "uniform_over_legal_one_hot_policies",
+    "n_legal": 64,
+    "pool_size": 1024,
+    "success": true
+  },
+  "weak_fallback_cost": 1.7150483246069235
+}

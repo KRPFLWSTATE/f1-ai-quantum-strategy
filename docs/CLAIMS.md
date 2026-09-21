@@ -21,9 +21,13 @@ Every intended contribution is **unsupported** until matching evidence exists. S
 | Learned donor selector improves useful regret on held-out test | Exact held-out comparison | unsupported (tuning-only results recorded; not held-out claims) |
 | C2 guarded mixer admitted | `c2_admission.json` | `NOT_ADMITTED_BY_PROTOCOL` (valid negative) |
 | Quantum advantage / first quantum F1 optimiser | Matching evidence | unsupported |
+| Phase 6 operational race-decision pilot ready | Causal simulator integration + evaluator | **false** — `CAUSAL_OPERATIONAL_READINESS: false` |
+| Phase 6 mechanism pilot establishes F1 value | Operational endpoints | unsupported — mechanism/resource scope only |
+| Absolute scientific novelty / first AI–quantum–F1 system | Literature Gate E | unsupported — `GATE_E: PASS_FOR_DEFINED_SCOPE` only |
+| Phase 6 calibration implies powered H1 superiority | Headroom gate + sizing | **false** — zero headroom; operational sizing `NOT_APPLICABLE` |
 
 ## Explicit limits (dossier §27 and master prompt §9.14)
 
-No absolute novelty, guaranteed future quantum advantage, team adoption, actual F1 performance gain, or publication acceptance is established. Phase 5 novelty status remains `PROPOSED_NOT_LITERATURE_VERIFIED`.
+No absolute novelty, guaranteed future quantum advantage, team adoption, actual F1 performance gain, or publication acceptance is established. Phase 5 novelty status remains `PROPOSED_NOT_LITERATURE_VERIFIED`. Phase 6 Gate E pass is **for a defined mechanism/resource scope only**.
 
-AI assistance: ChatGPT prepared earlier stage prompts; Cursor agents implemented Stages 1–5. That assistance is development tooling, not the runtime learned AI contribution.
+AI assistance: ChatGPT prepared earlier stage prompts; Cursor agents implemented Stages 1–6. That assistance is development tooling, not the runtime learned AI contribution.

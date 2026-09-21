@@ -1,6 +1,6 @@
 schema_version: "1.0.0"
 project_name: f1-ai-quantum-strategy
-active_stage: 5
+active_stage: 6
 scientific_protocol_status: DRAFT
 protocol_frozen: false
 hardware_execution_enabled: false
@@ -24,7 +24,7 @@ qpu:
   submission_path_implemented: false
 workers:
   max_workers: 2
-  reason: "Stage 4 permits at most two workers and 60% RAM; default remains one worker for formulation_check."
+  reason: "Stage 6 permits at most two workers and 60% RAM; default remains bounded local pilot."
 paths:
   evidence_dir: evidence
   ledger_relpath: evidence/var/ledger.sqlite
@@ -32,7 +32,7 @@ python:
   requires: ">=3.12,<3.14"
   selected: "3.12.13"
 authorization:
-  scope: stage5-local-phase5
+  scope: stage6-local-phase6
   allowed_plans:
     - bootstrap
     - development_preview
@@ -43,6 +43,7 @@ authorization:
     - formulation_repair_check
     - formulation_gate_c_closure_check
     - phase5
+    - phase6
   github_push_authorized: false
 unresolved:
   - field: ibm_backend
@@ -53,16 +54,16 @@ unresolved:
     reason: "IBM account inspection is not authorized in Stage 1."
   - field: calibrated_threshold
     value: null
-    reason: "No calibration has been performed."
+    reason: "Phase 6 calibration cohort is synthetic mechanism calibration, not F1 empirical calibration."
   - field: model_artifact
     value: null
-    reason: "No learned model has been trained."
+    reason: "Phase 5 corrected selector reused; no Phase 6 retraining."
   - field: simulation_distribution
     value: null
-    reason: "Simulator parameter distributions are a later freeze field."
+    reason: "Operational simulation distributions remain unfrozen pending causal integration."
   - field: protocol_hash
     value: null
-    reason: "Scientific protocol is DRAFT; the configuration hash is a draft fingerprint, not a frozen protocol hash."
+    reason: "Scientific protocol remains BLOCKED_DRAFT for operational/superiority fields; mechanism freeze recorded under Stage 6."
   - field: completed_gate
     value: null
-    reason: "Gate C is under Stage 4.1 repair verification; Gates D–F remain future acceptance checks."
+    reason: "Gates E/F assessed in Phase 6 for defined scope; hardware Gate F budget verification deferred."

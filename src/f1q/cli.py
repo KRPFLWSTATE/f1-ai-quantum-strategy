@@ -119,6 +119,13 @@ def main(argv: list[str] | None = None) -> int:
                 config, _, _ = load_project_config(root)
                 authorize_plan(config, args.plan)
                 result = run_phase5(root)
+            elif args.plan == "phase6":
+                from f1q.authorization import authorize_plan, load_project_config
+                from f1q.stage6.cli_run import run_phase6
+
+                config, _, _ = load_project_config(root)
+                authorize_plan(config, args.plan)
+                result = run_phase6(root)
             else:
                 from f1q.authorization import authorize_plan, load_project_config
 

@@ -1,6 +1,6 @@
 # Project instructions (always load)
 
-Active stage: **5 — Phase 5 final acceptance repair (await independent review)**. Architecture **A2** selected at Stage 5A. Corrected Phase 5 implements local A2 scenario-tree policy formulation, classical references, actual C0/C1 circuits, parameter bank, and learned donor selector with full 144/80 coverage and dossier-aligned normalised regret. Authoritative corrected report: `docs/STAGE_5_CORRECTED_REPORT.md` (run `e6b3588b-ab97-48c9-82f4-616785aa3611`). Targeted final-acceptance repair: `docs/STAGE_5_FINAL_ACCEPTANCE_REPORT.md` (C1 executable prep matched to NumPy; genuine Statevector cross-check; causal scope labelled restricted synthetic revealed-duration surrogate; training/donors reused, no retraining). Historical run `6ad68021-f19c-44e7-b166-13ab44dad31b` / `docs/STAGE_5_REPORT.md` preserved unchanged and not corrected-compliant. After a valid bounded Stage 4 closure: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`. Legacy exhaustive Gate C remains `LEGACY_EXHAUSTIVE_GATE: PARTIAL` with `LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME`. Counts for archived matrix runs must be read from git-tracked `*.record.json` (see `docs/STAGE_4_CLOSURE_ERRATUM.md`): currently **e85ee977 = 40/64**, **41c28597 = 21 archived files** (interrupted; no completed receipt; excluded from the bounded gate). Stage 4.1 is not independently accepted. Stage 4 evidence is **frozen** — do not resume `e85ee977` / `41c28597` or invoke `formulation_gate_c_closure_check`. `QPU_EXECUTION_AUTHORISED: false`. `NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`. Development headroom on checked Phase 5 A2 instances: **ZERO** (superiority path disabled). Next authorised stage: **NONE — await independent review** (Stage 6 only after explicit prompt; operational pilot requires causal simulator integration).
+Active stage: **6 — Phase 6 local mechanism pilot / Gate E–F (complete with documented limitations)**. Architecture **A2** selected at Stage 5A. Phase 5 final acceptance: `PASS_WITH_DOCUMENTED_LIMITATIONS` (commit `1c7631e…`; corrected run `e6b3588b-…`). Phase 6 run `bd83cb22-6a38-4d21-9267-3253f52587d7`: calibration cohort 24×48 completed; `DEVELOPMENT_HEADROOM: ZERO`; `GATE_E: PASS_FOR_DEFINED_SCOPE`; `PROTOCOL_STATUS: BLOCKED_DRAFT`; `CAUSAL_OPERATIONAL_READINESS: false`. Authoritative Phase 6 report: `docs/STAGE_6_REPORT.md`. After a valid bounded Stage 4 closure: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`. Legacy exhaustive Gate C remains `LEGACY_EXHAUSTIVE_GATE: PARTIAL` with `LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME` (e85ee977 40/64; 41c28597 21 archived files — see `docs/STAGE_4_CLOSURE_ERRATUM.md`). Stage 4.1 is not independently accepted. Stage 4 evidence is **frozen** — do not resume `e85ee977` / `41c28597` or invoke `formulation_gate_c_closure_check`. `QPU_EXECUTION_AUTHORISED: false`. Development headroom on checked A2 instances: **ZERO** (superiority path disabled). Next authorised stage: **NONE automatic — Phase 7 only after explicit prompt** (mechanism reduced matrix needs dated amendment; operational/superiority not ready).
 
 ## Authority
 
@@ -9,6 +9,7 @@ Active stage: **5 — Phase 5 final acceptance repair (await independent review)
 - `PROJECT_STATUS.md` plus the local ledger are the source of completion state. Chat recollection is not authorization or evidence.
 - Legacy count erratum: `docs/STAGE_4_CLOSURE_ERRATUM.md`.
 - Phase 5 contract lineage: `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`.
+- Phase 6 freeze / novelty: `docs/STAGE_6_PROTOCOL_FREEZE.md`, `docs/STAGE_6_NOVELTY_COMPARISON.md`.
 
 ## Project boundary
 
@@ -16,7 +17,7 @@ Permitted root: the directory containing `configs/project.draft.yaml` (intended 
 
 ## Evidence rules
 
-Label claims as: proposed, implemented, verified by a named check, simulated, physically measured, unsupported. A test fixture is not an experimental observation. Successful setup, a development preview, simulator checks, Gate C formulation agreement, and Phase 5 local ideal simulations do not establish scientific novelty, F1 calibration, quantum advantage, or hardware readiness.
+Label claims as: proposed, implemented, verified by a named check, simulated, physically measured, unsupported. A test fixture is not an experimental observation. Successful setup, a development preview, simulator checks, Gate C formulation agreement, Phase 5 local ideal simulations, and Phase 6 mechanism pilots do not establish scientific novelty, F1 calibration, quantum advantage, or hardware readiness.
 
 **Validation amendment:** engineering acceptance no longer requires simulating every physical-set Cartesian pair. Required instead: 64-episode analytical coverage, real JSON plan round-trips on every admitted pair, QUBO/Ising identities + algebraic penalty bounds, exactly one lex-first tied-optimum terminal witness per episode, and ≤12 committed hand/regression cases. Do not report the old `GATE_C_FORMULATION: PASS` without explaining the changed scope; use `STAGE_4_ENGINEERING` / `LEGACY_EXHAUSTIVE_GATE`.
 
@@ -26,10 +27,11 @@ Label claims as: proposed, implemented, verified by a named check, simulated, ph
 - No QPU default: `hardware_execution_enabled` is false. Do not submit jobs, inspect IBM balances, or implement a provider submission path unless a later stage prompt authorizes it.
 - No scheduled tasks, GitHub Actions, autonomous campaigns, automatic resume/packager/closeout watchers, or automatic publishing.
 - Do not scrape timing data. Do not train research models on sealed held-out partitions. Do not open held-out test outcomes.
-- Do not materialize training, tuning, calibration, test, or shift partitions beyond Phase 5's generated training+tuning block IDs (no calib/eval/test materialisation).
+- Do not materialize reserved **final-test** or **shift** partitions. Phase 6 may register an isolated `phase6.calib.*` calibration cohort (implemented); do not treat it as final-test evidence.
 - Do not invoke `formulation_gate_c_closure_check`. Use `python -m f1q.formulation.stage4_closure` for the bounded Stage 4 gate only if re-verification is separately authorised.
 - Do not resume `e85ee977-…` or `41c28597-…`.
 - Do not alter frozen Phase 5 evidence under `evidence/stage5/<run_id>/` after publication.
+- Do not begin Phase 7 automatically; feasibility ≠ permission.
 
 ## Commands
 
@@ -44,7 +46,9 @@ python -m f1q run --plan simulator_repair
 python -m f1q run --plan formulation_check
 python -m f1q run --plan formulation_repair_check
 python -m f1q run --plan phase5
+python -m f1q run --plan phase6
 python -m f1q.stage5
+python -m f1q.stage6
 python -m f1q.formulation.stage4_closure
 python -m f1q resume --run-id <id>
 python -m f1q receipt --run-id <id>
@@ -59,10 +63,10 @@ python -m f1q simulator diagnostic-stage3-3 [--write|--verify|--verify-historica
 
 Natural language later:
 
-- **do a run** -- execute the next authorized unit in the recorded plan once. It must not expand into the reserved corpus or start Stage 6/hardware unless authorised.
+- **do a run** -- execute the next authorized unit in the recorded plan once. It must not expand into the reserved corpus or start Stage 7/hardware unless authorised.
 - **resume** -- recover the identified incomplete run. If several exist, list IDs; do not guess. Never suggest resume for archived legacy Gate C runs.
 - **show status** -- read the ledger and integrity checks.
-- **push to GitHub** -- separate publication instruction only.
+- **push to GitHub** -- separate publication instruction only (Phase 6 user prompt authorised push for this stage's commit).
 
 ## Run / resume semantics
 
@@ -70,12 +74,14 @@ A `run` is an execution container, not automatically one scientific observation.
 
 Preserved Stage 4 identifiers: `e8b87881-…`, `c4d0a199-…`, `e85ee977-…` (40 archived / 64 PARTIAL), `41c28597-…` (21 archived files; interrupted; no completed receipt). Do not overwrite them.
 
+Preserved Stage 5/6 identifiers: Phase 5 `6ad68021-…` (historical), `e6b3588b-…` (corrected), final_acceptance_repair; Phase 6 `bd83cb22-…`.
+
 ## Simulator versions (current tree)
 
 - `simulator_version`: **1.0.4**
 - `interface_version`: **3.1.0**
 
-Package constants, YAML configs, and engine state must agree (`load_simulator_config` fails closed on mismatch). Package version: **0.5.0**.
+Package constants, YAML configs, and engine state must agree (`load_simulator_config` fails closed on mismatch). Package version: **0.5.0** (Stage 6 module `0.6.0`).
 
 ## GitHub
 

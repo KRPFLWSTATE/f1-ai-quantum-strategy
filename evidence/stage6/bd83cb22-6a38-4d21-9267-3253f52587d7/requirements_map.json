@@ -1,0 +1,68 @@
+{
+  "phase6_requirements": [
+    {
+      "dossier": "\u00a7\u00a711\u201316",
+      "evidence": "protocol_freeze.json",
+      "id": "P6-1",
+      "req": "Frozen models/policies/circuits before calibration"
+    },
+    {
+      "dossier": "\u00a77/\u00a718",
+      "evidence": "calibration_splits.json",
+      "id": "P6-2",
+      "req": "24 calibration blocks, 3/family, SC+VSC cases"
+    },
+    {
+      "dossier": "\u00a712\u201313/\u00a717",
+      "evidence": "pilot_receipt.json",
+      "id": "P6-3",
+      "req": "C0/C1 p=1/2; learned/fixed/NN/random; classical refs"
+    },
+    {
+      "dossier": "\u00a718\u201319",
+      "evidence": "statistical_sizing.json",
+      "id": "P6-4",
+      "req": "Precision targets + sizing; headroom gate"
+    },
+    {
+      "dossier": "\u00a717",
+      "evidence": "capacity_estimates.json",
+      "id": "P6-5",
+      "req": "Machine capacity + Phase 7 resource estimates"
+    },
+    {
+      "dossier": "\u00a710/\u00a726 Gate E",
+      "evidence": "novelty_comparison.json / STAGE_6_NOVELTY_COMPARISON.md",
+      "id": "P6-6",
+      "req": "Scientific value / novelty comparison"
+    },
+    {
+      "dossier": "\u00a726 Gate F",
+      "evidence": "capacity_estimates.json + sizing",
+      "id": "P6-7",
+      "req": "Local precision and resource gate"
+    },
+    {
+      "dossier": "\u00a715/\u00a723",
+      "evidence": "causal_adapter.json",
+      "id": "P6-8",
+      "req": "Causal/operational integration assessment"
+    }
+  ],
+  "phase7_planned_not_executed": [
+    "Full ideal circuit panel (dossier counts)",
+    "Held-out primary analysis",
+    "Ablation matrix",
+    "Fresh variational-reference campaign at dossier cap"
+  ],
+  "phase8_hardware_deferred": [
+    "IBM backend selection",
+    "QPU submission path",
+    "Hardware quality/latency blocks"
+  ],
+  "unresolved_prerequisites": [
+    "Causal model change + retraining for operational readiness",
+    "Nonzero headroom for superiority path",
+    "Dated amendment if reduced Phase 7 matrix used before final-test access"
+  ]
+}

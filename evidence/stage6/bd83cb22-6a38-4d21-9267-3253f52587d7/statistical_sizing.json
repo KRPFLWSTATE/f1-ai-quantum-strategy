@@ -1,0 +1,68 @@
+{
+  "headroom_gate": {
+    "DEVELOPMENT_HEADROOM": "ZERO",
+    "SUPERIORITY_PATH_AVAILABLE": false,
+    "do_not_power_impossible_superiority": true,
+    "do_not_use_zero_variance_for_80_block_floor": true
+  },
+  "mechanism": {
+    "block_mean_sd_mechanism_regret": 0.0,
+    "blocks_per_family_nominal": 3,
+    "limitation": "Only 3 calibration blocks/family \u2014 pilot uncertainty is large",
+    "n_blocks_observed": 24,
+    "precision_targets": {
+      "declared_before_calibration_outcomes": true,
+      "do_not_transfer_operational_margin_to_circuit_probs": true,
+      "mechanism_endpoints": {
+        "best_of_pool_normalised_regret": {
+          "justification": "Mechanism boundary endpoint on synthetic A2 loss; looser than operational h=0.01 because estimand is circuit-sample regret not race-outcome delta",
+          "target_halfwidth_per_block_mean": 0.05
+        },
+        "exact_ideal_legal_probability": {
+          "justification": "statevector ideal distribution is deterministic given params",
+          "target": "report exact value; no sampling precision target"
+        },
+        "strict_improvement_vs_exact": {
+          "justification": "When exact incumbent dominates, estimand is structurally zero",
+          "target": "point estimate with declared tolerance",
+          "tolerance": 1e-08
+        }
+      },
+      "operational_endpoints": {
+        "reason": "Causal operational evaluator not integrated; dossier \u03b4/h sizing NOT_APPLICABLE",
+        "status": "NOT_ELIGIBLE"
+      }
+    },
+    "stratified_bootstrap": "preserve SC/VSC pairing and policy seeds within blocks; equal family weight"
+  },
+  "monte_carlo_operational": {
+    "dossier_world_candidates": [
+      2048,
+      8192,
+      32768
+    ],
+    "preflight": "blocked",
+    "reason": "Eligible simulator-outcome pilot requires operational evaluator with separate train/online/final random banks and event-keyed CRN; unavailable/unaffordable here. Do not substitute surrogate A2 objective variation for simulated race-outcome uncertainty.",
+    "status": "NOT_ESTIMABLE_FOR_OPERATIONAL_WORLDS"
+  },
+  "operational_superiority_sizing": {
+    "delta": 0.02,
+    "formula_power": "n=((1.96+0.84)*s/delta)^2",
+    "formula_precision": "n=(1.96*s/h)^2",
+    "h": 0.01,
+    "note": "Do not use zero variance to assert an 80-block superiority study is powered",
+    "reasons": [
+      "CAUSAL_OPERATIONAL_READINESS=false",
+      "operational independent evaluator campaign not available in Phase 6",
+      "DEVELOPMENT_HEADROOM=ZERO on calibration cases with exact incumbent",
+      "headroom gate blocks H1 superiority before test access"
+    ],
+    "status": "NOT_APPLICABLE"
+  },
+  "proposed_phase7_test_blocks_if_mechanism_only": {
+    "calibration_reuse_forbidden_as_final_test": true,
+    "note": "Mechanism/boundary study \u2014 not H1 superiority",
+    "requires_dated_amendment_before_final_test_access": true,
+    "suggested_held_out_mechanism_blocks_if_amended": 80
+  }
+}
