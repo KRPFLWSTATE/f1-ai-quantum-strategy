@@ -4,9 +4,9 @@ Independent research infrastructure for a **deadline-constrained two-car pit-str
 
 This repository is **not** affiliated with a Formula 1 team. It reports **no experimental results**. Completing software setup, a development preview, or simulator checks does not establish scientific novelty, F1 calibration, or hardware readiness.
 
-## Current scope -- Phase 6 A4 attempted (local; Gates E/F FAIL)
+## Current scope -- Phase 6 A4 measured non-admission (`INCOMPLETE_ENGINEERING`)
 
-Restricted independent race simulator (`simulator.v1` **1.0.4** / interface **3.1.0**), Stage 3.x validation/repair/evidence correction, Stage 4 local formulation closed with documented limitations, Phase 5 A2 pipeline, and **Phase 6 A4** checkpoint candidate-generation software. Authoritative A4 report: `docs/PHASE_6_A4_FINAL_REPORT.md`. A3 scientific conclusions are **superseded** (`SUPERSEDED_INVALID_IMPLEMENTATION`). A4 Gates E/F **FAIL** (measured 75-minute minima cannot fit every required block; training hybrid cases failed; calibration not opened). This does **not** establish quantum advantage, F1 calibration, held-out H1/H2/H3 evidence, or hardware readiness. Stage 4: `PROXY_HEADROOM: ZERO`. Legacy exhaustive Gate C remains `PARTIAL` / `ARCHIVED_DO_NOT_RESUME`.
+Restricted independent race simulator (`simulator.v1` **1.0.4** / interface **3.1.0**), Stage 3.x validation/repair/evidence correction, Stage 4 local formulation closed with documented limitations, Phase 5 A2 pipeline, and **Phase 6 A4** checkpoint candidate-generation software. Authoritative closure report: `docs/PHASE_6_A4_CLOSURE_REPORT.md` (run `3de109c7-…`). Historical A4 report `docs/PHASE_6_A4_FINAL_REPORT.md` (run `09806343-…`) is preserved. A3 scientific conclusions are **superseded** (`SUPERSEDED_INVALID_IMPLEMENTATION`). The 120/80/24 corpus was **not admitted** (projected wall exceeds the 60-minute reserve). Gates E/F **FAIL**. This does **not** establish quantum advantage, F1 calibration, held-out H1/H2/H3 evidence, or hardware readiness. Stage 4: `PROXY_HEADROOM: ZERO`. Legacy exhaustive Gate C remains `PARTIAL` / `ARCHIVED_DO_NOT_RESUME`.
 
 Scientific protocol status: **DRAFT** (`frozen: false`). Hardware execution: **disabled**. Additional spending: **zero**. `QPU_EXECUTION_AUTHORISED: false`. `NOVELTY_STATUS: PROPOSED_NOT_LITERATURE_VERIFIED`.
 

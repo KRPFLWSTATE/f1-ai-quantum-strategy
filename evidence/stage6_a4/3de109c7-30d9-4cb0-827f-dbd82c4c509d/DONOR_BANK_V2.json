@@ -1,0 +1,1394 @@
+{
+  "bank_hash": "a02282ad039e20313783b88dfd640b70c5edf15f462c0d460a0ab8369727b4da",
+  "construction_rule": "one_best_successful_donor_per_instance_family_tiebreak_best_value_scaled_then_params_hash",
+  "family_depths": {
+    "C0_p1": {
+      "donors": [
+        {
+          "best_params": [
+            -0.29455422225070554,
+            0.5259538215590831
+          ],
+          "best_value_scaled": 1.1464041250757127,
+          "betas": [
+            0.5259538215590831
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0001",
+          "donor_id": "bca41cb4adef361f835ae7aa24f6bd2496cca6368b86221f8c1c4b32067a25cd",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7073249690194,
+            "mean_gap_ahead": 1.4216635473291088,
+            "mean_tyre_age": 0.2943419904196929,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.228447421620329,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.29455422225070554
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "bca41cb4adef361f835ae7aa24f6bd2496cca6368b86221f8c1c4b32067a25cd",
+          "source_qubo_hash": "df820d9358fae2d021fcb3d6c174f07b726030cbf54937194fdfe2cb55d3d3c8",
+          "source_seed": 498720634
+        },
+        {
+          "best_params": [
+            0.32131566463165045,
+            -0.5151862877343714
+          ],
+          "best_value_scaled": 1.2960348947535314,
+          "betas": [
+            -0.5151862877343714
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+          "donor_id": "3b278f924333bf1912897022a775eeee4595a4e0f2ef992bb0cd016710752724",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2567456879611,
+            "mean_gap_ahead": 4.541895348065085,
+            "mean_tyre_age": 0.2944063820143856,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.216885843894488,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            0.32131566463165045
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "3b278f924333bf1912897022a775eeee4595a4e0f2ef992bb0cd016710752724",
+          "source_qubo_hash": "5bec5676525355522734f207798d8287744d1803019ce808028e2324fd41c1cb",
+          "source_seed": 600793203
+        },
+        {
+          "best_params": [
+            -0.27825235376159324,
+            0.5189910099486107
+          ],
+          "best_value_scaled": 1.163846036282737,
+          "betas": [
+            0.5189910099486107
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0002",
+          "donor_id": "5f4d065c6dccf1587937b02b6447be7794c01d7e6c2321bf005b25b2c4684b44",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 11.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 956.7295381474889,
+            "mean_gap_ahead": 1.4130817727710536,
+            "mean_tyre_age": 0.2944462838686366,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.233338541129303,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 12.0
+          },
+          "gammas": [
+            -0.27825235376159324
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "5f4d065c6dccf1587937b02b6447be7794c01d7e6c2321bf005b25b2c4684b44",
+          "source_qubo_hash": "4d36453325111d5a1e1b41a516565c44a8700364b9998de338c2d5967ba0fbac",
+          "source_seed": 1852042933
+        },
+        {
+          "best_params": [
+            -0.2713499163657297,
+            0.6048846573990143
+          ],
+          "best_value_scaled": 1.1675444873016472,
+          "betas": [
+            0.6048846573990143
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0001",
+          "donor_id": "7f63fe2003bbc11ca4d29b70ca864c190e25c53b99b028b122ae0118d0765e8c",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2740490619555,
+            "mean_gap_ahead": 4.552242643499809,
+            "mean_tyre_age": 0.29434174343158104,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.21688067280786,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.2713499163657297
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "7f63fe2003bbc11ca4d29b70ca864c190e25c53b99b028b122ae0118d0765e8c",
+          "source_qubo_hash": "ad03a0383ef8fe1d8b9205e7c98dc6b8746c5cf078e0762f8dd9a4849ba57424",
+          "source_seed": 550314469
+        },
+        {
+          "best_params": [
+            0.272098693890757,
+            -0.5254633004829663
+          ],
+          "best_value_scaled": 1.1612397794770026,
+          "betas": [
+            -0.5254633004829663
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_dense.0001",
+          "donor_id": "7ad7dcecf88f69a70b6c439324ce903099b4fd3ebed56af345c8071e41d8271a",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7067058032143,
+            "mean_gap_ahead": 1.411914934323836,
+            "mean_tyre_age": 0.2944387755957344,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.174104682149062,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            0.272098693890757
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "7ad7dcecf88f69a70b6c439324ce903099b4fd3ebed56af345c8071e41d8271a",
+          "source_qubo_hash": "4a7b656814777af252299b949808ae0388dab535e8f8486d12b4599c3ddf3e56",
+          "source_seed": 1263362988
+        },
+        {
+          "best_params": [
+            -0.24838285774607982,
+            0.5616707658978793
+          ],
+          "best_value_scaled": 1.2507903420498874,
+          "betas": [
+            0.5616707658978793
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_sparse.0001",
+          "donor_id": "dcdfa9e14d786a72d2cb13b25b8c1ac9c78c056ef18d45dde6690c6286639817",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2381151299988,
+            "mean_gap_ahead": 4.5320171734687005,
+            "mean_tyre_age": 0.29448545128798637,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.16234671489092,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.24838285774607982
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "dcdfa9e14d786a72d2cb13b25b8c1ac9c78c056ef18d45dde6690c6286639817",
+          "source_qubo_hash": "617a129914d7c68cbeeeaae4eabf954ec71c48413e6f20b4fca41f3ecb582545",
+          "source_seed": 774237052
+        },
+        {
+          "best_params": [
+            -0.27899772342189916,
+            0.6649466934854815
+          ],
+          "best_value_scaled": 1.330095487956919,
+          "betas": [
+            0.6649466934854815
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_dense.0001",
+          "donor_id": "51a5946da605cdc0e45efcf5304edc420b9bf2539133733a75256ddcd1807fbc",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7451949469278,
+            "mean_gap_ahead": 1.4097729273437782,
+            "mean_tyre_age": 0.29448745134772003,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.174151416348822,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.27899772342189916
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "51a5946da605cdc0e45efcf5304edc420b9bf2539133733a75256ddcd1807fbc",
+          "source_qubo_hash": "04558e0d331fbedb9e32fc9747b628564b7374b31b7847136457e1316275d5df",
+          "source_seed": 1498471348
+        },
+        {
+          "best_params": [
+            -0.21329589703450758,
+            0.548932446619885
+          ],
+          "best_value_scaled": 1.74319341518038,
+          "betas": [
+            0.548932446619885
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000",
+          "donor_id": "342b7c12209d53eeee0763361c8a66137b5e65bb0a894fa458eb871f454db859",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 750.2594986925822,
+            "mean_gap_ahead": 4.544221627284742,
+            "mean_tyre_age": 0.29440677150794664,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.157629912164389,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            -0.21329589703450758
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "342b7c12209d53eeee0763361c8a66137b5e65bb0a894fa458eb871f454db859",
+          "source_qubo_hash": "3955b02ea6249ddc71e4675d081e0e45b8c9ef2d97dd24d39cb96b0dff74b889",
+          "source_seed": 1327376903
+        }
+      ],
+      "family": "C0",
+      "n_selected": 8,
+      "n_successful_source_starts": 72,
+      "p": 1,
+      "represented_instance_families": [
+        "fam.green_pit_high.tyre_near_linear.traffic_dense",
+        "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+        "fam.green_pit_low.tyre_near_linear.traffic_dense",
+        "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_low.tyre_nonlinear.traffic_sparse"
+      ]
+    },
+    "C0_p2": {
+      "donors": [
+        {
+          "best_params": [
+            0.31030014436353515,
+            -0.20618119997255815,
+            -1.1091661131641717,
+            0.39414394282733634
+          ],
+          "best_value_scaled": 1.067854228069956,
+          "betas": [
+            -1.1091661131641717,
+            0.39414394282733634
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+          "donor_id": "729188e71c3f6dc98219b1b92a3b1cc869f2a0ae2dddafed3cc772b73a5aaa2c",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 11.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 956.7208731221808,
+            "mean_gap_ahead": 1.4092599179837397,
+            "mean_tyre_age": 0.2944726953775193,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.233417513729904,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 12.0
+          },
+          "gammas": [
+            0.31030014436353515,
+            -0.20618119997255815
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "729188e71c3f6dc98219b1b92a3b1cc869f2a0ae2dddafed3cc772b73a5aaa2c",
+          "source_qubo_hash": "4d8444fb46d75c0ee78aa657df0a4340a65b3505127353bf1783705ec620e2df",
+          "source_seed": 979839527
+        },
+        {
+          "best_params": [
+            -0.5022329584529903,
+            0.19735500364451575,
+            -0.017187509722930094,
+            0.5246755025248867
+          ],
+          "best_value_scaled": 1.22724812534772,
+          "betas": [
+            -0.017187509722930094,
+            0.5246755025248867
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0001",
+          "donor_id": "35b8a47abca46bc678771ace328d467957188be68f6d619427bced48aee7143f",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2567456879611,
+            "mean_gap_ahead": 4.541895348065085,
+            "mean_tyre_age": 0.2944063820143856,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.216885843894488,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.5022329584529903,
+            0.19735500364451575
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "35b8a47abca46bc678771ace328d467957188be68f6d619427bced48aee7143f",
+          "source_qubo_hash": "5bec5676525355522734f207798d8287744d1803019ce808028e2324fd41c1cb",
+          "source_seed": 600794220
+        },
+        {
+          "best_params": [
+            0.2571892387564336,
+            0.016419624053029658,
+            -0.8588389108325026,
+            0.23628565708684737
+          ],
+          "best_value_scaled": 1.3538185484365102,
+          "betas": [
+            -0.8588389108325026,
+            0.23628565708684737
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+          "donor_id": "1ce4de2522aca654bb7aa4306c26888c7838f12d771c84a7c310f39a87356d5a",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7439276194624,
+            "mean_gap_ahead": 1.3985993632541402,
+            "mean_tyre_age": 0.294598124578072,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.228929196034498,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            0.2571892387564336,
+            0.016419624053029658
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "1ce4de2522aca654bb7aa4306c26888c7838f12d771c84a7c310f39a87356d5a",
+          "source_qubo_hash": "d3b0f304ed8a8c00929b4447e1e71085aece8dd2cf86d83003ff4a0ea35b49ed",
+          "source_seed": 689622523
+        },
+        {
+          "best_params": [
+            -0.2344638284078747,
+            -0.1370064524530371,
+            0.5025177767915413,
+            0.23134473710046916
+          ],
+          "best_value_scaled": 1.2885121624837554,
+          "betas": [
+            0.5025177767915413,
+            0.23134473710046916
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0000",
+          "donor_id": "366f96191cf2d9a613ec4be8aa2811ac17433bd3e662c3b5e5cd4180eb95ad9d",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 750.2481604218594,
+            "mean_gap_ahead": 4.534031608922707,
+            "mean_tyre_age": 0.2945009227663762,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.212181392390384,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            -0.2344638284078747,
+            -0.1370064524530371
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "366f96191cf2d9a613ec4be8aa2811ac17433bd3e662c3b5e5cd4180eb95ad9d",
+          "source_qubo_hash": "c080169c7aa58b221eb6bfe7fd6506e810ab886ef83e9996f4ddb6847dd37897",
+          "source_seed": 1859260759
+        },
+        {
+          "best_params": [
+            0.3102763686671494,
+            -0.4563275791144912,
+            -0.6832018506476798,
+            0.17453706115309364
+          ],
+          "best_value_scaled": 1.1857089095919384,
+          "betas": [
+            -0.6832018506476798,
+            0.17453706115309364
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_dense.0001",
+          "donor_id": "34d0c04d410d75a41f010941aee19e9bfd6dbb7c1be2796361ff3ec725a45050",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7067058032143,
+            "mean_gap_ahead": 1.411914934323836,
+            "mean_tyre_age": 0.2944387755957344,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.174104682149062,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            0.3102763686671494,
+            -0.4563275791144912
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "34d0c04d410d75a41f010941aee19e9bfd6dbb7c1be2796361ff3ec725a45050",
+          "source_qubo_hash": "4a7b656814777af252299b949808ae0388dab535e8f8486d12b4599c3ddf3e56",
+          "source_seed": 1263364005
+        },
+        {
+          "best_params": [
+            0.1279951256704033,
+            0.5071490666892853,
+            -0.49166973677986436,
+            -0.21033164811072053
+          ],
+          "best_value_scaled": 1.06952606696405,
+          "betas": [
+            -0.49166973677986436,
+            -0.21033164811072053
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000",
+          "donor_id": "13cc198be9745d775c3f2d24ac1d3c90c547a14326ed512ee674108615eb199b",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 750.2496441648675,
+            "mean_gap_ahead": 4.543498456641818,
+            "mean_tyre_age": 0.2943773319172612,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.157628028030585,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            0.1279951256704033,
+            0.5071490666892853
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "13cc198be9745d775c3f2d24ac1d3c90c547a14326ed512ee674108615eb199b",
+          "source_qubo_hash": "99e2220d81979ece440d34feeaa6f70d1546f49362145cbd2a0ae278e13e0f8f",
+          "source_seed": 1750207007
+        },
+        {
+          "best_params": [
+            0.220728854967025,
+            0.07978375952736927,
+            -0.32721610621403524,
+            -0.2818315602918239
+          ],
+          "best_value_scaled": 1.1631040372105559,
+          "betas": [
+            -0.32721610621403524,
+            -0.2818315602918239
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_dense.0002",
+          "donor_id": "d136d205288e207bac34c476529ff03abf04458d773f42eaae0313d1ba016b60",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 11.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 956.7418944744945,
+            "mean_gap_ahead": 1.4219427256004638,
+            "mean_tyre_age": 0.2943646392109268,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.17860802964012,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 12.0
+          },
+          "gammas": [
+            0.220728854967025,
+            0.07978375952736927
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "d136d205288e207bac34c476529ff03abf04458d773f42eaae0313d1ba016b60",
+          "source_qubo_hash": "20e9b0e60dad048f82231b42bb7f3d9dee61158c1329cbbff95a0ae13bb2958f",
+          "source_seed": 1201353058
+        },
+        {
+          "best_params": [
+            -0.3451308220199033,
+            0.1642586896979229,
+            -1.466357863543541,
+            -0.6038064267076764
+          ],
+          "best_value_scaled": 1.4160042694713484,
+          "betas": [
+            -1.466357863543541,
+            -0.6038064267076764
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0001",
+          "donor_id": "d17ef7b019c9ca4ce08d0fa74b4eaacea53cb3e6e81eabb783d668b902c776ab",
+          "evals": 15,
+          "family": "C0",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2576558280365,
+            "mean_gap_ahead": 4.5375402532613895,
+            "mean_tyre_age": 0.29447746343193854,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.162346075862436,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.3451308220199033,
+            0.1642586896979229
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "d17ef7b019c9ca4ce08d0fa74b4eaacea53cb3e6e81eabb783d668b902c776ab",
+          "source_qubo_hash": "40dffeac87fed4e085b412628aeb3f16d661dbb4ce4dadd75c88332f1dd38d9c",
+          "source_seed": 793895915
+        }
+      ],
+      "family": "C0",
+      "n_selected": 8,
+      "n_successful_source_starts": 72,
+      "p": 2,
+      "represented_instance_families": [
+        "fam.green_pit_high.tyre_near_linear.traffic_dense",
+        "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+        "fam.green_pit_low.tyre_near_linear.traffic_dense",
+        "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_low.tyre_nonlinear.traffic_sparse"
+      ]
+    },
+    "C1_p1": {
+      "donors": [
+        {
+          "best_params": [
+            2.0733769731542493,
+            -0.33348965771080963
+          ],
+          "best_value_scaled": 0.03393669991179088,
+          "betas": [
+            -0.33348965771080963
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+          "donor_id": "9b3fa8ed377e768de8f5fb1de250e1b0f3ab80a74457eb9531a3ec561eb338f2",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 11.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 956.7208731221808,
+            "mean_gap_ahead": 1.4092599179837397,
+            "mean_tyre_age": 0.2944726953775193,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.233417513729904,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 12.0
+          },
+          "gammas": [
+            2.0733769731542493
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "9b3fa8ed377e768de8f5fb1de250e1b0f3ab80a74457eb9531a3ec561eb338f2",
+          "source_qubo_hash": "4d8444fb46d75c0ee78aa657df0a4340a65b3505127353bf1783705ec620e2df",
+          "source_seed": 979839609
+        },
+        {
+          "best_params": [
+            1.0786538530251046,
+            -0.2693801661365359
+          ],
+          "best_value_scaled": 0.033972921256535255,
+          "betas": [
+            -0.2693801661365359
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+          "donor_id": "e1f09707e950371bf586067cee0c15c17eb0e4981e2ad0cb767198b0e3bfde11",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 750.2163673257814,
+            "mean_gap_ahead": 4.518043303898496,
+            "mean_tyre_age": 0.2946048173826299,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.212188041645824,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            1.0786538530251046
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "e1f09707e950371bf586067cee0c15c17eb0e4981e2ad0cb767198b0e3bfde11",
+          "source_qubo_hash": "0a13da4ecca5f3c8485429463da29150a9b388dcb30eec88740f5f4c54fd3e8a",
+          "source_seed": 1350862984
+        },
+        {
+          "best_params": [
+            0.8846039634219421,
+            -0.21375952907055668
+          ],
+          "best_value_scaled": 0.03403767095153783,
+          "betas": [
+            -0.21375952907055668
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0002",
+          "donor_id": "2a16cc32a0f38e691a4fbfefb312ffb5d9322f6550821e57438f7eef0f8cbf82",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 11.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 956.7295381474889,
+            "mean_gap_ahead": 1.4130817727710536,
+            "mean_tyre_age": 0.2944462838686366,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.233338541129303,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 12.0
+          },
+          "gammas": [
+            0.8846039634219421
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "2a16cc32a0f38e691a4fbfefb312ffb5d9322f6550821e57438f7eef0f8cbf82",
+          "source_qubo_hash": "4d36453325111d5a1e1b41a516565c44a8700364b9998de338c2d5967ba0fbac",
+          "source_seed": 1852044032
+        },
+        {
+          "best_params": [
+            -2.120035892631197,
+            0.3584754441617867
+          ],
+          "best_value_scaled": 0.0338935157713201,
+          "betas": [
+            0.3584754441617867
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0001",
+          "donor_id": "2c14f013ca35f7f71f1a7e2fc0850e4aff40cb70849491a741b0a14112f89129",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2740490619555,
+            "mean_gap_ahead": 4.552242643499809,
+            "mean_tyre_age": 0.29434174343158104,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.21688067280786,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -2.120035892631197
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "2c14f013ca35f7f71f1a7e2fc0850e4aff40cb70849491a741b0a14112f89129",
+          "source_qubo_hash": "ad03a0383ef8fe1d8b9205e7c98dc6b8746c5cf078e0762f8dd9a4849ba57424",
+          "source_seed": 550313568
+        },
+        {
+          "best_params": [
+            -2.5921644161805824,
+            0.5215431521849303
+          ],
+          "best_value_scaled": 0.0315472883967826,
+          "betas": [
+            0.5215431521849303
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_dense.0001",
+          "donor_id": "82069a7e2a374599be5dc8d3e6e9df4a1ce4599754c0c1ee56669934f6ac18bd",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7067058032143,
+            "mean_gap_ahead": 1.411914934323836,
+            "mean_tyre_age": 0.2944387755957344,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.174104682149062,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -2.5921644161805824
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "82069a7e2a374599be5dc8d3e6e9df4a1ce4599754c0c1ee56669934f6ac18bd",
+          "source_qubo_hash": "4a7b656814777af252299b949808ae0388dab535e8f8486d12b4599c3ddf3e56",
+          "source_seed": 1263362087
+        },
+        {
+          "best_params": [
+            2.083810962924814,
+            -0.4192714284323855
+          ],
+          "best_value_scaled": 0.03151850889671835,
+          "betas": [
+            -0.4192714284323855
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_sparse.0001",
+          "donor_id": "e05ec05fa15e652c735571bbfb1573ce32e97e3eba8e90c9337a0e31a26bd1c0",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2381151299988,
+            "mean_gap_ahead": 4.5320171734687005,
+            "mean_tyre_age": 0.29448545128798637,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.16234671489092,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            2.083810962924814
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "e05ec05fa15e652c735571bbfb1573ce32e97e3eba8e90c9337a0e31a26bd1c0",
+          "source_qubo_hash": "617a129914d7c68cbeeeaae4eabf954ec71c48413e6f20b4fca41f3ecb582545",
+          "source_seed": 774238151
+        },
+        {
+          "best_params": [
+            1.9139726615961827,
+            -0.3819519915986189
+          ],
+          "best_value_scaled": 0.03155287978559427,
+          "betas": [
+            -0.3819519915986189
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_dense.0000",
+          "donor_id": "fce7157dab49adb879946ac7458ea768d6f53b824b1389efff1491bd76ea14d7",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 776.7222044347074,
+            "mean_gap_ahead": 1.4140377766332413,
+            "mean_tyre_age": 0.2944329055482407,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.169350829210304,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            1.9139726615961827
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "fce7157dab49adb879946ac7458ea768d6f53b824b1389efff1491bd76ea14d7",
+          "source_qubo_hash": "53c60bc1921bfa8bd090a75b091d3085bb5a143781af5f380cbe171836f8e483",
+          "source_seed": 1245279497
+        },
+        {
+          "best_params": [
+            -1.4807715993221544,
+            0.3900915969330632
+          ],
+          "best_value_scaled": 0.031555875901151886,
+          "betas": [
+            0.3900915969330632
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0000",
+          "donor_id": "0a367e9f6f5da1440a885b360ca631de727a5ac3955b81091052bbb6d6d5a722",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 750.2594986925822,
+            "mean_gap_ahead": 4.544221627284742,
+            "mean_tyre_age": 0.29440677150794664,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.157629912164389,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            -1.4807715993221544
+          ],
+          "n_qubits": 20,
+          "p": 1,
+          "params_hash": "0a367e9f6f5da1440a885b360ca631de727a5ac3955b81091052bbb6d6d5a722",
+          "source_qubo_hash": "3955b02ea6249ddc71e4675d081e0e45b8c9ef2d97dd24d39cb96b0dff74b889",
+          "source_seed": 1327376002
+        }
+      ],
+      "family": "C1",
+      "n_selected": 8,
+      "n_successful_source_starts": 72,
+      "p": 1,
+      "represented_instance_families": [
+        "fam.green_pit_high.tyre_near_linear.traffic_dense",
+        "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+        "fam.green_pit_low.tyre_near_linear.traffic_dense",
+        "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_low.tyre_nonlinear.traffic_sparse"
+      ]
+    },
+    "C1_p2": {
+      "donors": [
+        {
+          "best_params": [
+            -0.01792740490331826,
+            -0.19127849549488246,
+            1.5411981482736339,
+            0.41053100761551486
+          ],
+          "best_value_scaled": 0.03264463933726679,
+          "betas": [
+            1.5411981482736339,
+            0.41053100761551486
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_dense.0002",
+          "donor_id": "1202a10d3277f269a1f8e7d1a8c678621706da32a958ff30f5b11b2004d853fe",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 11.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 956.7208731221808,
+            "mean_gap_ahead": 1.4092599179837397,
+            "mean_tyre_age": 0.2944726953775193,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.233417513729904,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 12.0
+          },
+          "gammas": [
+            -0.01792740490331826,
+            -0.19127849549488246
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "1202a10d3277f269a1f8e7d1a8c678621706da32a958ff30f5b11b2004d853fe",
+          "source_qubo_hash": "4d8444fb46d75c0ee78aa657df0a4340a65b3505127353bf1783705ec620e2df",
+          "source_seed": 979838626
+        },
+        {
+          "best_params": [
+            -0.20450644138791418,
+            -0.6910268683128806,
+            1.2262911136061105,
+            0.9744037530563097
+          ],
+          "best_value_scaled": 0.03270492189404263,
+          "betas": [
+            1.2262911136061105,
+            0.9744037530563097
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_near_linear.traffic_sparse.0000",
+          "donor_id": "eac453adccd56a41558b89a9d383a9408d6f5443956f7a08e72d178277e8e557",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 750.2163673257814,
+            "mean_gap_ahead": 4.518043303898496,
+            "mean_tyre_age": 0.2946048173826299,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.212188041645824,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            -0.20450644138791418,
+            -0.6910268683128806
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "eac453adccd56a41558b89a9d383a9408d6f5443956f7a08e72d178277e8e557",
+          "source_qubo_hash": "0a13da4ecca5f3c8485429463da29150a9b388dcb30eec88740f5f4c54fd3e8a",
+          "source_seed": 1350863001
+        },
+        {
+          "best_params": [
+            -0.9176129318791735,
+            1.4678023470385555,
+            0.5573313400572923,
+            -0.25502334760548606
+          ],
+          "best_value_scaled": 0.033804210362426104,
+          "betas": [
+            0.5573313400572923,
+            -0.25502334760548606
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_dense.0001",
+          "donor_id": "e13a05c2d27668a1c3d3c45f7b508339639d317a3b1fa35e3d7c7bed5fae4246",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7439276194624,
+            "mean_gap_ahead": 1.3985993632541402,
+            "mean_tyre_age": 0.294598124578072,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.228929196034498,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.9176129318791735,
+            1.4678023470385555
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "e13a05c2d27668a1c3d3c45f7b508339639d317a3b1fa35e3d7c7bed5fae4246",
+          "source_qubo_hash": "d3b0f304ed8a8c00929b4447e1e71085aece8dd2cf86d83003ff4a0ea35b49ed",
+          "source_seed": 689621622
+        },
+        {
+          "best_params": [
+            -0.8786252995814074,
+            -0.13584163324522153,
+            1.5933905529930779,
+            0.3409183352141421
+          ],
+          "best_value_scaled": 0.032738906323699496,
+          "betas": [
+            1.5933905529930779,
+            0.3409183352141421
+          ],
+          "block_id": "a4.anchor.fam.green_pit_high.tyre_nonlinear.traffic_sparse.0001",
+          "donor_id": "36b0fc11f3dfb82bf87c6b78fd5029db2bfa4d21dc855fb83d3022d506529e8f",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2740490619555,
+            "mean_gap_ahead": 4.552242643499809,
+            "mean_tyre_age": 0.29434174343158104,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 8.21688067280786,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.8786252995814074,
+            -0.13584163324522153
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "36b0fc11f3dfb82bf87c6b78fd5029db2bfa4d21dc855fb83d3022d506529e8f",
+          "source_qubo_hash": "ad03a0383ef8fe1d8b9205e7c98dc6b8746c5cf078e0762f8dd9a4849ba57424",
+          "source_seed": 550313585
+        },
+        {
+          "best_params": [
+            -0.035648459009333666,
+            -0.5780741540702522,
+            1.483213297258249,
+            0.1238322010799401
+          ],
+          "best_value_scaled": 0.031300184547289805,
+          "betas": [
+            1.483213297258249,
+            0.1238322010799401
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_dense.0001",
+          "donor_id": "ca3181abb47dc3160aa2555ac60e85ab0b309c2e1baba43b6310bc3daec8eee7",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 866.7067058032143,
+            "mean_gap_ahead": 1.411914934323836,
+            "mean_tyre_age": 0.2944387755957344,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.174104682149062,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.035648459009333666,
+            -0.5780741540702522
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "ca3181abb47dc3160aa2555ac60e85ab0b309c2e1baba43b6310bc3daec8eee7",
+          "source_qubo_hash": "4a7b656814777af252299b949808ae0388dab535e8f8486d12b4599c3ddf3e56",
+          "source_seed": 1263362104
+        },
+        {
+          "best_params": [
+            0.8727557057868203,
+            -0.11438451822953383,
+            -0.8188355394767561,
+            0.48452036725184294
+          ],
+          "best_value_scaled": 0.031233049089277088,
+          "betas": [
+            -0.8188355394767561,
+            0.48452036725184294
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_near_linear.traffic_sparse.0000",
+          "donor_id": "1a48da2a561cfad2024d2f828cb1b9df3becbda2fd0b21b49c05ef6465a3a26d",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+          "features": {
+            "completed_laps": 9.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 750.2496441648675,
+            "mean_gap_ahead": 4.543498456641818,
+            "mean_tyre_age": 0.2943773319172612,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.157628028030585,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 10.0
+          },
+          "gammas": [
+            0.8727557057868203,
+            -0.11438451822953383
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "1a48da2a561cfad2024d2f828cb1b9df3becbda2fd0b21b49c05ef6465a3a26d",
+          "source_qubo_hash": "99e2220d81979ece440d34feeaa6f70d1546f49362145cbd2a0ae278e13e0f8f",
+          "source_seed": 1750206106
+        },
+        {
+          "best_params": [
+            0.6556191725866666,
+            1.4051409459385056,
+            -1.3302129800726352,
+            -1.7091043376123023
+          ],
+          "best_value_scaled": 0.03104281126580274,
+          "betas": [
+            -1.3302129800726352,
+            -1.7091043376123023
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_dense.0002",
+          "donor_id": "1766a6684964b3510bfe7c9147d00d7109c30ef8b306c092ca8969391a8bed2b",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+          "features": {
+            "completed_laps": 11.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 956.7418944744945,
+            "mean_gap_ahead": 1.4219427256004638,
+            "mean_tyre_age": 0.2943646392109268,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.17860802964012,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 12.0
+          },
+          "gammas": [
+            0.6556191725866666,
+            1.4051409459385056
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "1766a6684964b3510bfe7c9147d00d7109c30ef8b306c092ca8969391a8bed2b",
+          "source_qubo_hash": "20e9b0e60dad048f82231b42bb7f3d9dee61158c1329cbbff95a0ae13bb2958f",
+          "source_seed": 1201352157
+        },
+        {
+          "best_params": [
+            -0.2303291624917601,
+            2.552624960725919,
+            0.7382901455001387,
+            -0.5233312325741214
+          ],
+          "best_value_scaled": 0.031116593728096546,
+          "betas": [
+            0.7382901455001387,
+            -0.5233312325741214
+          ],
+          "block_id": "a4.anchor.fam.green_pit_low.tyre_nonlinear.traffic_sparse.0001",
+          "donor_id": "44f2cd26fcd55d06fff5f77d20ad2d509002f210ec7beeccf3cd2d329c6066b0",
+          "evals": 15,
+          "family": "C1",
+          "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+          "features": {
+            "completed_laps": 10.0,
+            "crew_overlap_cost": 0.12,
+            "deadline_s": 840.2576558280365,
+            "mean_gap_ahead": 4.5375402532613895,
+            "mean_tyre_age": 0.29447746343193854,
+            "n_delay_actions": 12.0,
+            "n_expired": 0.0,
+            "n_legal_joint": 100.0,
+            "n_logical_vars": 20.0,
+            "n_pit_now_actions": 6.0,
+            "penalty_M": 7.162346075862436,
+            "qubo_density": 0.775,
+            "regime_is_sc": 1.0,
+            "remaining_laps": 11.0
+          },
+          "gammas": [
+            -0.2303291624917601,
+            2.552624960725919
+          ],
+          "n_qubits": 20,
+          "p": 2,
+          "params_hash": "44f2cd26fcd55d06fff5f77d20ad2d509002f210ec7beeccf3cd2d329c6066b0",
+          "source_qubo_hash": "40dffeac87fed4e085b412628aeb3f16d661dbb4ce4dadd75c88332f1dd38d9c",
+          "source_seed": 793896014
+        }
+      ],
+      "family": "C1",
+      "n_selected": 8,
+      "n_successful_source_starts": 72,
+      "p": 2,
+      "represented_instance_families": [
+        "fam.green_pit_high.tyre_near_linear.traffic_dense",
+        "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+        "fam.green_pit_low.tyre_near_linear.traffic_dense",
+        "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+        "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+        "fam.green_pit_low.tyre_nonlinear.traffic_sparse"
+      ]
+    }
+  },
+  "schema_version": "f1q.a4.donor_bank.v2",
+  "source_anchor_path": "evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/ANCHOR_FITS.jsonl",
+  "source_anchor_sha256": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+  "source_run_id": "09806343-f940-4f33-9e0f-eb2855d0714b"
+}

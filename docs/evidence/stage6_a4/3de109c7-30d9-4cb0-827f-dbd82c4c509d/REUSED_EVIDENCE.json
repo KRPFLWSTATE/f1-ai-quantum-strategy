@@ -1,0 +1,59 @@
+{
+  "do_not_rerun_anchors": true,
+  "do_not_rerun_native_noise": true,
+  "items": [
+    {
+      "artifact": "MANIFEST.json",
+      "expected_hash": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "observed_hash": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "reuse": true,
+      "source_path": "evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/MANIFEST.json",
+      "source_run": "09806343-f940-4f33-9e0f-eb2855d0714b"
+    },
+    {
+      "artifact": "ANCHOR_FITS.jsonl",
+      "expected_hash": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "n_rows": 288,
+      "n_success": 288,
+      "n_unique_anchors": 24,
+      "observed_hash": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "reuse": true,
+      "schema_ok": true,
+      "source_path": "evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/ANCHOR_FITS.jsonl",
+      "source_run": "09806343-f940-4f33-9e0f-eb2855d0714b"
+    },
+    {
+      "artifact": "NATIVE_NOISE_CORRECTION.json",
+      "expected_hash": "5daa9944fe0bbc0e8c837d5002bf0e0bb271db559901480501d1fd57b3adb84d",
+      "observed_hash": "5daa9944fe0bbc0e8c837d5002bf0e0bb271db559901480501d1fd57b3adb84d",
+      "reuse": true,
+      "source_path": "evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/NATIVE_NOISE_CORRECTION.json",
+      "source_run": "09806343-f940-4f33-9e0f-eb2855d0714b"
+    },
+    {
+      "artifact": "A3_INVALIDATION.json",
+      "expected_hash": "4b9743aea6273eee511133b12e0fde130103aae10c5ec1002484f9a642cd277d",
+      "observed_hash": "4b9743aea6273eee511133b12e0fde130103aae10c5ec1002484f9a642cd277d",
+      "reuse": true,
+      "source_path": "evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/A3_INVALIDATION.json",
+      "source_run": "09806343-f940-4f33-9e0f-eb2855d0714b"
+    },
+    {
+      "artifact": "PARTITIONS.json",
+      "expected_hash": "31f4b985b15face11752de1094282441d837acd362941c0e2c66e2686602c9f5",
+      "observed_hash": "31f4b985b15face11752de1094282441d837acd362941c0e2c66e2686602c9f5",
+      "reuse": true,
+      "source_path": "evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/PARTITIONS.json",
+      "source_run": "09806343-f940-4f33-9e0f-eb2855d0714b"
+    },
+    {
+      "artifact": "PROTOCOL_AMENDMENT_A4.json",
+      "expected_hash": "7ee7d9af1e7371c193c32eb4a03751127ed9c7004e6d391957c0e508b5aca9c3",
+      "observed_hash": "7ee7d9af1e7371c193c32eb4a03751127ed9c7004e6d391957c0e508b5aca9c3",
+      "reuse": true,
+      "source_path": "evidence/stage6_a4/09806343-f940-4f33-9e0f-eb2855d0714b/PROTOCOL_AMENDMENT_A4.json",
+      "source_run": "09806343-f940-4f33-9e0f-eb2855d0714b"
+    }
+  ],
+  "ok": true
+}

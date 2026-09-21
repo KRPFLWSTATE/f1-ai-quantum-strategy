@@ -1,0 +1,79 @@
+{
+  "checks": [
+    {
+      "name": "evidence_dir_exists",
+      "pass": true
+    },
+    {
+      "name": "required_START_STATE.json",
+      "pass": true
+    },
+    {
+      "name": "required_REUSED_EVIDENCE.json",
+      "pass": true
+    },
+    {
+      "name": "required_PARTITIONS.json",
+      "pass": true
+    },
+    {
+      "name": "required_ADMISSION_RECEIPT.json",
+      "pass": true
+    },
+    {
+      "name": "required_PRESTART_QUARANTINE.json",
+      "pass": true
+    },
+    {
+      "name": "required_REPAIR_TRACEABILITY.json",
+      "pass": true
+    },
+    {
+      "name": "required_DONOR_BANK_V2.json",
+      "pass": true
+    },
+    {
+      "name": "reused_ok",
+      "pass": true
+    },
+    {
+      "name": "donor_bank_four_keys",
+      "pass": true
+    },
+    {
+      "n": 32,
+      "name": "donor_count_32",
+      "pass": true
+    },
+    {
+      "name": "failed_train_rows_not_success",
+      "pass": true
+    },
+    {
+      "name": "qpu_not_authorised",
+      "pass": true
+    },
+    {
+      "name": "final_test_unopened",
+      "pass": true
+    },
+    {
+      "name": "prestart_diagnostic_only",
+      "pass": true
+    },
+    {
+      "name": "quarantine_not_phase6_input",
+      "pass": true
+    },
+    {
+      "name": "historical_a4_manifest_present",
+      "pass": true
+    }
+  ],
+  "config_hash_fn": "347111bdff15088088577dbf0f646e2a92cf7b8a7c5c40815d243fba4b154d85",
+  "mode": "auto",
+  "n_pass": 17,
+  "n_total": 17,
+  "ok": true,
+  "run_id": "3de109c7-30d9-4cb0-827f-dbd82c4c509d"
+}

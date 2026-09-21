@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/Users/kawinperera/f1-ai-quantum-strategy/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/a4",
+    "tests/stage6/test_residual_histograms_noise.py",
+    "-ra",
+    "--junitxml=/Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/focused.xml"
+  ],
+  "end_utc": "2026-09-21T20:51:22.617677+00:00",
+  "errored": 0,
+  "exit_code": 0,
+  "failed": 0,
+  "junit_sha256": "065e1daad3b0c6fbbbc8190f0621ff2a6d46babde32aa578fe2c9b14f28f22bd",
+  "log_sha256": "99ece4e5a3fa050864f9cf6da1e2adf8e8ea98764850062ce1dce0befbfd8a21",
+  "passed": 52,
+  "skipped": 0,
+  "start_utc": "2026-09-21T20:47:52.079159+00:00",
+  "stdout_tail": "....................................................                     [100%]\n- generated xml file: /Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/focused.xml -\n52 passed in 209.97s (0:03:29)\n"
+}

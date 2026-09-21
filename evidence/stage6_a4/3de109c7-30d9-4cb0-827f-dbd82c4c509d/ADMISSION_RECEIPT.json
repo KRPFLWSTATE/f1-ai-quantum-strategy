@@ -1,0 +1,323 @@
+{
+  "admission_measure_wall_s": 284.3242250829935,
+  "admitted": false,
+  "config_hash": "20593ae250ba7c8dceeb8bfb0152fc6ae14a578cf25a615dafb54165d55ce460",
+  "consumed": false,
+  "doctor_status_pip": {
+    "doctor": {
+      "exit_code": 0,
+      "ok": true
+    },
+    "pip_check": {
+      "exit_code": 0,
+      "ok": true
+    },
+    "status": {
+      "exit_code": 0,
+      "ok": true
+    }
+  },
+  "focused_tests": {
+    "command": [
+      "/Users/kawinperera/f1-ai-quantum-strategy/.venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/a4",
+      "tests/stage6/test_residual_histograms_noise.py",
+      "-ra",
+      "--junitxml=/Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/focused.xml"
+    ],
+    "end_utc": "2026-09-21T20:51:22.617677+00:00",
+    "errored": 0,
+    "exit_code": 0,
+    "failed": 0,
+    "junit_sha256": "065e1daad3b0c6fbbbc8190f0621ff2a6d46babde32aa578fe2c9b14f28f22bd",
+    "log_sha256": "99ece4e5a3fa050864f9cf6da1e2adf8e8ea98764850062ce1dce0befbfd8a21",
+    "passed": 52,
+    "skipped": 0,
+    "start_utc": "2026-09-21T20:47:52.079159+00:00",
+    "stdout_tail": "....................................................                     [100%]\n- generated xml file: /Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/focused.xml -\n52 passed in 209.97s (0:03:29)\n"
+  },
+  "full_tests": {
+    "command": [
+      "/Users/kawinperera/f1-ai-quantum-strategy/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-ra",
+      "--junitxml=/Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/full.xml"
+    ],
+    "end_utc": "2026-09-21T21:03:53.714735+00:00",
+    "errored": 0,
+    "exit_code": 0,
+    "failed": 0,
+    "junit_sha256": "0d76e8e3dbb2e9aec28750631c4080c8ea54cd83727f7d0bb6046ba4d66fa041",
+    "log_sha256": "e097a81b8926b815825a9a6e2b5264c5fceab1127f3ec7299a44e34aae384c40",
+    "passed": 238,
+    "skipped": 1,
+    "start_utc": "2026-09-21T20:51:22.620410+00:00",
+    "stdout_tail": "......................................................................s. [ 30%]\n........................................................................ [ 60%]\n........................................................................ [ 90%]\n.......................                                                  [100%]\n- generated xml file: /Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/full.xml -\n=========================== short test summary info ============================\nSKIPPED [1] tests/formulation/test_gate_c.py:519: set F1Q_STAGE4_RESUME_SMOKE=1 to run full formulation interrupt/resume\n238 passed, 1 skipped in 750.49s (0:12:30)\n"
+  },
+  "machine": {
+    "available_ram_bytes": 25769803776,
+    "cpu_safe_cap": 8,
+    "logical_cpus": 10,
+    "memory_safe_cap": 28,
+    "per_worker_rss_budget_bytes": 536870912,
+    "rule": "min(cpu_safe=cpus-2, memory_safe=60%RAM/512MiB, 8); reserve 2 CPUs",
+    "workers": 8
+  },
+  "measured": [
+    {
+      "budget_s": 5,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.760498667135835,
+      "regime": "SC",
+      "wall_s": 16.096498791943304
+    },
+    {
+      "budget_s": 10,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.767840791027993,
+      "regime": "SC",
+      "wall_s": 16.348891166970134
+    },
+    {
+      "budget_s": 30,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 6.602545957895927,
+      "regime": "SC",
+      "wall_s": 16.218410375062376
+    },
+    {
+      "budget_s": 60,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.610574833932333,
+      "regime": "SC",
+      "wall_s": 13.995550000108778
+    },
+    {
+      "budget_s": 120,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.5076931660296395,
+      "regime": "SC",
+      "wall_s": 13.274958833004348
+    },
+    {
+      "budget_s": 5,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.9510917901061475,
+      "regime": "VSC",
+      "wall_s": 13.89115949999541
+    },
+    {
+      "budget_s": 10,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.729566208901815,
+      "regime": "VSC",
+      "wall_s": 13.61183983401861
+    },
+    {
+      "budget_s": 30,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.661833791062236,
+      "regime": "VSC",
+      "wall_s": 13.495177375036292
+    },
+    {
+      "budget_s": 60,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.659682165831327,
+      "regime": "VSC",
+      "wall_s": 13.587046667002141
+    },
+    {
+      "budget_s": 120,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.645085208932869,
+      "regime": "VSC",
+      "wall_s": 13.490253542084247
+    },
+    {
+      "budget_s": 5,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.76565545797348,
+      "regime": "SC",
+      "wall_s": 13.336398166953586
+    },
+    {
+      "budget_s": 10,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.517369999084622,
+      "regime": "SC",
+      "wall_s": 13.175453374977224
+    },
+    {
+      "budget_s": 30,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.589421708136797,
+      "regime": "SC",
+      "wall_s": 13.85363512497861
+    },
+    {
+      "budget_s": 60,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.488842958002351,
+      "regime": "SC",
+      "wall_s": 13.074482165975496
+    },
+    {
+      "budget_s": 120,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.4193334160372615,
+      "regime": "SC",
+      "wall_s": 13.119064582977444
+    },
+    {
+      "budget_s": 5,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 5.26714316685684,
+      "regime": "VSC",
+      "wall_s": 14.781380458036438
+    },
+    {
+      "budget_s": 10,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 5.367517707985826,
+      "regime": "VSC",
+      "wall_s": 15.159394250018522
+    },
+    {
+      "budget_s": 30,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.902841543080285,
+      "regime": "VSC",
+      "wall_s": 14.473464917042293
+    },
+    {
+      "budget_s": 60,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.888614583062008,
+      "regime": "VSC",
+      "wall_s": 14.454949499922805
+    },
+    {
+      "budget_s": 120,
+      "classical_loss": 0.02631578947368421,
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "hybrid_loss": 0.02631578947368421,
+      "legal": 100,
+      "n_qubits": 20,
+      "precommit_s": 4.995524708880112,
+      "regime": "VSC",
+      "wall_s": 14.530979249975644
+    }
+  ],
+  "median_case_budget_s": 13.87239731248701,
+  "prepare_counters": {
+    "checkpoint_init": 4,
+    "enumeration": 4,
+    "formulation_verify": 4,
+    "menu_qubo": 4
+  },
+  "projections": {
+    "baseline": {
+      "conservative_s": 44173.76747569744,
+      "fits_60min": false,
+      "parallel_s": 32721.309241257357,
+      "serial_s": 143973.76066153237
+    },
+    "minimum": {
+      "conservative_s": 26429.710185998138,
+      "fits_60min": false,
+      "parallel_s": 19577.56310073936,
+      "serial_s": 86141.2776432532
+    },
+    "preferred": {
+      "conservative_s": 48411.15429114802,
+      "fits_60min": false,
+      "parallel_s": 35860.11428973927,
+      "serial_s": 157784.5028748528
+    }
+  },
+  "reason": "no ladder projected <= 60 minutes after 20% reserve",
+  "reused_evidence_ok": true,
+  "reviewed_source_commit": "f3c3c88ab1e9ab2dc95458e4ab775b284aded41f",
+  "run_id": "3de109c7-30d9-4cb0-827f-dbd82c4c509d",
+  "selected_world_level": "NONE"
+}

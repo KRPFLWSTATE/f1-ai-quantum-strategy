@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/Users/kawinperera/f1-ai-quantum-strategy/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-ra",
+    "--junitxml=/Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/full.xml"
+  ],
+  "end_utc": "2026-09-21T21:03:53.714735+00:00",
+  "errored": 0,
+  "exit_code": 0,
+  "failed": 0,
+  "junit_sha256": "0d76e8e3dbb2e9aec28750631c4080c8ea54cd83727f7d0bb6046ba4d66fa041",
+  "log_sha256": "e097a81b8926b815825a9a6e2b5264c5fceab1127f3ec7299a44e34aae384c40",
+  "passed": 238,
+  "skipped": 1,
+  "start_utc": "2026-09-21T20:51:22.620410+00:00",
+  "stdout_tail": "......................................................................s. [ 30%]\n........................................................................ [ 60%]\n........................................................................ [ 90%]\n.......................                                                  [100%]\n- generated xml file: /Users/kawinperera/f1-ai-quantum-strategy/evidence/stage6_a4/3de109c7-30d9-4cb0-827f-dbd82c4c509d/tests/full.xml -\n=========================== short test summary info ============================\nSKIPPED [1] tests/formulation/test_gate_c.py:519: set F1Q_STAGE4_RESUME_SMOKE=1 to run full formulation interrupt/resume\n238 passed, 1 skipped in 750.49s (0:12:30)\n"
+}

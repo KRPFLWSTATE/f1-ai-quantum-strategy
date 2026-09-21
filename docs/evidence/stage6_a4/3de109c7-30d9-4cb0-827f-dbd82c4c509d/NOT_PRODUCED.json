@@ -1,0 +1,24 @@
+{
+  "items": [
+    "PROTOCOL_FREEZE.json",
+    "DONOR_SELECTOR_TRAINING.jsonl",
+    "DONOR_SELECTOR_TUNING.jsonl",
+    "DONOR_SELECTOR_MODELS.json",
+    "PREPARED_CASES.jsonl",
+    "TRAINING_OPTION_RESULTS.jsonl",
+    "TUNING_OPTION_RESULTS.jsonl",
+    "CALIBRATION_OPTION_RESULTS.jsonl",
+    "PLANNING_WORLD_OUTCOMES.jsonl",
+    "EVALUATION_WORLD_OUTCOMES.jsonl",
+    "CALIBRATION_MARGIN_Q.json",
+    "OFFLINE_REFERENCE.jsonl",
+    "OPERATIONAL_LATENCY.jsonl",
+    "PILOT_CALIBRATION_ANALYSIS.json",
+    "PRECISION_AND_STAGE7_SIZING.json",
+    "BOUNDARY_TABLE.json",
+    "MECHANISM_RESULTS.json",
+    "PRIMARY_ANALYSIS.json"
+  ],
+  "status": "NOT_PRODUCED",
+  "stop_reason": "ADMISSION_NOT_ADMITTED: no world-count ladder projected <= 60 minutes after 20% reserve of the 75-minute ceiling"
+}

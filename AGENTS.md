@@ -1,6 +1,6 @@
 # Project instructions (always load)
 
-Active stage: **6 — A4 scientific supersession attempted; Gates E/F FAIL; Phase 7 not authorised**. Architecture **A4** is the operational amendment. **A3 scientific results are `SUPERSEDED_INVALID_IMPLEMENTATION`** and must not be reused as effect/offline/dispatcher/Gate E/F evidence. A2 lineage is preserved and is **not** an A4 continuation. Authoritative A4 run: `09806343-f940-4f33-9e0f-eb2855d0714b` (`docs/PHASE_6_A4_FINAL_REPORT.md`). Phase 5 final acceptance remains `PASS_WITH_DOCUMENTED_LIMITATIONS` (commit `1c7631e…`; corrected run `e6b3588b-…`). Phase 6 historical `bd83cb22-…` and corrected `2a3fb275-…` **preserved, not overwritten**. A2 residual `e437fa3d-…`. A3 artifacts `a5fdb488-…` preserved as an unsuccessful attempt. After a valid bounded Stage 4 closure: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`. Legacy exhaustive Gate C remains `LEGACY_EXHAUSTIVE_GATE: PARTIAL` with `LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME`. `QPU_EXECUTION_AUTHORISED: false`. Next authorised stage: **NONE automatic — Phase 7 only after explicit prompt**.
+Active stage: **6 — A4 repair and measured admission completed; corpus not admitted (`INCOMPLETE_ENGINEERING`); Gates E/F FAIL; Phase 7 not authorised**. Architecture **A4** is the operational amendment. **A3 scientific results are `SUPERSEDED_INVALID_IMPLEMENTATION`**. A2 lineage is preserved and is **not** an A4 continuation. Authoritative A4 closure attempt: `3de109c7-30d9-4cb0-827f-dbd82c4c509d` (`docs/PHASE_6_A4_CLOSURE_REPORT.md`). Prior failed A4 run `09806343-f940-4f33-9e0f-eb2855d0714b` is preserved. Phase 5 final acceptance remains `PASS_WITH_DOCUMENTED_LIMITATIONS` (commit `1c7631e…`; corrected run `e6b3588b-…`). Phase 6 historical `bd83cb22-…` and corrected `2a3fb275-…` **preserved, not overwritten**. A2 residual `e437fa3d-…`. A3 artifacts `a5fdb488-…` preserved as an unsuccessful attempt. After a valid bounded Stage 4 closure: `STAGE_4_ENGINEERING: CLOSED_WITH_DOCUMENTED_LIMITATIONS`. Legacy exhaustive Gate C remains `LEGACY_EXHAUSTIVE_GATE: PARTIAL` with `LEGACY_GATE_ACTION: ARCHIVED_DO_NOT_RESUME`. `QPU_EXECUTION_AUTHORISED: false`. Next authorised stage: **NONE automatic — Phase 7 only after explicit prompt**.
 
 ## Authority
 
@@ -11,7 +11,7 @@ Active stage: **6 — A4 scientific supersession attempted; Gates E/F FAIL; Phas
 - Phase 5 contract lineage: `docs/STAGE_5A_EXPERIMENT_CONTRACT.md`.
 - Phase 6 freeze / novelty: `docs/STAGE_6_PROTOCOL_FREEZE_V2.md`, `docs/STAGE_6_NOVELTY_COMPARISON.md` (v1 freeze/report preserved historically).
 - A3 amendment / freeze / novelty (historical, superseded scientifically): `docs/PROTOCOL_AMENDMENT_A3.md`, `docs/A3_PROTOCOL_FREEZE.md`, `docs/A3_NOVELTY_AND_VALUE.md`.
-- A4 invalidation / freeze / report: `docs/A3_INVALIDATION_AND_A4_PROTOCOL_AMENDMENT.md`, `docs/PHASE_6_A4_FINAL_REPORT.md`, `docs/PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v2.md`.
+- A4 invalidation / freeze / report: `docs/A3_INVALIDATION_AND_A4_PROTOCOL_AMENDMENT.md`, `docs/PHASE_6_A4_FINAL_REPORT.md` (historical 09806343), `docs/PHASE_6_A4_CLOSURE_REPORT.md` (run `3de109c7-…`, `INCOMPLETE_ENGINEERING`), `docs/PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v2.md`, `docs/PHASES_1_TO_6_FINAL_ACCEPTANCE_REPORT_v3.md`.
 
 ## Project boundary
 
@@ -36,6 +36,7 @@ Label claims as: proposed, implemented, verified by a named check, simulated, ph
 - Do not alter historical Phase 6 evidence under `evidence/stage6/bd83cb22-…/` (superseded by `evidence/stage6_corrected/`).
 - Do not alter A2 residual evidence under `evidence/stage6_a2_residual/` or A3 evidence under `evidence/a3/` after publication.
 - Do not alter A4 evidence under `evidence/stage6_a4/09806343-…` after publication.
+- Do not alter A4 evidence under `evidence/stage6_a4/3de109c7-…` after publication.
 - Do not begin Phase 7 automatically; feasibility ≠ permission.
 
 ## Commands

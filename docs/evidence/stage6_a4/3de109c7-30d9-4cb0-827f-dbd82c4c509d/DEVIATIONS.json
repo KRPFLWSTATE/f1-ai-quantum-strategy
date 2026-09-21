@@ -1,0 +1,32 @@
+{
+  "admission": "no ladder projected <= 60 minutes after 20% reserve",
+  "corpus_executed": false,
+  "notes": [
+    "Measured median case-budget wall was 13.87s for a shared classical+hybrid pair including five-budget probe work.",
+    "Conservative projections for preferred/baseline/minimum all exceed 3600s.",
+    "Corpus was not started. This is INCOMPLETE_ENGINEERING, not a scientific negative result on quantum candidates."
+  ],
+  "prestart_quarantine": "PRESTART_DIAGNOSTIC_ONLY; Stage 4 residue stashed, not Phase 6 input",
+  "projections": {
+    "baseline": {
+      "conservative_s": 44173.76747569744,
+      "fits_60min": false,
+      "parallel_s": 32721.309241257357,
+      "serial_s": 143973.76066153237
+    },
+    "minimum": {
+      "conservative_s": 26429.710185998138,
+      "fits_60min": false,
+      "parallel_s": 19577.56310073936,
+      "serial_s": 86141.2776432532
+    },
+    "preferred": {
+      "conservative_s": 48411.15429114802,
+      "fits_60min": false,
+      "parallel_s": 35860.11428973927,
+      "serial_s": 157784.5028748528
+    }
+  },
+  "selected_world_level": "NONE",
+  "stale_writer_94709": "SIGTERM of orphaned python -m f1q run --plan formulation_gate_c_closure_check (PPID 1) that held the ledger lock; flush files stashed, not used as Phase 6 input"
+}
