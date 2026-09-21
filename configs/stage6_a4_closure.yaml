@@ -1,4 +1,4 @@
-schema_version: "1.0.0"
+schema_version: "1.1.0"
 config_id: stage6_a4_closure
 architecture: A4_checkpoint_candidate_generation_downstream_reranking
 qpu_execution_authorised: false
@@ -7,6 +7,7 @@ phase_7_authorised: false
 final_test_open: false
 zero_additional_spending: true
 prior_failed_run_id: "09806343-f940-4f33-9e0f-eb2855d0714b"
+prior_admission_run_id: "3de109c7-30d9-4cb0-827f-dbd82c4c509d"
 reviewed_source_commit_placeholder: REVIEWED_SOURCE_COMMIT
 portfolio_k: 4
 pool_draws: 1024
@@ -15,14 +16,15 @@ nominal_budgets_s: [5, 10, 30, 60, 120]
 primary_budget_s: 30
 family_depths: [C0_p1, C0_p2, C1_p1, C1_p2]
 allocator_options: [stop_fallback, classical_only, C0_p1, C0_p2, C1_p1, C1_p2]
-donor_policies: [fixed, nn, random, learned]
+donor_policies: [fixed, nn, random, learned, best_found]
 exclusion_codes: [CLOSED_DECISION_WINDOW, NO_LEGAL_NONFALLBACK_ACTION]
-campaign_ceiling_s: 4500
-admission_wall_limit_s: 3600
+campaign_cpu_cap_s: 86400
+admission_wall_limit_s: 11520
+campaign_wall_cap_s: 14400
 world_ladder:
-  preferred: {training: {planning: 2, evaluation: 4}, tuning: {planning: 4, evaluation: 8}, calibration: {planning: 8, evaluation: 32}, offline: {planning: 8, evaluation: 32}}
-  baseline: {training: {planning: 2, evaluation: 4}, tuning: {planning: 4, evaluation: 8}, calibration: {planning: 8, evaluation: 16}, offline: {planning: 8, evaluation: 16}}
-  minimum: {training: {planning: 1, evaluation: 4}, tuning: {planning: 2, evaluation: 8}, calibration: {planning: 4, evaluation: 8}, offline: {planning: 4, evaluation: 8}}
+  preferred: {training: {planning: 8, evaluation: 64}, tuning: {planning: 16, evaluation: 256}, calibration: {planning: 64, evaluation: 2048}, offline: {planning: 64, evaluation: 2048}}
+  baseline: {training: {planning: 4, evaluation: 32}, tuning: {planning: 8, evaluation: 128}, calibration: {planning: 32, evaluation: 2048}, offline: {planning: 32, evaluation: 2048}}
+  minimum: {training: {planning: 2, evaluation: 16}, tuning: {planning: 4, evaluation: 64}, calibration: {planning: 16, evaluation: 2048}, offline: {planning: 16, evaluation: 2048}}
 ridge_lambdas: [0.1, 1.0, 10.0]
 bootstrap:
   n_boot: 2000

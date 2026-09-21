@@ -126,10 +126,12 @@ def simulate_c1(
     betas: list[float],
     *,
     scaled: bool = True,
+    legal_table: list[dict[str, Any]] | None = None,
+    allocate_dense: bool = False,
 ) -> dict[str, Any]:
-    """C1 on the one-hot subspace (XY mixer preserves it). Equivalent to full-space C1."""
+    """C1 on the one-hot legal subspace. Does not allocate dense 2^n unless requested."""
     n = int(qubo["n"])
-    rows = enumerate_legal_policies(instance)
+    rows = legal_table if legal_table is not None else enumerate_legal_policies(instance)
     n_legal = len(rows)
     sub_diags = np.array(
         [float(qubo_energy(qubo, r["x"], scaled=scaled)) for r in rows],
@@ -142,29 +144,37 @@ def simulate_c1(
         state = state * np.exp(-1j * float(g) * sub_diags)
         state = _c1_subspace_mixer(state, rows, instance, float(b))
     sub_probs = np.abs(state) ** 2
-    dim = 1 << n
-    probs = np.zeros(dim, dtype=float)
-    legal_idx = []
-    for i, r in enumerate(rows):
-        b = _bitstring(r["x"])
-        legal_idx.append(b)
-        probs[b] = float(sub_probs[i]) if n_legal else 0.0
-    s = float(probs.sum())
+    s = float(sub_probs.sum())
     if s > 0:
-        probs = probs / s
+        sub_probs = sub_probs / s
+    legal_idx = [_bitstring(r["x"]) for r in rows]
+    legal_xs = [tuple(int(v) for v in np.asarray(r["x"], dtype=int).tolist()) for r in rows]
     outside = 0.0
-    return {
+    out: dict[str, Any] = {
         "family": "C1",
         "p": len(gammas),
         "n": n,
-        "probs": probs,
-        "norm": float(np.sum(probs)),
+        "probs_legal": sub_probs,
+        "legal_bitstrings": legal_idx,
+        "legal_xs": legal_xs,
+        "probs": sub_probs,
+        "norm": float(np.sum(sub_probs)),
         "expectation_scaled": float(np.dot(sub_probs, sub_diags)) if n_legal else 0.0,
         "param_count": 2 * len(gammas),
         "init": "one_hot_uniform",
         "amp_outside_one_hot": outside,
         "n_legal": n_legal,
+        "dense_2n_allocated": False,
+        "representation": "legal_one_hot_subspace",
     }
+    if allocate_dense:
+        dim = 1 << n
+        dense = np.zeros(dim, dtype=float)
+        for i, b in enumerate(legal_idx):
+            dense[int(b)] = float(sub_probs[i]) if n_legal else 0.0
+        out["probs"] = dense
+        out["dense_2n_allocated"] = True
+    return out
 
 
 def c0_objective(qubo: dict[str, Any], params: np.ndarray) -> float:

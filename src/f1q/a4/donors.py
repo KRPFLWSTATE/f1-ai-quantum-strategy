@@ -375,6 +375,14 @@ def select_donor_policy(
 
         best = min(donors, key=_key)
         return {"selected": best, "policy": "nn"}
+    if policy == "best_found":
+        # Fixed-budget variational reference among the registered donor bank.
+        # Not a certified quantum optimum; no extra optimisation until favourable.
+        best = min(
+            donors,
+            key=lambda d: (float(d.get("best_value_scaled") if d.get("best_value_scaled") is not None else 1e9), str(d.get("donor_id") or "")),
+        )
+        return {"selected": best, "policy": "best_found", "certified_quantum_optimum": False, "fixed_budget_reference": True}
     if policy == "learned":
         if ranker is None:
             raise StructuralError("SCHEMA", "learned donor policy requires DonorRanker", path="select_donor_policy")

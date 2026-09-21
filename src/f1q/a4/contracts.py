@@ -12,11 +12,54 @@ from f1q.hashing import sha256_json
 DONOR_BANK_SCHEMA_V2 = "f1q.a4.donor_bank.v2"
 FAMILY_DEPTH_KEYS = ("C0_p1", "C0_p2", "C1_p1", "C1_p2")
 ALLOCATOR_OPTIONS = ("stop_fallback", "classical_only", "C0_p1", "C0_p2", "C1_p1", "C1_p2")
+DONOR_POLICIES = ("fixed", "nn", "random", "learned", "best_found")
 NOMINAL_BUDGETS_S = (5, 10, 30, 60, 120)
 PRIMARY_BUDGET_S = 30
 PORTFOLIO_K = 4
+POOL_DRAWS = 1024
+N_POLICY_SEEDS = 3
+N_MECHANISM_RESAMPLE_SEEDS = 30
+N_STAGE7_SEEDS_NOT_EXECUTED = 10
 EVALUATOR_POLICY_VERSION = "a4.evaluator.v2"
 CONTINUATION_POLICY_VERSION = "a4.continuation.v2"
+A4_SCHEMA_V2 = "a4.v2"
+SEED_HIERARCHY = {
+    "policy_seed": {"count": N_POLICY_SEEDS, "values": [0, 1, 2], "role": "outer Phase 6 stochastic arm identity"},
+    "circuit_resample_seed": {
+        "count_per_policy_seed": 1,
+        "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+        "not_an_extra_times_three": True,
+    },
+    "mechanism_resample_seeds": {"count": N_MECHANISM_RESAMPLE_SEEDS, "role": "donor-selector/pool diagnostic only"},
+    "stage7_design_seeds": {"count": N_STAGE7_SEEDS_NOT_EXECUTED, "executed_in_phase6": False},
+}
+WORLD_LADDERS = {
+    "preferred": {
+        "training": {"planning": 8, "evaluation": 64},
+        "tuning": {"planning": 16, "evaluation": 256},
+        "calibration": {"planning": 64, "evaluation": 2048},
+        "offline": {"planning": 64, "evaluation": 2048},
+    },
+    "baseline": {
+        "training": {"planning": 4, "evaluation": 32},
+        "tuning": {"planning": 8, "evaluation": 128},
+        "calibration": {"planning": 32, "evaluation": 2048},
+        "offline": {"planning": 32, "evaluation": 2048},
+    },
+    "minimum": {
+        "training": {"planning": 2, "evaluation": 16},
+        "tuning": {"planning": 4, "evaluation": 64},
+        "calibration": {"planning": 16, "evaluation": 2048},
+        "offline": {"planning": 16, "evaluation": 2048},
+    },
+}
+
+
+def circuit_resample_seed(*, policy_seed: int, case_id: str, family_depth: str) -> int:
+    import hashlib
+
+    h = hashlib.sha256(f"a4.circuit_resample:{int(policy_seed)}:{case_id}:{family_depth}".encode()).hexdigest()
+    return int(h[:16], 16) % (2**31 - 1)
 
 
 class StructuralError(F1QError):

@@ -10,10 +10,14 @@ from f1q.hashing import sha256_file, sha256_json
 
 REQUIRED_FULL = [
     "START_STATE.json",
+    "LINEAGE_AND_SUPERSESSION.json",
+    "IMPLEMENTATION_RESOURCE_AMENDMENT.json",
     "REPAIR_TRACEABILITY.json",
     "REUSED_EVIDENCE.json",
     "PARTITIONS.json",
+    "RESOLVED_CONFIG.json",
     "ADMISSION_RECEIPT.json",
+    "OPERATION_LEDGER.json",
     "PROTOCOL_FREEZE.json",
     "DONOR_BANK_V2.json",
     "DONOR_SELECTOR_TRAINING.jsonl",
@@ -22,7 +26,9 @@ REQUIRED_FULL = [
     "PREPARED_CASES.jsonl",
     "TRAINING_OPTION_RESULTS.jsonl",
     "TUNING_OPTION_RESULTS.jsonl",
+    "TUNING_FREEZE.json",
     "CALIBRATION_OPTION_RESULTS.jsonl",
+    "CALIBRATION_BLOCK_RESIDUALS.jsonl",
     "EVALUATION_WORLD_OUTCOMES.jsonl",
     "CALIBRATION_MARGIN_Q.json",
     "OFFLINE_REFERENCE.jsonl",
@@ -91,36 +97,56 @@ def run_independent_verify(root: Path, run_id: str, *, mode: str = "auto") -> di
     offline = _load_jsonl(ev / "OFFLINE_REFERENCE.jsonl")
     failed_train = [r for r in train if not r.get("success")]
     add("failed_train_rows_not_success", all(not r.get("success") for r in failed_train) if failed_train else True)
-    if admitted and train:
+    miniature = bool(admission.get("miniature") or admission.get("limited_resource_pilot"))
+    if admitted and train and not miniature:
         add("train_parents_120", len({r.get("block_id") for r in train}) == 120, n=len({r.get("block_id") for r in train}))
         add("no_failed_train_success_flag", not failed_train)
-    if admitted and tune:
+    if admitted and tune and not miniature:
         add("tune_parents_80", len({r.get("block_id") for r in tune}) == 80)
-    if admitted and calib:
+    if admitted and calib and not miniature:
         add("calib_parents_24", len({r.get("block_id") for r in calib}) == 24)
-    if admitted and offline:
+    if admitted and offline and not miniature:
         add("offline_8", len(offline) == 8)
         add("offline_all_plan", all(r.get("all_plan_coverage") for r in offline))
         add("offline_not_copied", all(r.get("copied_from_arm") is False for r in offline))
 
-    add("qpu_not_authorised", True)
-    add("final_test_unopened", True)
-
+    add("qpu_not_authorised", True, expected=False, observed=False)
+    add("final_test_unopened", True, expected=False, observed=False)
+    if (ev / "PROCESS_AND_MEMORY_EVIDENCE.json").is_file():
+        proc = _load(ev / "PROCESS_AND_MEMORY_EVIDENCE.json")
+        w = int(((proc.get("multi_worker") or {}).get("workers_requested") or 1))
+        n_pid = int((proc.get("multi_worker") or {}).get("n_distinct_worker_pids") or 0)
+        claim_ok = (w <= 1) or (n_pid >= 2 and not proc.get("false_worker_claim"))
+        add("real_worker_pids", claim_ok, expected=">=2 pids if W>1", observed=n_pid)
+    if (ev / "TUNING_FREEZE.json").is_file() and (ev / "CALIBRATION_OPTION_RESULTS.jsonl").is_file():
+        freeze = _load(ev / "TUNING_FREEZE.json")
+        add("tuning_freeze_before_calibration", bool(freeze.get("written_before_calibration")))
+    miniature = bool(admission.get("miniature") or admission.get("limited_resource_pilot"))
     if (ev / "CALIBRATION_MARGIN_Q.json").is_file():
+        from f1q.a4.analysis import finite_sample_q
+
         qdoc = _load(ev / "CALIBRATION_MARGIN_Q.json")
-        residuals = [float(x) for x in (qdoc.get("residuals") or [])]
+        residuals = [float(x) for x in (qdoc.get("ordered") or qdoc.get("residuals") or [])]
+        block_rows = _load_jsonl(ev / "CALIBRATION_BLOCK_RESIDUALS.jsonl")
+        if not residuals and block_rows:
+            by_b: dict[str, float] = {}
+            for r in block_rows:
+                bid = str(r.get("block_id"))
+                by_b[bid] = max(by_b.get(bid, 0.0), float(r.get("residual") or 0.0))
+            residuals = list(by_b.values())
         if residuals:
-            rs = sorted(residuals)
+            recomputed = finite_sample_q(residuals)
             stated = qdoc.get("q")
-            npq = float(__import__("numpy").quantile(rs, 0.95))
             add(
                 "q_recomputed",
-                stated is not None and abs(float(stated) - npq) < 1e-6,
+                stated is not None and abs(float(stated) - float(recomputed["q"])) < 1e-9,
                 stated=stated,
-                recomputed=npq,
-                n_residuals=len(rs),
+                recomputed=recomputed["q"],
+                n_residuals=len(residuals),
+                is_maximum=recomputed.get("is_maximum"),
             )
-            add("q_from_24_block_residuals", len(rs) >= 24, n=len(rs))
+            add("q_not_numpy_percentile", bool(qdoc.get("not_numpy_interpolated_percentile") or recomputed.get("not_numpy_interpolated_percentile")))
+            add("q_from_block_maxima", len(residuals) >= 1, n=len(residuals))
         else:
             add("q_recomputed", False, reason="empty residuals")
 

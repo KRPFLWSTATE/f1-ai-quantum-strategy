@@ -1,4 +1,4 @@
-"""One immutable PreparedCase per (partition, block_id, regime)."""
+"""One immutable PreparedCase per (partition, block_id, regime). Consumed by all arms."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ from dataclasses import dataclass, field
 from typing import Any, Callable
 
 from f1q import INTERFACE_VERSION, SIMULATOR_VERSION, __version__ as PACKAGE_VERSION
+from f1q.a4.banks import EVALUATION_BANK, PLANNING_BANK, bank_world_seeds
 from f1q.a4.contracts import StructuralError
 from f1q.a4.loop import family_spec
 from f1q.a4.problem import (
@@ -27,6 +28,7 @@ _PREPARE_COUNTERS: dict[str, int] = {
     "menu_qubo": 0,
     "enumeration": 0,
     "formulation_verify": 0,
+    "prepare_case_calls": 0,
 }
 
 
@@ -64,6 +66,10 @@ class PreparedCase:
     simulator_version: str
     interface_version: str
     package_version: str
+    prepared_case_hash: str
+    planning_bank_keys: list[int]
+    evaluation_bank_keys: list[int]
+    cache_schema_version: str = "a4.prepared.v2"
     timings: dict[str, float] = field(default_factory=dict)
 
     def window_for_budget(self, nominal_budget_s: float) -> dict[str, Any]:
@@ -93,6 +99,8 @@ def prepare_case(
     index: int,
     seed: int,
     spec: dict[str, Any] | None = None,
+    n_planning: int = 8,
+    n_evaluation: int = 64,
 ) -> PreparedCase:
     t0 = time.perf_counter()
     if str(partition) in {"finaltest", "final_test"}:
@@ -107,6 +115,7 @@ def prepare_case(
         ) if spec is None else spec
     sim = RaceSimulator()
     _PREPARE_COUNTERS["checkpoint_init"] += 1
+    _PREPARE_COUNTERS["prepare_case_calls"] += 1
     sim.initialize(copy.deepcopy(spec))
     sim.advance_to_checkpoint()
     blob = sim.serialize()
@@ -131,6 +140,17 @@ def prepare_case(
     spec_hash = sha256_json({k: spec[k] for k in spec if k not in {"stream_key_ids"}})
     legal_ser = list(legal)
     case_id = f"{partition}:{block_id}:{regime}"
+    payload = {
+        "case_id": case_id,
+        "spec_hash": spec_hash,
+        "observation_hash": str(view["observation_hash"]),
+        "qubo_hash": qubo.get("hash"),
+        "n_legal": len(legal_ser),
+        "simulator_version": SIMULATOR_VERSION,
+        "interface_version": INTERFACE_VERSION,
+        "package_version": PACKAGE_VERSION,
+    }
+    pch = sha256_json(payload)
     return PreparedCase(
         split=str(partition),
         block_id=block_id,
@@ -155,6 +175,9 @@ def prepare_case(
         simulator_version=SIMULATOR_VERSION,
         interface_version=INTERFACE_VERSION,
         package_version=PACKAGE_VERSION,
+        prepared_case_hash=pch,
+        planning_bank_keys=bank_world_seeds(block_id, regime, PLANNING_BANK, int(n_planning)),
+        evaluation_bank_keys=bank_world_seeds(block_id, regime, EVALUATION_BANK, int(n_evaluation)),
         timings={"prepare_s": time.perf_counter() - t0, "menu_qubo_enum_verify_s": menu_s},
     )
 

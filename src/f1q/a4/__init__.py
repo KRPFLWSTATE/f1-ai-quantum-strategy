@@ -6,8 +6,8 @@ are superseded as an unsuccessful implementation attempt.
 
 from __future__ import annotations
 
-A4_VERSION = "0.8.0"
-A4_SCHEMA = "a4.v1"
+A4_VERSION = "0.9.0"
+A4_SCHEMA = "a4.v2"
 QPU_EXECUTION_AUTHORISED = False
 PHASE7_NOT_AUTHORISED_BY_A4 = True
 A3_SCIENTIFIC_RESULT = "SUPERSEDED_INVALID_IMPLEMENTATION"

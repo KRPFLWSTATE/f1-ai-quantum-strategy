@@ -142,7 +142,7 @@ def _simulate_plan_world(
         rec["cache_hit"] = True
         return rec
     world = RaceSimulator()
-    world.restore(copy.deepcopy(base_blob), spec)
+    world.restore(base_blob, spec)
     apply_hidden_world(world, world_seed)
     rec_commit = world.consider_recommendation(
         plan,
@@ -242,25 +242,52 @@ def decide_and_evaluate(
     n_stochastic_seeds: int = 1,
     donor_ranker=None,
     legal_table: list[dict[str, Any]] | None = None,
+    prepared: Any | None = None,
+    dist_cache: Any | None = None,
+    policy_seed: int = 0,
 ) -> dict[str, Any]:
     assert_local_only()
     t_all = time.perf_counter()
     spec_local = copy.deepcopy(spec)
     spec_local.setdefault("deadline_interface", {})["primary_nominal_budget_s"] = float(deadline_s)
-    sim = RaceSimulator()
-    sim.initialize(copy.deepcopy(spec_local))
-    sim.advance_to_checkpoint()
-    base_blob = sim.serialize()
-    obs0 = sim.observe()
-    view = extract_causal_view(obs0)
-    t_menu = time.perf_counter()
-    inst = build_menu_and_instance(view)
-    qubo = build_a4_qubo(inst)
-    agree = verify_direct_qubo_milp(inst, qubo)
-    feats = qubo_structural_features(inst, qubo)
-    legal_table = legal_table if legal_table is not None else None
-    menu_s = time.perf_counter() - t_menu
+    t_obs = time.perf_counter()
+    if prepared is not None:
+        spec_local = prepared.spec_with_budget(deadline_s)
+        base_blob = prepared.checkpoint_blob
+        view = prepared.view
+        inst = prepared.instance
+        qubo = prepared.qubo
+        agree = prepared.formulation
+        feats = dict(prepared.features)
+        legal_table = prepared.legal_table if legal_table is None else legal_table
+        spec_hash = prepared.spec_hash
+        checkpoint_hash = prepared.checkpoint_hash
+        pch = prepared.prepared_case_hash
+        sim = RaceSimulator()
+        sim.restore(copy.deepcopy(base_blob), spec_local)
+        obs_s = max(1e-6, time.perf_counter() - t_obs)
+        menu_s = max(1e-6, float(prepared.timings.get("menu_qubo_enum_verify_s") or 1e-4))
+    else:
+        sim = RaceSimulator()
+        sim.initialize(copy.deepcopy(spec_local))
+        sim.advance_to_checkpoint()
+        base_blob = sim.serialize()
+        obs0 = sim.observe()
+        view = extract_causal_view(obs0)
+        obs_s = max(1e-6, time.perf_counter() - t_obs)
+        t_menu = time.perf_counter()
+        inst = build_menu_and_instance(view)
+        qubo = build_a4_qubo(inst)
+        agree = verify_direct_qubo_milp(inst, qubo)
+        feats = qubo_structural_features(inst, qubo)
+        legal_table = legal_table if legal_table is not None else None
+        menu_s = max(1e-6, time.perf_counter() - t_menu)
+        spec_hash = sha256_json({k: spec_local[k] for k in spec_local if k not in {"stream_key_ids"}})
+        checkpoint_hash = view["observation_hash"]
+        pch = spec_hash
+    t_feat = time.perf_counter()
     pred = runtime.predict(feats) if runtime is not None else {"pred_marginal_utility": 0.0, "uncertainty": 1.0}
+    feature_s = max(1e-6, time.perf_counter() - t_feat)
     choice = dispatch_choice(
         pred,
         deadline_s=deadline_s,
@@ -333,23 +360,62 @@ def decide_and_evaluate(
         equal_k=equal_k,
         n_stochastic_seeds=n_stochastic_seeds,
         legal_table=legal_table,
+        prepared_case_hash=pch,
+        dist_cache=dist_cache,
+        donor_id=None if donor_rec is None else (donor_rec.get("selected") or {}).get("donor_id"),
     )
-    gen_s = time.perf_counter() - t_gen
-    spec_hash = sha256_json({k: spec_local[k] for k in spec_local if k not in {"stream_key_ids"}})
-    checkpoint_hash = view["observation_hash"]
+    gen_s = max(1e-6, time.perf_counter() - t_gen)
     window = {
         "effective_end_race_s": view.get("effective_end_race_s"),
         "decision_time_race_s": view.get("decision_time_race_s"),
         "effective_remaining_s": view.get("effective_remaining_s"),
     }
-    feature_s = 0.0
-    donor_s = 0.0
-    decode_s = 0.0
+    from f1q.a4.timing import frozen_scenario_latency_s, modelled_algorithm_latency_s, reconcile_timing
+
+    donor_s = max(1e-6, 5e-4)
+    decode_s = max(1e-6, 2e-7 * int(pool_size))
+    validation_s = max(1e-6, 2e-5 * max(int(port["n_downstream"]), 1))
+    modelled = modelled_algorithm_latency_s(
+        prepare_s=menu_s,
+        n_qubits=int(qubo["n"]),
+        n_legal=int(agree.get("legal_plan_count") or len(legal_table or [])),
+        family=family if params else None,
+        p_depth=p_depth,
+        pool_draws=int(pool_size),
+        n_plans=int(port["n_downstream"]),
+        n_planning_worlds=len(planning_seeds),
+        n_evaluation_worlds=len(evaluation_seeds),
+    )
+    modelled["observation_state_s"] = obs_s
+    modelled["features_s"] = feature_s
+    modelled["encoding_s"] = menu_s
+    modelled["donor_inference_s"] = donor_s
+    modelled["candidate_decoding_s"] = decode_s
+    modelled["validation_s"] = validation_s
+    option = choice if str(choice) in {"stop_fallback", "classical_only", "C0_p1", "C0_p2", "C1_p1", "C1_p2"} else (
+        f"{family}_p{p_depth}" if params else "classical_only"
+    )
+    feats["pred_latency_s"] = float(modelled["overlapped_critical_path_s"])
     precommit_s = menu_s + feature_s + donor_s + gen_s
-    arrival = float(precommit_s)
-    commitment_epoch = view.get("effective_end_race_s")
+    if prepared is not None:
+        win = prepared.window_for_budget(deadline_s)
+        commitment_epoch = win.get("effective_end_race_s")
+        remaining = float(win.get("remaining_window_s") or 0.0)
+    else:
+        commitment_epoch = view.get("effective_end_race_s")
+        remaining = float(view.get("effective_remaining_s") or deadline_s)
     if commitment_epoch is None:
-        commitment_epoch = float(view["decision_time_race_s"]) + float(view.get("effective_remaining_s") or deadline_s)
+        commitment_epoch = float(view["decision_time_race_s"]) + max(remaining, 0.0)
+    # Frozen scenario latency is online critical path only (not independent evaluation worlds).
+    online_model = max(precommit_s, float(modelled.get("encoding_s") or 0) + float(modelled.get("circuit_sim_s") or 0) + float(modelled.get("candidate_decoding_s") or 0) + float(modelled.get("validation_s") or 0) + float(modelled.get("features_s") or 0) + float(modelled.get("donor_inference_s") or 0))
+    scenario_s = frozen_scenario_latency_s(
+        case_hash=pch,
+        option=str(option),
+        budget_s=float(deadline_s),
+        seed=int(online_seed),
+        modelled_s=online_model,
+    )
+    arrival = float(scenario_s)
 
     t_plan = time.perf_counter()
     plan_eval = evaluate_candidates_on_bank(
@@ -366,9 +432,10 @@ def decide_and_evaluate(
         nominal_budget_s=float(deadline_s),
     )
     selected = select_by_planning_mean(port["downstream_candidates"], plan_eval["means"])
-    plan_s = time.perf_counter() - t_plan
+    plan_s = max(1e-6, time.perf_counter() - t_plan)
     plan = selected["selected"]["plan"]
-    arrival_commit = float(precommit_s + plan_s)
+    modelled["downstream_scoring_s"] = plan_s
+    arrival_commit = float(scenario_s)
 
     t_eval = time.perf_counter()
     eval_eval = evaluate_candidates_on_bank(
@@ -384,9 +451,41 @@ def decide_and_evaluate(
         checkpoint_hash=checkpoint_hash,
         nominal_budget_s=float(deadline_s),
     )
-    eval_s = time.perf_counter() - t_eval
+    eval_s = max(1e-6, time.perf_counter() - t_eval)
+    modelled["evaluation_s"] = eval_s
+    modelled["serial_sum_s"] = (
+        modelled["observation_state_s"]
+        + modelled["features_s"]
+        + modelled["encoding_s"]
+        + modelled["incumbent_search_s"]
+        + modelled["donor_inference_s"]
+        + modelled["circuit_sim_s"]
+        + modelled["candidate_decoding_s"]
+        + modelled["downstream_scoring_s"]
+        + modelled["validation_s"]
+        + modelled["fallback_s"]
+        + modelled["evaluation_s"]
+    )
+    modelled["overlapped_critical_path_s"] = min(
+        modelled["serial_sum_s"],
+        max(modelled["observation_state_s"], modelled["features_s"])
+        + modelled["encoding_s"]
+        + max(modelled["incumbent_search_s"], modelled["donor_inference_s"])
+        + modelled["circuit_sim_s"]
+        + modelled["candidate_decoding_s"]
+        + modelled["validation_s"]
+        + modelled["downstream_scoring_s"]
+        + modelled["evaluation_s"]
+        + modelled["fallback_s"],
+    )
+    timing_recon = reconcile_timing(modelled)
     recs = eval_eval["worlds"][selected["selected_plan_hash"]]
     losses = [r["loss"] for r in recs]
+    cl_hashes = set(port.get("classical_k_hashes") or [])
+    hy_hashes = {c["plan_hash"] for c in port["downstream_candidates"]}
+    n_q_gen = int(port.get("n_quantum_unique") or 0)
+    n_q_eval = int(port.get("n_quantum_incremental_at_k") or 0)
+    selected_incremental = bool(selected["selected"].get("quantum_incremental_at_k"))
     return {
         "mode": mode,
         "choice": choice,
@@ -420,17 +519,31 @@ def decide_and_evaluate(
             "quantum_pool": None if port["quantum"] is None else port["quantum"]["pool"],
             "quantum_seed_receipts": None if port["quantum"] is None else port["quantum"].get("seed_receipts"),
             "n_stochastic_seeds": None if port["quantum"] is None else port["quantum"].get("n_stochastic_seeds"),
+            "n_quantum_incremental_at_k": port.get("n_quantum_incremental_at_k"),
+            "classical_k_hashes": port.get("classical_k_hashes"),
+            "n_quantum_unique": port.get("n_quantum_unique"),
         },
+        "quantum_incremental_generated": n_q_gen > 0,
+        "quantum_incremental_evaluated_in_k": n_q_eval > 0,
+        "quantum_incremental_selected": selected_incremental,
         "timings": {
             "menu_qubo_s": menu_s,
             "generation_s": gen_s,
             "planning_sim_s": plan_s,
             "evaluation_sim_s": eval_s,
-            "precommit_s": arrival_commit,
+            "precommit_s": precommit_s,
             "arrival_delay_s": arrival_commit,
+            "measured_compute_s": time.perf_counter() - t_all,
+            "frozen_scenario_latency_s": scenario_s,
+            "not_provider_latency": True,
             "total_s": time.perf_counter() - t_all,
             "uncapped": True,
+            "components": modelled,
+            "reconciliation": timing_recon,
         },
+        "prepared_case_hash": pch,
+        "pool_draws": int(pool_size),
+        "policy_seed": int(policy_seed),
         "window": window,
         "donor": donor_rec,
         "n_qubits": qubo["n"],

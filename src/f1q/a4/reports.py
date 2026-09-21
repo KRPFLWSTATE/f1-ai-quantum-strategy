@@ -415,3 +415,175 @@ def finalize_phase6_evidence(
     pkg = {"hashes": pkg_hashes, "ok": all(bool(v) for v in pkg_hashes.values())}
     atomic_write_text(ev / "FINAL_PACKAGE_VERIFY.json", json.dumps(pkg, indent=2, sort_keys=True) + "\n")
     return {"pre": pre, "final": final_v, "manifest": man, "package": pkg}
+
+
+def write_completion_report(
+    root: Path,
+    run_id: str,
+    *,
+    start_commit: str,
+    reviewed_commit: str,
+    engineering: str,
+    gate_e: dict[str, Any],
+    gate_f: dict[str, Any],
+) -> str:
+    """Generate docs/PHASE_6_COMPLETION_REPORT.md from verified artifacts."""
+    ev = root / "evidence/stage6_a4" / run_id
+
+    def _maybe(name: str) -> dict[str, Any]:
+        p = ev / name
+        return _load(p) if p.is_file() else {}
+
+    rec = _maybe("RUN_RECEIPT.json")
+    adm = _maybe("ADMISSION_RECEIPT.json")
+    freeze = _maybe("PROTOCOL_FREEZE.json")
+    primary = _maybe("PRIMARY_ANALYSIS.json")
+    qdoc = _maybe("CALIBRATION_MARGIN_Q.json")
+    sizing = _maybe("PRECISION_AND_STAGE7_SIZING.json")
+    claims = _maybe("CLAIMS_LEDGER.json")
+    lineage = _maybe("LINEAGE_AND_SUPERSESSION.json")
+    amend = _maybe("IMPLEMENTATION_RESOURCE_AMENDMENT.json")
+    proc = _maybe("PROCESS_AND_MEMORY_EVIDENCE.json")
+    verify = _maybe("PRE_REPORT_VERIFY.json") or _maybe("FINAL_VERIFY.json")
+    train = _jsonl(ev / "TRAINING_OPTION_RESULTS.jsonl")
+    tune = _jsonl(ev / "TUNING_OPTION_RESULTS.jsonl")
+    calib = _jsonl(ev / "CALIBRATION_OPTION_RESULTS.jsonl")
+    offline = _jsonl(ev / "OFFLINE_REFERENCE.jsonl")
+    prepared = _jsonl(ev / "PREPARED_CASES.jsonl")
+    labels = _jsonl(ev / "ALLOCATOR_TRAINING_LABELS.jsonl")
+    donor_pol = _maybe("DONOR_POLICY_SELECTION.json")
+    boot = primary.get("bootstrap") or {}
+    ci = boot.get("ci95") or []
+    n_train = len({r.get("block_id") for r in train})
+    n_tune = len({r.get("block_id") for r in tune})
+    n_cal = len({r.get("block_id") for r in calib})
+    n_off = len(offline)
+    coverage = all(r.get("all_plan_coverage") for r in offline) if offline else False
+    body = f"""# Phase 6 completion report
+
+**Document class:** A4 local pre-test mechanism/resource pilot. Generated from frozen artifacts.  
+**PHASE_6_ENGINEERING:** `{engineering}`  
+**Authoritative run:** `{run_id}`  
+**START_COMMIT:** `{start_commit}`  
+**REVIEWED_SOURCE_COMMIT:** `{reviewed_commit}`  
+**QPU_EXECUTION_AUTHORISED:** false · **QPU_JOBS:** 0 · **FINAL_TEST_ACCESSED:** false · **PHASE_7_AUTHORISED:** false
+
+Evidence labels: implemented / verified by a named check / simulated. Not physically measured. Not F1-calibrated. Not quantum advantage. A test fixture is not an experimental observation.
+
+## 1. Executive verdict
+
+Terminal engineering state `{engineering}` has the exact meaning given in the authorised completion prompt: a completed Phase 6 corpus is `CLOSED_READY_FOR_PHASE7_BOUNDARY` or `CLOSED_NOT_READY_FOR_PHASE7`; missing corpus or software failure is `INCOMPLETE_ENGINEERING`; a valid implementation whose minimum complete corpus cannot fit the prospective cap is `INCOMPLETE_ENGINEERING_RESOURCE_LIMIT`. Readiness is a recommendation, not Phase 7 permission.
+
+Gate E is `{gate_e.get("GATE_E_SCIENTIFIC_VALUE")}` because {gate_e.get("reason")}. Superiority path available: `{gate_e.get("SUPERIORITY_PATH_AVAILABLE")}` (proxy headroom is zero whenever exact classical optimisation removes all proxy slack). Boundary mechanism path: `{gate_e.get("BOUNDARY_MECHANISM_PATH_AVAILABLE")}`.
+
+Gate F is `{gate_f.get("GATE_F_LOCAL_PRECISION_AND_RESOURCES")}` because {gate_f.get("reason")}. Phase 7 was not started.
+
+Source: `evidence/stage6_a4/{run_id}/RUN_RECEIPT.json`, `CLAIMS_LEDGER.json`.
+
+## 2. Authority, amendments, commits
+
+Governing authority: the authorised Cursor completion prompt; dossier v3.1 (unchanged PDF); `docs/A3_INVALIDATION_AND_A4_PROTOCOL_AMENDMENT.md`; `docs/PHASE_6_A4_IMPLEMENTATION_AND_RESOURCE_AMENDMENT.md` (prospective, pre-outcome). Reviewed source commit `{reviewed_commit}`. Start commit `{start_commit}` contains `443c636…` in ancestry. Clean-tree proof is the git worktree `phase6-a4-completion` created from `origin/main`.
+
+Amendment companion: `IMPLEMENTATION_RESOURCE_AMENDMENT.json` (`prior_75min_and_60min_were_implementation_added={amend.get("prior_75min_and_60min_were_implementation_added")}`). Lineage: `{lineage.get("prior_admission_disposition")}`.
+
+## 3. Historical lineage
+
+Run `3de109c7-30d9-4cb0-827f-dbd82c4c509d` is superseded **only as a resource model**. Its files are immutable. Its statement that no 120/80/24 corpus ran remains true. Run `09806343-…` remains the hash-verified 24-anchor / 288-start donor source. A3 `a5fdb488-…` remains `SUPERSEDED_INVALID_IMPLEMENTATION`. A2 lineage is not an A4 continuation.
+
+## 4. Defect → fix → test → evidence
+
+This prompt's defects (PreparedCase reuse ignored; sequential loops with assumed parallel factor; C1 dense `2^n`; hidden 64/256 draws; energy-proxy donor labels; `campaign_raw_complete` CLI stop; stale report filenames) are repaired in `src/f1q/a4/` and gated by `tests/a4/test_a4_completion_contract.py`. Traceability also records the earlier bcc740c repair set in `REPAIR_TRACEABILITY.json`.
+
+## 5. Partitions, seeds, final-test
+
+Fresh A4 partitions (120/80/24/80) with SC/VSC children. Final-test IDs are hash-committed only (`PARTITIONS.json` `outcomes_opened=false`). Seed hierarchy: 3 policy seeds; one derived circuit-resample seed each; not 3×3. Mechanism resampling seeds (30) are donor-selector diagnostics. Stage 7's ten seeds were not executed.
+
+Observed training parents `{n_train}`; tuning `{n_tune}`; calibration `{n_cal}`; offline `{n_off}`. Source: `TRAINING_OPTION_RESULTS.jsonl` / `TUNING_OPTION_RESULTS.jsonl` / `CALIBRATION_OPTION_RESULTS.jsonl` / `OFFLINE_REFERENCE.jsonl`.
+
+## 6. Machine, pool, memory, admission
+
+Workers requested `{((proc.get("multi_worker") or {}).get("workers_requested"))}`; distinct PIDs `{((proc.get("multi_worker") or {}).get("n_distinct_worker_pids"))}`; measured efficiency `{proc.get("efficiency")}`. Admission selected ladder `{adm.get("selected_world_level")}`; admitted `{adm.get("admitted")}`; limited pilot `{adm.get("limited_resource_pilot")}`. Conservative wall formula: `unit_p95 * n_units / (W * measured_efficiency) * 1.20`. No assumed 0.55. Source: `ADMISSION_RECEIPT.json`, `PROCESS_AND_MEMORY_EVIDENCE.json`, `OPERATION_LEDGER.json`.
+
+## 7. Prepared-case and distribution reuse
+
+Prepared-case rows `{len(prepared)}`. Distribution index `IDEAL_DISTRIBUTIONS_INDEX.jsonl`. Counters in `MECHANISM_RESULTS.json`. C1 distributions set `dense_2n_allocated=false`.
+
+## 8. Donor bank and selector
+
+Reused anchors 288/24 (hash-verified). Donor policies by family/depth: `{ {k: (v or {}).get("policy") for k, v in donor_pol.items()} }`. Training labels are sampled normalised regret from 1,024-draw pools (`DONOR_SELECTOR_TRAINING.jsonl` field `label`). Learned scores on training cases are fit diagnostics unless parent-grouped OOF is recorded.
+
+## 9. Mechanism panel and noise
+
+Mechanism pool rows are in `MECHANISM_POOL_RESULTS.jsonl`. Variational-reference policy is a fixed-budget reference, not a certified quantum optimum. Local noisy diagnostic is labelled `LOCAL_SYNTHETIC_NOISE` or excluded without fabrication (`LOCAL_SYNTHETIC_NOISE_EXCLUSION.json`).
+
+## 10. Matched K and quantum-incremental flow
+
+Portfolio K is 4 unique slots including fallback; hybrid replaces classical slots (`portfolio_budget_matched` in option results). Quantum-incremental counts are per-row fields `quantum_incremental_generated` / `evaluated_in_k` / `selected`. No Gate E claim is allowed if the treatment does not reach the evaluated K-set.
+
+## 11. Allocator
+
+Feature rows include causal state, menu size, coefficient statistics, budget, and modelled latency (`ALLOCATOR_TRAINING_LABELS.jsonl`, n={len(labels)}). Labels are independent-evaluation reduction in normalised team loss, including zeros/negatives. Tuning freeze (`TUNING_FREEZE.json`) precedes calibration.
+
+## 12. Calibration residual and q
+
+Finite-sample q uses `ceil((n+1)*0.95)` clipped to n. For n=24 this is the maximum residual, not a NumPy interpolated percentile. Stated q `{qdoc.get("q")}`; n `{qdoc.get("n")}`; is_maximum `{qdoc.get("is_maximum")}`. Source: `CALIBRATION_MARGIN_Q.json`, `CALIBRATION_BLOCK_RESIDUALS.jsonl`.
+
+## 13. Offline reference
+
+Offline cases `{n_off}`; all-plan coverage `{coverage}`; `copied_from_arm` is false by construction (`evaluate_offline_reference`). Proxy vs evaluation-simulator disagreement is a model-boundary result when proxy headroom is zero (`BOUNDARY_RESULTS.json`).
+
+## 14. Timing
+
+Frozen scenario latency is keyed by case/option/budget/seed. Isolated local compute is reported separately and is not provider latency. Component tables are in `OPERATIONAL_LATENCY.jsonl` and option-result `timings.components`. Critical-path totals are reconciled; no paired turnaround is divided by two.
+
+## 15. Primary 30-second effect
+
+Development/calibration block-mean `{boot.get("mean")}` with 95% stratified block-bootstrap interval `{ci}` (n_boot={boot.get("n_boot")}, seed={boot.get("seed")}). Label: development/calibration, not final-test confirmation. Source: `PRIMARY_ANALYSIS.json`.
+
+## 16. Ablations
+
+Always-classical, no-learned-donor, and C0-for-C1 diagnostics live in option-result files (`ABLATION_RESULTS.json`). Always-quantum remains a local diagnostic, not an operational recommendation.
+
+## 17. Boundary table and F1 meaning
+
+Per-family/regime benefit, harm, fallback, and executed-plan differences: `BOUNDARY_RESULTS.json`. These are simulated restricted-model results. They do not establish F1 operational readiness.
+
+## 18. Precision and Stage 7 sizing
+
+MC world target `{((sizing.get("mc_target") or {}).get("target"))}`. Stage 7 recommended blocks `{((sizing.get("sizing") or {}).get("recommended_blocks"))}`; classification `{((sizing.get("sizing") or {}).get("analysis_classification"))}`. If required blocks exceed 160, the honest claim is estimation, not a powered superiority design.
+
+## 19. Gate E
+
+{gate_e}
+
+Zero proxy headroom disables superiority. A boundary/mechanism question may still survive if matched-K quantum-incremental candidates were generated, evaluated inside K, and downstream scoring can select or reject them.
+
+## 20. Gate F
+
+{gate_f}
+
+Phase 7 remains unauthorised.
+
+## 21. Claims
+
+Allowed: {claims.get("allowed")}. Prohibited: {claims.get("prohibited")}. Novelty is not yet literature-verified.
+
+## 22. Failures, exclusions, deviations
+
+See `DEVIATIONS.json`. Missing observations are not replaced with zeros. Scientific failures remain in the denominator.
+
+## 23. Tests, verification, hashes
+
+Independent verifier `{verify.get("n_pass")}/{verify.get("n_total")}` (`PRE_REPORT_VERIFY.json` / `FINAL_VERIFY.json`). Manifest excludes itself and later wrappers by explicit rule. Reproducibility: from the reviewed source commit, `python -m f1q.a4 --verify-run {run_id}` recomputes checks without rerunning the corpus.
+
+## 24. Phase 7 recommendation (not authorised)
+
+`PHASE_7_AUTHORISED` is false in every terminal state. A later explicit user prompt is required even if this report recommends a boundary study.
+
+---
+Generated from `{ev}`.
+"""
+    out = root / "docs" / "PHASE_6_COMPLETION_REPORT.md"
+    atomic_write_text(out, body)
+    return sha256_file(out)
+

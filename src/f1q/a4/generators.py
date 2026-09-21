@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 
-from collections import Counter
 from typing import Any, Callable
 
 import numpy as np
 
-from f1q.a4.circuits import simulate_c0, simulate_c1
 from f1q.a4.problem import (
     A4Instance,
     binary_to_policy,
@@ -16,7 +14,6 @@ from f1q.a4.problem import (
     repair_to_legal_plan,
 )
 from f1q.hashing import sha256_json
-from f1q.stage6.metrics_pilot import distribution_hash
 
 
 def _legal_rows(instance: A4Instance, legal_table: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
@@ -163,22 +160,32 @@ def quantum_candidates(
     pool_size: int,
     seed: int,
     sim_validate: Callable,
+    prepared_case_hash: str | None = None,
+    dist_cache: Any | None = None,
+    legal_table: list[dict[str, Any]] | None = None,
+    distribution: Any | None = None,
 ) -> dict[str, Any]:
+    from f1q.a4.distributions import build_ideal_distribution, resample_pool
+
     gammas, betas = params
-    if family == "C0":
-        sim = simulate_c0(qubo, gammas, betas, scaled=True)
-    else:
-        sim = simulate_c1(instance, qubo, gammas, betas, scaled=True)
     n = int(qubo["n"])
-    p_norm = np.asarray(sim["probs"], dtype=np.float64)
-    p_norm = p_norm / max(float(p_norm.sum()), 1e-30)
-    rng = np.random.default_rng(seed)
-    idx = rng.choice(p_norm.size, size=int(pool_size), replace=True, p=p_norm)
-    counts = Counter(int(b) for b in idx)
-    hist = {str(b): int(c) for b, c in sorted(counts.items())}
+    pch = prepared_case_hash or sha256_json({"instance": instance.instance_id, "qubo": qubo.get("hash")})
+    dist = distribution or build_ideal_distribution(
+        instance=instance,
+        qubo=qubo,
+        family=family,
+        depth=p,
+        gammas=gammas,
+        betas=betas,
+        prepared_case_hash=pch,
+        cache=dist_cache,
+        legal_table=legal_table,
+    )
+    pool_rec = resample_pool(dist, pool_draws=int(pool_size), seed=int(seed))
     n_legal = n_decode_invalid = n_repaired = 0
     decoded = []
     seen_plans: set[str] = set()
+    hist = pool_rec["histogram_sparse"]
     for b_s, cnt in sorted(hist.items(), key=lambda kv: -int(kv[1])):
         b = int(b_s)
         x = np.array([(b >> k) & 1 for k in range(n)], dtype=int)
@@ -207,16 +214,7 @@ def quantum_candidates(
         decoded.append(row)
         seen_plans.add(ph)
     pool = {
-        "seed": int(seed),
-        "requested_shots": int(pool_size),
-        "actual_draws": int(idx.size),
-        "histogram_sum": int(sum(counts.values())),
-        "shot_conservation_ok": int(idx.size) == int(pool_size) and int(sum(counts.values())) == int(idx.size),
-        "histogram_sparse": hist,
-        "distribution_hash": distribution_hash(p_norm),
-        "rng_id": "numpy.random.Generator",
-        "rng_bit_generator": type(rng.bit_generator).__name__,
-        "numpy_version": str(np.__version__),
+        **pool_rec,
         "n_legal_in_pool": n_legal,
         "n_decoding_invalid": n_decode_invalid,
         "n_repaired": n_repaired,
@@ -227,16 +225,21 @@ def quantum_candidates(
         "duplicates_in_denominator": True,
         "repaired_in_denominator": True,
         "invalid_in_denominator": True,
+        "rng_id": "numpy.random.Generator",
+        "numpy_version": str(np.__version__),
+        "distribution_hash": dist.distribution_hash,
     }
     return {
         "family": family,
         "p": p,
         "n": n,
-        "norm": float(sim["norm"]),
-        "expectation_scaled": float(sim["expectation_scaled"]),
-        "amp_outside_one_hot": float(sim.get("amp_outside_one_hot", 0.0)),
+        "norm": 1.0,
+        "expectation_scaled": float(dist.expectation_scaled),
+        "amp_outside_one_hot": 0.0,
         "pool": pool,
         "decoded": decoded,
+        "distribution_key": dist.key,
+        "dense_2n_allocated": dist.dense_2n_allocated,
         "resource_counts": {"n_qubits": n, "p": p, "param_count": 2 * p, "family": family},
         "not_claimed_novel_mixer": True,
     }
@@ -257,6 +260,8 @@ def assemble_portfolio(
     n_stochastic_seeds: int = 1,
     legal_table: list[dict[str, Any]] | None = None,
     donor_id: str | None = None,
+    prepared_case_hash: str | None = None,
+    dist_cache: Any | None = None,
 ) -> dict[str, Any]:
     """Matched K unique downstream slots.
 
@@ -293,6 +298,9 @@ def assemble_portfolio(
                 pool_size=pool_size,
                 seed=seed + 10007 * s_i,
                 sim_validate=sim_validate,
+                prepared_case_hash=prepared_case_hash,
+                dist_cache=dist_cache,
+                legal_table=legal_table,
             )
             seed_receipts.append(
                 {
