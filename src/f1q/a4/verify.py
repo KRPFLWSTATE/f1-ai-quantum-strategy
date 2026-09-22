@@ -177,7 +177,7 @@ def run_independent_verify(root: Path, run_id: str, *, mode: str = "auto") -> di
         _add(checks, "production_scalar_calls_zero", int((kern.get("scalar_calls") or 0)) == 0, expected=0, observed=kern.get("scalar_calls"))
         tests = admission.get("full_tests") or {}
         skipped = tests.get("skipped")
-        tests_ok = int(tests.get("exit_code") or 1) == 0 and int(tests.get("failed") or 0) == 0 and skipped is not True
+        tests_ok = int(tests.get("exit_code", 1)) == 0 and int(tests.get("failed") or 0) == 0 and skipped is not True
         _add(checks, "full_tests_not_skipped", tests_ok, expected=0, observed={"exit": tests.get("exit_code"), "failed": tests.get("failed"), "skipped": skipped})
         e2e = admission.get("clean_extract_e2e") or {}
         _add(checks, "clean_extract_e2e", bool(e2e.get("ok") or e2e.get("exit_code") == 0))
@@ -223,7 +223,7 @@ def run_independent_verify(root: Path, run_id: str, *, mode: str = "auto") -> di
         tests = admission.get("full_tests") or {}
         if tests:
             skipped = tests.get("skipped")
-            tests_ok = int(tests.get("exit_code") or 1) == 0 and int(tests.get("failed") or 0) == 0 and skipped is not True
+            tests_ok = int(tests.get("exit_code", 1)) == 0 and int(tests.get("failed") or 0) == 0 and skipped is not True
             _add(checks, "full_tests_not_skipped", tests_ok, expected=0, observed={"exit": tests.get("exit_code"), "failed": tests.get("failed"), "skipped": skipped})
         e2e = admission.get("clean_extract_e2e") or {}
         if e2e and not e2e.get("skipped"):
