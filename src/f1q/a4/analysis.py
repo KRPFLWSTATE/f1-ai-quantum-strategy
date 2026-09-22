@@ -148,10 +148,14 @@ def derive_gate_e(
         gate = "FAIL_NO_SURVIVING_QUESTION"
         boundary = False
         reason = "quantum treatment structurally or empirically indistinguishable; no boundary contribution"
-    elif boundary_question_survives:
-        gate = "PASS_BOUNDARY_MECHANISM"
+    elif boundary_question_survives and mechanism_distinguishable:
+        gate = "PASS_BOUNDARY_POSITIVE"
         boundary = True
-        reason = "matched-K experiment supports a nontrivial boundary/mechanism question; superiority path closed"
+        reason = "registered F/R sample would support a positive boundary/mechanism result; superiority path closed"
+    elif boundary_question_survives:
+        gate = "PASS_BOUNDARY_NULL"
+        boundary = True
+        reason = "registered sample complete with implemented quantum treatment quantifying zero/negligible incremental yield"
     else:
         gate = "FAIL_NO_SURVIVING_QUESTION"
         boundary = False
@@ -189,11 +193,11 @@ def derive_gate_f(
         ready = False
         reason = "missing calibration parents, q, sizing, admission, or resource fit"
     elif not precision_met:
-        status = "FAIL"
-        ready = False
-        reason = "precision target not met; Stage 7 estimation-only or not ready"
+        status = "PASS_BOUNDARY_ESTIMATION" if n_calib_parents == 24 else "FAIL"
+        ready = n_calib_parents == 24
+        reason = "24 maxima and q complete but prespecified precision not attainable within 80-160 Stage 7 blocks"
     else:
-        status = "PASS_BOUNDARY_RESOURCES"
+        status = "PASS_BOUNDARY_PRECISION"
         ready = True
         reason = "local precision and resources support a Stage 7 boundary design; not authorised"
     return {
@@ -224,7 +228,7 @@ def claims_ledger(*, gate_e: dict[str, Any], gate_f: dict[str, Any], proxy_headr
         "final_test_confirmation",
         "superiority_with_zero_proxy_headroom",
     ]
-    if gate_e.get("GATE_E_SCIENTIFIC_VALUE") == "PASS_BOUNDARY_MECHANISM":
+    if gate_e.get("GATE_E_SCIENTIFIC_VALUE") in {"PASS_BOUNDARY_MECHANISM", "PASS_BOUNDARY_POSITIVE", "PASS_BOUNDARY_NULL"}:
         allowed.append("boundary_mechanism_question_for_future_phase7_design")
     return {
         "allowed": allowed,

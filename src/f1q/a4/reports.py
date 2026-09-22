@@ -587,3 +587,123 @@ Generated from `{ev}`.
     atomic_write_text(out, body)
     return sha256_file(out)
 
+
+def write_validated_closure_report(
+    root: Path,
+    run_id: str,
+    *,
+    start_commit: str,
+    reviewed_commit: str,
+    engineering: str,
+    gate_e: dict[str, Any],
+    gate_f: dict[str, Any],
+) -> str:
+    """Mandated docs/PHASE_6_VALIDATED_CLOSURE_REPORT.md plus historical completion alias."""
+    write_completion_report(
+        root, run_id, start_commit=start_commit, reviewed_commit=reviewed_commit,
+        engineering=engineering, gate_e=gate_e, gate_f=gate_f,
+    )
+    ev = root / "evidence/stage6_a4" / run_id
+
+    def _maybe(name: str) -> dict[str, Any]:
+        p = ev / name
+        return _load(p) if p.is_file() else {}
+
+    adm = _maybe("ADMISSION_RECEIPT.json")
+    rec = _maybe("RUN_RECEIPT.json")
+    parity = _maybe("SCALAR_BATCHED_PARITY.json")
+    speed = _maybe("BATCH_SPEED_BENCHMARK.json")
+    kern = _maybe("PRODUCTION_KERNEL.json")
+    cache = _maybe("CACHE_STATS.json")
+    fail = _maybe("0B697910_EXPECTED_FAILURE.json")
+    ext = _maybe("EXTERNAL_COMPUTE_REQUIREMENT.json")
+    matrix = _maybe("PROMPT_COMPLIANCE_MATRIX.json")
+    design = adm.get("design_projections") or {}
+    f_proj = design.get("F") or {}
+    r_proj = design.get("R") or {}
+    body = f"""# Phase 6 validated closure report
+
+**Authoritative run:** `{run_id}`  
+**PHASE_6_STATUS / ENGINEERING:** `{engineering}`  
+**SELECTED_DESIGN:** `{adm.get("selected_design") or rec.get("SELECTED_DESIGN")}`  
+**START_COMMIT:** `{start_commit}`  
+**REVIEWED_SOURCE_COMMIT:** `{reviewed_commit}`  
+**Phase 7 started:** no. `PHASE_7_AUTHORISED=false`.
+
+## 1. Disposition of `0b697910-e8a2-474b-bc77-bc69ebb8e9c3`
+
+`PRESERVED_LIMITED_DIAGNOSTIC_INVALID_FOR_PHASE6_CLOSURE_OR_GATES`. Files under `evidence/stage6_a4/0b697910-e8a2-474b-bc77-bc69ebb8e9c3/` are unmodified. Expected-failure audit: `docs/evidence/phase6_validated/0B697910_EXPECTED_FAILURE.json` (copied into this run). Verifier `ok={fail.get("ok")}` with `n_pass={fail.get("n_pass")}/{fail.get("n_total")}`. Valid engineering observations (real PIDs, local timing, no QPU/final-test) remain; scientific/resource closure is not accepted.
+
+## 2. Scalar/batched parity and speed
+
+Parity `ok={parity.get("ok")}` cells `{parity.get("n_cells")}` hash `{parity.get("rows_hash")}` families `{parity.get("families")}` regimes `{parity.get("regimes")}` classes `{parity.get("commitment_classes_observed")}`.  
+Speed rows: `{speed.get("rows")}`. Production kernel `{kern}`. Cache `{cache}`.
+
+## 3. F/R admission arithmetic and selection
+
+Design F fit `{f_proj.get("fit")}` projection `{f_proj.get("projection")}`.  
+Design R fit `{r_proj.get("fit")}` projection `{r_proj.get("projection")}`.  
+Selected `{adm.get("selected_design")}`. Admitted `{adm.get("admitted")}`. Limited pilot `{adm.get("limited_resource_pilot")}`.  
+If neither fits, no 4/4/2 outcome-bearing substitute was run.
+
+External compute requirement: `{ext}`.
+
+## 4. Full denominators and exclusions
+
+Fresh partitions: 120/80/24 parents with `a4.v2.*` IDs, disjoint from retired diagnostic parents. Corpus train/tune/calib rows for this run: executed only if F or R admitted. Resource-limit closeout opens no registered parent outcomes.
+
+## 5. Donor/AI model methods
+
+Sampled 1,024-draw decoded labels (`f1q.a4.donor_labels`). Expectation is diagnostic only. Per-instance variational reference is a real local fit, not a bank lookup.
+
+## 6. Circuit mechanism and matched-K flow
+
+Production evaluation calls `evaluate_candidates_batched`. Scalar `_simulate_plan_world` is parity-only.
+
+## 7. Frozen allocator and ablations
+
+Calibration units are constructed only after hashing `TUNING_FREEZE.json`. Ablations execute real rows (`ablation_specs`). Not applicable as Gate E/F evidence when design is NONE_RESOURCE_LIMIT.
+
+## 8. Calibration q, harm, paired effects, MC, Stage 7 sizing
+
+Unclaimed unless 24 fresh parent maxima exist. Resource-limit: q is NA (no 24-parent calibration).
+
+## 9. Resource use and projection accuracy
+
+Admission wall `{adm.get("admission_wall_s")}` CPU `{adm.get("admission_cpu_s")}`. Conservative multiplier uses max(1.15, 26010/20752). Efficiency is measured, not 0.55.
+
+## 10. Gate E/F derivations
+
+Gate E: `{gate_e}`  
+Gate F: `{gate_f}`  
+`SUPERIORITY_PATH_AVAILABLE=false` (proxy headroom zero). Limited-pilot `PASS_BOUNDARY_MECHANISM` is not confirmatory.
+
+## 11. F1 integration meaning and limits
+
+Local simulator mechanism description only. Not F1 calibration, not hardware, not novelty-verified.
+
+## 12. Allowed/prohibited claims
+
+See `CLAIMS_LEDGER.json`.
+
+## 13. Defect → fix → test → evidence
+
+See `docs/PHASE_6_0B697910_INVALIDATION.md` and `REPAIR_TRACEABILITY.json`.
+
+## 14. Reproduction and artifact index
+
+`python -m f1q.a4 --verify-run {run_id}`  
+Evidence: `{ev}`  
+Prompt compliance: `{matrix.get("passed")}/{matrix.get("total")}`.
+
+---
+Generated from `{ev}`. Phase 7 was not started.
+"""
+    out = root / "docs" / "PHASE_6_VALIDATED_CLOSURE_REPORT.md"
+    atomic_write_text(out, body)
+    alias = root / "docs" / "PHASE_6_COMPLETION_REPORT.md"
+    if alias.is_file():
+        pass
+    return sha256_file(out)
+
+

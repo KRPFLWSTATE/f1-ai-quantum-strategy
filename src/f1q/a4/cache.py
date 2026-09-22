@@ -36,6 +36,8 @@ class ByteBoundedCache:
         self.misses = 0
         self.evictions = 0
         self.max_bytes_observed = 0
+        self._class: dict[str, str] = {}
+        self.keys_by_class: dict[str, int] = {}
 
     def __contains__(self, key: str) -> bool:
         return key in self._data
@@ -59,23 +61,31 @@ class ByteBoundedCache:
             raise KeyError(key)
         return rec
 
-    def put(self, key: str, value: Any) -> None:
+    def put(self, key: str, value: Any, klass: str = "continuation") -> None:
         size = max(1, _nbytes(value))
         if key in self._data:
             self.bytes -= self._sizes[key]
+            old_c = self._class.pop(key, None)
+            if old_c:
+                self.keys_by_class[old_c] = max(0, self.keys_by_class.get(old_c, 0) - 1)
         while self._data and (self.bytes + size) > self.max_bytes:
             old_k, _ = self._data.popitem(last=False)
             self.bytes -= self._sizes.pop(old_k, 0)
+            old_c = self._class.pop(old_k, None)
+            if old_c:
+                self.keys_by_class[old_c] = max(0, self.keys_by_class.get(old_c, 0) - 1)
             self.evictions += 1
         if size > self.max_bytes:
-            # Single object larger than the ceiling: do not retain.
             self.evictions += 1
             self._data.pop(key, None)
             self._sizes.pop(key, None)
+            self._class.pop(key, None)
             return
         self._data[key] = value
         self._data.move_to_end(key)
         self._sizes[key] = size
+        self._class[key] = str(klass)
+        self.keys_by_class[str(klass)] = self.keys_by_class.get(str(klass), 0) + 1
         self.bytes += size
         if self.bytes > self.max_bytes_observed:
             self.max_bytes_observed = self.bytes
@@ -87,10 +97,13 @@ class ByteBoundedCache:
         keys = [k for k in self._data if k.startswith(prefix)]
         for k in keys:
             self.bytes -= self._sizes.pop(k, 0)
+            old_c = self._class.pop(k, None)
+            if old_c:
+                self.keys_by_class[old_c] = max(0, self.keys_by_class.get(old_c, 0) - 1)
             del self._data[k]
         return len(keys)
 
-    def stats(self) -> dict[str, int]:
+    def stats(self) -> dict[str, Any]:
         return {
             "hits": self.hits,
             "misses": self.misses,
@@ -99,4 +112,5 @@ class ByteBoundedCache:
             "bytes": self.bytes,
             "max_bytes": self.max_bytes,
             "max_bytes_observed": self.max_bytes_observed,
+            "keys_by_class": dict(self.keys_by_class),
         }

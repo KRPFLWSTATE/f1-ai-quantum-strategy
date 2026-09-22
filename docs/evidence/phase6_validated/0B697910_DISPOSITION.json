@@ -1,0 +1,25 @@
+{
+  "run_id": "0b697910-e8a2-474b-bc77-bc69ebb8e9c3",
+  "disposition": "PRESERVED_LIMITED_DIAGNOSTIC_INVALID_FOR_PHASE6_CLOSURE_OR_GATES",
+  "files_unmodified": true,
+  "evidence_commit": "dcfe1cde7f02643d7a2d258d961e7ce2b4e62461",
+  "valid_engineering_observations": [
+    "real_worker_processes",
+    "local_timing_measured",
+    "no_qpu_access",
+    "no_final_test_access"
+  ],
+  "invalid_for": ["phase6_closure", "gate_e", "gate_f"],
+  "expected_verifier_failures": [
+    "limited_pilot_cannot_pass_gates_or_closure",
+    "calib_parents_not_24",
+    "freeze_vs_executed_options",
+    "expectation_used_as_donor_label",
+    "allocator_runtime_none",
+    "cache_stats_not_persisted",
+    "scalar_production_path",
+    "full_tests_skipped",
+    "heartbeat_raw_perf_counter",
+    "projection_underprediction"
+  ]
+}

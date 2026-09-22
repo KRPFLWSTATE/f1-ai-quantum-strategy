@@ -84,7 +84,8 @@ from f1q.stage5.metrics import normalised_regret
 
 PRIOR_FAILED = "09806343-f940-4f33-9e0f-eb2855d0714b"
 PRIOR_ADMISSION = "3de109c7-30d9-4cb0-827f-dbd82c4c509d"
-START_COMMIT_EXPECTED = "443c6365777965438e1cd57439a58770227ae513"
+START_COMMIT_EXPECTED = "dcfe1cde7f02643d7a2d258d961e7ce2b4e62461"
+PRIOR_DIAGNOSTIC = "0b697910-e8a2-474b-bc77-bc69ebb8e9c3"
 REUSED = {
     "MANIFEST.json": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
     "ANCHOR_FITS.jsonl": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
@@ -99,6 +100,7 @@ COMPLETED_STATES = {
     "CLOSED_NOT_READY_FOR_PHASE7",
     "INCOMPLETE_ENGINEERING",
     "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT",
+    "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED",
 }
 
 
@@ -107,6 +109,9 @@ def _utc() -> str:
 
 
 def _git_head(root: Path) -> str:
+    env = os.environ.get("F1Q_REVIEWED_SOURCE_COMMIT")
+    if env:
+        return env
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(root), text=True).strip()
 
 
@@ -149,6 +154,8 @@ def lineage_record(*, new_run: str, source_commit: str) -> dict[str, Any]:
         "prior_admission_disposition": "SUPERSEDED_RESOURCE_MODEL_ONLY",
         "prior_failed_run": PRIOR_FAILED,
         "prior_failed_disposition": "PRESERVED_ANCHOR_SOURCE",
+        "prior_diagnostic_run": PRIOR_DIAGNOSTIC,
+        "prior_diagnostic_disposition": "PRESERVED_LIMITED_DIAGNOSTIC_INVALID_FOR_PHASE6_CLOSURE_OR_GATES",
         "a3_run": "a5fdb488-9a90-47f9-a4f5-7f77a74180a6",
         "a3_disposition": "SUPERSEDED_INVALID_IMPLEMENTATION",
         "do_not_modify_historical_files": True,
@@ -317,9 +324,17 @@ def operation_ledger(
     }
 
 
-def _heartbeat(ev: Path, **fields: Any) -> None:
+def _heartbeat(ev: Path, *, campaign_t0: float | None = None, **fields: Any) -> None:
+    wall = fields.get("elapsed_wall_s")
+    if campaign_t0 is not None:
+        wall = max(0.0, time.perf_counter() - float(campaign_t0))
+        fields["elapsed_wall_s"] = wall
+        fields["campaign_relative_wall"] = True
+        fields["not_raw_perf_counter_epoch"] = True
     rec = {"ts": _utc(), **fields}
-    append_jsonl(ev / "HEARTBEATS.jsonl", rec)
+    from f1q.a4.hashing_io import append_jsonl_nofsync
+
+    append_jsonl_nofsync(ev / "HEARTBEATS.jsonl", rec)
     print(
         f"[heartbeat] phase={fields.get('phase')} {fields.get('completed')}/{fields.get('total')} "
         f"last={fields.get('last_case')} workers={fields.get('active_workers')} "
@@ -327,6 +342,24 @@ def _heartbeat(ev: Path, **fields: Any) -> None:
         f"rss={fields.get('aggregate_rss')} eta={fields.get('eta_s')} bytes={fields.get('evidence_bytes')}",
         flush=True,
     )
+
+
+def _persist_eval_worlds(payload: dict[str, Any], pc: Any, option: str, budget: Any, seed: int, worlds: Any) -> dict[str, Any] | None:
+    if not worlds:
+        return None
+    from f1q.a4.world_store import write_world_chunk
+
+    dest = Path(payload.get("world_dir") or payload.get("evidence_dir") or ".") / "worlds"
+    if isinstance(worlds, dict):
+        rows = []
+        for ph, recs in worlds.items():
+            for r in recs or []:
+                rec = dict(r)
+                rec["plan_hash"] = rec.get("plan_hash") or ph
+                rows.append(rec)
+    else:
+        rows = list(worlds)
+    return write_world_chunk(dest, rows, prefix=f"{pc.case_id}.{option}.{budget}.{seed}")
 
 
 def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
@@ -350,8 +383,15 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
     if prepare_counters()["prepare_case_calls"] != 1:
         raise StructuralError("PREPARE", "worker prepared more than once", path=pc.case_id)
     bank = payload["donor_bank"]
-    cache: dict[str, Any] = {}
-    dist_cache: dict[str, Any] = {}
+    from f1q.a4.cache import ByteBoundedCache
+    from f1q.a4.allocator import RidgeModel
+
+    cache = ByteBoundedCache(max_bytes=int(payload.get("cache_max_bytes") or 64 * 1024 * 1024))
+    dist_cache = ByteBoundedCache(max_bytes=int(payload.get("dist_cache_max_bytes") or 32 * 1024 * 1024))
+    runtime = None
+    freeze = payload.get("freeze")
+    if payload.get("allocator_artifact"):
+        runtime = RidgeModel.from_artifact(payload["allocator_artifact"])
     rows = []
     p_seeds = bank_world_seeds(pc.block_id, pc.regime, PLANNING_BANK, int(payload["n_planning"]))
     e_seeds = bank_world_seeds(pc.block_id, pc.regime, EVALUATION_BANK, int(payload["n_evaluation"]))
@@ -359,7 +399,12 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
         raise StructuralError("BANKS", "planning/evaluation overlap", path=pc.case_id)
     n_seeds = int(payload.get("n_policy_seeds") or 1)
     pool_draws = int(payload.get("pool_draws") or POOL_DRAWS)
+    n_eval_by_budget = payload.get("n_eval_by_budget") or {}
     for budget in payload["budgets"]:
+        n_eval_b = int(n_eval_by_budget.get(str(int(budget)), payload["n_evaluation"]))
+        e_seeds = bank_world_seeds(pc.block_id, pc.regime, EVALUATION_BANK, n_eval_b)
+        if not banks_disjoint(p_seeds, e_seeds):
+            raise StructuralError("BANKS", "planning/evaluation overlap", path=pc.case_id)
         for option, mode, fd in payload["option_specs"]:
             key = None if fd is None else f"{fd[0]}_p{fd[1]}"
             dpol = payload.get("donor_policy_by_fd", {}).get(key or "classical", {}).get("policy", "fixed")
@@ -367,7 +412,7 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
                 rec = decide_and_evaluate(
                     pc.spec_with_budget(budget),
                     mode=mode,
-                    runtime=None,
+                    runtime=runtime,
                     donor_bank=bank,
                     donor_policy=dpol if fd else "fixed",
                     planning_seeds=p_seeds,
@@ -377,7 +422,7 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
                     pool_size=pool_draws,
                     equal_k=PORTFOLIO_K,
                     deadline_s=float(budget),
-                    margin=0.001,
+                    margin=float((freeze or {}).get("dispatch_threshold") or 0.001) if payload.get("use_frozen_allocator") else 0.001,
                     conservative_residual=0.0,
                     family_depth=tuple(fd) if fd else None,
                     n_stochastic_seeds=1,
@@ -385,6 +430,8 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
                     prepared=pc,
                     dist_cache=dist_cache,
                     policy_seed=s_i,
+                    freeze=freeze,
+                    allowed_options=list((freeze or {}).get("allowed_options") or []) or None,
                 )
                 rows.append(
                     {
@@ -413,7 +460,12 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
                         "measured_compute_s": rec["timings"].get("measured_compute_s"),
                         "pool_draws": rec.get("pool_draws"),
                         "prepared_case_hash": rec.get("prepared_case_hash"),
-                        "eval_worlds": rec["eval_worlds"] if payload.get("persist_worlds") else None,
+                        "eval_worlds": None,
+                        "world_chunk": (
+                            _persist_eval_worlds(payload, pc, option, budget, s_i, rec.get("eval_worlds"))
+                            if payload.get("persist_worlds")
+                            else None
+                        ),
                         "success": rec["mean_loss"] is not None,
                         "config_hash": payload.get("config_hash"),
                         "source_commit": payload.get("source_commit"),
@@ -445,6 +497,7 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
         "wall_s": time.perf_counter() - t0,
         "rss": current_rss_bytes(),
         "worker_pid": os.getpid(),
+        "cache_stats": {"continuation": cache.stats(), "distribution": dist_cache.stats()},
     }
 
 
@@ -501,7 +554,9 @@ def _project_from_probes(ledger: dict[str, Any], probes: list[dict[str, Any]], w
     cpu_eval = per_eval_world_s * int(counts["evaluation_worlds_upper"])
     cpu_off = per_world_s * int(counts["offline_all_plan_evaluations"])
     serial_point = cpu_prep + cpu_dist + cpu_plan + cpu_eval + cpu_off
-    serial = serial_point * 1.15
+    historical_under = 26010.0 / 20752.0  # 0b697910 actual/projected
+    cons_mult = max(1.15, historical_under)
+    serial = serial_point * cons_mult
     n_w = max(1, int(workers["workers"]))
     eff = max(float(efficiency), 0.05)
     wall_point = serial_point / max(n_w * eff, 1.0)
@@ -540,6 +595,8 @@ def _project_from_probes(ledger: dict[str, Any], probes: list[dict[str, Any]], w
         },
         "efficiency_used": eff,
         "assumed_0_55_forbidden": True,
+        "conservative_multiplier": cons_mult,
+        "historical_underprediction_0b697910": historical_under,
         "peak_aggregate_rss_bytes": rss,
         "storage_bytes": storage,
         "workers": n_w,

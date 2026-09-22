@@ -42,7 +42,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.admission_check or args.preflight:
         result = run_admission_check(root, args.config, miniature=args.miniature, skip_full_tests=args.skip_full_tests)
         print(json.dumps({k: v for k, v in result.items() if k != "receipt"}, indent=2, sort_keys=True, default=str))
-        return 0 if result.get("admitted") or result.get("limited_resource_pilot") else 2
+        return 0 if (
+            result.get("admitted")
+            or result.get("selected_design") in {"NONE_RESOURCE_LIMIT", "MINIATURE"}
+            or result.get("status") == "not_admitted_resource_limit"
+        ) else 2
     if args.execute_phase6:
         if not args.run_id:
             print("ERROR: --execute-phase6 requires --run-id", file=sys.stderr)

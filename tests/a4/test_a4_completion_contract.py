@@ -358,6 +358,10 @@ def test_choose_workers_uses_measured_rss_not_512mib():
 @pytest.mark.skipif(os.environ.get("F1Q_A4_IN_ADMISSION") == "1", reason="avoid recursive admission pytest")
 def test_e2e_miniature_campaign(tmp_path: Path):
     """Named e2e_miniature so admission focused pytest can exclude it."""
+    import os
+
+    if os.environ.get("F1Q_A4_IN_ADMISSION") == "1" or os.environ.get("F1Q_A4_IN_CLEAN_EXTRACT") == "1":
+        pytest.skip("nested e2e forbidden during admission/extract")
     from f1q.a4.completion_run import execute_phase6, run_admission_check
     from f1q.a4.verify import run_independent_verify
     from f1q.paths import resolve_project_root

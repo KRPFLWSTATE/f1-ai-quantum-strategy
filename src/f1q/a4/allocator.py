@@ -154,31 +154,38 @@ def dispatch_choice(
     mode: str,
     conservative_residual: float,
     allowed_options: tuple[str, ...] | list[str] | None = None,
+    freeze: dict[str, Any] | None = None,
 ) -> str:
-    """Map a score to an option. Calibration uses score = g_hat - q - lambda*u separately."""
-    allowed = list(allowed_options or ALLOCATOR_OPTIONS)
+    """Map a score to an option. Calibration uses freeze-selected depths and threshold."""
+    allowed = list(allowed_options or (list(freeze["allowed_options"]) if freeze else ALLOCATOR_OPTIONS))
     if mode in {"always_classical", "classical_only"}:
         return "classical_only"
     if mode == "always_c0":
-        return "C0_p1" if "C0_p1" in allowed else "always_c0"
+        depth = (freeze or {}).get("frozen_c0_depth") or "C0_p1"
+        return depth if depth in allowed else ("C0_p1" if "C0_p1" in allowed else "classical_only")
     if mode == "always_c1":
-        return "C1_p1" if "C1_p1" in allowed else "always_c1"
+        depth = (freeze or {}).get("frozen_c1_depth") or "C1_p1"
+        return depth if depth in allowed else ("C1_p1" if "C1_p1" in allowed else "classical_only")
     if mode in {"always_c0_p2"}:
         return "C0_p2"
     if mode in {"always_c1_p2"}:
         return "C1_p2"
     if mode == "stop_fallback":
         return "stop_fallback"
-    adj = float(pred.get("pred_marginal_utility") or 0.0) - float(conservative_residual)
+    lam = float((freeze or {}).get("primary_lambda") or 0.0)
+    thresh = float((freeze or {}).get("dispatch_threshold") or 0.0)
+    c0 = str((freeze or {}).get("frozen_c0_depth") or "C0_p1")
+    c1 = str((freeze or {}).get("frozen_c1_depth") or "C1_p1")
+    adj = float(pred.get("pred_marginal_utility") or 0.0) - float(conservative_residual) - lam * float(pred.get("uncertainty") or 0.0) - thresh
     if pred_latency_s > 0.8 * max(deadline_s, 1e-6):
-        return "classical_only"
+        return "classical_only" if "classical_only" in allowed else "stop_fallback"
     if adj <= 0.0:
-        return "classical_only"
-    if "C1_p1" in allowed and adj > 2 * max(margin, 1e-12):
-        return "C1_p1"
-    if "C0_p1" in allowed:
-        return "C0_p1"
-    return "classical_only"
+        return "classical_only" if "classical_only" in allowed else "stop_fallback"
+    if c1 in allowed and adj > 2 * max(margin, 1e-12):
+        return c1
+    if c0 in allowed:
+        return c0
+    return "classical_only" if "classical_only" in allowed else "stop_fallback"
 
 
 def select_calibrated_option(

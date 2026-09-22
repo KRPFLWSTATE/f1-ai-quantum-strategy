@@ -121,57 +121,24 @@ def _simulate_plan_world(
     bank: str,
     nominal_budget_s: float,
 ) -> dict[str, Any]:
-    if bank in {PLANNING_BANK, "offline_planning_bank"}:
-        reject_evaluation_in_planning(bank)
-    ph = plan_fingerprint(plan)
-    epoch = commitment_epoch_race_s
-    if epoch is None and common_commit_delay_s is not None:
-        epoch = float(common_commit_delay_s)  # delay stored; full epoch hashed below after restore
-    ck = cache_key(
-        spec_hash=spec_hash,
-        checkpoint_hash=checkpoint_hash,
-        plan_hash=ph,
-        bank=bank,
-        world_seed=world_seed,
-        nominal_budget_s=float(nominal_budget_s),
-        arrival_delay_s=float(arrival_delay_s),
-        commitment_epoch_race_s=float(epoch if epoch is not None else nominal_budget_s),
-    )
-    if ck in cache:
-        rec = dict(cache[ck])
-        rec["cache_hit"] = True
-        return rec
-    world = RaceSimulator()
-    world.restore(base_blob, spec)
-    apply_hidden_world(world, world_seed)
-    rec_commit = world.consider_recommendation(
+    """Parity-only scalar path. Production evaluation must not call this."""
+    from f1q.a4.batched import simulate_plan_world_scalar
+
+    return simulate_plan_world_scalar(
+        spec,
+        base_blob,
         plan,
-        arrival_delay_s=float(arrival_delay_s),
+        world_seed,
+        arrival_delay_s=arrival_delay_s,
         common_commit_delay_s=common_commit_delay_s,
         commitment_epoch_race_s=commitment_epoch_race_s,
+        cache=cache,
+        spec_hash=spec_hash,
+        checkpoint_hash=checkpoint_hash,
+        bank=bank,
+        nominal_budget_s=nominal_budget_s,
+        parity=True,
     )
-    _state, outcome = world.continue_to_finish()
-    loss = float(outcome["team_loss"]["normalized_team_rank_loss"])
-    is_fb = rec_commit.get("selected_plan") != "recommendation"
-    rec = {
-        "loss": loss,
-        "timely": bool(rec_commit.get("timely")),
-        "fallback": bool(is_fb),
-        "commit": rec_commit.get("selected_plan"),
-        "plan_hash": ph,
-        "world_seed": int(world_seed),
-        "bank": bank,
-        "cache_hit": False,
-        "evaluator": "simulator.team_rank_loss",
-        "not_proxy_qubo": True,
-        "trace_id": ck[:16],
-        "nominal_budget_s": float(nominal_budget_s),
-        "arrival_delay_s": float(arrival_delay_s),
-        "registered_commitment_epoch_race_s": rec_commit.get("registered_commitment_epoch_race_s"),
-        "late_vs_registered_epoch": rec_commit.get("late_vs_registered_epoch"),
-    }
-    cache[ck] = rec
-    return rec
 
 
 def evaluate_candidates_on_bank(
@@ -189,37 +156,22 @@ def evaluate_candidates_on_bank(
     checkpoint_hash: str,
     nominal_budget_s: float,
 ) -> dict[str, Any]:
-    from f1q.a4.banks import forbid_evaluation_payload
-    from f1q.a4.banks import EVALUATION_BANK as _EB
+    from f1q.a4.batched import evaluate_candidates_batched
 
-    if bank in {PLANNING_BANK, "offline_planning_bank"}:
-        forbid_evaluation_payload({"bank": bank}, path="evaluate_candidates_on_bank")
-        # planning path: still reject evaluation bank ids
-        reject_evaluation_in_planning(bank)
-    means = {}
-    worlds = {}
-    for cand in candidates:
-        recs = [
-            _simulate_plan_world(
-                spec,
-                base_blob,
-                cand["plan"],
-                w,
-                arrival_delay_s=arrival_delay_s,
-                common_commit_delay_s=common_commit_delay_s,
-                commitment_epoch_race_s=commitment_epoch_race_s,
-                cache=cache,
-                spec_hash=spec_hash,
-                checkpoint_hash=checkpoint_hash,
-                bank=bank,
-                nominal_budget_s=nominal_budget_s,
-            )
-            for w in world_seeds
-        ]
-        losses = [r["loss"] for r in recs]
-        means[cand["plan_hash"]] = float(np.mean(losses)) if losses else float("inf")
-        worlds[cand["plan_hash"]] = recs
-    return {"means": means, "worlds": worlds}
+    return evaluate_candidates_batched(
+        spec,
+        base_blob,
+        candidates,
+        world_seeds,
+        bank=bank,
+        arrival_delay_s=arrival_delay_s,
+        common_commit_delay_s=common_commit_delay_s,
+        commitment_epoch_race_s=commitment_epoch_race_s,
+        cache=cache,
+        spec_hash=spec_hash,
+        checkpoint_hash=checkpoint_hash,
+        nominal_budget_s=nominal_budget_s,
+    )
 
 
 def decide_and_evaluate(
@@ -245,6 +197,8 @@ def decide_and_evaluate(
     prepared: Any | None = None,
     dist_cache: Any | None = None,
     policy_seed: int = 0,
+    freeze: dict[str, Any] | None = None,
+    allowed_options: list[str] | None = None,
 ) -> dict[str, Any]:
     assert_local_only()
     t_all = time.perf_counter()
@@ -295,6 +249,8 @@ def decide_and_evaluate(
         margin=margin,
         mode=mode,
         conservative_residual=conservative_residual,
+        allowed_options=allowed_options,
+        freeze=freeze,
     )
     if family_depth is None:
         if str(choice).startswith("C1") or "c1" in str(choice):

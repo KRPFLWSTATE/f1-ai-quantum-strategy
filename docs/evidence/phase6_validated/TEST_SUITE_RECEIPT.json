@@ -1,0 +1,24 @@
+{
+  "full_suite": {
+    "command": "pytest tests -k 'not e2e_miniature and not e2e_clean_extract' --ignore=docs -q",
+    "exit_code": 0,
+    "unexpected_failures": 0,
+    "note": "one expected skip: test_e2e_clean_extract_skipped_inside_admission when F1Q_A4_IN_ADMISSION is unset"
+  },
+  "validated_closure": {
+    "command": "pytest tests/a4/test_a4_validated_closure.py -q",
+    "exit_code": 0
+  },
+  "a4_contract_group": {
+    "command": "pytest tests/a4/test_a4_core.py tests/a4/test_a4_phase6_contract.py tests/a4/test_a4_phase6_integration.py tests/a4/test_a4_completion_contract.py -k 'not e2e_miniature and not e2e_clean_extract' -q",
+    "exit_code": 0
+  },
+  "doctor": {"exit_code": 0},
+  "pip_check": {"exit_code": 0},
+  "clean_extract_e2e": {
+    "ok": true,
+    "run_id": "a50130a8-9f4a-4ecb-bfec-54935b21e374",
+    "verify": "13/13",
+    "freeze_present": true
+  }
+}

@@ -13,6 +13,19 @@ from typing import Any, Callable
 
 from f1q.a4.resources import choose_workers, cpu_seconds, current_rss_bytes
 
+def _emit_hb(heartbeat: Callable | None, payload: dict[str, Any] | str) -> None:
+    if heartbeat is None:
+        return
+    try:
+        heartbeat(payload)
+    except TypeError:
+        if isinstance(payload, dict):
+            heartbeat(
+                f"pool completed={payload.get('completed')}/{payload.get('total')} last={payload.get('last_case')}"
+            )
+        else:
+            heartbeat(str(payload))
+
 TASK_CEILING_S = 300.0
 HEARTBEAT_S = 30.0
 STALL_DUMP_S = 60.0
@@ -110,7 +123,17 @@ def run_pool(
             run.peak_coordinator_rss = max(run.peak_coordinator_rss, current_rss_bytes())
             now = time.perf_counter()
             if heartbeat and now - last_hb >= HEARTBEAT_S:
-                heartbeat(f"pool W=1 {i+1}/{len(payloads)}")
+                _emit_hb(
+                    heartbeat,
+                    {
+                        "completed": i + 1,
+                        "total": len(payloads),
+                        "phase": "pool",
+                        "elapsed_wall_s": now - t0,
+                        "last_case": str(payloads[i].get("unit_id")),
+                        "active_workers": 1,
+                    },
+                )
                 last_hb = now
         run.wall_s = time.perf_counter() - t0
         run.cpu_s = cpu_seconds() - cpu0
@@ -128,8 +151,18 @@ def run_pool(
             done, pending = wait(pending, timeout=min(5.0, HEARTBEAT_S), return_when=FIRST_COMPLETED)
             now = time.perf_counter()
             run.peak_coordinator_rss = max(run.peak_coordinator_rss, current_rss_bytes())
-            if not done and heartbeat and now - last_hb >= HEARTBEAT_S:
-                heartbeat(f"pool W={n} completed={len(by_index)}/{len(payloads)} pending={len(pending)}")
+            if heartbeat and now - last_hb >= HEARTBEAT_S:
+                _emit_hb(
+                    heartbeat,
+                    {
+                        "completed": len(by_index),
+                        "total": len(payloads),
+                        "phase": "pool",
+                        "elapsed_wall_s": now - t0,
+                        "last_case": f"pending={len(pending)}",
+                        "active_workers": n,
+                    },
+                )
                 last_hb = now
             if not done and now - last_progress >= STALL_DUMP_S and heartbeat:
                 heartbeat(f"STALL dump completed={len(by_index)} pending={len(pending)}")
@@ -149,12 +182,24 @@ def run_pool(
                     futs[nf] = (i, payload, 1)
                     pending.add(nf)
                     continue
-                by_index[i] = rec
-                pid = int(rec.get("worker_pid") or 0)
-                if pid:
-                    run.worker_pids.append(pid)
-                    run.task_counts[pid] = run.task_counts.get(pid, 0) + 1
                 last_progress = now
+                by_index[i] = rec
+                pid = int(rec.get("worker_pid") or os.getpid())
+                run.worker_pids.append(pid)
+                run.task_counts[pid] = run.task_counts.get(pid, 0) + 1
+                if heartbeat:
+                    _emit_hb(
+                        heartbeat,
+                        {
+                            "completed": len(by_index),
+                            "total": len(payloads),
+                            "phase": "pool",
+                            "elapsed_wall_s": now - t0,
+                            "last_case": str(payload.get("unit_id")),
+                            "active_workers": n,
+                        },
+                    )
+                    last_hb = now
         run.results = [by_index[i] for i in range(len(payloads))] if ordered else list(by_index.values())
     run.wall_s = time.perf_counter() - t0
     run.cpu_s = cpu_seconds() - cpu0

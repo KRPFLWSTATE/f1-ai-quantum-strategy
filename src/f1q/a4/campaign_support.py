@@ -59,10 +59,15 @@ def _run_tests_into(dest: Path, root: Path, *, focused: bool) -> dict[str, Any]:
     log = dest / ("focused.log" if focused else "full.log")
     cmd = [str(root / ".venv" / "bin" / "python"), "-m", "pytest"]
     if focused:
-        cmd += ["tests/a4", "tests/stage6/test_residual_histograms_noise.py", "-k", "not e2e_miniature"]
+        cmd += ["tests/a4", "tests/stage6/test_residual_histograms_noise.py", "-k", "not e2e_miniature and not e2e_clean_extract"]
+    else:
+        # Full suite; e2e is a separate clean-extract step so admission cannot recurse.
+        cmd += ["-k", "not e2e_miniature and not e2e_clean_extract"]
     cmd += ["-ra", f"--junitxml={junit}"]
     t0 = datetime.now(timezone.utc).isoformat()
-    proc = subprocess.run(cmd, cwd=str(root), capture_output=True, text=True)
+    env = dict(__import__("os").environ)
+    env["F1Q_A4_IN_ADMISSION"] = "1"
+    proc = subprocess.run(cmd, cwd=str(root), capture_output=True, text=True, env=env)
     t1 = datetime.now(timezone.utc).isoformat()
     log.write_text(proc.stdout + "\n" + proc.stderr)
     receipt = {

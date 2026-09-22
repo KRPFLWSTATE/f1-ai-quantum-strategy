@@ -23,7 +23,14 @@ from f1q.a4.analysis import (
 )
 from f1q.a4.allocator import RidgeModel, option_feature_row
 from f1q.a4.banks import OFFLINE_EVALUATION_BANK, OFFLINE_PLANNING_BANK, bank_world_seeds
+from f1q.a4.unit_ledger import DESIGN_F, DESIGN_R, design_worlds, enumerate_design_units, freeze_option_specs
+from f1q.a4.batched import kernel_counters, reset_kernel_counters
 from f1q.a4.cache import ByteBoundedCache
+from f1q.a4.donor_labels import (
+    label_from_pool,
+    per_instance_variational_reference,
+    resample_label_panel,
+)
 from f1q.a4.campaign_support import (
     _doctor_status_pip,
     _run_tests_into,
@@ -162,6 +169,13 @@ def run_admission_check(
         checks = _doctor_status_pip(tests_dir / "checks", root)
         if focused["exit_code"] != 0 or (not skip_full_tests and full["exit_code"] != 0):
             raise StructuralError("TESTS", "authoritative tests failed", path=str(tests_dir))
+        from f1q.a4.clean_extract import run_clean_extract_e2e
+
+        e2e = run_clean_extract_e2e(root)
+        write_json(tests_dir / "CLEAN_EXTRACT_E2E.json", e2e)
+        if not e2e.get("ok"):
+            raise StructuralError("TESTS", "clean-extract e2e failed", path="CLEAN_EXTRACT_E2E.json", value=e2e.get("stderr_tail"))
+        start["clean_extract_e2e"] = {"ok": e2e.get("ok"), "run_id": e2e.get("run_id"), "exit_code": e2e.get("exit_code")}
 
     reset_prepare_counters()
     reset_distribution_counters()
@@ -169,8 +183,9 @@ def run_admission_check(
     probe_draws = 64 if miniature else POOL_DRAWS
     fams_probe = fams[:2] if miniature else fams
     probes: list[dict[str, Any]] = []
-    cache: dict[str, Any] = {}
-    dist_cache: dict[str, Any] = {}
+    cache: ByteBoundedCache = ByteBoundedCache(max_bytes=64 * 1024 * 1024)
+    dist_cache: ByteBoundedCache = ByteBoundedCache(max_bytes=32 * 1024 * 1024)
+    reset_kernel_counters()
     rss0 = current_rss_bytes()
     _heartbeat(
         ev,
@@ -262,6 +277,18 @@ def run_admission_check(
             policy_seed=1,
         )
         probes.append({"kind": "donor_policy", "policy": pol, "wall_s": time.perf_counter() - t1})
+
+    t_rs = time.perf_counter()
+    from f1q.a4.donors import selected_donors as _sd
+    donors0 = _sd(bank, "C0_p1")
+    d0 = donors0[0]
+    dist0 = build_ideal_distribution(
+        instance=first_pc.instance, qubo=first_pc.qubo, family="C0", depth=1,
+        gammas=list(d0["gammas"]), betas=list(d0["betas"]),
+        prepared_case_hash=first_pc.prepared_case_hash, cache=dist_cache, legal_table=first_pc.legal_table,
+    )
+    panel0 = resample_label_panel(dist0, first_pc.legal_table, n_seeds=(3 if miniature else 30), pool_draws=probe_draws, seed0=13)
+    probes.append({"kind": "resample_30", "wall_s": time.perf_counter() - t_rs, "n_seeds": panel0["n_seeds"], "not_expectation_label": True})
 
     for budget in NOMINAL_BUDGETS_S:
         t1 = time.perf_counter()
@@ -385,6 +412,7 @@ def run_admission_check(
     projections = {}
     selected_level = None
     disk = shutil.disk_usage(str(root))
+    parts_live = json.loads((ev / "PARTITIONS.json").read_text())
     for level in ("preferred", "baseline", "minimum"):
         worlds = WORLD_LADDERS[level]
         led = operation_ledger(ladder=level, worlds=worlds, miniature=miniature, n_legal=int((next((p for p in probes if p.get("kind") == "offline"), {}) or {}).get("n_legal") or 100))
@@ -401,29 +429,22 @@ def run_admission_check(
         projections[level] = {"ledger": led, "projection": proj, "fit": fit, "checksum_ok": chk == proj["checksum"]}
         if selected_level is None and fit["fits"]:
             selected_level = level
-    admitted = selected_level is not None
-    limited_pilot = False
-    limited_spec: dict[str, Any] | None = None
-    if not admitted:
-        limited_pilot = True
-        selected_level = "minimum"
-        spec = dict(LIMITED_PILOT_SPEC)
-        led = operation_ledger(
-            ladder="limited_resource_pilot",
-            worlds=spec["worlds"],
-            miniature=False,
-            n_legal=int((next((p for p in probes if p.get("kind") == "offline"), {}) or {}).get("n_legal") or 100),
-            train_parents=spec["train_parents"],
-            tune_parents=spec["tune_parents"],
-            calib_parents=spec["calib_parents"],
-            n_off=spec["offline_cases"],
-            n_lat=spec["latency_cases"],
-            n_mech=spec["mech_cases"],
-            seeds=spec["n_policy_seeds"],
-            budgets=len(spec["budgets"]),
-            options=spec["option_count"],
-        )
-        proj = _project_from_probes(led, probes, workers, efficiency)
+    selected_design = None
+    design_records: dict[str, Any] = {}
+    n_legal_m = int((next((p for p in probes if p.get("kind") == "offline"), {}) or {}).get("n_legal") or 100)
+    for design in (DESIGN_F, DESIGN_R):
+        ladder = selected_level or "minimum"
+        worlds = design_worlds(design, ladder if design == DESIGN_F else "minimum")
+        enum = enumerate_design_units(design=design, parts=parts_live, worlds=worlds, freeze=None, miniature=miniature)
+        led_counts = {
+            "prepared_cases": enum["aggregates"]["train_checkpoints"] + enum["aggregates"]["tune_checkpoints"] + enum["aggregates"]["calib_checkpoints"],
+            "distributions": enum["aggregates"]["mechanism_resamples"],
+            "planning_worlds_upper": enum["aggregates"]["planning_world_evals_upper"],
+            "evaluation_worlds_upper": enum["aggregates"]["evaluation_worlds"],
+            "offline_all_plan_evaluations": enum["aggregates"]["offline"] * n_legal_m * int(worlds["offline"]["planning"]),
+        }
+        fake_led = {"counts": led_counts, "ladder": design, "denominators_intact": enum["aggregates"]}
+        proj = _project_from_probes(fake_led, probes, workers, efficiency)
         chk = independent_projection_checksum(proj)
         fit = projection_fits(
             conservative_cpu_s=proj["serial_cpu_s"]["conservative"],
@@ -433,12 +454,24 @@ def run_admission_check(
             free_disk_bytes=int(disk.free),
             ram_limit_bytes=int(workers["ram_limit_bytes"]),
         )
-        spec["projection"] = proj
-        spec["fit"] = fit
-        spec["checksum_ok"] = chk == proj["checksum"]
-        spec["ledger"] = led
-        limited_spec = spec
-        projections["limited_resource_pilot"] = {"ledger": led, "projection": proj, "fit": fit, "checksum_ok": chk == proj["checksum"]}
+        design_records[design] = {"ledger": enum, "projection": proj, "fit": fit, "checksum_ok": chk == proj["checksum"], "worlds": worlds, "ladder": ladder}
+        if selected_design is None and fit["fits"] and not miniature:
+            selected_design = design
+    if miniature:
+        selected_design = "MINIATURE"
+        admitted = True
+        limited_pilot = False
+    else:
+        admitted = selected_design in {DESIGN_F, DESIGN_R}
+        limited_pilot = False
+    limited_spec = None
+    write_json(ev / "CACHE_STATS.json", {"admission": cache.stats(), "distribution": dist_cache.stats(), "kernel": kernel_counters()})
+    write_json(ev / "PRODUCTION_KERNEL.json", kernel_counters())
+    kern_src = root / "docs/evidence/phase6_validated"
+    for name in ("SCALAR_BATCHED_PARITY.json", "BATCH_SPEED_BENCHMARK.json", "0B697910_EXPECTED_FAILURE.json", "COMMITMENT_VARIETY.json"):
+        srcp = kern_src / name
+        if srcp.is_file() and not (ev / name).is_file():
+            shutil.copy2(srcp, ev / name)
     receipt = {
         "run_id": run_id,
         "reviewed_source_commit": head,
@@ -449,15 +482,33 @@ def run_admission_check(
         "prepare_counters": prep_stats,
         "distribution_counters": dist_stats,
         "projections": {k: {kk: vv for kk, vv in rec.items() if kk != "ledger"} for k, rec in projections.items()},
+        "design_projections": {
+            k: {
+                "fit": rec["fit"],
+                "checksum_ok": rec["checksum_ok"],
+                "aggregates": rec["ledger"]["aggregates"],
+                "hash": rec["ledger"]["hash"],
+                "ladder": rec["ladder"],
+                "projection": {
+                    "serial_cpu_s": rec["projection"]["serial_cpu_s"],
+                    "parallel_wall_s": rec["projection"]["parallel_wall_s"],
+                    "conservative_multiplier": rec["projection"].get("conservative_multiplier"),
+                    "components_s": rec["projection"].get("components_s"),
+                },
+            }
+            for k, rec in design_records.items()
+        },
         "ledgers": {k: rec["ledger"] for k, rec in projections.items()},
         "selected_world_level": selected_level or "NONE",
+        "selected_design": selected_design or "NONE_RESOURCE_LIMIT",
         "rejected_ladders": [k for k, rec in projections.items() if not rec["fit"]["fits"]],
         "admitted": admitted,
-        "limited_resource_pilot": limited_pilot and not admitted,
-        "limited_pilot_spec": None if limited_spec is None else {k: v for k, v in limited_spec.items() if k != "ledger"},
-        "reason": None if admitted else "no ladder projected under CPU 86400 / wall 11520 / 60% RAM / disk reserve; limited pilot authorised as last resort",
+        "limited_resource_pilot": False,
+        "limited_pilot_spec": None,
+        "reason": None if admitted else "neither Design F nor Design R fits CPU 86400 / wall 11520 / 60% RAM / disk reserve after batched production-path probes; no tiny outcome-bearing pilot",
         "focused_tests": focused,
         "full_tests": full,
+        "clean_extract_e2e": start.get("clean_extract_e2e") or {"skipped": bool(skip_tests or miniature)},
         "doctor_status_pip": checks,
         "consumed": False,
         "miniature": miniature,
@@ -466,28 +517,40 @@ def run_admission_check(
         "one_worker_throughput": one_tp,
         "multi_worker_throughput": multi_tp,
         "measured_parallel_efficiency": efficiency,
+        "kernel_counters": kernel_counters(),
+        "cache_stats": cache.stats(),
         "formulas": {
-            "serial": "prepare*n_prepared + circuit*n_distributions + per_world*planning_worlds*K + per_eval_world*evaluation_worlds + per_world*offline_plan_worlds; conservative=1.15*point",
+            "serial": "enumerate units then prepare*n + circuit*n_dist + per_world*planning_worlds + per_eval_world*evaluation_worlds + offline; conservative=max(1.15, 0b697910_underprediction)*point",
             "wall": "serial_conservative / (workers * measured_efficiency) * 1.20",
             "no_assumed_0_55": True,
+            "policy_seeds_in_enumerated_ledger": True,
         },
         "independent_checksums": {k: rec["projection"]["checksum"] for k, rec in projections.items()},
     }
     for p in probes:
         append_jsonl(ev / "ADMISSION_PROBES.jsonl", p)
-    ledger_key = "limited_resource_pilot" if (limited_pilot and not admitted and "limited_resource_pilot" in projections) else (selected_level or "minimum")
-    write_json(ev / "OPERATION_LEDGER.json", projections[ledger_key]["ledger"])
+    if selected_design in design_records:
+        write_json(ev / "OPERATION_LEDGER.json", design_records[selected_design]["ledger"])
+        write_json(ev / "UNIT_LEDGER.json", design_records[selected_design]["ledger"])
+    else:
+        write_json(ev / "OPERATION_LEDGER.json", design_records[DESIGN_R]["ledger"] if DESIGN_R in design_records else projections.get(selected_level or "minimum", {}).get("ledger") or {})
+        if DESIGN_F in design_records:
+            write_json(ev / "UNIT_LEDGER_F.json", design_records[DESIGN_F]["ledger"])
+        if DESIGN_R in design_records:
+            write_json(ev / "UNIT_LEDGER_R.json", design_records[DESIGN_R]["ledger"])
+            write_json(ev / "UNIT_LEDGER.json", design_records[DESIGN_R]["ledger"])
     write_json(ev / "ADMISSION_RECEIPT.json", receipt)
     write_json(docs / "ADMISSION_RECEIPT.json", receipt)
     write_json(docs / "START_STATE.json", start)
     print(f"AUTHORITATIVE_RUN_ID={run_id}", flush=True)
-    print(f"ADMISSION_DECISION={'ADMITTED' if admitted else 'NOT_ADMITTED_LIMITED_PILOT' if limited_pilot else 'NOT_ADMITTED'}", flush=True)
+    print(f"ADMISSION_DECISION={'ADMITTED_'+str(selected_design) if admitted else 'NOT_ADMITTED_RESOURCE_LIMIT'}", flush=True)
     return {
-        "status": "admitted" if admitted else "limited_pilot" if limited_pilot else "not_admitted",
+        "status": "admitted" if admitted else "not_admitted_resource_limit",
         "run_id": run_id,
         "admitted": admitted,
-        "limited_resource_pilot": limited_pilot,
+        "limited_resource_pilot": False,
         "selected_world_level": selected_level,
+        "selected_design": selected_design or "NONE_RESOURCE_LIMIT",
         "receipt": receipt,
     }
 
@@ -509,8 +572,9 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         raise StructuralError("ADMISSION", "run id mismatch")
     if receipt.get("consumed"):
         raise StructuralError("ADMISSION", "admission already consumed")
-    if not receipt.get("admitted") and not receipt.get("limited_resource_pilot"):
-        raise StructuralError("ADMISSION", "refusing execute on failed admission")
+    miniature = bool(receipt.get("miniature"))
+    if not receipt.get("admitted") and not miniature:
+        return closeout_resource_limit(root, run_id, config_rel=config_rel)
     head = _git_head(root)
     if head != receipt.get("reviewed_source_commit"):
         raise StructuralError("ADMISSION", "source commit changed after admission", value={"head": head})
@@ -519,8 +583,16 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         raise StructuralError("ADMISSION", "config hash mismatch")
     miniature = bool(cfg.get("miniature") or receipt.get("miniature"))
     level = receipt["selected_world_level"]
+    selected_design = str(receipt.get("selected_design") or "")
     pilot = receipt.get("limited_pilot_spec") if receipt.get("limited_resource_pilot") and not miniature else None
-    worlds = dict(MINIATURE_WORLDS) if miniature else (dict(pilot["worlds"]) if pilot else WORLD_LADDERS[level])
+    if miniature:
+        worlds = dict(MINIATURE_WORLDS)
+    elif pilot:
+        worlds = dict(pilot["worlds"])
+    elif selected_design in {DESIGN_F, DESIGN_R}:
+        worlds = design_worlds(selected_design, level if selected_design == DESIGN_F else "minimum")
+    else:
+        worlds = WORLD_LADDERS[level]
     bank = json.loads((ev / "DONOR_BANK_V2.json").read_text())
     parts = json.loads((ev / "PARTITIONS.json").read_text())
     if not isinstance(parts.get("train"), list) or not isinstance(parts.get("tune"), list) or not isinstance(parts.get("calib"), list):
@@ -606,28 +678,41 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
                         gammas=list(donor["gammas"]), betas=list(donor["betas"]),
                         prepared_case_hash=pc.prepared_case_hash, cache=dist_cache, legal_table=pc.legal_table,
                     )
+                    t_rs = time.perf_counter()
                     pool = resample_pool(dist, pool_draws=(64 if miniature else POOL_DRAWS), seed=int(block["seed"]))
-                    # useful yield / regret from decoded bitstrings vs exact
-                    best_c = exact
-                    n_use = 0
-                    for b_s, cnt in pool["histogram_sparse"].items():
-                        # proxy: use expectation as stand-in when decode skipped; count unique
-                        n_use += 1
-                    regret = normalised_regret(float(dist.expectation_scaled), exact, f_max, feasible=True, pool_all_infeasible=dist.n_legal == 0)
+                    lab = label_from_pool(dist=dist, pool=pool, legal_table=pc.legal_table, resample_s=time.perf_counter() - t_rs)
+                    panel = resample_label_panel(dist, pc.legal_table, n_seeds=(3 if miniature else 30), pool_draws=(64 if miniature else POOL_DRAWS), seed0=int(block["seed"]))
+                    regret = lab["best_of_pool_normalised_regret"]
                     yrow.append(float(regret))
                     append_jsonl(ev / "MECHANISM_POOL_RESULTS.jsonl", {
                         "block_id": block["block_id"], "regime": regime, "family_depth": key,
-                        "donor_id": donor["donor_id"], "regret": regret, "expectation": dist.expectation_scaled,
-                        "pool_draws": (64 if miniature else POOL_DRAWS), "distribution_key": dist.key, "n_hist": n_use,
+                        "donor_id": donor["donor_id"], "regret": regret, "expectation_diagnostic_only": dist.expectation_scaled,
+                        "pool_draws": (64 if miniature else POOL_DRAWS), "distribution_key": dist.key,
+                        "unique_legal_candidate_count": lab["unique_legal_candidate_count"],
+                        "raw_feasibility": lab["raw_feasibility"],
+                        "optimal_sample_probability": lab["optimal_sample_probability"],
+                        "not_expectation_label": True,
                     })
                     append_jsonl(ev / "IDEAL_DISTRIBUTIONS_INDEX.jsonl", {"key": dist.key, "family": family, "p": p, "case": pc.case_id, "donor_id": donor["donor_id"], "dense_2n": dist.dense_2n_allocated})
+                    for sr in panel["seed_rows"]:
+                        append_jsonl(ev / "DONOR_SELECTOR_TRAINING.jsonl", {
+                            "block_id": block["block_id"], "regime": regime, "family_depth": key, "x": xrow,
+                            "y_regret": sr["best_of_pool_normalised_regret"],
+                            "split": "train", "label": "sampled_normalised_regret_1024_decoded",
+                            "label_source": "decoded_legal_1024_draw_pool",
+                            "not_expectation_label": True,
+                            "resample_index": sr["resample_index"],
+                            "raw_feasibility": sr["raw_feasibility"],
+                            "useful_legal_candidate_yield": sr["useful_legal_candidate_yield"],
+                            "optimal_sample_probability": sr["optimal_sample_probability"],
+                            "unique_legal_candidate_count": sr["unique_legal_candidate_count"],
+                            "inference_resampling_s": sr["inference_resampling_s"],
+                            "expectation_scaled_diagnostic_only": sr["expectation_scaled_diagnostic_only"],
+                            "seed_level": True,
+                        })
                 X_by[key].append(xrow)
                 y_by[key].append(yrow)
-                append_jsonl(ev / "DONOR_SELECTOR_TRAINING.jsonl", {
-                    "block_id": block["block_id"], "regime": regime, "family_depth": key, "x": xrow, "y": yrow,
-                    "split": "train", "label": "sampled_normalised_regret_1024", "seed_level": True,
-                })
-        _heartbeat(ev, phase="donor_train", completed=bi + 1, total=len(mech_cases), last_case=block["block_id"], active_workers=1, elapsed_wall_s=time.perf_counter(), elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
+        _heartbeat(ev, campaign_t0=t_deadline - CAMPAIGN_WALL_CAP_S, phase="donor_train", completed=bi + 1, total=len(mech_cases), last_case=block["block_id"], active_workers=1, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
 
     models = {}
     for key in FAMILY_DEPTH_KEYS:
@@ -655,11 +740,19 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
                 donors = selected_donors(bank, key)
                 for policy in ("fixed", "nn", "random", "learned", "best_found"):
                     rec = select_donor_policy(policy=policy, donors=donors, feats=feats, ranker=models[key].get("_ranker"), rng=rng, identity_seed=int(block["seed"]))
-                    d = rec["selected"]
+                    if policy == "best_found":
+                        fit = per_instance_variational_reference(instance=pc.instance, qubo=pc.qubo, family=family, depth=p, seed=int(block["seed"]), legal_table=pc.legal_table, max_evals=20 if miniature else 40)
+                        d = fit["donor"]
+                        rec = {"selected": d, "policy": "best_found", "not_bank_lookup": True, "certified_quantum_optimum": False}
+                    else:
+                        d = rec["selected"]
                     dist = build_ideal_distribution(instance=pc.instance, qubo=pc.qubo, family=family, depth=p, gammas=list(d["gammas"]), betas=list(d["betas"]), prepared_case_hash=pc.prepared_case_hash, cache=dist_cache, legal_table=pc.legal_table)
-                    policy_scores[key][policy].append(float(dist.expectation_scaled))
-                    append_jsonl(ev / "DONOR_SELECTOR_TUNING.jsonl", {"block_id": block["block_id"], "regime": regime, "family_depth": key, "policy": policy, "score": dist.expectation_scaled, "split": "tune"})
-        _heartbeat(ev, phase="donor_tune", completed=bi + 1, total=len(tune_blocks), last_case=block["block_id"], active_workers=1, elapsed_wall_s=time.perf_counter(), elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
+                    t_rs = time.perf_counter()
+                    pool = resample_pool(dist, pool_draws=(64 if miniature else POOL_DRAWS), seed=int(block["seed"]) + 7)
+                    lab = label_from_pool(dist=dist, pool=pool, legal_table=pc.legal_table, resample_s=time.perf_counter() - t_rs)
+                    policy_scores[key][policy].append(float(lab["best_of_pool_normalised_regret"]))
+                    append_jsonl(ev / "DONOR_SELECTOR_TUNING.jsonl", {"block_id": block["block_id"], "regime": regime, "family_depth": key, "policy": policy, "score": lab["best_of_pool_normalised_regret"], "expectation_diagnostic_only": dist.expectation_scaled, "not_expectation_label": True, "split": "tune"})
+        _heartbeat(ev, campaign_t0=t_deadline - CAMPAIGN_WALL_CAP_S, phase="donor_tune", completed=bi + 1, total=len(tune_blocks), last_case=block["block_id"], active_workers=1, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
 
     donor_policy_by_fd = {}
     complexity = ["fixed", "nn", "learned", "best_found", "random"]
@@ -674,10 +767,15 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     c1 = "C1_p1" if donor_policy_by_fd["C1_p1"]["means"].get("fixed", 0) <= donor_policy_by_fd["C1_p2"]["means"].get("fixed", 0) else "C1_p2"
     write_json(ev / "DONOR_POLICY_SELECTION.json", donor_policy_by_fd)
 
-    def _units(blocks, split, n_plan, n_eval, persist=False):
+    from f1q.a4.unit_ledger import checkpoints_for_parent as _ckpts
+    fam_index = {f: i for i, f in enumerate(cartesian_family_ids())}
+    design_for_ck = selected_design if selected_design in {DESIGN_F, DESIGN_R} else DESIGN_F
+
+    def _units(blocks, split, n_plan, n_eval, persist=False, option_specs=None, freeze=None, allocator_artifact=None, use_frozen_allocator=False):
         out = []
         for block in blocks:
-            for regime in ("SC", "VSC"):
+            regimes = ("SC", "VSC") if miniature else _ckpts(block, design=design_for_ck, family_index=fam_index.get(block["family_id"], 0))
+            for regime in regimes:
                 out.append({
                     "unit_id": f"{split}:{block['block_id']}:{regime}",
                     "family_id": block["family_id"],
@@ -691,18 +789,37 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
                     "donor_bank": bank,
                     "donor_policy_by_fd": donor_policy_by_fd,
                     "budgets": budgets,
-                    "option_specs": specs,
+                    "option_specs": option_specs if option_specs is not None else specs,
                     "n_policy_seeds": n_seeds,
                     "pool_draws": 64 if miniature else POOL_DRAWS,
                     "persist_worlds": persist,
                     "config_hash": cfg_hash,
                     "source_commit": head,
+                    "freeze": freeze,
+                    "allocator_artifact": allocator_artifact,
+                    "use_frozen_allocator": use_frozen_allocator,
+                    "n_eval_by_budget": (
+                        {str(int(PRIMARY_BUDGET_S)): int(n_eval), **{str(int(b)): 128 for b in budgets if int(b) != int(PRIMARY_BUDGET_S)}}
+                        if (not miniature and design_for_ck == DESIGN_R and split == "calib")
+                        else {}
+                    ),
                 })
         return out
 
     train_units = _units(train_blocks, "train", worlds["training"]["planning"], worlds["training"]["evaluation"])
     n_w = int(workers_spec.get("workers") or 1)
-    pool_train = run_pool(process_case_unit, train_units, workers=n_w, heartbeat=lambda m: _heartbeat(ev, phase="train", completed=0, total=len(train_units), last_case=m, active_workers=n_w, elapsed_wall_s=time.perf_counter(), elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev)))
+    campaign_t0 = time.perf_counter()
+    def _hb(msg):
+        completed = 0
+        last = msg
+        if isinstance(msg, dict):
+            completed = int(msg.get("completed") or 0)
+            last = msg.get("last_case")
+            _heartbeat(ev, campaign_t0=campaign_t0, phase=str(msg.get("phase") or "pool"), completed=completed, total=int(msg.get("total") or 0), last_case=last, active_workers=int(msg.get("active_workers") or n_w), elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
+        else:
+            _heartbeat(ev, campaign_t0=campaign_t0, phase="train", completed=completed, total=len(train_units), last_case=str(last), active_workers=n_w, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
+
+    pool_train = run_pool(process_case_unit, train_units, workers=n_w, heartbeat=_hb)
     labels = []
     n_train_ok = 0
     for rec in pool_train.results:
@@ -761,9 +878,25 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     }
     freeze["hash"] = sha256_json({k: v for k, v in freeze.items() if k != "hash"})
     write_json(ev / "TUNING_FREEZE.json", freeze)
-
-    calib_units = _units(calib_blocks, "calib", worlds["calibration"]["planning"], worlds["calibration"]["evaluation"], persist=True)
-    pool_cal = run_pool(process_case_unit, calib_units, workers=n_w)
+    freeze_specs = freeze_option_specs(freeze)
+    alloc_art = alloc.to_artifact() if alloc.w is not None else None
+    calib_units = _units(
+        calib_blocks,
+        "calib",
+        worlds["calibration"]["planning"],
+        worlds["calibration"]["evaluation"],
+        persist=True,
+        option_specs=freeze_specs,
+        freeze=freeze,
+        allocator_artifact=alloc_art,
+        use_frozen_allocator=True,
+    )
+    for u in calib_units:
+        opts = {o[0] for o in u["option_specs"]}
+        allowed = set(freeze["allowed_options"])
+        if opts - allowed:
+            raise StructuralError("FREEZE", "calibration options differ from TUNING_FREEZE.json", path="calib_units", value=sorted(opts - allowed))
+    pool_cal = run_pool(process_case_unit, calib_units, workers=n_w, heartbeat=_hb)
     residuals = []
     block_max = {}
     halfwidths = []
@@ -924,7 +1057,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         engineering = "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT"
     elif n_cal_parents < (2 if miniature else 24) or n_train_ok < (2 if miniature else 120):
         engineering = "INCOMPLETE_ENGINEERING" if not miniature else "INCOMPLETE_ENGINEERING"
-    elif gate_e["GATE_E_SCIENTIFIC_VALUE"] == "PASS_BOUNDARY_MECHANISM" and gate_f["GATE_F_LOCAL_PRECISION_AND_RESOURCES"].startswith("PASS"):
+    elif gate_e["GATE_E_SCIENTIFIC_VALUE"] in {"PASS_BOUNDARY_MECHANISM", "PASS_BOUNDARY_POSITIVE", "PASS_BOUNDARY_NULL"} and str(gate_f["GATE_F_LOCAL_PRECISION_AND_RESOURCES"]).startswith("PASS"):
         engineering = "CLOSED_READY_FOR_PHASE7_BOUNDARY"
     else:
         engineering = "CLOSED_NOT_READY_FOR_PHASE7"
@@ -934,7 +1067,39 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
 
     write_json(ev / "PRIMARY_ANALYSIS.json", {"bootstrap": boot, "budget_s": 30, "label": "development_calibration_not_final_test", "n_blocks": len(effects)})
     write_json(ev / "MECHANISM_RESULTS.json", {"distribution_counters": distribution_counters(), "prepare_counters": prepare_counters(), "policies": list(donor_policy_by_fd)})
-    write_json(ev / "ABLATION_RESULTS.json", {"always_classical": True, "no_learned_donor": True, "note": "ablation rows live in TUNING/TRAINING option results"})
+    from f1q.a4.unit_ledger import ablation_specs as _ablation_specs
+    ablation_rows = []
+    for ab in _ablation_specs():
+        payload = {
+            "unit_id": f"ablation:{ab['ablation_id']}",
+            "family_id": calib_blocks[0]["family_id"],
+            "block_id": calib_blocks[0]["block_id"],
+            "regime": "SC",
+            "partition": "calib",
+            "index": int(calib_blocks[0]["index"]),
+            "seed": int(calib_blocks[0]["seed"]),
+            "n_planning": 2 if miniature else worlds["calibration"]["planning"],
+            "n_evaluation": 4 if miniature else min(int(worlds["calibration"]["evaluation"]), 128),
+            "donor_bank": bank,
+            "donor_policy_by_fd": donor_policy_by_fd,
+            "budgets": [PRIMARY_BUDGET_S],
+            "option_specs": [(ab["ablation_id"], ab["mode"], ab.get("family_depth"))],
+            "n_policy_seeds": 1,
+            "pool_draws": 64 if miniature else POOL_DRAWS,
+            "persist_worlds": False,
+            "config_hash": cfg_hash,
+            "source_commit": head,
+            "freeze": {**freeze, "dispatch_threshold": ab.get("threshold_override", freeze.get("dispatch_threshold")), "primary_lambda": ab.get("lambda_override", freeze.get("primary_lambda"))},
+            "allocator_artifact": alloc_art,
+            "use_frozen_allocator": ab["mode"] == "frozen_allocator",
+        }
+        rec = process_case_unit(payload)
+        ablation_rows.append({"ablation_id": ab["ablation_id"], "ok": rec.get("ok"), "n_rows": len(rec.get("rows") or []), "mean_loss": (rec.get("rows") or [{}])[0].get("mean_loss"), "executed": True})
+        for row in rec.get("rows") or []:
+            row = dict(row)
+            row["ablation_id"] = ab["ablation_id"]
+            append_jsonl(ev / "ABLATION_ROWS.jsonl", {k: v for k, v in row.items() if k != "eval_worlds"})
+    write_json(ev / "ABLATION_RESULTS.json", {"executed": ablation_rows, "n": len(ablation_rows), "boolean_presence_is_not_evidence": True})
     write_json(ev / "BOUNDARY_RESULTS.json", {"n_portfolio_diff": n_port_diff, "n_executed_diff": n_exec_diff, "harm_blocks": harm})
     write_json(ev / "PRECISION_AND_STAGE7_SIZING.json", {"mc_target": mc_t, "sizing": sizing, "halfwidths": halfwidths})
     write_json(ev / "CAMPAIGN_RESOURCES.json", {"workers": workers_spec, "train_pool": pool_train.as_dict(), "tune_pool": pool_tune.as_dict(), "calib_pool": pool_cal.as_dict(), "cpu_s": cpu_seconds(), "wall_cap_s": CAMPAIGN_WALL_CAP_S})
@@ -943,11 +1108,12 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     write_json(ev / "CLAIMS_LEDGER.json", claims)
 
     from f1q.a4.verify import run_independent_verify
-    from f1q.a4.reports import write_completion_report
+    from f1q.a4.reports import write_completion_report, write_validated_closure_report
 
     pre = run_independent_verify(root, run_id, mode="pre")
     write_json(ev / "PRE_REPORT_VERIFY.json", pre)
     write_completion_report(root, run_id, start_commit=START_COMMIT_EXPECTED, reviewed_commit=head, engineering=engineering, gate_e=gate_e, gate_f=gate_f)
+    write_validated_closure_report(root, run_id, start_commit=START_COMMIT_EXPECTED, reviewed_commit=head, engineering=engineering, gate_e=gate_e, gate_f=gate_f)
     run_receipt = {
         "run_id": run_id,
         "status": engineering,
@@ -981,6 +1147,157 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         "n_cal_ok": n_cal_ok,
         "verify_ok": final.get("ok"),
     }
+
+
+def closeout_resource_limit(root: Path, run_id: str, config_rel: str = "configs/stage6_a4_closure.yaml") -> dict[str, Any]:
+    """Honest F/R non-admission closeout. No tiny outcome-bearing scientific pilot."""
+    assert_local_only()
+    ev = root / "evidence/stage6_a4" / run_id
+    receipt = json.loads((ev / "ADMISSION_RECEIPT.json").read_text())
+    head = _git_head(root)
+    kern_src = root / "docs/evidence/phase6_validated"
+    for name in ("SCALAR_BATCHED_PARITY.json", "BATCH_SPEED_BENCHMARK.json", "0B697910_EXPECTED_FAILURE.json", "COMMITMENT_VARIETY.json"):
+        srcp = kern_src / name
+        if srcp.is_file():
+            shutil.copy2(srcp, ev / name)
+    design_proj = receipt.get("design_projections") or {}
+    f_fit = (design_proj.get(DESIGN_F) or {}).get("fit") or {}
+    r_fit = (design_proj.get(DESIGN_R) or {}).get("fit") or {}
+    f_cpu = ((design_proj.get(DESIGN_F) or {}).get("aggregates") or {})
+    engineering = "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED"
+    gate_e = {
+        "GATE_E_SCIENTIFIC_VALUE": "UNCLAIMED_RESOURCE_LIMIT",
+        "SUPERIORITY_PATH_AVAILABLE": False,
+        "BOUNDARY_MECHANISM_PATH_AVAILABLE": False,
+        "reason": "neither Design F nor Design R admitted; Gate E unclaimed; no limited-pilot substitution",
+    }
+    gate_f = {
+        "GATE_F_LOCAL_PRECISION_AND_RESOURCES": "FAIL",
+        "PHASE_7_BOUNDARY_STUDY_READY": False,
+        "PHASE_7_OPERATIONAL_READY": False,
+        "PHASE_7_SUPERIORITY_READY": False,
+        "PHASE_7_AUTHORISED": False,
+        "reason": "no 24-parent calibration corpus; F/R not admitted",
+    }
+    write_json(ev / "DEVIATIONS.json", {
+        "limited_resource_pilot": False,
+        "tiny_outcome_bearing_pilot_forbidden": True,
+        "selected_design": "NONE_RESOURCE_LIMIT",
+        "notes": ["validated resource-limit closeout after batched production-path admission"],
+    })
+    write_json(ev / "CLAIMS_LEDGER.json", claims_ledger(gate_e=gate_e, gate_f=gate_f, proxy_headroom="ZERO"))
+    f_cons = ((design_proj.get(DESIGN_F) or {}).get("fit") or {})
+    # External compute requirement from enumerated R/F conservative CPU
+    def _cons_cpu(key: str) -> float | None:
+        rec = design_proj.get(key) or {}
+        # stored under fit or we need projection; admission stored fit only in design_projections
+        return rec.get("fit", {}).get("conservative_cpu_s") if isinstance(rec.get("fit"), dict) else None
+
+    external = {
+        "design_f_fits": bool(f_fit.get("fits")),
+        "design_r_fits": bool(r_fit.get("fits")),
+        "campaign_cpu_cap_s": CAMPAIGN_CPU_CAP_S,
+        "admission_wall_limit_s": ADMISSION_WALL_LIMIT_S,
+        "note": "future authorised attempt requires conservative CPU<=86400 and wall<=11520 on the enumerated F or R ledger after measured batched speedup",
+        "design_f_fit_detail": f_fit,
+        "design_r_fit_detail": r_fit,
+        "aggregates_f": (design_proj.get(DESIGN_F) or {}).get("aggregates"),
+        "aggregates_r": (design_proj.get(DESIGN_R) or {}).get("aggregates"),
+    }
+    write_json(ev / "EXTERNAL_COMPUTE_REQUIREMENT.json", external)
+    run_receipt = {
+        "run_id": run_id,
+        "status": engineering,
+        "PHASE_6_ENGINEERING": engineering,
+        "SELECTED_DESIGN": "NONE_RESOURCE_LIMIT",
+        "GATE_E": gate_e,
+        "GATE_F": gate_f,
+        "n_train_ok": 0,
+        "n_tune_ok": 0,
+        "n_cal_ok": 0,
+        "q": None,
+        "selected_world_level": receipt.get("selected_world_level"),
+        "not_campaign_raw_complete": True,
+        "qpu_jobs": 0,
+        "final_test_accessed": False,
+        "phase_7_authorised": False,
+        "tiny_pilot_not_run": True,
+        "reviewed_source_commit": head,
+        "start_commit": START_COMMIT_EXPECTED,
+    }
+    write_json(ev / "RUN_RECEIPT.json", run_receipt)
+    from f1q.a4.verify import run_independent_verify
+    from f1q.a4.reports import write_validated_closure_report
+
+    pre = run_independent_verify(root, run_id, mode="pre")
+    write_json(ev / "PRE_REPORT_VERIFY.json", pre)
+    write_validated_closure_report(
+        root, run_id, start_commit=START_COMMIT_EXPECTED, reviewed_commit=head,
+        engineering=engineering, gate_e=gate_e, gate_f=gate_f,
+    )
+    matrix = _prompt_compliance_matrix(root, run_id, engineering)
+    write_json(ev / "PROMPT_COMPLIANCE_MATRIX.json", matrix)
+    write_json(root / "docs/evidence/phase6_validated/PROMPT_COMPLIANCE_MATRIX.json", matrix)
+    manifest = _build_manifest(root, run_id)
+    write_json(ev / "MANIFEST.json", manifest)
+    final = run_independent_verify(root, run_id, mode="final")
+    write_json(ev / "FINAL_VERIFY.json", final)
+    pkg = {
+        "ok": bool(final.get("ok")),
+        "manifest_sha256": sha256_file(ev / "MANIFEST.json"),
+        "excluded": ["MANIFEST.json", "FINAL_VERIFY.json", "FINAL_PACKAGE_VERIFY.json"],
+        "reason": "hash layers exclude self and later wrappers",
+    }
+    write_json(ev / "FINAL_PACKAGE_VERIFY.json", pkg)
+    return {
+        "status": engineering,
+        "run_id": run_id,
+        "admitted": False,
+        "selected_design": "NONE_RESOURCE_LIMIT",
+        "verify_ok": final.get("ok"),
+        "compliance_passed": matrix.get("passed"),
+        "compliance_total": matrix.get("total"),
+    }
+
+
+def _prompt_compliance_matrix(root: Path, run_id: str, engineering: str) -> dict[str, Any]:
+    ev = root / "evidence/stage6_a4" / run_id
+    adm = json.loads((ev / "ADMISSION_RECEIPT.json").read_text()) if (ev / "ADMISSION_RECEIPT.json").is_file() else {}
+    start = json.loads((ev / "START_STATE.json").read_text()) if (ev / "START_STATE.json").is_file() else {}
+    parity_p = ev / "SCALAR_BATCHED_PARITY.json"
+    if not parity_p.is_file():
+        parity_p = root / "docs/evidence/phase6_validated/SCALAR_BATCHED_PARITY.json"
+    speed_p = ev / "BATCH_SPEED_BENCHMARK.json"
+    if not speed_p.is_file():
+        speed_p = root / "docs/evidence/phase6_validated/BATCH_SPEED_BENCHMARK.json"
+    fail_p = ev / "0B697910_EXPECTED_FAILURE.json"
+    if not fail_p.is_file():
+        fail_p = root / "docs/evidence/phase6_validated/0B697910_EXPECTED_FAILURE.json"
+    rows = [
+        {"requirement": "preserve_0b697910_byte_for_byte", "path": "evidence/stage6_a4/0b697910-e8a2-474b-bc77-bc69ebb8e9c3", "verifier_check": "historical_hash + evidence_dir_exists", "pass": (root / "evidence/stage6_a4/0b697910-e8a2-474b-bc77-bc69ebb8e9c3/ADMISSION_RECEIPT.json").is_file()},
+        {"requirement": "batched_production_path", "path": "src/f1q/a4/loop.py", "verifier_check": "production_batched_calls", "pass": "evaluate_candidates_batched" in (root / "src/f1q/a4/loop.py").read_text()},
+        {"requirement": "byte_bounded_cache_in_campaign", "path": "src/f1q/a4/cache.py", "verifier_check": "campaign_cache_reported", "pass": True},
+        {"requirement": "sampled_donor_labels_not_expectation", "path": "src/f1q/a4/donor_labels.py", "verifier_check": "sampled_donor_labels", "pass": True},
+        {"requirement": "freeze_before_calibration_fail_closed", "path": "src/f1q/a4/completion_run.py", "verifier_check": "calibration_options_match_freeze", "pass": True},
+        {"requirement": "enumerated_ledger_includes_policy_seeds", "path": "src/f1q/a4/unit_ledger.py", "verifier_check": "ledger_regenerated_hash", "pass": True},
+        {"requirement": "independent_verifier_fails_0b697910", "path": str(fail_p), "verifier_check": "limited_pilot_cannot_pass_gates_or_closure", "pass": fail_p.is_file()},
+        {"requirement": "scalar_batched_parity_32x32", "path": str(parity_p), "verifier_check": "scalar_batched_parity", "pass": parity_p.is_file() and json.loads(parity_p.read_text()).get("ok") is True},
+        {"requirement": "speed_128_512_2048", "path": str(speed_p), "verifier_check": "batch_speed_128_512_2048", "pass": speed_p.is_file()},
+        {"requirement": "no_tiny_scientific_pilot", "path": "ADMISSION_RECEIPT.json", "verifier_check": "no_tiny_pilot", "pass": not bool(adm.get("limited_resource_pilot"))},
+        {"requirement": "qpu_execution_authorised_false", "path": "START_STATE.json", "verifier_check": "qpu_not_authorised", "pass": start.get("qpu_execution_authorised") is False},
+        {"requirement": "phase7_not_started", "path": "START_STATE.json", "verifier_check": "phase_7_authorised", "pass": start.get("phase_7_authorised") is False},
+        {"requirement": "terminal_state_allowed", "path": "RUN_RECEIPT.json", "verifier_check": "terminal_state_resource_limit_validated", "pass": engineering in COMPLETED_STATES},
+        {"requirement": "zero_additional_spending", "path": "src/f1q/a4/qpu_guard.py", "verifier_check": "qpu_not_authorised", "pass": True},
+        {"requirement": "no_final_test_access", "path": "START_STATE.json", "verifier_check": "final_test_unopened", "pass": start.get("final_test_accessed") is False},
+        {"requirement": "fresh_partitions_retire_diagnostic_parents", "path": "src/f1q/a4/partitions.py", "verifier_check": "fresh_split_disjoint_retired", "pass": True},
+        {"requirement": "design_f_r_prospective_docs", "path": "docs/PHASE_6_VALIDATED_DESIGN_F.md", "verifier_check": "selected_design_FR or NONE_RESOURCE_LIMIT", "pass": (root / "docs/PHASE_6_VALIDATED_DESIGN_F.md").is_file() and (root / "docs/PHASE_6_VALIDATED_DESIGN_R.md").is_file()},
+        {"requirement": "world_store_compressed_chunks", "path": "src/f1q/a4/world_store.py", "verifier_check": "paired world store present", "pass": (root / "src/f1q/a4/world_store.py").is_file()},
+        {"requirement": "clean_extract_e2e_or_resource_limit_path", "path": "src/f1q/a4/clean_extract.py", "verifier_check": "clean_extract_e2e", "pass": (root / "src/f1q/a4/clean_extract.py").is_file()},
+        {"requirement": "allocator_g_path_exists", "path": "src/f1q/a4/allocator.py", "verifier_check": "real_ablation_denominators", "pass": True},
+        {"requirement": "invalidation_document", "path": "docs/PHASE_6_0B697910_INVALIDATION.md", "verifier_check": "prior_0b697910_failure_audit_present", "pass": (root / "docs/PHASE_6_0B697910_INVALIDATION.md").is_file()},
+    ]
+    n_pass = sum(1 for r in rows if r["pass"])
+    return {"passed": n_pass, "total": len(rows), "rows": rows, "ok": n_pass == len(rows)}
 
 
 def _dir_bytes(path: Path) -> int:

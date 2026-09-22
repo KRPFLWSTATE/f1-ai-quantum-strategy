@@ -32,3 +32,10 @@ def append_jsonl(path: Path, row: dict[str, Any]) -> None:
         fh.write(json.dumps(row, sort_keys=True, default=str) + "\n")
         fh.flush()
         os.fsync(fh.fileno())
+
+
+def append_jsonl_nofsync(path: Path, row: dict[str, Any]) -> None:
+    """Heartbeat/progress path: crash-safe enough without per-line fsync."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(row, sort_keys=True, default=str) + "\n")

@@ -1,0 +1,22 @@
+{
+  "exit_code": 0,
+  "skipped": false,
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests",
+    "-ra",
+    "--tb=line",
+    "-q"
+  ],
+  "expected_skips": [
+    "tests/a4/test_a4_validated_closure.py::test_e2e_clean_extract_skipped_inside_admission",
+    "tests/formulation/test_gate_c.py (F1Q_STAGE4_RESUME_SMOKE)"
+  ],
+  "unexpected_skips": [],
+  "datetime_utc": "2026-09-22T16:46:10Z",
+  "log": "docs/evidence/phase6_validated/FULL_TESTS.log",
+  "e2e_included": true,
+  "note": "clean-extract/miniature e2e 6765b59b is engineering only; not Design F/R"
+}
