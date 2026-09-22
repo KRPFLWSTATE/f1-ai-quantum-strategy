@@ -1,0 +1,57 @@
+{
+  "kernel_counters": {
+    "batched_calls": 40,
+    "batched_worlds": 8458,
+    "parity_scalar_calls": 8448,
+    "scalar_calls": 8448
+  },
+  "n_worlds": [
+    128,
+    512,
+    2048
+  ],
+  "ok": true,
+  "rows": [
+    {
+      "batched_cpu_s": 144.37753299999986,
+      "batched_wall_s": 146.907975209062,
+      "n_plans": 2,
+      "n_worlds": 128,
+      "parity_ok": true,
+      "rss_bytes": 118390784,
+      "scalar_cpu_s": 142.58147999999983,
+      "scalar_wall_s": 144.44794483296573,
+      "speedup_cpu": 0.9875600243148632,
+      "speedup_wall": 0.9832546165543741
+    },
+    {
+      "batched_cpu_s": 577.2071930000002,
+      "batched_wall_s": 588.0719086250756,
+      "n_plans": 2,
+      "n_worlds": 512,
+      "parity_ok": true,
+      "rss_bytes": 136790016,
+      "scalar_cpu_s": 581.7975649999998,
+      "scalar_wall_s": 591.6696594170062,
+      "speedup_cpu": 1.0079527283368412,
+      "speedup_wall": 1.0061178756188884
+    },
+    {
+      "batched_cpu_s": 2402.725372,
+      "batched_wall_s": 2464.210418707924,
+      "n_plans": 2,
+      "n_worlds": 2048,
+      "parity_ok": true,
+      "rss_bytes": 256376832,
+      "scalar_cpu_s": 2304.0843289999993,
+      "scalar_wall_s": 2343.3270510410657,
+      "speedup_cpu": 0.9589461849658278,
+      "speedup_wall": 0.9509443809063018
+    }
+  ],
+  "sizes": [
+    128,
+    512,
+    2048
+  ]
+}

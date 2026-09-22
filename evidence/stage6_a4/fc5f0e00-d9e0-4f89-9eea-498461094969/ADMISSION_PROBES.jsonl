@@ -1,0 +1,28 @@
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.16508341708686203}
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.058264999999664724}
+{"family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.15460487501695752}
+{"family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.05802270898129791}
+{"family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.05797545798122883}
+{"family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.05992416699882597}
+{"family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.059231707942672074}
+{"family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.06107783399056643}
+{"family_depth": "C0_p1", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 9.667032915982418}
+{"family_depth": "C0_p2", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 9.4195876250742}
+{"family_depth": "C1_p1", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 7.103345999959856}
+{"family_depth": "C1_p2", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 7.2467223750427365}
+{"kind": "four_family_depths", "wall_s": 33.44419045804534}
+{"kind": "donor_policy", "policy": "fixed", "wall_s": 7.943991792039014}
+{"kind": "donor_policy", "policy": "nn", "wall_s": 7.159049708978273}
+{"kind": "donor_policy", "policy": "random", "wall_s": 6.99908224993851}
+{"kind": "donor_policy", "policy": "best_found", "wall_s": 7.090533333015628}
+{"kind": "resample_30", "n_seeds": 30, "not_expectation_label": true, "wall_s": 1.125269916956313}
+{"budget_s": 5, "kind": "budget", "wall_s": 7.14192941703368}
+{"budget_s": 10, "kind": "budget", "wall_s": 7.041721832938492}
+{"budget_s": 30, "kind": "budget", "wall_s": 7.221554959076457}
+{"budget_s": 60, "kind": "budget", "wall_s": 7.311832583043724}
+{"budget_s": 120, "kind": "budget", "wall_s": 7.1134094999870285}
+{"coverage": true, "kind": "offline", "n_legal": 100, "wall_s": 243.2990797079401}
+{"kind": "calib_2048", "n_eval": 2048, "requested": 2048, "wall_s": 1222.6163783330703}
+{"kind": "pool_one", "pids": [17929], "throughput": 0.2738527233687031, "wall_s": 3.65159779204987}
+{"efficiency": 0.5241606743832048, "kind": "pool_multi", "pids": [19422, 19423, 19424, 19425], "throughput": 0.5741713126504665, "wall_s": 6.9665619160514325, "workers": 4}
+{"kind": "case_unit", "wall_s": 5.606070646026637}

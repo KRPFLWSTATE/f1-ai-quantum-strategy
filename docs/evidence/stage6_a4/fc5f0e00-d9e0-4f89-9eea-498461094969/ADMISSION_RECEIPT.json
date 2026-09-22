@@ -1,0 +1,838 @@
+{
+  "admission_cpu_s": 5210.3775319999995,
+  "admission_wall_s": 4488.215427499963,
+  "admitted": false,
+  "cache_stats": {
+    "bytes": 5624165,
+    "entries": 156,
+    "evictions": 0,
+    "hits": 0,
+    "keys_by_class": {
+      "continuation": 156
+    },
+    "max_bytes": 67108864,
+    "max_bytes_observed": 5624165,
+    "misses": 156
+  },
+  "clean_extract_e2e": {
+    "exit_code": 0,
+    "ok": true,
+    "run_id": "05e6edce-11c6-4a68-b7ce-bac1c8e42f0b"
+  },
+  "config_hash": "013cb04fbb7d29aa11f72df2e88defe46e7e0e24489927c2c05cec1f91ded633",
+  "consumed": false,
+  "design_projections": {
+    "F": {
+      "aggregates": {
+        "ablations": 336,
+        "calib_checkpoints": 48,
+        "calib_parents": 24,
+        "evaluation_worlds": 3235096,
+        "latency": 12,
+        "mechanism_resamples": 72000,
+        "n_budgets": 5,
+        "n_policy_seeds": 3,
+        "offline": 8,
+        "planning_world_evals_upper": 403808,
+        "policy_seeds_included_in_world_counts": true,
+        "train_checkpoints": 240,
+        "train_parents": 120,
+        "tune_checkpoints": 160,
+        "tune_parents": 80
+      },
+      "checksum_ok": true,
+      "fit": {
+        "admission_wall_limit_s": 11520.0,
+        "campaign_cpu_cap_s": 86400.0,
+        "campaign_wall_cap_s": 14400.0,
+        "cpu_ok": false,
+        "disk_ok": true,
+        "fits": false,
+        "ram_ok": true,
+        "wall_ok": false
+      },
+      "hash": "5fc71aa73ed39955b4d09e2f1733a1d37b4dd978cd18f74c40b786d261a04c7b",
+      "ladder": "minimum",
+      "projection": {
+        "components_s": {
+          "circuit_s": 2.3361390640959137,
+          "distributions": 168202.01261490578,
+          "evaluation_worlds": 1931289.7241600598,
+          "n_legal_measured": 100,
+          "offline": 7632.912304562827,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "planning_worlds": 963197.203712783,
+          "prepare": 72.31433545835316
+        },
+        "conservative_multiplier": 1.253373168851195,
+        "parallel_wall_s": {
+          "conservative": 1101289.124199452,
+          "p50": 732216.8366457463,
+          "p95": 1101289.124199452,
+          "point": 732216.8366457463
+        },
+        "serial_cpu_s": {
+          "conservative": 3848349.666875159,
+          "p50": 3070394.16712777,
+          "p95": 3848349.666875159,
+          "point": 3070394.16712777
+        }
+      }
+    },
+    "R": {
+      "aggregates": {
+        "ablations": 168,
+        "calib_checkpoints": 24,
+        "calib_parents": 24,
+        "evaluation_worlds": 750232,
+        "latency": 12,
+        "mechanism_resamples": 72000,
+        "n_budgets": 5,
+        "n_policy_seeds": 3,
+        "offline": 8,
+        "planning_world_evals_upper": 202016,
+        "policy_seeds_included_in_world_counts": true,
+        "train_checkpoints": 120,
+        "train_parents": 120,
+        "tune_checkpoints": 80,
+        "tune_parents": 80
+      },
+      "checksum_ok": true,
+      "fit": {
+        "admission_wall_limit_s": 11520.0,
+        "campaign_cpu_cap_s": 86400.0,
+        "campaign_wall_cap_s": 14400.0,
+        "cpu_ok": false,
+        "disk_ok": true,
+        "fits": false,
+        "ram_ok": true,
+        "wall_ok": false
+      },
+      "hash": "8c7738a653d6681a0c51a8aa0394eebe59dfc902fb8f1203d88f66a4be8fde0e",
+      "ladder": "minimum",
+      "projection": {
+        "components_s": {
+          "circuit_s": 2.3361390640959137,
+          "distributions": 168202.01261490578,
+          "evaluation_worlds": 447873.9896238164,
+          "n_legal_measured": 100,
+          "offline": 7632.912304562827,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "planning_worlds": 481865.75378705125,
+          "prepare": 36.15716772917658
+        },
+        "conservative_multiplier": 1.253373168851195,
+        "parallel_wall_s": {
+          "conservative": 396560.54286255076,
+          "p50": 263662.1935628493,
+          "p95": 396560.54286255076,
+          "point": 263662.1935628493
+        },
+        "serial_cpu_s": {
+          "conservative": 1385742.943870696,
+          "p50": 1105610.8254980654,
+          "p95": 1385742.943870696,
+          "point": 1105610.8254980654
+        }
+      }
+    }
+  },
+  "distribution_counters": {
+    "distribution_builds": 7,
+    "resamples": 38
+  },
+  "doctor_status_pip": {
+    "doctor": {
+      "exit_code": 0,
+      "ok": true
+    },
+    "pip_check": {
+      "exit_code": 0,
+      "ok": true
+    },
+    "status": {
+      "exit_code": 0,
+      "ok": true
+    }
+  },
+  "focused_tests": {
+    "command": [
+      "/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/.venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/a4",
+      "tests/stage6/test_residual_histograms_noise.py",
+      "-k",
+      "not e2e_miniature and not e2e_clean_extract",
+      "-ra",
+      "--junitxml=/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/focused.xml"
+    ],
+    "end_utc": "2026-09-22T17:18:24.270079+00:00",
+    "errored": 0,
+    "exit_code": 0,
+    "failed": 0,
+    "junit_sha256": "a04edfa2a28d2145bcba072e13e3c7924f54d0041338f2db39175ea1e26301b1",
+    "log_sha256": "acb984c25a31a70c9a371e218c262a409dc5f2b5226a60e6dead728be87c79e4",
+    "passed": 86,
+    "skipped": 0,
+    "start_utc": "2026-09-22T17:08:37.974559+00:00",
+    "stdout_tail": "........................................................................ [ 83%]\n..............                                                           [100%]\n- generated xml file: /Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/focused.xml -\n86 passed, 2 deselected in 585.65s (0:09:45)\n"
+  },
+  "formulas": {
+    "no_assumed_0_55": true,
+    "policy_seeds_in_enumerated_ledger": true,
+    "serial": "enumerate units then prepare*n + circuit*n_dist + per_world*planning_worlds + per_eval_world*evaluation_worlds + offline; conservative=max(1.15, 0b697910_underprediction)*point",
+    "wall": "serial_conservative / (workers * measured_efficiency) * 1.20"
+  },
+  "full_tests": {
+    "command": [
+      "/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-k",
+      "not e2e_miniature and not e2e_clean_extract",
+      "-ra",
+      "--junitxml=/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/full.xml"
+    ],
+    "end_utc": "2026-09-22T17:36:08.570706+00:00",
+    "errored": 0,
+    "exit_code": 0,
+    "failed": 0,
+    "junit_sha256": "9cd969aca6cb8fd737ca4feff7aebbb2f44fdfeb8e9bb42abc973f88fead1a2a",
+    "log_sha256": "0bf94b864d83a8d6dfc49b90f12824a12b5edf0c88128cd003832b110b866c52",
+    "passed": 272,
+    "skipped": 1,
+    "start_utc": "2026-09-22T17:18:24.273279+00:00",
+    "stdout_tail": "........................................................................ [ 26%]\n................................s....................................... [ 52%]\n........................................................................ [ 79%]\n.........................................................                [100%]\n- generated xml file: /Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/full.xml -\n=========================== short test summary info ============================\nSKIPPED [1] tests/formulation/test_gate_c.py:519: set F1Q_STAGE4_RESUME_SMOKE=1 to run full formulation interrupt/resume\n272 passed, 1 skipped, 2 deselected in 1063.15s (0:17:43)\n"
+  },
+  "independent_checksums": {
+    "baseline": "8c26dcb0d2bac481a77f7fa02215a4bfdf8ded7a605ea7d633087a628f3db863",
+    "minimum": "ab91b249d6a3aee0ad408b099949ea05cf4fc1fb733999384fc198b7f4355339",
+    "preferred": "4aec243ccc239fec9bc833b5229ee8f80db25a112741cea194422f2973b18c8c"
+  },
+  "kernel_counters": {
+    "batched_calls": 32,
+    "batched_worlds": 2626,
+    "parity_scalar_calls": 0,
+    "scalar_calls": 0
+  },
+  "ledgers": {
+    "baseline": {
+      "counts": {
+        "bootstrap_passes": 1,
+        "distinct_plan_evaluations_upper": 33600,
+        "distributions": 3840,
+        "evaluation_worlds_upper": 3161600,
+        "model_fits": 5,
+        "offline_all_plan_evaluations": 41984,
+        "optimiser_expectation_evaluations": 3840,
+        "parameter_policies": 5,
+        "planning_worlds_upper": 94400,
+        "pools_1024": 72000,
+        "portfolios": 33600,
+        "prepared_cases": 582,
+        "report_verifier_passes": 2
+      },
+      "denominators_intact": {
+        "budgets": [
+          5,
+          10,
+          30,
+          60,
+          120
+        ],
+        "calib_parents": 24,
+        "calibration_eval_worlds": 2048,
+        "family_depths": [
+          "C0_p1",
+          "C0_p2",
+          "C1_p1",
+          "C1_p2"
+        ],
+        "policy_seeds": 3,
+        "pool_draws": 1024,
+        "portfolio_k": 4,
+        "train_parents": 120,
+        "tune_parents": 80
+      },
+      "ladder": "baseline",
+      "miniature": false,
+      "row_arithmetic_note": "policy_seed=3; circuit_resample_seed derived 1:1; not 3x3",
+      "seed_hierarchy": {
+        "circuit_resample_seed": {
+          "count_per_policy_seed": 1,
+          "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+          "not_an_extra_times_three": true
+        },
+        "mechanism_resample_seeds": {
+          "count": 30,
+          "role": "donor-selector/pool diagnostic only"
+        },
+        "policy_seed": {
+          "count": 3,
+          "role": "outer Phase 6 stochastic arm identity",
+          "values": [
+            0,
+            1,
+            2
+          ]
+        },
+        "stage7_design_seeds": {
+          "count": 10,
+          "executed_in_phase6": false
+        }
+      }
+    },
+    "minimum": {
+      "counts": {
+        "bootstrap_passes": 1,
+        "distinct_plan_evaluations_upper": 33600,
+        "distributions": 3840,
+        "evaluation_worlds_upper": 2809600,
+        "model_fits": 5,
+        "offline_all_plan_evaluations": 29184,
+        "optimiser_expectation_evaluations": 3840,
+        "parameter_policies": 5,
+        "planning_worlds_upper": 47200,
+        "pools_1024": 72000,
+        "portfolios": 33600,
+        "prepared_cases": 582,
+        "report_verifier_passes": 2
+      },
+      "denominators_intact": {
+        "budgets": [
+          5,
+          10,
+          30,
+          60,
+          120
+        ],
+        "calib_parents": 24,
+        "calibration_eval_worlds": 2048,
+        "family_depths": [
+          "C0_p1",
+          "C0_p2",
+          "C1_p1",
+          "C1_p2"
+        ],
+        "policy_seeds": 3,
+        "pool_draws": 1024,
+        "portfolio_k": 4,
+        "train_parents": 120,
+        "tune_parents": 80
+      },
+      "ladder": "minimum",
+      "miniature": false,
+      "row_arithmetic_note": "policy_seed=3; circuit_resample_seed derived 1:1; not 3x3",
+      "seed_hierarchy": {
+        "circuit_resample_seed": {
+          "count_per_policy_seed": 1,
+          "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+          "not_an_extra_times_three": true
+        },
+        "mechanism_resample_seeds": {
+          "count": 30,
+          "role": "donor-selector/pool diagnostic only"
+        },
+        "policy_seed": {
+          "count": 3,
+          "role": "outer Phase 6 stochastic arm identity",
+          "values": [
+            0,
+            1,
+            2
+          ]
+        },
+        "stage7_design_seeds": {
+          "count": 10,
+          "executed_in_phase6": false
+        }
+      }
+    },
+    "preferred": {
+      "counts": {
+        "bootstrap_passes": 1,
+        "distinct_plan_evaluations_upper": 33600,
+        "distributions": 3840,
+        "evaluation_worlds_upper": 3865600,
+        "model_fits": 5,
+        "offline_all_plan_evaluations": 67584,
+        "optimiser_expectation_evaluations": 3840,
+        "parameter_policies": 5,
+        "planning_worlds_upper": 188800,
+        "pools_1024": 72000,
+        "portfolios": 33600,
+        "prepared_cases": 582,
+        "report_verifier_passes": 2
+      },
+      "denominators_intact": {
+        "budgets": [
+          5,
+          10,
+          30,
+          60,
+          120
+        ],
+        "calib_parents": 24,
+        "calibration_eval_worlds": 2048,
+        "family_depths": [
+          "C0_p1",
+          "C0_p2",
+          "C1_p1",
+          "C1_p2"
+        ],
+        "policy_seeds": 3,
+        "pool_draws": 1024,
+        "portfolio_k": 4,
+        "train_parents": 120,
+        "tune_parents": 80
+      },
+      "ladder": "preferred",
+      "miniature": false,
+      "row_arithmetic_note": "policy_seed=3; circuit_resample_seed derived 1:1; not 3x3",
+      "seed_hierarchy": {
+        "circuit_resample_seed": {
+          "count_per_policy_seed": 1,
+          "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+          "not_an_extra_times_three": true
+        },
+        "mechanism_resample_seeds": {
+          "count": 30,
+          "role": "donor-selector/pool diagnostic only"
+        },
+        "policy_seed": {
+          "count": 3,
+          "role": "outer Phase 6 stochastic arm identity",
+          "values": [
+            0,
+            1,
+            2
+          ]
+        },
+        "stage7_design_seeds": {
+          "count": 10,
+          "executed_in_phase6": false
+        }
+      }
+    }
+  },
+  "limited_pilot_spec": null,
+  "limited_resource_pilot": false,
+  "machine": {
+    "available_ram_bytes": 25769803776,
+    "blas_threads_per_worker": 1,
+    "cpu_safe_cap": 8,
+    "denominator_source": "measured_peak_worker_rss_times_safety_multiplier",
+    "logical_cpus": 10,
+    "measured_peak_worker_rss_bytes": 1060454400,
+    "memory_safe_cap": 9,
+    "mp_context": "spawn",
+    "per_worker_rss_budget_bytes": 1590681600,
+    "ram_limit_bytes": 15461882265,
+    "replaced_assumed_512mib": true,
+    "rule": "min(cpu_count-2, floor(0.60*RAM / (measured_peak_worker_RSS * 1.5)), 8); floor 1",
+    "safety_multiplier": 1.5,
+    "workers": 8
+  },
+  "measured_parallel_efficiency": 0.5241606743832048,
+  "miniature": false,
+  "multi_worker_throughput": 0.5741713126504665,
+  "one_worker_throughput": 0.2738527233687031,
+  "prepare_counters": {
+    "checkpoint_init": 8,
+    "enumeration": 8,
+    "formulation_verify": 8,
+    "menu_qubo": 8,
+    "prepare_case_calls": 8
+  },
+  "probes": [
+    {
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "SC",
+      "wall_s": 0.16508341708686203
+    },
+    {
+      "family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "VSC",
+      "wall_s": 0.058264999999664724
+    },
+    {
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "SC",
+      "wall_s": 0.15460487501695752
+    },
+    {
+      "family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "VSC",
+      "wall_s": 0.05802270898129791
+    },
+    {
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "SC",
+      "wall_s": 0.05797545798122883
+    },
+    {
+      "family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "VSC",
+      "wall_s": 0.05992416699882597
+    },
+    {
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "SC",
+      "wall_s": 0.059231707942672074
+    },
+    {
+      "family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse",
+      "kind": "prepare",
+      "n_legal": 100,
+      "n_qubits": 20,
+      "regime": "VSC",
+      "wall_s": 0.06107783399056643
+    },
+    {
+      "family_depth": "C0_p1",
+      "k": 4,
+      "kind": "family_depth",
+      "pool_draws": 1024,
+      "wall_s": 9.667032915982418
+    },
+    {
+      "family_depth": "C0_p2",
+      "k": 4,
+      "kind": "family_depth",
+      "pool_draws": 1024,
+      "wall_s": 9.4195876250742
+    },
+    {
+      "family_depth": "C1_p1",
+      "k": 4,
+      "kind": "family_depth",
+      "pool_draws": 1024,
+      "wall_s": 7.103345999959856
+    },
+    {
+      "family_depth": "C1_p2",
+      "k": 4,
+      "kind": "family_depth",
+      "pool_draws": 1024,
+      "wall_s": 7.2467223750427365
+    },
+    {
+      "kind": "four_family_depths",
+      "wall_s": 33.44419045804534
+    },
+    {
+      "kind": "donor_policy",
+      "policy": "fixed",
+      "wall_s": 7.943991792039014
+    },
+    {
+      "kind": "donor_policy",
+      "policy": "nn",
+      "wall_s": 7.159049708978273
+    },
+    {
+      "kind": "donor_policy",
+      "policy": "random",
+      "wall_s": 6.99908224993851
+    },
+    {
+      "kind": "donor_policy",
+      "policy": "best_found",
+      "wall_s": 7.090533333015628
+    },
+    {
+      "kind": "resample_30",
+      "n_seeds": 30,
+      "not_expectation_label": true,
+      "wall_s": 1.125269916956313
+    },
+    {
+      "budget_s": 5,
+      "kind": "budget",
+      "wall_s": 7.14192941703368
+    },
+    {
+      "budget_s": 10,
+      "kind": "budget",
+      "wall_s": 7.041721832938492
+    },
+    {
+      "budget_s": 30,
+      "kind": "budget",
+      "wall_s": 7.221554959076457
+    },
+    {
+      "budget_s": 60,
+      "kind": "budget",
+      "wall_s": 7.311832583043724
+    },
+    {
+      "budget_s": 120,
+      "kind": "budget",
+      "wall_s": 7.1134094999870285
+    },
+    {
+      "coverage": true,
+      "kind": "offline",
+      "n_legal": 100,
+      "wall_s": 243.2990797079401
+    },
+    {
+      "kind": "calib_2048",
+      "n_eval": 2048,
+      "requested": 2048,
+      "wall_s": 1222.6163783330703
+    },
+    {
+      "kind": "pool_one",
+      "pids": [
+        17929
+      ],
+      "throughput": 0.2738527233687031,
+      "wall_s": 3.65159779204987
+    },
+    {
+      "efficiency": 0.5241606743832048,
+      "kind": "pool_multi",
+      "pids": [
+        19422,
+        19423,
+        19424,
+        19425
+      ],
+      "throughput": 0.5741713126504665,
+      "wall_s": 6.9665619160514325,
+      "workers": 4
+    },
+    {
+      "kind": "case_unit",
+      "wall_s": 5.606070646026637
+    }
+  ],
+  "projections": {
+    "baseline": {
+      "checksum_ok": true,
+      "fit": {
+        "admission_wall_limit_s": 11520.0,
+        "campaign_cpu_cap_s": 86400.0,
+        "campaign_wall_cap_s": 14400.0,
+        "cpu_ok": false,
+        "disk_ok": true,
+        "fits": false,
+        "ram_ok": true,
+        "wall_ok": false
+      },
+      "projection": {
+        "assumed_0_55_forbidden": true,
+        "checksum": "8c26dcb0d2bac481a77f7fa02215a4bfdf8ded7a605ea7d633087a628f3db863",
+        "checksum_payload": {
+          "eff": 0.5241606743832048,
+          "n": 582,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "serial": 2690598.154897037,
+          "wall": 769973.298186613,
+          "workers": 8
+        },
+        "components_s": {
+          "circuit_s": 2.3361390640959137,
+          "distributions": 8970.774006128308,
+          "evaluation_worlds": 1887414.0340516772,
+          "n_legal_measured": 100,
+          "offline": 25035.95235896607,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "planning_worlds": 225170.91298460338,
+          "prepare": 93.94406972491414
+        },
+        "conservative_multiplier": 1.253373168851195,
+        "efficiency_used": 0.5241606743832048,
+        "historical_underprediction_0b697910": 1.253373168851195,
+        "n_units": 582,
+        "parallel_wall_s": {
+          "conservative": 769973.298186613,
+          "p50": 511934.0601040815,
+          "p95": 769973.298186613,
+          "point": 511934.0601040815
+        },
+        "peak_aggregate_rss_bytes": 12725452800,
+        "serial_cpu_s": {
+          "conservative": 2690598.154897037,
+          "p50": 2146685.6174711,
+          "p95": 2690598.154897037,
+          "point": 2146685.6174711
+        },
+        "storage_bytes": 1796320000,
+        "unit_s": {
+          "conservative": 5.606070646026637,
+          "n": 1,
+          "p50": 5.606070646026637,
+          "p95": 5.606070646026637,
+          "point": 5.606070646026637
+        },
+        "workers": 8
+      }
+    },
+    "minimum": {
+      "checksum_ok": true,
+      "fit": {
+        "admission_wall_limit_s": 11520.0,
+        "campaign_cpu_cap_s": 86400.0,
+        "campaign_wall_cap_s": 14400.0,
+        "cpu_ok": false,
+        "disk_ok": true,
+        "fits": false,
+        "ram_ok": true,
+        "wall_ok": false
+      },
+      "projection": {
+        "assumed_0_55_forbidden": true,
+        "checksum": "ab91b249d6a3aee0ad408b099949ea05cf4fc1fb733999384fc198b7f4355339",
+        "checksum_payload": {
+          "eff": 0.5241606743832048,
+          "n": 582,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "serial": 2276539.3612876204,
+          "wall": 651481.3508185704,
+          "workers": 8
+        },
+        "components_s": {
+          "circuit_s": 2.3361390640959137,
+          "distributions": 8970.774006128308,
+          "evaluation_worlds": 1677276.8440256808,
+          "n_legal_measured": 100,
+          "offline": 17403.040054403245,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "planning_worlds": 112585.45649230169,
+          "prepare": 93.94406972491414
+        },
+        "conservative_multiplier": 1.253373168851195,
+        "efficiency_used": 0.5241606743832048,
+        "historical_underprediction_0b697910": 1.253373168851195,
+        "n_units": 582,
+        "parallel_wall_s": {
+          "conservative": 651481.3508185704,
+          "p50": 433152.02461191115,
+          "p95": 651481.3508185704,
+          "point": 433152.02461191115
+        },
+        "peak_aggregate_rss_bytes": 12725452800,
+        "serial_cpu_s": {
+          "conservative": 2276539.3612876204,
+          "p50": 1816330.058648239,
+          "p95": 2276539.3612876204,
+          "point": 1816330.058648239
+        },
+        "storage_bytes": 1725920000,
+        "unit_s": {
+          "conservative": 5.606070646026637,
+          "n": 1,
+          "p50": 5.606070646026637,
+          "p95": 5.606070646026637,
+          "point": 5.606070646026637
+        },
+        "workers": 8
+      }
+    },
+    "preferred": {
+      "checksum_ok": true,
+      "fit": {
+        "admission_wall_limit_s": 11520.0,
+        "campaign_cpu_cap_s": 86400.0,
+        "campaign_wall_cap_s": 14400.0,
+        "cpu_ok": false,
+        "disk_ok": true,
+        "fits": false,
+        "ram_ok": true,
+        "wall_ok": false
+      },
+      "projection": {
+        "assumed_0_55_forbidden": true,
+        "checksum": "4aec243ccc239fec9bc833b5229ee8f80db25a112741cea194422f2973b18c8c",
+        "checksum_payload": {
+          "eff": 0.5241606743832048,
+          "n": 582,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "serial": 3518715.74211587,
+          "wall": 1006957.1929226986,
+          "workers": 8
+        },
+        "components_s": {
+          "circuit_s": 2.3361390640959137,
+          "distributions": 8970.774006128308,
+          "evaluation_worlds": 2307688.41410367,
+          "n_legal_measured": 100,
+          "offline": 40301.776968091726,
+          "per_eval_world_s": 0.5969806534829445,
+          "per_world_s": 0.5963212737939708,
+          "planning_worlds": 450341.82596920675,
+          "prepare": 93.94406972491414
+        },
+        "conservative_multiplier": 1.253373168851195,
+        "efficiency_used": 0.5241606743832048,
+        "historical_underprediction_0b697910": 1.253373168851195,
+        "n_units": 582,
+        "parallel_wall_s": {
+          "conservative": 1006957.1929226986,
+          "p50": 669498.1310884224,
+          "p95": 1006957.1929226986,
+          "point": 669498.1310884224
+        },
+        "peak_aggregate_rss_bytes": 12725452800,
+        "serial_cpu_s": {
+          "conservative": 3518715.74211587,
+          "p50": 2807396.7351168217,
+          "p95": 3518715.74211587,
+          "point": 2807396.7351168217
+        },
+        "storage_bytes": 1937120000,
+        "unit_s": {
+          "conservative": 5.606070646026637,
+          "n": 1,
+          "p50": 5.606070646026637,
+          "p95": 5.606070646026637,
+          "point": 5.606070646026637
+        },
+        "workers": 8
+      }
+    }
+  },
+  "reason": "neither Design F nor Design R fits CPU 86400 / wall 11520 / 60% RAM / disk reserve after batched production-path probes; no tiny outcome-bearing pilot",
+  "rejected_ladders": [
+    "preferred",
+    "baseline",
+    "minimum"
+  ],
+  "reused_evidence_ok": true,
+  "reviewed_source_commit": "dc2996733a6161111f10664070e55a291fe2da0b",
+  "run_id": "fc5f0e00-d9e0-4f89-9eea-498461094969",
+  "selected_design": "NONE_RESOURCE_LIMIT",
+  "selected_world_level": "NONE"
+}

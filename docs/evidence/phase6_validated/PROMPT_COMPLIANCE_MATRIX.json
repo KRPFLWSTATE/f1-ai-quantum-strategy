@@ -1,0 +1,133 @@
+{
+  "ok": true,
+  "passed": 21,
+  "rows": [
+    {
+      "pass": true,
+      "path": "evidence/stage6_a4/0b697910-e8a2-474b-bc77-bc69ebb8e9c3",
+      "requirement": "preserve_0b697910_byte_for_byte",
+      "verifier_check": "historical_hash + evidence_dir_exists"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/loop.py",
+      "requirement": "batched_production_path",
+      "verifier_check": "production_batched_calls"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/cache.py",
+      "requirement": "byte_bounded_cache_in_campaign",
+      "verifier_check": "campaign_cache_reported"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/donor_labels.py",
+      "requirement": "sampled_donor_labels_not_expectation",
+      "verifier_check": "sampled_donor_labels"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/completion_run.py",
+      "requirement": "freeze_before_calibration_fail_closed",
+      "verifier_check": "calibration_options_match_freeze"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/unit_ledger.py",
+      "requirement": "enumerated_ledger_includes_policy_seeds",
+      "verifier_check": "ledger_regenerated_hash"
+    },
+    {
+      "pass": true,
+      "path": "/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/0B697910_EXPECTED_FAILURE.json",
+      "requirement": "independent_verifier_fails_0b697910",
+      "verifier_check": "limited_pilot_cannot_pass_gates_or_closure"
+    },
+    {
+      "pass": true,
+      "path": "/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/SCALAR_BATCHED_PARITY.json",
+      "requirement": "scalar_batched_parity_32x32",
+      "verifier_check": "scalar_batched_parity"
+    },
+    {
+      "pass": true,
+      "path": "/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/BATCH_SPEED_BENCHMARK.json",
+      "requirement": "speed_128_512_2048",
+      "verifier_check": "batch_speed_128_512_2048"
+    },
+    {
+      "pass": true,
+      "path": "ADMISSION_RECEIPT.json",
+      "requirement": "no_tiny_scientific_pilot",
+      "verifier_check": "no_tiny_pilot"
+    },
+    {
+      "pass": true,
+      "path": "START_STATE.json",
+      "requirement": "qpu_execution_authorised_false",
+      "verifier_check": "qpu_not_authorised"
+    },
+    {
+      "pass": true,
+      "path": "START_STATE.json",
+      "requirement": "phase7_not_started",
+      "verifier_check": "phase_7_authorised"
+    },
+    {
+      "pass": true,
+      "path": "RUN_RECEIPT.json",
+      "requirement": "terminal_state_allowed",
+      "verifier_check": "terminal_state_resource_limit_validated"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/qpu_guard.py",
+      "requirement": "zero_additional_spending",
+      "verifier_check": "qpu_not_authorised"
+    },
+    {
+      "pass": true,
+      "path": "START_STATE.json",
+      "requirement": "no_final_test_access",
+      "verifier_check": "final_test_unopened"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/partitions.py",
+      "requirement": "fresh_partitions_retire_diagnostic_parents",
+      "verifier_check": "fresh_split_disjoint_retired"
+    },
+    {
+      "pass": true,
+      "path": "docs/PHASE_6_VALIDATED_DESIGN_F.md",
+      "requirement": "design_f_r_prospective_docs",
+      "verifier_check": "selected_design_FR or NONE_RESOURCE_LIMIT"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/world_store.py",
+      "requirement": "world_store_compressed_chunks",
+      "verifier_check": "paired world store present"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/clean_extract.py",
+      "requirement": "clean_extract_e2e_or_resource_limit_path",
+      "verifier_check": "clean_extract_e2e"
+    },
+    {
+      "pass": true,
+      "path": "src/f1q/a4/allocator.py",
+      "requirement": "allocator_g_path_exists",
+      "verifier_check": "real_ablation_denominators"
+    },
+    {
+      "pass": true,
+      "path": "docs/PHASE_6_0B697910_INVALIDATION.md",
+      "requirement": "invalidation_document",
+      "verifier_check": "prior_0b697910_failure_audit_present"
+    }
+  ],
+  "total": 21
+}

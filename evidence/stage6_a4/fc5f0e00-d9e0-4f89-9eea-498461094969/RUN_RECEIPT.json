@@ -1,0 +1,32 @@
+{
+  "GATE_E": {
+    "BOUNDARY_MECHANISM_PATH_AVAILABLE": false,
+    "GATE_E_SCIENTIFIC_VALUE": "UNCLAIMED_RESOURCE_LIMIT",
+    "SUPERIORITY_PATH_AVAILABLE": false,
+    "reason": "neither Design F nor Design R admitted; Gate E unclaimed; no limited-pilot substitution"
+  },
+  "GATE_F": {
+    "GATE_F_LOCAL_PRECISION_AND_RESOURCES": "FAIL",
+    "PHASE_7_AUTHORISED": false,
+    "PHASE_7_BOUNDARY_STUDY_READY": false,
+    "PHASE_7_OPERATIONAL_READY": false,
+    "PHASE_7_SUPERIORITY_READY": false,
+    "reason": "no 24-parent calibration corpus; F/R not admitted"
+  },
+  "PHASE_6_ENGINEERING": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED",
+  "SELECTED_DESIGN": "NONE_RESOURCE_LIMIT",
+  "final_test_accessed": false,
+  "n_cal_ok": 0,
+  "n_train_ok": 0,
+  "n_tune_ok": 0,
+  "not_campaign_raw_complete": true,
+  "phase_7_authorised": false,
+  "q": null,
+  "qpu_jobs": 0,
+  "reviewed_source_commit": "885f1adffb3b65865dbc752c9b0ca0442eb8fd52",
+  "run_id": "fc5f0e00-d9e0-4f89-9eea-498461094969",
+  "selected_world_level": "NONE",
+  "start_commit": "dcfe1cde7f02643d7a2d258d961e7ce2b4e62461",
+  "status": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED",
+  "tiny_pilot_not_run": true
+}

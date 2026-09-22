@@ -1,0 +1,23 @@
+{
+  "allowed": [
+    "local_simulator_mechanism_description",
+    "engineering_repair_and_admission_measurement",
+    "development_calibration_block_effects_labelled_as_such"
+  ],
+  "hash": "2b44f71fd668d4dbbb1b62d8de76c96a783cc9ac3584e3082a7ee55138dbf6cc",
+  "not_yet_literature_verified": [
+    "novelty_status"
+  ],
+  "prohibited": [
+    "quantum_advantage",
+    "F1_calibration",
+    "hardware_readiness",
+    "scientific_novelty_unverified",
+    "IBM_or_device_noise",
+    "provider_latency",
+    "certified_quantum_optimum",
+    "final_test_confirmation",
+    "superiority_with_zero_proxy_headroom"
+  ],
+  "proxy_headroom": "ZERO"
+}

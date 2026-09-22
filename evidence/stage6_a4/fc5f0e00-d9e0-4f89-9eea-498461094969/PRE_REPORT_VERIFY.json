@@ -1,0 +1,175 @@
+{
+  "checks": [
+    {
+      "expected": true,
+      "name": "evidence_dir_exists",
+      "observed": true,
+      "pass": true
+    },
+    {
+      "expected": 0,
+      "name": "fresh_split_disjoint_retired",
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "expected": 0,
+      "name": "no_finaltest_overlap",
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "partitions_ok_flag",
+      "pass": true
+    },
+    {
+      "expected": 120,
+      "name": "train_parents_registered_120",
+      "observed": 120,
+      "pass": true
+    },
+    {
+      "expected": 80,
+      "name": "tune_parents_registered_80",
+      "observed": 80,
+      "pass": true
+    },
+    {
+      "expected": 24,
+      "name": "calib_parents_registered_24",
+      "observed": 24,
+      "pass": true
+    },
+    {
+      "expected": "NONE_RESOURCE_LIMIT",
+      "name": "selected_design_none_resource_limit",
+      "observed": "NONE_RESOURCE_LIMIT",
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "no_tiny_pilot",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": "no F/R calib rows as gate evidence",
+      "name": "no_fr_outcomes_claimed",
+      "pass": true
+    },
+    {
+      "name": "gates_unclaimed_on_resource_limit",
+      "pass": true
+    },
+    {
+      "expected": true,
+      "name": "scalar_batched_parity",
+      "observed": true,
+      "pass": true
+    },
+    {
+      "expected": [
+        128,
+        512,
+        2048
+      ],
+      "name": "batch_speed_128_512_2048",
+      "observed": [
+        128,
+        512,
+        2048
+      ],
+      "pass": true
+    },
+    {
+      "expected": ">0",
+      "name": "production_batched_calls",
+      "observed": 32,
+      "pass": true
+    },
+    {
+      "expected": 0,
+      "name": "full_tests_not_skipped",
+      "observed": {
+        "exit": 0,
+        "failed": 0,
+        "skipped": 1
+      },
+      "pass": true
+    },
+    {
+      "name": "clean_extract_e2e",
+      "pass": true
+    },
+    {
+      "expected": true,
+      "name": "external_compute_requirement",
+      "observed": true,
+      "pass": true
+    },
+    {
+      "expected": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED",
+      "name": "terminal_state_resource_limit_validated",
+      "observed": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED",
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "qpu_not_authorised",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "final_test_unopened",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "name": "historical_hash_ANCHOR_FITS.jsonl",
+      "observed": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "pass": true
+    },
+    {
+      "expected": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "name": "historical_hash_MANIFEST.json",
+      "observed": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "pass": true
+    },
+    {
+      "name": "donor_bank_four_keys",
+      "pass": true
+    },
+    {
+      "expected": 32,
+      "name": "donor_count_32",
+      "observed": 32,
+      "pass": true
+    },
+    {
+      "expected": ">=2 pids if W>1",
+      "name": "real_worker_pids",
+      "observed": 4,
+      "pass": true
+    },
+    {
+      "n": 44,
+      "n_ok": 43,
+      "name": "manifest_all_hashed",
+      "pass": false
+    },
+    {
+      "name": "prior_0b697910_failure_audit_present",
+      "pass": true
+    }
+  ],
+  "closure_claim": false,
+  "config_hash_fn": "37a1beb1dba887a2e8cd3c5b33c208a18a8417d0bbd6231e518851cc708879f3",
+  "mode": "pre",
+  "n_pass": 26,
+  "n_total": 27,
+  "ok": false,
+  "run_id": "fc5f0e00-d9e0-4f89-9eea-498461094969",
+  "selected_design": "NONE_RESOURCE_LIMIT"
+}

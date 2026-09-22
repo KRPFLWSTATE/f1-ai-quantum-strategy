@@ -1,0 +1,10 @@
+{
+  "excluded": [
+    "MANIFEST.json",
+    "FINAL_VERIFY.json",
+    "FINAL_PACKAGE_VERIFY.json"
+  ],
+  "manifest_sha256": "d9b697aef135087bb76beb6a3eac3cdfdde201f80e5be588666d0abde76d0e63",
+  "ok": true,
+  "reason": "hash layers exclude self and later wrappers"
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/a4",
+    "tests/stage6/test_residual_histograms_noise.py",
+    "-k",
+    "not e2e_miniature and not e2e_clean_extract",
+    "-ra",
+    "--junitxml=/Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/focused.xml"
+  ],
+  "end_utc": "2026-09-22T17:18:24.270079+00:00",
+  "errored": 0,
+  "exit_code": 0,
+  "failed": 0,
+  "junit_sha256": "a04edfa2a28d2145bcba072e13e3c7924f54d0041338f2db39175ea1e26301b1",
+  "log_sha256": "acb984c25a31a70c9a371e218c262a409dc5f2b5226a60e6dead728be87c79e4",
+  "passed": 86,
+  "skipped": 0,
+  "start_utc": "2026-09-22T17:08:37.974559+00:00",
+  "stdout_tail": "........................................................................ [ 83%]\n..............                                                           [100%]\n- generated xml file: /Users/kawinperera/f1-ai-quantum-strategy-phase6-validated/evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/focused.xml -\n86 passed, 2 deselected in 585.65s (0:09:45)\n"
+}

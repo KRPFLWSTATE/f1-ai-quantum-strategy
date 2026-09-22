@@ -1,0 +1,32 @@
+{
+  "admission": {
+    "bytes": 5624165,
+    "entries": 156,
+    "evictions": 0,
+    "hits": 0,
+    "keys_by_class": {
+      "continuation": 156
+    },
+    "max_bytes": 67108864,
+    "max_bytes_observed": 5624165,
+    "misses": 156
+  },
+  "distribution": {
+    "bytes": 896,
+    "entries": 7,
+    "evictions": 0,
+    "hits": 2,
+    "keys_by_class": {
+      "continuation": 7
+    },
+    "max_bytes": 33554432,
+    "max_bytes_observed": 896,
+    "misses": 7
+  },
+  "kernel": {
+    "batched_calls": 32,
+    "batched_worlds": 2626,
+    "parity_scalar_calls": 0,
+    "scalar_calls": 0
+  }
+}

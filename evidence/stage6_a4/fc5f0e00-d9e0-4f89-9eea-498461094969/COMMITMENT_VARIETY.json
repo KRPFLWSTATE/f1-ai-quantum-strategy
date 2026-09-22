@@ -1,0 +1,21 @@
+{
+  "covers_fallback_timely_late_stale_changed": true,
+  "missing": [],
+  "observed": [
+    "changed-state",
+    "fallback",
+    "fallback_continuation",
+    "late",
+    "recommendation",
+    "stale",
+    "timely"
+  ],
+  "ok": true,
+  "required": [
+    "changed-state",
+    "fallback",
+    "late",
+    "stale",
+    "timely"
+  ]
+}
