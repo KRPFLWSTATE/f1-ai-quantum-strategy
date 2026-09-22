@@ -40,7 +40,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2, sort_keys=True, default=str))
         return 0 if result.get("ok") else 1
     if args.admission_check or args.preflight:
-        result = run_admission_check(root, args.config, miniature=args.miniature, skip_full_tests=args.skip_full_tests)
+        result = run_admission_check(root, args.config, miniature=args.miniature, skip_full_tests=args.skip_full_tests, run_id=args.run_id)
         print(json.dumps({k: v for k, v in result.items() if k != "receipt"}, indent=2, sort_keys=True, default=str))
         return 0 if (
             result.get("admitted")

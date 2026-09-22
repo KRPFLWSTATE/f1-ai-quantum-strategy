@@ -164,15 +164,21 @@ def run_admission_check(
         full = {"exit_code": 0, "passed": None, "skipped": True}
         checks = {"doctor": {"ok": True, "skipped": True}, "status": {"ok": True, "skipped": True}, "pip_check": {"ok": True, "skipped": True}}
     else:
+        print("[heartbeat] phase=focused_tests completed=0/1 last=start workers=1 wall=0", flush=True)
         focused = _run_tests_into(tests_dir, root, focused=True)
+        print(f"[heartbeat] phase=focused_tests completed=1/1 last=exit={focused.get('exit_code')} workers=1 wall={time.perf_counter()-t_ad0:.1f}", flush=True)
+        print("[heartbeat] phase=full_tests completed=0/1 last=start workers=1", flush=True)
         full = {"exit_code": 0, "passed": None, "skipped": True} if skip_full_tests else _run_tests_into(tests_dir, root, focused=False)
+        print(f"[heartbeat] phase=full_tests completed=1/1 last=exit={full.get('exit_code')} skipped={full.get('skipped')} wall={time.perf_counter()-t_ad0:.1f}", flush=True)
         checks = _doctor_status_pip(tests_dir / "checks", root)
         if focused["exit_code"] != 0 or (not skip_full_tests and full["exit_code"] != 0):
             raise StructuralError("TESTS", "authoritative tests failed", path=str(tests_dir))
         from f1q.a4.clean_extract import run_clean_extract_e2e
 
+        print("[heartbeat] phase=clean_extract_e2e completed=0/1 last=start workers=1", flush=True)
         e2e = run_clean_extract_e2e(root)
         write_json(tests_dir / "CLEAN_EXTRACT_E2E.json", e2e)
+        print(f"[heartbeat] phase=clean_extract_e2e completed=1/1 last=ok={e2e.get('ok')} wall={time.perf_counter()-t_ad0:.1f}", flush=True)
         if not e2e.get("ok"):
             raise StructuralError("TESTS", "clean-extract e2e failed", path="CLEAN_EXTRACT_E2E.json", value=e2e.get("stderr_tail"))
         start["clean_extract_e2e"] = {"ok": e2e.get("ok"), "run_id": e2e.get("run_id"), "exit_code": e2e.get("exit_code")}
