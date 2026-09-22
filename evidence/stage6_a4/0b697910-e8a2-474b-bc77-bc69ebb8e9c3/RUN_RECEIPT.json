@@ -1,0 +1,33 @@
+{
+  "GATE_E": {
+    "BOUNDARY_MECHANISM_PATH_AVAILABLE": true,
+    "GATE_E_SCIENTIFIC_VALUE": "PASS_BOUNDARY_MECHANISM",
+    "SUPERIORITY_PATH_AVAILABLE": false,
+    "n_matched_k": 12,
+    "proxy_headroom_zero": true,
+    "quantum_incremental_evaluated_cases": 8,
+    "reason": "matched-K experiment supports a nontrivial boundary/mechanism question; superiority path closed",
+    "superiority_reason": "PROXY_HEADROOM_ZERO"
+  },
+  "GATE_F": {
+    "GATE_F_LOCAL_PRECISION_AND_RESOURCES": "FAIL",
+    "PHASE_7_AUTHORISED": false,
+    "PHASE_7_BOUNDARY_STUDY_READY": false,
+    "PHASE_7_OPERATIONAL_READY": false,
+    "PHASE_7_SUPERIORITY_READY": false,
+    "n_calib_parents": 2,
+    "reason": "missing calibration parents, q, sizing, admission, or resource fit"
+  },
+  "PHASE_6_ENGINEERING": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT",
+  "final_test_accessed": false,
+  "n_cal_ok": 4,
+  "n_train_ok": 8,
+  "n_tune_ok": 8,
+  "not_campaign_raw_complete": true,
+  "phase_7_authorised": false,
+  "q": 0.0,
+  "qpu_jobs": 0,
+  "run_id": "0b697910-e8a2-474b-bc77-bc69ebb8e9c3",
+  "selected_world_level": "minimum",
+  "status": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT"
+}

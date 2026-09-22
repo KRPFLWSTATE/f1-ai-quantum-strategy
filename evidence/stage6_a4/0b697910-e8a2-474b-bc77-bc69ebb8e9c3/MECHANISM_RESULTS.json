@@ -1,0 +1,19 @@
+{
+  "distribution_counters": {
+    "distribution_builds": 368,
+    "resamples": 264
+  },
+  "policies": [
+    "C0_p1",
+    "C0_p2",
+    "C1_p1",
+    "C1_p2"
+  ],
+  "prepare_counters": {
+    "checkpoint_init": 25,
+    "enumeration": 25,
+    "formulation_verify": 25,
+    "menu_qubo": 25,
+    "prepare_case_calls": 25
+  }
+}

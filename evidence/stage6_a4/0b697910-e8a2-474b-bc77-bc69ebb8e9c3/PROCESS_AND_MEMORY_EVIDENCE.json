@@ -1,0 +1,49 @@
+{
+  "available_ram_bytes": 25769803776,
+  "efficiency": 0.503446160866435,
+  "false_worker_claim": false,
+  "measured_peak_worker_rss_bytes": 1076592640,
+  "multi_worker": {
+    "cpu_s": 27.72061600000052,
+    "distinct_worker_pids": [
+      5462,
+      5463,
+      5464,
+      5465
+    ],
+    "false_worker_claim": false,
+    "n_distinct_worker_pids": 4,
+    "n_ok": 4,
+    "n_results": 4,
+    "peak_coordinator_rss": 1076592640,
+    "retries": 0,
+    "startup_s": 0.012089291005395353,
+    "task_counts": {
+      "5462": 1,
+      "5463": 1,
+      "5464": 1,
+      "5465": 1
+    },
+    "wall_s": 7.4809393750038,
+    "workers_requested": 4
+  },
+  "one_worker": {
+    "cpu_s": 3.744665000000168,
+    "distinct_worker_pids": [
+      4844
+    ],
+    "false_worker_claim": false,
+    "n_distinct_worker_pids": 1,
+    "n_ok": 1,
+    "n_results": 1,
+    "peak_coordinator_rss": 1076592640,
+    "retries": 0,
+    "startup_s": 5.916925147175789e-06,
+    "task_counts": {
+      "4844": 1
+    },
+    "wall_s": 3.7662502080202103,
+    "workers_requested": 1
+  },
+  "peak_coordinator_rss": 1076592640
+}

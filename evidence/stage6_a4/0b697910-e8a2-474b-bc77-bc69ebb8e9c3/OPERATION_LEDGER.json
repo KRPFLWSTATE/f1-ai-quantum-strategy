@@ -1,0 +1,66 @@
+{
+  "counts": {
+    "bootstrap_passes": 1,
+    "distinct_plan_evaluations_upper": 60,
+    "distributions": 128,
+    "evaluation_worlds_upper": 26496,
+    "model_fits": 5,
+    "offline_all_plan_evaluations": 1664,
+    "optimiser_expectation_evaluations": 128,
+    "parameter_policies": 5,
+    "planning_worlds_upper": 336,
+    "pools_1024": 2400,
+    "portfolios": 60,
+    "prepared_cases": 27,
+    "report_verifier_passes": 2
+  },
+  "denominators_intact": {
+    "budgets": [
+      5,
+      10,
+      30,
+      60,
+      120
+    ],
+    "calib_parents": 2,
+    "calibration_eval_worlds": 2048,
+    "family_depths": [
+      "C0_p1",
+      "C0_p2",
+      "C1_p1",
+      "C1_p2"
+    ],
+    "policy_seeds": 1,
+    "pool_draws": 1024,
+    "portfolio_k": 4,
+    "train_parents": 4,
+    "tune_parents": 4
+  },
+  "ladder": "limited_resource_pilot",
+  "miniature": false,
+  "row_arithmetic_note": "policy_seed=3; circuit_resample_seed derived 1:1; not 3x3",
+  "seed_hierarchy": {
+    "circuit_resample_seed": {
+      "count_per_policy_seed": 1,
+      "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+      "not_an_extra_times_three": true
+    },
+    "mechanism_resample_seeds": {
+      "count": 30,
+      "role": "donor-selector/pool diagnostic only"
+    },
+    "policy_seed": {
+      "count": 3,
+      "role": "outer Phase 6 stochastic arm identity",
+      "values": [
+        0,
+        1,
+        2
+      ]
+    },
+    "stage7_design_seeds": {
+      "count": 10,
+      "executed_in_phase6": false
+    }
+  }
+}

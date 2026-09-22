@@ -1,0 +1,25 @@
+{
+  "allowed_options": [
+    "stop_fallback",
+    "classical_only",
+    "C0_p2",
+    "C1_p2"
+  ],
+  "datetime_utc": "2026-09-22T00:31:09Z",
+  "dispatch_threshold": 0.0,
+  "donor_policy_by_fd": {
+    "C0_p1": "fixed",
+    "C0_p2": "fixed",
+    "C1_p1": "fixed",
+    "C1_p2": "fixed"
+  },
+  "frozen_c0_depth": "C0_p2",
+  "frozen_c1_depth": "C1_p2",
+  "hash": "64c82b152ece259fcbf14a9915a7369dc5ec1c8d2323f57e94b5f6e52a2ff163",
+  "n_policy_seeds": 1,
+  "primary_lambda": 0.0,
+  "ridge_l2": 1.0,
+  "strongest_classical_comparator": "classical_only",
+  "tie_rule": "min_planning_mean_then_lex_plan_hash",
+  "written_before_calibration": true
+}

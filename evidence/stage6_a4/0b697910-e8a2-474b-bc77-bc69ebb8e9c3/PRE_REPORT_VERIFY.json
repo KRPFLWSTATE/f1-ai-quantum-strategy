@@ -1,0 +1,110 @@
+{
+  "checks": [
+    {
+      "name": "evidence_dir_exists",
+      "pass": true
+    },
+    {
+      "name": "required_START_STATE.json",
+      "pass": true
+    },
+    {
+      "name": "required_REUSED_EVIDENCE.json",
+      "pass": true
+    },
+    {
+      "name": "required_PARTITIONS.json",
+      "pass": true
+    },
+    {
+      "name": "required_ADMISSION_RECEIPT.json",
+      "pass": true
+    },
+    {
+      "name": "required_PRESTART_QUARANTINE.json",
+      "pass": true
+    },
+    {
+      "name": "required_REPAIR_TRACEABILITY.json",
+      "pass": true
+    },
+    {
+      "name": "required_DONOR_BANK_V2.json",
+      "pass": true
+    },
+    {
+      "name": "reused_ok",
+      "pass": true
+    },
+    {
+      "name": "donor_bank_four_keys",
+      "pass": true
+    },
+    {
+      "n": 32,
+      "name": "donor_count_32",
+      "pass": true
+    },
+    {
+      "name": "failed_train_rows_not_success",
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "qpu_not_authorised",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "final_test_unopened",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": ">=2 pids if W>1",
+      "name": "real_worker_pids",
+      "observed": 4,
+      "pass": true
+    },
+    {
+      "name": "tuning_freeze_before_calibration",
+      "pass": true
+    },
+    {
+      "is_maximum": true,
+      "n_residuals": 2,
+      "name": "q_recomputed",
+      "pass": true,
+      "recomputed": 0.0,
+      "stated": 0.0
+    },
+    {
+      "name": "q_not_numpy_percentile",
+      "pass": true
+    },
+    {
+      "n": 2,
+      "name": "q_from_block_maxima",
+      "pass": true
+    },
+    {
+      "name": "prestart_diagnostic_only",
+      "pass": true
+    },
+    {
+      "name": "quarantine_not_phase6_input",
+      "pass": true
+    },
+    {
+      "name": "historical_a4_manifest_present",
+      "pass": true
+    }
+  ],
+  "config_hash_fn": "0fa527830b01404458541f1b6298858a16d2655cf8f0fb82e38ce5d72ecf5493",
+  "mode": "pre",
+  "n_pass": 22,
+  "n_total": 22,
+  "ok": true,
+  "run_id": "0b697910-e8a2-474b-bc77-bc69ebb8e9c3"
+}

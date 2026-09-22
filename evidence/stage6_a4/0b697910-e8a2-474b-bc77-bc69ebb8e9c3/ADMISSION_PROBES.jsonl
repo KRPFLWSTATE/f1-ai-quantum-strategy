@@ -1,0 +1,27 @@
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.06416583305690438}
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.057546042022295296}
+{"family_id": "fam.green_pit_high.tyre_nonlinear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.064544208929874}
+{"family_id": "fam.green_pit_high.tyre_nonlinear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.09363149991258979}
+{"family_id": "fam.green_pit_low.tyre_near_linear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.059219625080004334}
+{"family_id": "fam.green_pit_low.tyre_near_linear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.0612473749788478}
+{"family_id": "fam.green_pit_low.tyre_nonlinear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.05906866700388491}
+{"family_id": "fam.green_pit_low.tyre_nonlinear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.06418866699095815}
+{"family_depth": "C0_p1", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 10.33233750006184}
+{"family_depth": "C0_p2", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 9.876614999957383}
+{"family_depth": "C1_p1", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 7.364385124994442}
+{"family_depth": "C1_p2", "k": 4, "kind": "family_depth", "pool_draws": 1024, "wall_s": 7.0464632080402225}
+{"kind": "four_family_depths", "wall_s": 34.62779054197017}
+{"kind": "donor_policy", "policy": "fixed", "wall_s": 7.056312625063583}
+{"kind": "donor_policy", "policy": "nn", "wall_s": 7.059945167042315}
+{"kind": "donor_policy", "policy": "random", "wall_s": 7.25518491701223}
+{"kind": "donor_policy", "policy": "best_found", "wall_s": 7.283735709032044}
+{"budget_s": 5, "kind": "budget", "wall_s": 7.076604665955529}
+{"budget_s": 10, "kind": "budget", "wall_s": 7.392910166992806}
+{"budget_s": 30, "kind": "budget", "wall_s": 7.0975407909136266}
+{"budget_s": 60, "kind": "budget", "wall_s": 7.182524541974999}
+{"budget_s": 120, "kind": "budget", "wall_s": 7.3467055830406025}
+{"coverage": true, "kind": "offline", "n_legal": 100, "wall_s": 248.97838220803533}
+{"kind": "calib_2048", "n_eval": 2048, "requested": 2048, "wall_s": 1224.228649583063}
+{"kind": "pool_one", "pids": [4844], "throughput": 0.26551608224820145, "wall_s": 3.7662502080202103}
+{"efficiency": 0.503446160866435, "kind": "pool_multi", "pids": [5463, 5465, 5464, 5462], "throughput": 0.5346922090246145, "wall_s": 7.4809393750038, "workers": 4}
+{"kind": "case_unit", "wall_s": 5.857189354021102}
