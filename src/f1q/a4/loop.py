@@ -156,8 +156,16 @@ def evaluate_candidates_on_bank(
     checkpoint_hash: str,
     nominal_budget_s: float,
 ) -> dict[str, Any]:
+    from f1q.a4.backend_select import CANDIDATE, evaluation_backend
     from f1q.a4.batched import evaluate_candidates_batched
 
+    finisher = None
+    key_fn = None
+    if evaluation_backend() == CANDIDATE:
+        from f1q.simulator.compiled_kernel import candidate_cache_key, candidate_finish
+
+        finisher = candidate_finish
+        key_fn = candidate_cache_key
     return evaluate_candidates_batched(
         spec,
         base_blob,
@@ -171,6 +179,8 @@ def evaluate_candidates_on_bank(
         spec_hash=spec_hash,
         checkpoint_hash=checkpoint_hash,
         nominal_budget_s=nominal_budget_s,
+        finisher=finisher,
+        key_fn=key_fn,
     )
 
 

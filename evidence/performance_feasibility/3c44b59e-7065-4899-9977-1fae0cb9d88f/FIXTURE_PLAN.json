@@ -1,0 +1,44 @@
+{
+  "plan_id": "engperf.fixture.v1",
+  "label": "ENGINEERING_ONLY_NOT_SCIENTIFIC",
+  "registered_before_candidate_timing": true,
+  "disjoint_from_registered_scientific_parents": true,
+  "id_prefix": "engperf",
+  "generator": "f1q.a4.loop.family_spec",
+  "families": "cartesian_family_ids() eight families",
+  "regimes": ["SC", "VSC"],
+  "correctness": {
+    "id_prefix": "engperf.corr",
+    "checkpoints": 32,
+    "layout": "8 families x SC/VSC x replicates 0 and 1",
+    "legal_plans_per_checkpoint": 3,
+    "plan_selection": "first three enumerate_legal_policies rows, not chosen for speed",
+    "world_seeds": "810000 + i for i in 0..31",
+    "n_world_seeds": 32,
+    "partition": "development",
+    "seed_base": 41000
+  },
+  "timing": {
+    "id_prefix": "engperf.time",
+    "checkpoints": "8 families x SC/VSC, replicate 0 only",
+    "id_disjoint_from_correctness": true,
+    "world_seed_base": 830000,
+    "not_the_correctness_panel": true
+  },
+  "adversarial": {
+    "id_prefix": "engperf.adv",
+    "cases": [
+      "timely",
+      "exactly_on_boundary",
+      "late_vs_registered",
+      "stale_or_closed",
+      "changed_state",
+      "sc_regime_end",
+      "vsc_regime_end",
+      "shared_crew_stacking",
+      "identical_observables_distinct_hidden_futures"
+    ]
+  },
+  "scientific_parents_executed": 0,
+  "final_test_opened": false
+}

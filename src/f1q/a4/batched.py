@@ -75,6 +75,7 @@ def _run_committed(
     arrival_delay_s: float,
     common_commit_delay_s: float | None,
     commitment_epoch_race_s: float | None,
+    finisher=None,
 ) -> dict[str, Any]:
     rec_commit = sim.consider_recommendation(
         plan,
@@ -82,7 +83,10 @@ def _run_committed(
         common_commit_delay_s=common_commit_delay_s,
         commitment_epoch_race_s=commitment_epoch_race_s,
     )
-    _state, outcome = sim.continue_to_finish()
+    if finisher is None:
+        _state, outcome = sim.continue_to_finish()
+    else:
+        outcome = finisher(sim)
     loss = float(outcome["team_loss"]["normalized_team_rank_loss"])
     is_fb = rec_commit.get("selected_plan") != "recommendation"
     events = []
@@ -200,6 +204,8 @@ def evaluate_candidates_batched(
     spec_hash: str,
     checkpoint_hash: str,
     nominal_budget_s: float,
+    finisher=None,
+    key_fn=None,
 ) -> dict[str, Any]:
     """Production paired-world kernel.
 
@@ -219,6 +225,7 @@ def evaluate_candidates_batched(
     if epoch is None and common_commit_delay_s is not None:
         epoch = float(common_commit_delay_s)
     epoch_f = float(epoch if epoch is not None else nominal_budget_s)
+    make_key = cache_key if key_fn is None else key_fn
 
     pending_by_seed: dict[int, list[dict[str, Any]]] = {}
     for cand in candidates:
@@ -226,7 +233,7 @@ def evaluate_candidates_batched(
         recs: list[dict[str, Any] | None] = [None] * len(world_seeds)
         worlds[ph] = recs  # type: ignore[assignment]
         for i, w in enumerate(world_seeds):
-            ck = cache_key(
+            ck = make_key(
                 spec_hash=spec_hash,
                 checkpoint_hash=checkpoint_hash,
                 plan_hash=ph,
@@ -263,6 +270,7 @@ def evaluate_candidates_batched(
                 arrival_delay_s=arrival_delay_s,
                 common_commit_delay_s=common_commit_delay_s,
                 commitment_epoch_race_s=commitment_epoch_race_s,
+                finisher=finisher,
             )
             rec["plan_hash"] = job["ph"]
             _KERNEL_COUNTERS["batched_worlds"] += 1
