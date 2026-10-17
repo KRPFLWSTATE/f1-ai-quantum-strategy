@@ -1,0 +1,684 @@
+{
+  "arithmetic": {
+    "designs": {
+      "F": {
+        "absolute_difference_cpu": 0.0,
+        "absolute_difference_wall": 0.0,
+        "counts": {
+          "distributions": 72000,
+          "evaluation_worlds_upper": 3235096,
+          "offline_all_plan_evaluations": 12800,
+          "planning_worlds_upper": 403808,
+          "prepared_cases": 448
+        },
+        "eval_only_point_h": 536.4693678222388,
+        "eval_only_point_s": 1931289.7241600598,
+        "k_not_doubled": {
+          "conservative_cpu": 2942915.518290583,
+          "conservative_wall": 842179.4104699664,
+          "cpu_h": 817.4765328584953,
+          "cpu_over_86400": 34.0615222024373,
+          "distributions": 168202.01261490578,
+          "eval_n": 3235096,
+          "evaluation": 1931289.7241600598,
+          "n_dist": 72000,
+          "n_units": 448,
+          "off_n": 12800,
+          "offline": 7632.912304562827,
+          "plan_n": 403808,
+          "planning": 240799.30092819576,
+          "point": 2347996.2643431826,
+          "prepare": 72.31433545835316,
+          "wall_h": 233.9387251305462,
+          "wall_over_11520": 73.10585160329569,
+          "wall_point": 559941.9174058933
+        },
+        "k_not_doubled_dist3840": {
+          "conservative_cpu": 2743339.356175399,
+          "conservative_wall": 785066.3423205776,
+          "cpu_h": 762.0387100487219,
+          "cpu_over_86400": 31.751612918696747,
+          "distributions": 8970.774006128308,
+          "eval_n": 3235096,
+          "evaluation": 1931289.7241600598,
+          "n_dist": 3840,
+          "n_units": 448,
+          "off_n": 12800,
+          "offline": 7632.912304562827,
+          "plan_n": 403808,
+          "planning": 240799.30092819576,
+          "point": 2188765.025734405,
+          "prepare": 72.31433545835316,
+          "wall_h": 218.0739839779382,
+          "wall_over_11520": 68.1481199931057,
+          "wall_point": 521969.0098627651
+        },
+        "k_not_doubled_resample_cost": {
+          "conservative_cpu": 2735480.548224198,
+          "conservative_wall": 782817.3731584647,
+          "cpu_h": 759.8557078400551,
+          "cpu_over": 31.660654493335628,
+          "distributions": 2700.647800695151,
+          "per_resample_s": 0.037508997231877096,
+          "point": 2182494.899528972,
+          "wall_h": 217.44927032179575,
+          "wall_over": 67.95289697556117
+        },
+        "published_formula": {
+          "conservative_cpu": 3848349.666875159,
+          "conservative_wall": 1101289.124199452,
+          "cpu_h": 1068.986018576433,
+          "cpu_over_86400": 44.541084107351374,
+          "distributions": 168202.01261490578,
+          "eval_n": 3235096,
+          "evaluation": 1931289.7241600598,
+          "n_dist": 72000,
+          "n_units": 448,
+          "off_n": 12800,
+          "offline": 7632.912304562827,
+          "plan_n": 403808,
+          "planning": 963197.203712783,
+          "point": 3070394.16712777,
+          "prepare": 72.31433545835316,
+          "wall_h": 305.9136456109589,
+          "wall_over_11520": 95.59801425342467,
+          "wall_point": 732216.8366457463
+        },
+        "speedup_needed_corrected_dist3840": {
+          "accelerable_point_s": 2179721.9373928187,
+          "binding": "wall",
+          "non_accelerable_point_s": 9043.088341586661,
+          "point_budget_binding_s": 32117.76092951405,
+          "published_non_accelerable_exceeds_cpu_cap": true,
+          "speedup_on_world_portion": 94.46382951207048
+        },
+        "stored_receipt": {
+          "components": {
+            "circuit_s": 2.3361390640959137,
+            "distributions": 168202.01261490578,
+            "evaluation_worlds": 1931289.7241600598,
+            "n_legal_measured": 100,
+            "offline": 7632.912304562827,
+            "per_eval_world_s": 0.5969806534829445,
+            "per_world_s": 0.5963212737939708,
+            "planning_worlds": 963197.203712783,
+            "prepare": 72.31433545835316
+          },
+          "cpu": 3848349.666875159,
+          "mult": 1.253373168851195,
+          "point": 3070394.16712777,
+          "wall": 1101289.124199452
+        },
+        "unit_summary": {
+          "eval_matches_agg": true,
+          "eval_sum": 3235096,
+          "n_units_in_file": 103076,
+          "parents": {
+            "calib": 24,
+            "train": 120,
+            "tune": 80
+          },
+          "plan_matches_agg": true,
+          "plan_raw": 101048,
+          "plan_times_k": 403808,
+          "policy_seed_unit_counts": {
+            "0": 10000,
+            "1": 10000,
+            "2": 10000
+          },
+          "portfolio_k_hist": {
+            "0": 8,
+            "4": 103068
+          },
+          "prepared_cases_used": 448,
+          "roles": {
+            "ablation": 336,
+            "calib_budget": 576,
+            "calib_primary": 144,
+            "isolated_latency": 12,
+            "mechanism_resample": 72000,
+            "offline_all_plan": 8,
+            "train_option": 18000,
+            "tune_option": 12000
+          },
+          "worlds": {
+            "calibration": {
+              "evaluation": 2048,
+              "planning": 16
+            },
+            "offline": {
+              "evaluation": 2048,
+              "planning": 16
+            },
+            "training": {
+              "evaluation": 16,
+              "planning": 2
+            },
+            "tuning": {
+              "evaluation": 64,
+              "planning": 4
+            }
+          }
+        }
+      },
+      "R": {
+        "absolute_difference_cpu": 0.0,
+        "absolute_difference_wall": 0.0,
+        "counts": {
+          "distributions": 72000,
+          "evaluation_worlds_upper": 750232,
+          "offline_all_plan_evaluations": 12800,
+          "planning_worlds_upper": 202016,
+          "prepared_cases": 224
+        },
+        "eval_only_point_h": 124.40944156217122,
+        "eval_only_point_s": 447873.9896238164,
+        "k_not_doubled": {
+          "conservative_cpu": 932774.7387819863,
+          "conservative_wall": 266933.81944752234,
+          "cpu_h": 259.1040941061073,
+          "cpu_over_86400": 10.796003921087804,
+          "distributions": 168202.01261490578,
+          "eval_n": 750232,
+          "evaluation": 447873.9896238164,
+          "n_dist": 72000,
+          "n_units": 224,
+          "off_n": 12800,
+          "offline": 7632.912304562827,
+          "plan_n": 202016,
+          "planning": 120466.43844676281,
+          "point": 744211.510157777,
+          "prepare": 36.15716772917658,
+          "wall_h": 74.14828317986732,
+          "wall_over_11520": 23.171338493708536,
+          "wall_point": 177476.95185105037
+        },
+        "k_not_doubled_dist3840": {
+          "conservative_cpu": 733198.5766668022,
+          "conservative_wall": 209820.75129813346,
+          "cpu_h": 203.66627129633395,
+          "cpu_over_86400": 8.486094637347247,
+          "distributions": 8970.774006128308,
+          "eval_n": 750232,
+          "evaluation": 447873.9896238164,
+          "n_dist": 3840,
+          "n_units": 224,
+          "off_n": 12800,
+          "offline": 7632.912304562827,
+          "plan_n": 202016,
+          "planning": 120466.43844676281,
+          "point": 584980.2715489996,
+          "prepare": 36.15716772917658,
+          "wall_h": 58.283542027259294,
+          "wall_over_11520": 18.21360688351853,
+          "wall_point": 139504.04430792213
+        },
+        "k_not_doubled_resample_cost": {
+          "conservative_cpu": 725339.7687156014,
+          "conservative_wall": 207571.7821360206,
+          "cpu_h": 201.48326908766705,
+          "cpu_over": 8.395136211986127,
+          "distributions": 2700.647800695151,
+          "per_resample_s": 0.037508997231877096,
+          "point": 578710.1453435663,
+          "wall_h": 57.65882837111683,
+          "wall_over": 18.01838386597401
+        },
+        "published_formula": {
+          "conservative_cpu": 1385742.943870696,
+          "conservative_wall": 396560.54286255076,
+          "cpu_h": 384.9285955196378,
+          "cpu_over_86400": 16.03869147998491,
+          "distributions": 168202.01261490578,
+          "eval_n": 750232,
+          "evaluation": 447873.9896238164,
+          "n_dist": 72000,
+          "n_units": 224,
+          "off_n": 12800,
+          "offline": 7632.912304562827,
+          "plan_n": 202016,
+          "planning": 481865.75378705125,
+          "point": 1105610.8254980654,
+          "prepare": 36.15716772917658,
+          "wall_h": 110.15570635070854,
+          "wall_over_11520": 34.423658234596424,
+          "wall_point": 263662.1935628493
+        },
+        "speedup_needed_corrected_dist3840": {
+          "accelerable_point_s": 575973.340375142,
+          "binding": "wall",
+          "non_accelerable_point_s": 9006.931173857483,
+          "point_budget_binding_s": 32117.76092951405,
+          "published_non_accelerable_exceeds_cpu_cap": true,
+          "speedup_on_world_portion": 24.922226785655234
+        },
+        "stored_receipt": {
+          "components": {
+            "circuit_s": 2.3361390640959137,
+            "distributions": 168202.01261490578,
+            "evaluation_worlds": 447873.9896238164,
+            "n_legal_measured": 100,
+            "offline": 7632.912304562827,
+            "per_eval_world_s": 0.5969806534829445,
+            "per_world_s": 0.5963212737939708,
+            "planning_worlds": 481865.75378705125,
+            "prepare": 36.15716772917658
+          },
+          "cpu": 1385742.943870696,
+          "mult": 1.253373168851195,
+          "point": 1105610.8254980654,
+          "wall": 396560.54286255076
+        },
+        "unit_summary": {
+          "eval_matches_agg": true,
+          "eval_sum": 750232,
+          "n_units_in_file": 87548,
+          "parents": {
+            "calib": 24,
+            "train": 120,
+            "tune": 80
+          },
+          "plan_matches_agg": true,
+          "plan_raw": 50600,
+          "plan_times_k": 202016,
+          "policy_seed_unit_counts": {
+            "0": 5000,
+            "1": 5000,
+            "2": 5000
+          },
+          "portfolio_k_hist": {
+            "0": 8,
+            "4": 87540
+          },
+          "prepared_cases_used": 224,
+          "roles": {
+            "ablation": 168,
+            "calib_exploratory_sensitivity": 288,
+            "calib_primary": 72,
+            "isolated_latency": 12,
+            "mechanism_resample": 72000,
+            "offline_all_plan": 8,
+            "train_option": 9000,
+            "tune_option": 6000
+          },
+          "worlds": {
+            "calibration": {
+              "evaluation": 2048,
+              "evaluation_primary": 2048,
+              "evaluation_sensitivity": 128,
+              "planning": 16
+            },
+            "offline": {
+              "evaluation": 2048,
+              "planning": 16
+            },
+            "training": {
+              "evaluation": 16,
+              "planning": 2
+            },
+            "tuning": {
+              "evaluation": 64,
+              "planning": 4
+            }
+          }
+        }
+      }
+    },
+    "formula_notes": [
+      "conservative multiplier applied once to point CPU",
+      "efficiency applied once in the wall denominator",
+      "additional wall factor 1.20 applied once",
+      "design planning_world_evals_upper already includes portfolio_k; projection multiplies by PORTFOLIO_K again",
+      "design distributions count is mechanism_resamples 72000; operation_ledger uses 3840 builds",
+      "policy seeds appear once on train and tune units; calibration rows are seed 0"
+    ],
+    "max_conservative_cpu_s_compatible_with_wall_11520_at_8_workers": 40255.53979263013,
+    "rates": {
+      "calib_wall": 1222.6163783330703,
+      "circuit_s": 2.3361390640959137,
+      "classical_p95": 7.293777058250271,
+      "cons_mult": 1.253373168851195,
+      "eff": 0.5241606743832048,
+      "fd_p95": 9.629916122346184,
+      "offline_wall": 243.2990797079401,
+      "per_eval_world_s": 0.5969806534829445,
+      "per_world_s": 0.5963212737939708,
+      "prepare_p95": 0.16141592736239543,
+      "workers": 8
+    }
+  },
+  "baseline": {
+    "admission_source_commit": "dc2996733a6161111f10664070e55a291fe2da0b",
+    "branch": "post-phase6-evidence-disposition",
+    "descendants_of_evidence_commit": [],
+    "fetch": "succeeded",
+    "origin_main": "53ce10d187c2140511c7419863b5447119496a77",
+    "other_worktrees_left_untouched": true,
+    "production_kernel_diff_dc29967_to_885f1ad": "none; only src/f1q/a4/verify.py",
+    "remote": "https://github.com/KRPFLWSTATE/f1-ai-quantum-strategy.git",
+    "reviewed_source_commit": "885f1adffb3b65865dbc752c9b0ca0442eb8fd52",
+    "start_commit": "dcfe1cde7f02643d7a2d258d961e7ce2b4e62461",
+    "verifier_intermediate_commit": "8398980c680a3ce235c13d20ef7be5a058d10f62",
+    "worktree": "/Users/kawinperera/f1-ai-quantum-strategy-post-phase6"
+  },
+  "classifications": {
+    "reported_and_checked": [
+      "PHASE_6 status INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED",
+      "Gate E UNCLAIMED_RESOURCE_LIMIT",
+      "Gate F FAIL",
+      "admission wall 4488.215427499963 s and CPU 5210.3775319999995 s",
+      "full suite 272 passed, 1 skipped, 2 deselected",
+      "clean-extract verifier 13/13 on miniature run 05e6edce-11c6-4a68-b7ce-bac1c8e42f0b",
+      "0b697910 expected failure 15/18"
+    ],
+    "unresolved": [
+      "individual continuation cache key strings were not persisted",
+      "simultaneous eight-worker RSS sum was not measured",
+      "admission-time free-disk bytes were not persisted",
+      "parity-panel wall total was not stored",
+      "whether mechanism cost should be 72000 times the circuit increment or the measured resample",
+      "novelty beyond the existing 2026-09-21 comparison was not re-verified",
+      "python -m f1q status does not surface the fc5f0e00 receipt"
+    ],
+    "verified": [
+      "executed parents 0/120, 0/80, 0/24",
+      "parity 3072 cells at 1e-12 on 32 synthetic checkpoints x 3 plans x 32 seeds",
+      "wall speedups 0.9832546165543741, 1.0061178756188884, 0.9509443809063018",
+      "published F/R conservative CPU and wall reproduce with absolute difference 0",
+      "portfolio K applied twice on design planning term",
+      "evaluation-world term alone exceeds 24 CPU-hours for both designs",
+      "admission cache 0 hits and 156 misses with entries==misses",
+      "verifier-only commits between admission source and reviewed source",
+      "historical verifier 27/27 re-executed once as 27/27 without rewriting FINAL_VERIFY.json",
+      "mutation tests re-verify archived 0b697910 rather than injecting each defect class",
+      "deselected e2e tests are not identical to the clean-extract receipt",
+      "QPU flags false and doctor did not query a provider"
+    ]
+  },
+  "command_receipts": [
+    {
+      "command": "git fetch origin",
+      "origin_main": "53ce10d187c2140511c7419863b5447119496a77",
+      "result": "success"
+    },
+    {
+      "command": "python -m f1q status",
+      "cwd": "/Users/kawinperera/f1-ai-quantum-strategy-post-phase6",
+      "exit_code": 0,
+      "note": "does not read fc5f0e00; PHASE_6_ENGINEERING reported as CORRECTED_WITH_DOCUMENTED_LIMITATIONS; ledger present false; not used as authorisation"
+    },
+    {
+      "command": "python -m f1q doctor",
+      "cwd": "/Users/kawinperera/f1-ai-quantum-strategy-post-phase6",
+      "disk_free_bytes_today": 115628154880,
+      "dossier_sha256": "2c6fd0851d12a281bb7f7bad7d4cc522f4606a3c3df32c43cad1ca9146b83b76",
+      "exit_code": 0,
+      "hardware_execution_enabled": false,
+      "ledger_present_in_worktree": false,
+      "physical_memory_bytes": 25769803776,
+      "provider_login_attempted": false,
+      "qpu_account_queried": false,
+      "status": "ok"
+    },
+    {
+      "command": "python -m f1q.a4 --verify-run fc5f0e00-d9e0-4f89-9eea-498461094969",
+      "exit_code": 0,
+      "n_pass": 27,
+      "n_total": 27,
+      "ok": true,
+      "rewrote_historical_final_verify": false,
+      "selected_design": "NONE_RESOURCE_LIMIT"
+    }
+  ],
+  "compliance_gaps": [
+    "published planning CPU applies PORTFOLIO_K twice",
+    "published distribution CPU charges 72000 resamples at the full circuit increment",
+    "RAM 60 percent fit is a budget, not a measured eight-worker aggregate",
+    "mutation tests do not cover each required defect class individually",
+    "two deselected e2e tests are only partly represented by the clean-extract receipt",
+    "CLI status does not report the validated closure receipt"
+  ],
+  "corpus": {
+    "executed_train_tune_calib": [
+      0,
+      0,
+      0
+    ],
+    "outcome_files_present": [
+      {
+        "exists": false,
+        "name": "TRAINING_OPTION_RESULTS.jsonl"
+      },
+      {
+        "exists": false,
+        "name": "TUNING_OPTION_RESULTS.jsonl"
+      },
+      {
+        "exists": false,
+        "name": "CALIBRATION_OPTION_RESULTS.jsonl"
+      },
+      {
+        "exists": false,
+        "name": "TUNING_FREEZE.json"
+      },
+      {
+        "exists": false,
+        "name": "CALIBRATION_MARGIN_Q.json"
+      }
+    ],
+    "registered_train_tune_calib": [
+      120,
+      80,
+      24
+    ]
+  },
+  "current_resource_interpretation": "RESOURCE_STOP_PARTIALLY_SUPPORTED_WITH_DOCUMENTED_GAPS",
+  "evidence_index": [
+    {
+      "bytes": 8608,
+      "path": "AGENTS.md",
+      "sha256": "0981a1e8e25e713bd2175d46162f495d839122013bd8048109571e11b98b543f",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 3628,
+      "path": "PROJECT_STATUS.md",
+      "sha256": "a23ca4c4fabbc91a87edaa6486aebc1dc80b30f925a1b78b21cee87dbc49859e",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1604,
+      "path": "docs/PHASE_6_0B697910_INVALIDATION.md",
+      "sha256": "4a425af7cd53dc48c19974fedae00fc70aee60ae8a2d6cda7a12a7acdd1832f2",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 9109,
+      "path": "docs/PHASE_6_VALIDATED_CLOSURE_REPORT.md",
+      "sha256": "ee1723ca868802f08b917a9bebec63a409a43e2d7759cd502be517846f19b815",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1485,
+      "path": "docs/PHASE_6_VALIDATED_DESIGN_F.md",
+      "sha256": "e7fba9f988fbcc60c00d312dbc2c2a49add6fe46e28a30fe8910e70251f4efce",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1391,
+      "path": "docs/PHASE_6_VALIDATED_DESIGN_R.md",
+      "sha256": "a0249343f9b9c357568029a3a09f71cb31e279f6f863aba4476557be06d70a80",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 976,
+      "path": "docs/PHASE_6_VALIDATED_RESOURCE_AMENDMENT.md",
+      "sha256": "3c9969ffde2dc7544b4ffcf0b964cc07a286275112a800a30b9f0b334174fcbc",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 2820,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/0B697910_EXPECTED_FAILURE.json",
+      "sha256": "b3cb056de7e4c14515fa3f95023b4edfd9ddbe0a768b4e06174a02703d104e00",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 25407,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/ADMISSION_RECEIPT.json",
+      "sha256": "5487c4029887704891ba9d30021841ede8af85abeab9a9241dbc583b7279cb65",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1347,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/BATCH_SPEED_BENCHMARK.json",
+      "sha256": "b9d9d2f7ebed5b3a81aba3f917f28a25d23e329d5bf299486e9852fc02c9a1e7",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 586,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/CACHE_STATS.json",
+      "sha256": "a2734c18c5cea60240909b00d831aba13511f7a18488986f85986ebb158a37d2",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1666,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/EXTERNAL_COMPUTE_REQUIREMENT.json",
+      "sha256": "23d38b9a7c132267f83a7ce1b0899bf213c318f50b2f069f121d690debfd7403",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 3855,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/FINAL_VERIFY.json",
+      "sha256": "35aea54cdab38009d2bcd30fa7f884a5d9dd399a8e8027d3d1f479ef2b71af1f",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 9031,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/MANIFEST.json",
+      "sha256": "d9b697aef135087bb76beb6a3eac3cdfdde201f80e5be588666d0abde76d0e63",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 70339933,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/OPERATION_LEDGER.json",
+      "sha256": "f1b4ecb97ad4750772845582943c3b102122221bdfb59ae8bcdeaae31ee34af8",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1105,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/PROCESS_AND_MEMORY_EVIDENCE.json",
+      "sha256": "840f36343a59db704f87a897d905f5b808ad4965e84314ef756d043e11974fd1",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 101,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/PRODUCTION_KERNEL.json",
+      "sha256": "abd2b9e7d891dd768cf0bb0276691d68ff306586ccb0305370dbd50fb1276dcd",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 4245,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/PROMPT_COMPLIANCE_MATRIX.json",
+      "sha256": "46bbb4b2879202e3142bf65331e0ea3d7098863b4c731c40462cddfdc7d10950",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1184,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/RUN_RECEIPT.json",
+      "sha256": "296c2766ab0aaee0962c0bd2019ec557f14df68e480b50099803b244c2e455f3",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1452,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/SCALAR_BATCHED_PARITY.json",
+      "sha256": "158de7515bec41e3974f449b129bf17d4677208f9b870d7db2b7daacc6a4e67e",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 70339933,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/UNIT_LEDGER.json",
+      "sha256": "f1b4ecb97ad4750772845582943c3b102122221bdfb59ae8bcdeaae31ee34af8",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 82387555,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/UNIT_LEDGER_F.json",
+      "sha256": "2d31a6cf1eb288d5dfb7abe85b76ec6521ca90155211a59d8b64ce69d4c241a0",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 70339933,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/UNIT_LEDGER_R.json",
+      "sha256": "f1b4ecb97ad4750772845582943c3b102122221bdfb59ae8bcdeaae31ee34af8",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 4345,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/CLEAN_EXTRACT_E2E.json",
+      "sha256": "082c350ffa27e21af6cd2db8d95214ebc4f1ce01d37ddc0c623cc0adf1e6a2c3",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    },
+    {
+      "bytes": 1464,
+      "path": "evidence/stage6_a4/fc5f0e00-d9e0-4f89-9eea-498461094969/tests/full_receipt.json",
+      "sha256": "4f04bf55e35212c4b5a3cf6501165b1b3bd010b1ec92b60b25498e6772c1112d",
+      "source_commit": "53ce10d187c2140511c7419863b5447119496a77"
+    }
+  ],
+  "historical_phase_6_status": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT_VALIDATED",
+  "ledger_identity": {
+    "UNIT_LEDGER_F_sha256": "2d31a6cf1eb288d5dfb7abe85b76ec6521ca90155211a59d8b64ce69d4c241a0",
+    "UNIT_LEDGER_R_equals_UNIT_LEDGER_equals_OPERATION_LEDGER": true,
+    "sha256": "f1b4ecb97ad4750772845582943c3b102122221bdfb59ae8bcdeaae31ee34af8"
+  },
+  "local_sqlite_ledger": {
+    "contains_fc5f0e00": false,
+    "gitignored": true,
+    "modified": false,
+    "newest_run_id": "fcbb3e38-727f-4132-8043-11a16c404c57",
+    "newest_status": "running",
+    "note": "older main checkout ledger; archived Stage 4 runs were not resumed",
+    "opened": "read-only",
+    "path": "/Users/kawinperera/f1-ai-quantum-strategy/evidence/var/ledger.sqlite",
+    "present_in_evidence_worktree": false,
+    "run_count": 13
+  },
+  "memory": {
+    "aggregate_eight_worker_rss_measured": false,
+    "available_ram_bytes": 25769803776,
+    "budget_aggregate_rss_bytes": 12725452800,
+    "efficiency": 0.5241606743832048,
+    "efficiency_probe_worker_pids": [
+      19422,
+      19423,
+      19424,
+      19425
+    ],
+    "measured_peak_worker_rss_bytes": 1060454400,
+    "note": "ram_ok uses budgeted RSS times 1.5 times 8 workers, not a measured simultaneous sum",
+    "ram_limit_60_percent_bytes": 15461882265
+  },
+  "options": {
+    "1": "separate simulator-performance project; not executed",
+    "2": "different resource envelope; not executed; no purchase or credentials",
+    "3": "archive empirical study under current constraints; recommended; draft not authorised"
+  },
+  "phase_7_design_ready": false,
+  "phase_7_executed": false,
+  "provenance_test_and_mutation_gaps": {
+    "clean_extract_covers_miniature_path_in_temp_tree": true,
+    "clean_extract_is_identical_to_both_deselected_tests": false,
+    "deselected_tests": [
+      "tests/a4/test_a4_completion_contract.py::test_e2e_miniature_campaign",
+      "tests/a4/test_a4_validated_closure.py::test_e2e_clean_extract_skipped_inside_admission"
+    ],
+    "mutation_coverage": "archived 0b697910 rejection only",
+    "qpu_guard_limit": "code refusal plus recorded flags plus JSON token scan; not a universal network proof",
+    "suite_skip_is_stage4_resume_smoke": true
+  },
+  "recommended_route": 3,
+  "recommended_route_name": "archive_intended_empirical_study_under_current_constraints",
+  "registered_outcomes_generated_this_task": 0,
+  "review_date": "2026-10-17",
+  "task": "POST_PHASE_6_EVIDENCE_AND_CONTINUATION_DECISION"
+}
