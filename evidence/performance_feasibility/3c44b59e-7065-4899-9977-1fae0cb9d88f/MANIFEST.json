@@ -1,0 +1,222 @@
+{
+  "order": "hashes of evidence files and the report; this manifest is not included in itself",
+  "run_id": "3c44b59e-7065-4899-9977-1fae0cb9d88f",
+  "candidate_source_commit": "6796a144bd0b3da4eeeaa0dbd27f2c64497192fc",
+  "baseline_disposition_commit": "85c5d88dab562b24c7965ceaf60d25e12dccb720",
+  "baseline_evidence_commit": "53ce10d187c2140511c7419863b5447119496a77",
+  "terminal_result": "ENGINEERING_FEASIBILITY_NOT_DEMONSTRATED",
+  "registered_scientific_parents_executed": 0,
+  "phase_7_executed": false,
+  "files": [
+    {
+      "path": "docs/SIMULATOR_PERFORMANCE_FEASIBILITY_REPORT.md",
+      "sha256": "8696f92a4ce6c0a587203e5ad0721cdb8c3805b437a16703b54bd1dbf5881bf7",
+      "bytes": 9676
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/COMMAND_LEDGER.jsonl",
+      "sha256": "afe671c8c708b5a8ced6c704dab5e48759394b338e4e236d4a3b5ef8846c2db0",
+      "bytes": 282
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/FIXTURE_PLAN.json",
+      "sha256": "ca66ad0c35ae29fa7ff9ca99708bc98bfb37638d89178e5afe71232ea62c3453",
+      "bytes": 1346
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/PARITY_SUMMARY.json",
+      "sha256": "897006e53e95399df08b38c245193622276c6e87d4af6427f1c1a55c095af159",
+      "bytes": 178
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/PROFILE_SUMMARY.json",
+      "sha256": "3e41b1473ea0d1848e4872fe872c41488739b1c07524166fcb95336c8f74139e",
+      "bytes": 16347
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/PROJECTION.json",
+      "sha256": "79932c6c1fea7d7d75d3585622d81ca03a00459445db8f06b64a3bed3d86cc34",
+      "bytes": 3392
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/RESOURCE_LEDGER.json",
+      "sha256": "a5a778c94bf38db3b1e39038a2b376521c46677321f313936cace3b5c26ba78b",
+      "bytes": 2404
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/TIMING.json",
+      "sha256": "30ae7a4dd150fdd6a826a1972f908c263f2e9554ce78ba11724ef639bb1c31bd",
+      "bytes": 1029
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/WORKER_MEASUREMENT.json",
+      "sha256": "96a9a14ab46ed9f9390e8e18dcf500016a461aa6cb78d6d8398f5f3f6edbe008",
+      "bytes": 1582
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/WORKER_MEASUREMENT_64.json",
+      "sha256": "9f44599ccbc1e267cb104fa733b56f137240a2e14c682e1befe88cf7104814aa",
+      "bytes": 1923
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_0_SC_r0.json.gz",
+      "sha256": "3b9c197d6421b151133f98db50c77cc70f8531dc12909c986b35c803e8910617",
+      "bytes": 5194
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_0_SC_r1.json.gz",
+      "sha256": "9fe6e24783a881cba9990fd954d49cb02f48d56118c4bb0a6e7eaab73cf8b112",
+      "bytes": 5150
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_0_VSC_r0.json.gz",
+      "sha256": "94580125c350f6717f2092157424d134f7afe424fdd9883931601c28fd0fb361",
+      "bytes": 5072
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_0_VSC_r1.json.gz",
+      "sha256": "18469854d9d42e464733366863ced3a73c3d4375a066b6c9b1de0e4b334766d2",
+      "bytes": 5126
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_1_SC_r0.json.gz",
+      "sha256": "1551f42917c3182f0d8ef3e8796ce6b0378677ae470d0c05e392fd47f56da5c4",
+      "bytes": 5131
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_1_SC_r1.json.gz",
+      "sha256": "9d760f5131c456ff30db6f0c0b1c562405709429f35d6acaf1b6c6c012323817",
+      "bytes": 5122
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_1_VSC_r0.json.gz",
+      "sha256": "f38971c60ef77a589dbeffdb1d693616a417e46488feac6acc7971bfbffe225f",
+      "bytes": 5068
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_1_VSC_r1.json.gz",
+      "sha256": "0daa2a77e679b8ebc819ff6809afcb1dc5a5a9d97189a14aed2320d423b6969d",
+      "bytes": 5058
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_2_SC_r0.json.gz",
+      "sha256": "f01f6c1cbdb4ff61f6a01fbf2388a58b983af3a597376afc5b760ddf4e3fbea4",
+      "bytes": 5073
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_2_SC_r1.json.gz",
+      "sha256": "c1c3534e2c7599a7ecd5cb294b463609815d43920657d432a6e889079ef33ae2",
+      "bytes": 5072
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_2_VSC_r0.json.gz",
+      "sha256": "ef3517fc48dfc63afe9b3b5e017b088ce384af7587d93cbabd4c23a5f10bbb62",
+      "bytes": 5075
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_2_VSC_r1.json.gz",
+      "sha256": "c4049a7f08525d04d59699cfd31d2052d7309496f3cdc908cbc0d9d82099d831",
+      "bytes": 5085
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_3_SC_r0.json.gz",
+      "sha256": "87ae4a3d027befa82d5609778f5f0678adafb7ec397d9fda4336cd754350a174",
+      "bytes": 5095
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_3_SC_r1.json.gz",
+      "sha256": "ab5c57f26dae837660b7b30246e08b27f19ce1bde8219ba1729ddf90bbbb6c56",
+      "bytes": 5096
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_3_VSC_r0.json.gz",
+      "sha256": "9073018b8712cae794c08b47fe4eca7ffa08107ea05fdbe0b2bddc7be3cc4be1",
+      "bytes": 5067
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_3_VSC_r1.json.gz",
+      "sha256": "8a849dc7ddc0661644d33cc1a398a9b7f65b8a7c244a37cbbd8be9b4a7f46406",
+      "bytes": 5067
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_4_SC_r0.json.gz",
+      "sha256": "102efa7265f67f081003fafbade30570dc0f1d97da4fd991681d9da14e4e7bf3",
+      "bytes": 5162
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_4_SC_r1.json.gz",
+      "sha256": "9f5a498215b00be0d8651477b1ba8064ef78019c11e7821c2bede9861ef0910b",
+      "bytes": 5132
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_4_VSC_r0.json.gz",
+      "sha256": "b2df1c2910e7d621911bd17ff35be7b569c4f9c71e6c609fb3e6acf51c2af4b1",
+      "bytes": 5085
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_4_VSC_r1.json.gz",
+      "sha256": "217898cbf7725ec664cb91f509363162b35d26ad64bf375786d1da88cd27e4d2",
+      "bytes": 5066
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_5_SC_r0.json.gz",
+      "sha256": "55738a2e0dd3d5f09a8ae97d96fc2c40c71340b79ebdf5f2585f5f5a5ce8392b",
+      "bytes": 5112
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_5_SC_r1.json.gz",
+      "sha256": "15105d2b23cf880c8cb2e08c9410750b7a0e96f9f715369e339118b36b858509",
+      "bytes": 5106
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_5_VSC_r0.json.gz",
+      "sha256": "14262505998372ec2b58334f8ab6392993155deb9038f17249ab2d9e0c20fcf4",
+      "bytes": 5060
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_5_VSC_r1.json.gz",
+      "sha256": "11485a08d8201537374de574b42140858e9ec653f5a75c1f750bc73d5c500a5c",
+      "bytes": 5034
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_6_SC_r0.json.gz",
+      "sha256": "af4895d0a8e0abf5925761e82068085d82295a2f91385d70b2fc26df44adc794",
+      "bytes": 5083
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_6_SC_r1.json.gz",
+      "sha256": "f86f81659d7c14967d2eb257d66a92f6cbca8d470300bda48b078f023359f081",
+      "bytes": 5121
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_6_VSC_r0.json.gz",
+      "sha256": "a55c99ff2ac507b43caabd66b1ec9744dad74857d5966ea258bef14636ae47d8",
+      "bytes": 5075
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_6_VSC_r1.json.gz",
+      "sha256": "ec6debe6df1f7090d85c363c381bf54395e8afa38154aa7eb3b260d7da71c211",
+      "bytes": 5067
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_7_SC_r0.json.gz",
+      "sha256": "2992f35fd4461b0e1e3e1900d0dafc008342389d7fd0e3b5a7881458e0cab0ca",
+      "bytes": 5094
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_7_SC_r1.json.gz",
+      "sha256": "b987945d49025a2b085fb1432ae2cee9e0be4a4b7fa30cddfb43c2bb57371bcb",
+      "bytes": 5089
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_7_VSC_r0.json.gz",
+      "sha256": "8996b3d2456bc0df30f1fa00b11ddb1dae58dfa38d10192109f4b931295f45c3",
+      "bytes": 5054
+    },
+    {
+      "path": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f/parity/w32_7_VSC_r1.json.gz",
+      "sha256": "885c49e567ff70584b6a0d9aeb3f1fe610ba303a152b9605e60623df997a4149",
+      "bytes": 5057
+    }
+  ]
+}

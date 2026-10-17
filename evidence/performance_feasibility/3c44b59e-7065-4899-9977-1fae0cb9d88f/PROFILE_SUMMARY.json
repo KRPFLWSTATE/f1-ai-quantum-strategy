@@ -1,0 +1,555 @@
+{
+  "label": "engineering_profile_not_scientific",
+  "wall_s": 20.227021042024717,
+  "process_time_s": 20.171441,
+  "regimes": {
+    "SC": {
+      "wall_s": 9.962173416977748,
+      "n_means": 3,
+      "kernel": "batched",
+      "n_events": 216,
+      "setup": {
+        "initialize_s": 0.0025015000719577074,
+        "advance_s": 0.012121792184188962,
+        "n_legal": 100,
+        "n_events_to_checkpoint": 8
+      }
+    },
+    "VSC": {
+      "wall_s": 10.264770832844079,
+      "n_means": 3,
+      "kernel": "batched",
+      "n_events": 209,
+      "setup": {
+        "initialize_s": 0.002272208919748664,
+        "advance_s": 0.011415124870836735,
+        "n_legal": 100,
+        "n_events_to_checkpoint": 7
+      }
+    }
+  },
+  "top_cumulative": [
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/a4/batched.py",
+      "line": 189,
+      "func": "evaluate_candidates_batched",
+      "ncalls": 2,
+      "tottime": 0.001238586,
+      "cumtime": 20.226674791
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/a4/batched.py",
+      "line": 67,
+      "func": "_run_committed",
+      "ncalls": 12,
+      "tottime": 0.00041558700000000003,
+      "cumtime": 19.969621331000003
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/interface.py",
+      "line": 361,
+      "func": "continue_to_finish",
+      "ncalls": 12,
+      "tottime": 7.0294e-05,
+      "cumtime": 19.714064959
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 890,
+      "func": "tick",
+      "ncalls": 23847,
+      "tottime": 0.100765821,
+      "cumtime": 19.619229605
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 934,
+      "func": "continue_to_finish",
+      "ncalls": 12,
+      "tottime": 0.010990601000000001,
+      "cumtime": 19.617618081
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 571,
+      "func": "update_intents",
+      "ncalls": 23859,
+      "tottime": 1.065870267,
+      "cumtime": 8.080940928
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 67,
+      "func": "public_car_view",
+      "ncalls": 477180,
+      "tottime": 2.7817796450000003,
+      "cumtime": 3.860968027
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 271,
+      "func": "speeds",
+      "ncalls": 23847,
+      "tottime": 0.869295773,
+      "cumtime": 3.322130544
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 482,
+      "func": "step_motion",
+      "ncalls": 23847,
+      "tottime": 0.753689095,
+      "cumtime": 3.258427524
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 380,
+      "func": "next_events",
+      "ncalls": 23847,
+      "tottime": 0.7452341650000001,
+      "cumtime": 3.0935398430000003
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 250,
+      "func": "free_T",
+      "ncalls": 1634331,
+      "tottime": 0.600374441,
+      "cumtime": 2.864801135
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 105,
+      "func": "continuation_intent",
+      "ncalls": 477180,
+      "tottime": 0.161536581,
+      "cumtime": 2.735251938
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 88,
+      "func": "obligation_met",
+      "ncalls": 477180,
+      "tottime": 0.24322021700000002,
+      "cumtime": 2.573715357
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 79,
+      "func": "compounds_used",
+      "ncalls": 477180,
+      "tottime": 1.085579706,
+      "cumtime": 2.281702612
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 25,
+      "func": "free_lap_time_s",
+      "ncalls": 1634331,
+      "tottime": 1.0301678870000002,
+      "cumtime": 2.264426694
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<method 'get' of 'dict' objects>",
+      "ncalls": 13529964,
+      "tottime": 1.5271494570000002,
+      "cumtime": 1.5271494570000002
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 368,
+      "func": "_green_free",
+      "ncalls": 953062,
+      "tottime": 0.355291293,
+      "cumtime": 1.238064832
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 352,
+      "func": "_distance_in_time",
+      "ncalls": 199508,
+      "tottime": 0.74232482,
+      "cumtime": 1.2207255750000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<built-in method builtins.sorted>",
+      "ncalls": 57702,
+      "tottime": 0.36846035200000005,
+      "cumtime": 1.143450568
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<built-in method builtins.isinstance>",
+      "ncalls": 14593188,
+      "tottime": 1.1015707510000001,
+      "cumtime": 1.1016561040000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 835,
+      "func": "_apply_green_overtakes",
+      "ncalls": 23847,
+      "tottime": 0.107855882,
+      "cumtime": 0.927640695
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<built-in method builtins.max>",
+      "ncalls": 3263372,
+      "tottime": 0.613684468,
+      "cumtime": 0.8170341440000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 41,
+      "func": "distance",
+      "ncalls": 3769098,
+      "tottime": 0.804266817,
+      "cumtime": 0.805507584
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 797,
+      "func": "maybe_finish",
+      "ncalls": 23847,
+      "tottime": 0.260194957,
+      "cumtime": 0.7780255660000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 12,
+      "func": "tyre_delta_s",
+      "ncalls": 1634331,
+      "tottime": 0.5335690240000001,
+      "cumtime": 0.5335690240000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 329,
+      "func": "_pace_poly",
+      "ncalls": 399355,
+      "tottime": 0.45453900300000005,
+      "cumtime": 0.530731991
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 388,
+      "func": "add",
+      "ncalls": 500142,
+      "tottime": 0.30427913100000004,
+      "cumtime": 0.506443765
+    },
+    {
+      "file": "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/copy.py",
+      "line": 118,
+      "func": "deepcopy",
+      "ncalls": 340,
+      "tottime": 0.21959645300000002,
+      "cumtime": 0.434232375
+    },
+    {
+      "file": "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/copy.py",
+      "line": 217,
+      "func": "_deepcopy_dict",
+      "ncalls": 2020,
+      "tottime": 0.070447313,
+      "cumtime": 0.429048719
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 472,
+      "func": "_consume",
+      "ncalls": 476525,
+      "tottime": 0.292629111,
+      "cumtime": 0.414479117
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 56,
+      "func": "get",
+      "ncalls": 954360,
+      "tottime": 0.324246056,
+      "cumtime": 0.412194406
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 346,
+      "func": "_time_to_cover",
+      "ncalls": 199847,
+      "tottime": 0.10657991200000001,
+      "cumtime": 0.406277763
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 8,
+      "func": "compound_offset_s",
+      "ncalls": 2033686,
+      "tottime": 0.393239753,
+      "cumtime": 0.393239753
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 21,
+      "func": "fuel_delta_s",
+      "ncalls": 1634331,
+      "tottime": 0.383643018,
+      "cumtime": 0.383643018
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 77,
+      "func": "clone_state",
+      "ncalls": 72,
+      "tottime": 0.000331673,
+      "cumtime": 0.34122850200000004
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 247,
+      "func": "leader",
+      "ncalls": 23929,
+      "tottime": 0.014901486,
+      "cumtime": 0.30913059600000004
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/interface.py",
+      "line": 619,
+      "func": "_wrap_state",
+      "ncalls": 52,
+      "tottime": 0.0013566790000000002,
+      "cumtime": 0.26615091700000004
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/interface.py",
+      "line": 383,
+      "func": "consider_recommendation",
+      "ncalls": 12,
+      "tottime": 0.001115831,
+      "cumtime": 0.252559042
+    },
+    {
+      "file": "/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/copy.py",
+      "line": 191,
+      "func": "_deepcopy_list",
+      "ncalls": 4048,
+      "tottime": 0.008098191000000001,
+      "cumtime": 0.24709166300000002
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 51,
+      "func": "__getitem__",
+      "ncalls": 477180,
+      "tottime": 0.194049573,
+      "cumtime": 0.24146202600000002
+    }
+  ],
+  "top_tottime": [
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 67,
+      "func": "public_car_view",
+      "ncalls": 477180,
+      "tottime": 2.7817796450000003,
+      "cumtime": 3.860968027
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<method 'get' of 'dict' objects>",
+      "ncalls": 13529964,
+      "tottime": 1.5271494570000002,
+      "cumtime": 1.5271494570000002
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<built-in method builtins.isinstance>",
+      "ncalls": 14593188,
+      "tottime": 1.1015707510000001,
+      "cumtime": 1.1016561040000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 79,
+      "func": "compounds_used",
+      "ncalls": 477180,
+      "tottime": 1.085579706,
+      "cumtime": 2.281702612
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 571,
+      "func": "update_intents",
+      "ncalls": 23859,
+      "tottime": 1.065870267,
+      "cumtime": 8.080940928
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 25,
+      "func": "free_lap_time_s",
+      "ncalls": 1634331,
+      "tottime": 1.0301678870000002,
+      "cumtime": 2.264426694
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 271,
+      "func": "speeds",
+      "ncalls": 23847,
+      "tottime": 0.869295773,
+      "cumtime": 3.322130544
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 41,
+      "func": "distance",
+      "ncalls": 3769098,
+      "tottime": 0.804266817,
+      "cumtime": 0.805507584
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 482,
+      "func": "step_motion",
+      "ncalls": 23847,
+      "tottime": 0.753689095,
+      "cumtime": 3.258427524
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 380,
+      "func": "next_events",
+      "ncalls": 23847,
+      "tottime": 0.7452341650000001,
+      "cumtime": 3.0935398430000003
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 352,
+      "func": "_distance_in_time",
+      "ncalls": 199508,
+      "tottime": 0.74232482,
+      "cumtime": 1.2207255750000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<built-in method builtins.max>",
+      "ncalls": 3263372,
+      "tottime": 0.613684468,
+      "cumtime": 0.8170341440000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 250,
+      "func": "free_T",
+      "ncalls": 1634331,
+      "tottime": 0.600374441,
+      "cumtime": 2.864801135
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 12,
+      "func": "tyre_delta_s",
+      "ncalls": 1634331,
+      "tottime": 0.5335690240000001,
+      "cumtime": 0.5335690240000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 329,
+      "func": "_pace_poly",
+      "ncalls": 399355,
+      "tottime": 0.45453900300000005,
+      "cumtime": 0.530731991
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 8,
+      "func": "compound_offset_s",
+      "ncalls": 2033686,
+      "tottime": 0.393239753,
+      "cumtime": 0.393239753
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/physics.py",
+      "line": 21,
+      "func": "fuel_delta_s",
+      "ncalls": 1634331,
+      "tottime": 0.383643018,
+      "cumtime": 0.383643018
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<built-in method builtins.sorted>",
+      "ncalls": 57702,
+      "tottime": 0.36846035200000005,
+      "cumtime": 1.143450568
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 368,
+      "func": "_green_free",
+      "ncalls": 953062,
+      "tottime": 0.355291293,
+      "cumtime": 1.238064832
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 56,
+      "func": "get",
+      "ncalls": 954360,
+      "tottime": 0.324246056,
+      "cumtime": 0.412194406
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 388,
+      "func": "add",
+      "ncalls": 500142,
+      "tottime": 0.30427913100000004,
+      "cumtime": 0.506443765
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 472,
+      "func": "_consume",
+      "ncalls": 476525,
+      "tottime": 0.292629111,
+      "cumtime": 0.414479117
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/engine.py",
+      "line": 797,
+      "func": "maybe_finish",
+      "ncalls": 23847,
+      "tottime": 0.260194957,
+      "cumtime": 0.7780255660000001
+    },
+    {
+      "file": "/Users/kawinperera/f1-ai-quantum-strategy-sim-perf/src/f1q/simulator/policies.py",
+      "line": 88,
+      "func": "obligation_met",
+      "ncalls": 477180,
+      "tottime": 0.24322021700000002,
+      "cumtime": 2.573715357
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "func": "<built-in method builtins.abs>",
+      "ncalls": 3320516,
+      "tottime": 0.23224533000000003,
+      "cumtime": 0.23224533000000003
+    }
+  ]
+}

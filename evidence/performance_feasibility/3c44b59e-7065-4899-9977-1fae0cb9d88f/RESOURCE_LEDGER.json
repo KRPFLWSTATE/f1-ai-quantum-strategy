@@ -1,0 +1,115 @@
+{
+  "engineering_limits": {
+    "wall_s": 7200,
+    "aggregate_cpu_s": 14400,
+    "ram_fraction": 0.6
+  },
+  "named_commands": [
+    {
+      "name": "profile_failed_epoch",
+      "wall_s": 2.41,
+      "cpu_s": 0.96
+    },
+    {
+      "name": "profile_sc_vsc",
+      "wall_s": 21.46,
+      "cpu_s": 21.14
+    },
+    {
+      "name": "pip_numba_isolated_target",
+      "wall_s": 15.85,
+      "cpu_s": 15.85,
+      "note": "CPU not instrumented; charged at wall"
+    },
+    {
+      "name": "numba_import_check",
+      "wall_s": 4.5,
+      "cpu_s": 4.5
+    },
+    {
+      "name": "parity_python_mode",
+      "wall_s": 2.89,
+      "cpu_s": 2.59
+    },
+    {
+      "name": "parity_script_jit_disabled",
+      "wall_s": 2.62,
+      "cpu_s": 2.49
+    },
+    {
+      "name": "numba_compile_typing_failure",
+      "wall_s": 10.24,
+      "cpu_s": 10.17
+    },
+    {
+      "name": "numba_compile_match",
+      "wall_s": 16.01,
+      "cpu_s": 15.18
+    },
+    {
+      "name": "steady_and_extra_parity",
+      "wall_s": 16.28,
+      "cpu_s": 15.77
+    },
+    {
+      "name": "eight_family_smoke",
+      "wall_s": 26.07,
+      "cpu_s": 25.21
+    },
+    {
+      "name": "distribution_build_resample",
+      "wall_s": 5.04,
+      "cpu_s": 5.04
+    },
+    {
+      "name": "c0_p2_build_partial",
+      "wall_s": 6.54,
+      "cpu_s": 6.54
+    },
+    {
+      "name": "variational_fit_attempts",
+      "wall_s": 20.64,
+      "cpu_s": 20.64
+    },
+    {
+      "name": "pytest_cost_and_candidate",
+      "wall_s": 26.75,
+      "cpu_s": 25.5
+    },
+    {
+      "name": "parity_runner_smoke_2worlds",
+      "wall_s": 18.34,
+      "cpu_s": 18.34
+    },
+    {
+      "name": "parity_panel_4workers_3072cells",
+      "wall_s": 737.48,
+      "cpu_s": 2809.44
+    },
+    {
+      "name": "timing_fixture_and_large_batches",
+      "wall_s": 208.25,
+      "cpu_s": 206.4
+    },
+    {
+      "name": "eight_worker_24cell_task",
+      "wall_s": 40.7,
+      "cpu_s": 198.46
+    },
+    {
+      "name": "eight_worker_192cell_task",
+      "wall_s": 56.72,
+      "cpu_s": 264.57
+    },
+    {
+      "name": "aborted_oversubscribed_worker_launch",
+      "wall_s": 217.0,
+      "cpu_s": 1736.0,
+      "note": "killed after an accidental 128-worker launch; CPU charged as 8 times wall because the true aggregate was not instrumented"
+    }
+  ],
+  "sum_wall_s": 1455.79,
+  "sum_cpu_s": 5404.79,
+  "within_wall_limit": true,
+  "within_cpu_limit": true
+}

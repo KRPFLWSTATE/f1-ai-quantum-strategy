@@ -1,0 +1,85 @@
+{
+  "task_cells": 192,
+  "workers": 8,
+  "solo": {
+    "tag": "solo",
+    "wall_s": 4.290486708050594,
+    "cpu_s": 4.285330999999999,
+    "ru_maxrss": 417923072,
+    "pid": 40556,
+    "cells": 192
+  },
+  "solo_outer_including_compile_s": 17.954177499981597,
+  "eight_pool_wall_including_compile_s": 38.391902749892324,
+  "eight_steady_makespan_s": 8.53298870800063,
+  "eight": [
+    {
+      "tag": "w0",
+      "wall_s": 8.53298870800063,
+      "cpu_s": 7.174074999999998,
+      "ru_maxrss": 384188416,
+      "pid": 40575,
+      "cells": 192
+    },
+    {
+      "tag": "w1",
+      "wall_s": 7.914821750018746,
+      "cpu_s": 6.570719999999998,
+      "ru_maxrss": 384909312,
+      "pid": 40576,
+      "cells": 192
+    },
+    {
+      "tag": "w2",
+      "wall_s": 8.463349625002593,
+      "cpu_s": 7.029163999999998,
+      "ru_maxrss": 379699200,
+      "pid": 40577,
+      "cells": 192
+    },
+    {
+      "tag": "w3",
+      "wall_s": 7.992762458976358,
+      "cpu_s": 6.666556,
+      "ru_maxrss": 398721024,
+      "pid": 40578,
+      "cells": 192
+    },
+    {
+      "tag": "w4",
+      "wall_s": 8.064903792226687,
+      "cpu_s": 6.6841940000000015,
+      "ru_maxrss": 411582464,
+      "pid": 40579,
+      "cells": 192
+    },
+    {
+      "tag": "w5",
+      "wall_s": 8.240376415895298,
+      "cpu_s": 6.880651,
+      "ru_maxrss": 397721600,
+      "pid": 40580,
+      "cells": 192
+    },
+    {
+      "tag": "w6",
+      "wall_s": 7.988963915966451,
+      "cpu_s": 6.632052000000002,
+      "ru_maxrss": 393543680,
+      "pid": 40581,
+      "cells": 192
+    },
+    {
+      "tag": "w7",
+      "wall_s": 7.970969290938228,
+      "cpu_s": 6.541647000000001,
+      "ru_maxrss": 405143552,
+      "pid": 40582,
+      "cells": 192
+    }
+  ],
+  "efficiency": 0.5028117175436765,
+  "speedup": 4.022493740349412,
+  "rss_sum_of_peaks": 3155509248,
+  "note": "efficiency = solo steady wall / slowest concurrent steady wall. Compile excluded."
+}
