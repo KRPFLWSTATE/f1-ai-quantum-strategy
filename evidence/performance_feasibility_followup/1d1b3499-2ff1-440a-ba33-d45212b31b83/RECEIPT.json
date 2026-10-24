@@ -1,0 +1,49 @@
+{
+  "decision": "ENGINEERING_NOT_FEASIBLE_WITHIN_CURRENT_ENVELOPE",
+  "reason": "Literal event-signature parity is 3072/3072. No measured worker count puts the conservative Design R estimate inside every frozen limit. Eight-worker admission wall is 13981.679 s against 11520 s. Ten-worker admission wall is 14549.330 s. Twelve workers were not run: this machine has 10 logical CPUs.",
+  "parity_denominator": 3072,
+  "literal_signature_mismatches": 0,
+  "chosen_worker_count": null,
+  "chosen_efficiency": null,
+  "measured_workers": {
+    "8": {
+      "efficiency": 0.46288885835714266,
+      "conservative_cpu_s": 43015.261046109365,
+      "admission_wall_s": 13981.67923182981,
+      "campaign_wall_s": 13981.67923182981,
+      "simultaneous_rss_bytes": 3585376256
+    },
+    "10": {
+      "efficiency": 0.3565956968715956,
+      "conservative_cpu_s": 43085.633285738804,
+      "admission_wall_s": 14549.330382178028,
+      "campaign_wall_s": 14549.330382178028,
+      "simultaneous_rss_bytes": 4216307712
+    },
+    "12": "EXCLUDED_OVERSUBSCRIPTION"
+  },
+  "source_commit": "179b95197395044b8dcb5f9c39b032c13518f75a",
+  "parent_feasibility_commit": "5b7b28c96790d3571a684ff3959cfd9754ef7979",
+  "kernel_source_sha256": "a763fe1bc041f77a4ed7f06978eaf2dfd48a468205d8b675988224afd8a7818f",
+  "kernel_version": "compiled-event-loop-2",
+  "prior_evidence": "evidence/performance_feasibility/3c44b59e-7065-4899-9977-1fae0cb9d88f",
+  "prior_parity": {"denominator": 3072, "literal_signature_mismatches": 1},
+  "PHASE_7_DESIGN_READY": false,
+  "REGISTERED_SCIENTIFIC_PARENTS_EXECUTED": 0,
+  "FINAL_TEST_ACCESSED": false,
+  "QPU_JOBS": 0,
+  "hardware_execution_enabled": false,
+  "design_f_admitted": false,
+  "design_r_admitted": false,
+  "registered_corpus_admitted": false,
+  "cumulative_engineering": {
+    "prior_wall_s": 1455.79,
+    "prior_cpu_s": 5404.79,
+    "this_package_wall_s": 1400.258,
+    "this_package_cpu_s": 5586.258,
+    "cumulative_wall_s": 2856.048,
+    "cumulative_cpu_s": 10991.048,
+    "wall_limit_s": 7200,
+    "cpu_limit_s": 14400
+  }
+}

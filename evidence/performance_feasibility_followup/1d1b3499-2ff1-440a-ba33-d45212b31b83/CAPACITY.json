@@ -1,0 +1,1293 @@
+{
+  "logical_cpus": 10,
+  "physical_cpus": 10,
+  "twelve_worker_exclusion": {
+    "workers": 12,
+    "measured": false,
+    "reason": "12 workers exceed 10 logical and 10 physical CPUs"
+  },
+  "fits": {
+    "fits": [
+      {
+        "family": "C0",
+        "depth": 1,
+        "key": "C0_p1",
+        "reps": [
+          {
+            "rep": 0,
+            "wall_s": 5.64247354096733,
+            "cpu_s": 5.528072999999999,
+            "fit_s": 5.641730708070099,
+            "n_evals": 33
+          },
+          {
+            "rep": 1,
+            "wall_s": 6.64293995895423,
+            "cpu_s": 6.358015999999999,
+            "fit_s": 6.642744290875271,
+            "n_evals": 40
+          },
+          {
+            "rep": 2,
+            "wall_s": 6.088358041131869,
+            "cpu_s": 6.065434,
+            "fit_s": 6.088083583861589,
+            "n_evals": 40
+          }
+        ],
+        "conservative_wall_s": 6.64293995895423,
+        "conservative_fit_s": 6.642744290875271
+      },
+      {
+        "family": "C0",
+        "depth": 2,
+        "key": "C0_p2",
+        "reps": [
+          {
+            "rep": 0,
+            "wall_s": 12.105785459047183,
+            "cpu_s": 12.049443,
+            "fit_s": 12.105627416167408,
+            "n_evals": 40
+          },
+          {
+            "rep": 1,
+            "wall_s": 12.135471584042534,
+            "cpu_s": 12.009191000000001,
+            "fit_s": 12.135290416888893,
+            "n_evals": 40
+          },
+          {
+            "rep": 2,
+            "wall_s": 12.001650749938563,
+            "cpu_s": 11.948095000000002,
+            "fit_s": 12.001471875002608,
+            "n_evals": 40
+          }
+        ],
+        "conservative_wall_s": 12.135471584042534,
+        "conservative_fit_s": 12.135290416888893
+      },
+      {
+        "family": "C1",
+        "depth": 1,
+        "key": "C1_p1",
+        "reps": [
+          {
+            "rep": 0,
+            "wall_s": 0.18997358297929168,
+            "cpu_s": 0.18932300000000168,
+            "fit_s": 0.1898229168727994,
+            "n_evals": 40
+          },
+          {
+            "rep": 1,
+            "wall_s": 0.14542983286082745,
+            "cpu_s": 0.14516900000000277,
+            "fit_s": 0.14531175000593066,
+            "n_evals": 37
+          },
+          {
+            "rep": 2,
+            "wall_s": 0.13622725009918213,
+            "cpu_s": 0.1360390000000038,
+            "fit_s": 0.13609612500295043,
+            "n_evals": 35
+          }
+        ],
+        "conservative_wall_s": 0.18997358297929168,
+        "conservative_fit_s": 0.1898229168727994
+      },
+      {
+        "family": "C1",
+        "depth": 2,
+        "key": "C1_p2",
+        "reps": [
+          {
+            "rep": 0,
+            "wall_s": 0.19118566601537168,
+            "cpu_s": 0.19100299999999493,
+            "fit_s": 0.19103458290919662,
+            "n_evals": 40
+          },
+          {
+            "rep": 1,
+            "wall_s": 0.1913254999089986,
+            "cpu_s": 0.19106399999999724,
+            "fit_s": 0.1912076671142131,
+            "n_evals": 40
+          },
+          {
+            "rep": 2,
+            "wall_s": 0.19194345804862678,
+            "cpu_s": 0.19172199999999862,
+            "fit_s": 0.1918244999833405,
+            "n_evals": 40
+          }
+        ],
+        "conservative_wall_s": 0.19194345804862678,
+        "conservative_fit_s": 0.1918244999833405
+      }
+    ],
+    "ranker_fit_s": 0.0007096659392118454,
+    "selections": [
+      {
+        "policy": "fixed",
+        "per_call_s": 2.3250002413988114e-07,
+        "calls_timed": 100
+      },
+      {
+        "policy": "nn",
+        "per_call_s": 1.7741601914167404e-06,
+        "calls_timed": 100
+      },
+      {
+        "policy": "random",
+        "per_call_s": 1.2142499908804893e-05,
+        "calls_timed": 100
+      },
+      {
+        "policy": "learned",
+        "per_call_s": 5.0591607578098775e-06,
+        "calls_timed": 100
+      },
+      {
+        "policy": "best_found",
+        "per_call_s": 1.032920554280281e-06,
+        "calls_timed": 100
+      }
+    ],
+    "n_legal": 100
+  },
+  "reps": [
+    {
+      "rep": 0,
+      "configs": [
+        {
+          "workers": 1,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 18.854888833127916,
+              "workers": [
+                {
+                  "pid": 37133,
+                  "wall_s": 18.19300362514332,
+                  "cpu_s": 17.95292,
+                  "ru_maxrss": 409616384,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 4.841103374958038,
+              "workers": [
+                {
+                  "pid": 37133,
+                  "wall_s": 4.834458499914035,
+                  "cpu_s": 4.827557000000002,
+                  "ru_maxrss": 409616384,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 24.004933665972203,
+          "parent_process_time_s": 0.17988100000000173,
+          "simultaneous_rss_samples": 47,
+          "simultaneous_rss_max_bytes": 588152832,
+          "simultaneous_rss_median_bytes": 578420736
+        },
+        {
+          "workers": 8,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 48.51209362503141,
+              "workers": [
+                {
+                  "pid": 37189,
+                  "wall_s": 47.159736750181764,
+                  "cpu_s": 34.193369,
+                  "ru_maxrss": 420118528,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37191,
+                  "wall_s": 46.927082542097196,
+                  "cpu_s": 34.208534,
+                  "ru_maxrss": 420642816,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37192,
+                  "wall_s": 47.01703774998896,
+                  "cpu_s": 34.200030000000005,
+                  "ru_maxrss": 407486464,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37193,
+                  "wall_s": 47.166076000081375,
+                  "cpu_s": 34.171725,
+                  "ru_maxrss": 425721856,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37194,
+                  "wall_s": 47.02155066700652,
+                  "cpu_s": 34.179292,
+                  "ru_maxrss": 409927680,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37196,
+                  "wall_s": 47.02033262513578,
+                  "cpu_s": 34.12165,
+                  "ru_maxrss": 409780224,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37195,
+                  "wall_s": 46.89623845787719,
+                  "cpu_s": 34.190146,
+                  "ru_maxrss": 414728192,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37197,
+                  "wall_s": 46.7890057079494,
+                  "cpu_s": 34.045478,
+                  "ru_maxrss": 420855808,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 10.458457332802936,
+              "workers": [
+                {
+                  "pid": 37197,
+                  "wall_s": 10.410569832893088,
+                  "cpu_s": 7.748776999999997,
+                  "ru_maxrss": 420855808,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37195,
+                  "wall_s": 10.414140625158325,
+                  "cpu_s": 7.745669999999997,
+                  "ru_maxrss": 414728192,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37191,
+                  "wall_s": 10.430994041031227,
+                  "cpu_s": 7.716033000000003,
+                  "ru_maxrss": 420642816,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37192,
+                  "wall_s": 10.441459082998335,
+                  "cpu_s": 7.710567000000005,
+                  "ru_maxrss": 407486464,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37196,
+                  "wall_s": 10.372120917076245,
+                  "cpu_s": 7.745587,
+                  "ru_maxrss": 409780224,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37194,
+                  "wall_s": 10.291058083996177,
+                  "cpu_s": 7.729132999999997,
+                  "ru_maxrss": 409927680,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37189,
+                  "wall_s": 10.289537792094052,
+                  "cpu_s": 7.738149,
+                  "ru_maxrss": 420118528,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37193,
+                  "wall_s": 10.359458249993622,
+                  "cpu_s": 7.736257000000002,
+                  "ru_maxrss": 425721856,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 59.86696945806034,
+          "parent_process_time_s": 0.7131159999999994,
+          "simultaneous_rss_samples": 106,
+          "simultaneous_rss_max_bytes": 3479060480,
+          "simultaneous_rss_median_bytes": 3133947904
+        },
+        {
+          "workers": 10,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 59.43183479108848,
+              "workers": [
+                {
+                  "pid": 37328,
+                  "wall_s": 57.61294308304787,
+                  "cpu_s": 34.746911999999995,
+                  "ru_maxrss": 418512896,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37329,
+                  "wall_s": 57.44439945812337,
+                  "cpu_s": 34.362833,
+                  "ru_maxrss": 417710080,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37326,
+                  "wall_s": 57.22254304098897,
+                  "cpu_s": 34.423866,
+                  "ru_maxrss": 431554560,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37331,
+                  "wall_s": 57.71537979203276,
+                  "cpu_s": 34.581371000000004,
+                  "ru_maxrss": 414040064,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37332,
+                  "wall_s": 57.273745874874294,
+                  "cpu_s": 34.527086,
+                  "ru_maxrss": 429129728,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37334,
+                  "wall_s": 57.528862750157714,
+                  "cpu_s": 34.513402000000006,
+                  "ru_maxrss": 417808384,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37330,
+                  "wall_s": 57.5378794579301,
+                  "cpu_s": 34.577891,
+                  "ru_maxrss": 411369472,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37333,
+                  "wall_s": 56.900265167001635,
+                  "cpu_s": 34.416764,
+                  "ru_maxrss": 432914432,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37336,
+                  "wall_s": 57.40627812501043,
+                  "cpu_s": 34.515913,
+                  "ru_maxrss": 415694848,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37335,
+                  "wall_s": 56.73324416601099,
+                  "cpu_s": 34.442947000000004,
+                  "ru_maxrss": 432586752,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 12.938892374979332,
+              "workers": [
+                {
+                  "pid": 37335,
+                  "wall_s": 12.71967662498355,
+                  "cpu_s": 7.7564999999999955,
+                  "ru_maxrss": 432586752,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37333,
+                  "wall_s": 12.929886874975637,
+                  "cpu_s": 7.713572999999997,
+                  "ru_maxrss": 432914432,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37326,
+                  "wall_s": 12.316630749963224,
+                  "cpu_s": 7.717109000000001,
+                  "ru_maxrss": 431554560,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37332,
+                  "wall_s": 12.680709041887894,
+                  "cpu_s": 7.78378,
+                  "ru_maxrss": 429129728,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37329,
+                  "wall_s": 12.853433541953564,
+                  "cpu_s": 7.731445000000001,
+                  "ru_maxrss": 417710080,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37330,
+                  "wall_s": 12.60587383294478,
+                  "cpu_s": 7.716132999999999,
+                  "ru_maxrss": 411369472,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37334,
+                  "wall_s": 12.580768124898896,
+                  "cpu_s": 7.760791999999995,
+                  "ru_maxrss": 417808384,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37328,
+                  "wall_s": 12.710805125068873,
+                  "cpu_s": 7.796509,
+                  "ru_maxrss": 418512896,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37336,
+                  "wall_s": 12.791841791942716,
+                  "cpu_s": 7.799877000000002,
+                  "ru_maxrss": 415694848,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37331,
+                  "wall_s": 12.669466957915574,
+                  "cpu_s": 7.785643,
+                  "ru_maxrss": 414040064,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 73.4491563339252,
+          "parent_process_time_s": 0.919435,
+          "simultaneous_rss_samples": 133,
+          "simultaneous_rss_max_bytes": 4216307712,
+          "simultaneous_rss_median_bytes": 3787505664
+        }
+      ]
+    },
+    {
+      "rep": 1,
+      "configs": [
+        {
+          "workers": 1,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 18.499999832827598,
+              "workers": [
+                {
+                  "pid": 37487,
+                  "wall_s": 17.818734917091206,
+                  "cpu_s": 17.745632,
+                  "ru_maxrss": 417955840,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 4.859838542062789,
+              "workers": [
+                {
+                  "pid": 37487,
+                  "wall_s": 4.853207167005166,
+                  "cpu_s": 4.846376000000003,
+                  "ru_maxrss": 418414592,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 23.63986008311622,
+          "parent_process_time_s": 0.1547210000000021,
+          "simultaneous_rss_samples": 46,
+          "simultaneous_rss_max_bytes": 497369088,
+          "simultaneous_rss_median_bytes": 484835328
+        },
+        {
+          "workers": 8,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 48.068752291146666,
+              "workers": [
+                {
+                  "pid": 37540,
+                  "wall_s": 46.26864941697568,
+                  "cpu_s": 34.218827000000005,
+                  "ru_maxrss": 444252160,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37538,
+                  "wall_s": 46.07901945896447,
+                  "cpu_s": 34.132831,
+                  "ru_maxrss": 443318272,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37542,
+                  "wall_s": 46.02207995811477,
+                  "cpu_s": 34.178022999999996,
+                  "ru_maxrss": 458014720,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37541,
+                  "wall_s": 46.523246499942616,
+                  "cpu_s": 34.224626,
+                  "ru_maxrss": 453410816,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37544,
+                  "wall_s": 46.03890033415519,
+                  "cpu_s": 34.028663,
+                  "ru_maxrss": 433668096,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37543,
+                  "wall_s": 46.177814583992586,
+                  "cpu_s": 34.052237,
+                  "ru_maxrss": 446087168,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37545,
+                  "wall_s": 46.648440750082955,
+                  "cpu_s": 34.320211,
+                  "ru_maxrss": 447627264,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37546,
+                  "wall_s": 46.487489791121334,
+                  "cpu_s": 34.273788,
+                  "ru_maxrss": 431554560,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 10.373620666796342,
+              "workers": [
+                {
+                  "pid": 37542,
+                  "wall_s": 10.08194954204373,
+                  "cpu_s": 7.703591000000003,
+                  "ru_maxrss": 458014720,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37544,
+                  "wall_s": 10.315128833986819,
+                  "cpu_s": 7.741343999999998,
+                  "ru_maxrss": 433668096,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37538,
+                  "wall_s": 10.21821316704154,
+                  "cpu_s": 7.706200000000003,
+                  "ru_maxrss": 443318272,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37543,
+                  "wall_s": 10.35951108415611,
+                  "cpu_s": 7.714855,
+                  "ru_maxrss": 446087168,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37540,
+                  "wall_s": 10.165144917089492,
+                  "cpu_s": 7.779254000000002,
+                  "ru_maxrss": 444252160,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37541,
+                  "wall_s": 10.161907583940774,
+                  "cpu_s": 7.739126999999996,
+                  "ru_maxrss": 453410816,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37546,
+                  "wall_s": 9.947569584008306,
+                  "cpu_s": 7.734454999999997,
+                  "ru_maxrss": 432324608,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37545,
+                  "wall_s": 10.2389132080134,
+                  "cpu_s": 7.797696999999999,
+                  "ru_maxrss": 447627264,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 59.283892165869474,
+          "parent_process_time_s": 0.6895359999999968,
+          "simultaneous_rss_samples": 106,
+          "simultaneous_rss_max_bytes": 3585376256,
+          "simultaneous_rss_median_bytes": 3161309184
+        },
+        {
+          "workers": 10,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 60.496246750000864,
+              "workers": [
+                {
+                  "pid": 37678,
+                  "wall_s": 58.675107415998355,
+                  "cpu_s": 34.991763999999996,
+                  "ru_maxrss": 406749184,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37681,
+                  "wall_s": 58.074184332974255,
+                  "cpu_s": 34.816786,
+                  "ru_maxrss": 429080576,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37680,
+                  "wall_s": 58.5859604999423,
+                  "cpu_s": 34.985731,
+                  "ru_maxrss": 402112512,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37682,
+                  "wall_s": 58.070982167031616,
+                  "cpu_s": 34.832268,
+                  "ru_maxrss": 432553984,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37679,
+                  "wall_s": 57.808930249884725,
+                  "cpu_s": 34.640935999999996,
+                  "ru_maxrss": 419004416,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37685,
+                  "wall_s": 58.10583975003101,
+                  "cpu_s": 34.79093,
+                  "ru_maxrss": 422199296,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37683,
+                  "wall_s": 58.17104258388281,
+                  "cpu_s": 34.806139,
+                  "ru_maxrss": 419512320,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37686,
+                  "wall_s": 58.31104837497696,
+                  "cpu_s": 34.70710699999999,
+                  "ru_maxrss": 415891456,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37687,
+                  "wall_s": 58.3263263751287,
+                  "cpu_s": 35.047481,
+                  "ru_maxrss": 409862144,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37684,
+                  "wall_s": 58.45041358307935,
+                  "cpu_s": 34.917232000000006,
+                  "ru_maxrss": 405602304,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 13.628427332965657,
+              "workers": [
+                {
+                  "pid": 37679,
+                  "wall_s": 13.40185962500982,
+                  "cpu_s": 7.806059000000005,
+                  "ru_maxrss": 419004416,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37682,
+                  "wall_s": 13.48720212513581,
+                  "cpu_s": 7.783853000000001,
+                  "ru_maxrss": 432553984,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37681,
+                  "wall_s": 13.529841041890904,
+                  "cpu_s": 7.808873999999996,
+                  "ru_maxrss": 429080576,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37685,
+                  "wall_s": 13.301625624997541,
+                  "cpu_s": 7.843267999999995,
+                  "ru_maxrss": 422199296,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37683,
+                  "wall_s": 13.557641834020615,
+                  "cpu_s": 7.870942999999997,
+                  "ru_maxrss": 419512320,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37686,
+                  "wall_s": 13.459906541975215,
+                  "cpu_s": 7.778795000000002,
+                  "ru_maxrss": 415891456,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37687,
+                  "wall_s": 13.518250999972224,
+                  "cpu_s": 7.836069999999999,
+                  "ru_maxrss": 409862144,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37684,
+                  "wall_s": 13.440043041948229,
+                  "cpu_s": 7.842196999999999,
+                  "ru_maxrss": 405602304,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37680,
+                  "wall_s": 13.594065916026011,
+                  "cpu_s": 7.838273999999998,
+                  "ru_maxrss": 402112512,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37678,
+                  "wall_s": 13.478732666000724,
+                  "cpu_s": 7.815719000000001,
+                  "ru_maxrss": 406749184,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 75.18779324996285,
+          "parent_process_time_s": 0.9606209999999962,
+          "simultaneous_rss_samples": 136,
+          "simultaneous_rss_max_bytes": 4158341120,
+          "simultaneous_rss_median_bytes": 3808952320
+        }
+      ]
+    },
+    {
+      "rep": 2,
+      "configs": [
+        {
+          "workers": 1,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 18.393062124960124,
+              "workers": [
+                {
+                  "pid": 37851,
+                  "wall_s": 17.700975416926667,
+                  "cpu_s": 17.641088,
+                  "ru_maxrss": 410435584,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 5.136343542020768,
+              "workers": [
+                {
+                  "pid": 37851,
+                  "wall_s": 5.129314417019486,
+                  "cpu_s": 5.112348999999998,
+                  "ru_maxrss": 410435584,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 23.811170000117272,
+          "parent_process_time_s": 0.15551999999999566,
+          "simultaneous_rss_samples": 46,
+          "simultaneous_rss_max_bytes": 485474304,
+          "simultaneous_rss_median_bytes": 476659712
+        },
+        {
+          "workers": 8,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 52.893054416170344,
+              "workers": [
+                {
+                  "pid": 37921,
+                  "wall_s": 50.844105458119884,
+                  "cpu_s": 34.580000999999996,
+                  "ru_maxrss": 431439872,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37919,
+                  "wall_s": 51.0878892079927,
+                  "cpu_s": 34.581728,
+                  "ru_maxrss": 405585920,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37924,
+                  "wall_s": 50.87814720883034,
+                  "cpu_s": 34.822691999999996,
+                  "ru_maxrss": 415383552,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37923,
+                  "wall_s": 51.38192870793864,
+                  "cpu_s": 34.738058,
+                  "ru_maxrss": 407339008,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37922,
+                  "wall_s": 50.87394395796582,
+                  "cpu_s": 34.715882,
+                  "ru_maxrss": 420773888,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37926,
+                  "wall_s": 51.16222683293745,
+                  "cpu_s": 34.683984,
+                  "ru_maxrss": 417447936,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37925,
+                  "wall_s": 51.31287004193291,
+                  "cpu_s": 34.92112899999999,
+                  "ru_maxrss": 419954688,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37927,
+                  "wall_s": 50.82565495907329,
+                  "cpu_s": 34.561732,
+                  "ru_maxrss": 421019648,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 10.389588917139918,
+              "workers": [
+                {
+                  "pid": 37921,
+                  "wall_s": 10.237250792095438,
+                  "cpu_s": 7.690292999999997,
+                  "ru_maxrss": 431439872,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37924,
+                  "wall_s": 10.374405084177852,
+                  "cpu_s": 7.8686250000000015,
+                  "ru_maxrss": 415383552,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37927,
+                  "wall_s": 10.252451707841828,
+                  "cpu_s": 7.730681000000004,
+                  "ru_maxrss": 421019648,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37922,
+                  "wall_s": 10.367013124981895,
+                  "cpu_s": 7.736556999999998,
+                  "ru_maxrss": 420773888,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37919,
+                  "wall_s": 10.363522166851908,
+                  "cpu_s": 7.715738999999999,
+                  "ru_maxrss": 405585920,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37926,
+                  "wall_s": 10.36420891690068,
+                  "cpu_s": 7.742408999999995,
+                  "ru_maxrss": 417447936,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37923,
+                  "wall_s": 10.19435516698286,
+                  "cpu_s": 7.7172979999999995,
+                  "ru_maxrss": 407339008,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 37925,
+                  "wall_s": 10.249911084072664,
+                  "cpu_s": 7.737090000000002,
+                  "ru_maxrss": 419954688,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 64.36821812507696,
+          "parent_process_time_s": 0.7675550000000015,
+          "simultaneous_rss_samples": 114,
+          "simultaneous_rss_max_bytes": 3392028672,
+          "simultaneous_rss_median_bytes": 3122855936
+        },
+        {
+          "workers": 10,
+          "waves": [
+            {
+              "wave": 0,
+              "makespan_s": 63.379738999996334,
+              "workers": [
+                {
+                  "pid": 38088,
+                  "wall_s": 61.18398725008592,
+                  "cpu_s": 34.925492,
+                  "ru_maxrss": 400375808,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38086,
+                  "wall_s": 61.431096374988556,
+                  "cpu_s": 35.134223,
+                  "ru_maxrss": 396902400,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38084,
+                  "wall_s": 60.687711084028706,
+                  "cpu_s": 34.818338,
+                  "ru_maxrss": 407126016,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38087,
+                  "wall_s": 61.25215575005859,
+                  "cpu_s": 35.226384,
+                  "ru_maxrss": 392167424,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38089,
+                  "wall_s": 61.274028540821746,
+                  "cpu_s": 34.79623,
+                  "ru_maxrss": 389808128,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38090,
+                  "wall_s": 61.239764040801674,
+                  "cpu_s": 34.806084999999996,
+                  "ru_maxrss": 399048704,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38091,
+                  "wall_s": 61.1052736248821,
+                  "cpu_s": 34.939937,
+                  "ru_maxrss": 390578176,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38092,
+                  "wall_s": 61.16043133405037,
+                  "cpu_s": 34.813705999999996,
+                  "ru_maxrss": 407240704,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38093,
+                  "wall_s": 60.950829749926925,
+                  "cpu_s": 34.990345,
+                  "ru_maxrss": 395968512,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38094,
+                  "wall_s": 60.726734208874404,
+                  "cpu_s": 34.92011,
+                  "ru_maxrss": 389365760,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            },
+            {
+              "wave": 1,
+              "makespan_s": 13.035294250119478,
+              "workers": [
+                {
+                  "pid": 38084,
+                  "wall_s": 13.027580957859755,
+                  "cpu_s": 7.7462560000000025,
+                  "ru_maxrss": 407126016,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38094,
+                  "wall_s": 12.630457542138174,
+                  "cpu_s": 7.779370999999998,
+                  "ru_maxrss": 389513216,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38091,
+                  "wall_s": 12.839969458058476,
+                  "cpu_s": 7.756589999999996,
+                  "ru_maxrss": 390692864,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38093,
+                  "wall_s": 12.535159792052582,
+                  "cpu_s": 7.786443999999996,
+                  "ru_maxrss": 396132352,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38089,
+                  "wall_s": 12.767148416955024,
+                  "cpu_s": 7.755712000000003,
+                  "ru_maxrss": 389808128,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38088,
+                  "wall_s": 12.941635207971558,
+                  "cpu_s": 7.722901,
+                  "ru_maxrss": 400506880,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38090,
+                  "wall_s": 12.904482041951269,
+                  "cpu_s": 7.752728000000005,
+                  "ru_maxrss": 399441920,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38087,
+                  "wall_s": 12.841270500095561,
+                  "cpu_s": 7.734079000000001,
+                  "ru_maxrss": 392544256,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38092,
+                  "wall_s": 12.565633499994874,
+                  "cpu_s": 7.752580999999999,
+                  "ru_maxrss": 407240704,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                },
+                {
+                  "pid": 38086,
+                  "wall_s": 12.898161791963503,
+                  "cpu_s": 7.771395000000005,
+                  "ru_maxrss": 396902400,
+                  "cells": 192,
+                  "scalar_continue_calls": 0
+                }
+              ]
+            }
+          ],
+          "pool_wall_s": 77.54679816705175,
+          "parent_process_time_s": 0.9301579999999987,
+          "simultaneous_rss_samples": 141,
+          "simultaneous_rss_max_bytes": 3978199040,
+          "simultaneous_rss_median_bytes": 3506241536
+        }
+      ]
+    }
+  ],
+  "wall_s": 538.0633084590081,
+  "cells_per_task": 192,
+  "waves": 2,
+  "repetitions_completed": 3
+}
