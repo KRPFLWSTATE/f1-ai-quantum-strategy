@@ -21,7 +21,10 @@ from numba import njit
 
 from f1q.simulator.engine import BIG, EPS, OVERTAKE_ORDER_SNAP_LAPS
 
-KERNEL_VERSION = "compiled-event-loop-1"
+KERNEL_VERSION = "compiled-event-loop-2"
+# Runtime argument into the compiled entry. A literal 2 inside njit is rewritten
+# to a multiply and does not match ``tyre_delta_s``.
+TYRE_AGE_EXPONENT = 2.0
 _NJIT = dict(fastmath=False, error_model="python")
 
 # Schedule kinds. Name ranks follow lexicographic kind strings.
@@ -77,12 +80,13 @@ _COMPOUND_NAME = ("soft", "medium", "hard")
 
 
 @njit(**_NJIT)
-def _free_lap(green, offset, age, form_linear, wear, curv, fuel, time_scale, curve_scale, time_per_kg):
+def _free_lap(green, offset, age, form_linear, wear, curv, fuel, time_scale, curve_scale, time_per_kg, square_exp):
+    # tyre_delta_s is (curvature * curve_scale) * (age ** 2), not a left fold of four factors.
     linear = wear * time_scale * age
     if form_linear == 1:
         tyre = linear
     else:
-        tyre = linear + curv * curve_scale * age * age
+        tyre = linear + (curv * curve_scale) * (age ** square_exp)
     return green + offset + tyre + time_per_kg * fuel
 
 
@@ -306,6 +310,7 @@ def run_continuation(
     prio_regime,
     prio_sc,
     race_rank,
+    square_exp,
 ):
     offsets = np.empty(3, dtype=np.float64)
     offsets[0] = offsets0
@@ -404,7 +409,7 @@ def run_continuation(
                 speed[i] = 0.0
                 continue
             off = offsets[compound[i]]
-            ft = _free_lap(green, off, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg)
+            ft = _free_lap(green, off, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg, square_exp)
             speed[i] = 1.0 / max(ft, EPS)
         t_sc = sc_factor * green
         t_vsc = vsc_factor * green
@@ -449,8 +454,8 @@ def run_continuation(
                 continue
             off_a = offsets[compound[ahead]]
             off_i = offsets[compound[i]]
-            ft_a = _free_lap(green, off_a, tyre_age[ahead], form_linear, wear, curv, fuel_a[ahead], time_scale, curve_scale, time_per_kg)
-            ft_i = _free_lap(green, off_i, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg)
+            ft_a = _free_lap(green, off_a, tyre_age[ahead], form_linear, wear, curv, fuel_a[ahead], time_scale, curve_scale, time_per_kg, square_exp)
+            ft_i = _free_lap(green, off_i, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg, square_exp)
             advantage = ft_a - ft_i
             if advantage >= adv_need and time_gap <= attack_s:
                 want_pass[i] = ahead
@@ -505,7 +510,7 @@ def run_continuation(
             if remain_lap <= 1e-9:
                 continue
             off = offsets[compound[i]]
-            ft = _free_lap(green, off, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg)
+            ft = _free_lap(green, off, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg, square_exp)
             v_free = 1.0 / max(ft, EPS)
             green_free = regime[0] == RG_GREEN and abs(v - v_free) <= 1e-9
             a = 0.0
@@ -618,15 +623,15 @@ def run_continuation(
         if dt <= EPS and nf == 0:
             dt = dt_max
         # step motion
-        st = _step(n, dt, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, fuel_e, retired, has_finish, finish_time, speed, pclock, frozen, has_frozen, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, kg_per_lap, regime[0])
+        st = _step(n, dt, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, fuel_e, retired, has_finish, finish_time, speed, pclock, frozen, has_frozen, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, kg_per_lap, regime[0], square_exp)
         if st != ST_OK:
             return st
         t = t_box[0]
         if nf > 0:
-            st = _fire(n, nf, fk, fc, fa, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, pit_this, retired, has_finish, finish_time, want_pass, pending_c, pending_s, pstart, pend, pclock, entry_completed, entry_frac, frozen, has_frozen, service_wait, team, nsets, mounted, inv_compound, inv_used, inv_age, used_extra, policy_kind, crew, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, regime, regime_end, has_regime_end, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, entry, exit_f, box_frac, t_in, t_service, t_out, stacking_forbidden, adv_need)
+            st = _fire(n, nf, fk, fc, fa, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, pit_this, retired, has_finish, finish_time, want_pass, pending_c, pending_s, pstart, pend, pclock, entry_completed, entry_frac, frozen, has_frozen, service_wait, team, nsets, mounted, inv_compound, inv_used, inv_age, used_extra, policy_kind, crew, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, regime, regime_end, has_regime_end, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, entry, exit_f, box_frac, t_in, t_service, t_out, stacking_forbidden, adv_need, square_exp)
             if st != ST_OK:
                 return st
-        st = _overtakes(n, dt, completed, frac, in_pit, compound, tyre_age, fuel_a, retired, has_finish, speed, want_pass, car_rank, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, regime[0], green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, adv_need, entry_completed, entry_frac, frozen, has_frozen, phase, pstart, pend, pclock)
+        st = _overtakes(n, dt, completed, frac, in_pit, compound, tyre_age, fuel_a, retired, has_finish, speed, want_pass, car_rank, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, regime[0], green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, adv_need, entry_completed, entry_frac, frozen, has_frozen, phase, pstart, pend, pclock, square_exp)
         if st != ST_OK:
             return st
         st = _maybe_finish(n, completed, frac, in_pit, phase, retired, has_finish, finish_time, entry_completed, entry_frac, frozen, has_frozen, pstart, pend, pclock, car_rank, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, finished, leader_finished, leader_finish_t, leader_car, horizon)
@@ -648,7 +653,7 @@ def _consume(i, ds, fuel_a, fuel_e, tyre_age, kg_per_lap):
 
 
 @njit(**_NJIT)
-def _step(n, dt, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, fuel_e, retired, has_finish, finish_time, speed, pclock, frozen, has_frozen, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, kg_per_lap, regime):
+def _step(n, dt, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, fuel_e, retired, has_finish, finish_time, speed, pclock, frozen, has_frozen, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, kg_per_lap, regime, square_exp):
     if dt <= EPS:
         t_box[0] = t + max(dt, 0.0)
         for i in range(n):
@@ -676,7 +681,7 @@ def _step(n, dt, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, 
         v = speed[i]
         old = float(completed[i]) + frac[i]
         off = offsets[compound[i]]
-        ft = _free_lap(green, off, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg)
+        ft = _free_lap(green, off, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg, square_exp)
         v_free = 1.0 / max(ft, EPS)
         green_free = regime == RG_GREEN and abs(v - v_free) <= 1e-9
         if green_free:
@@ -747,7 +752,7 @@ def _mount(i, comp, set_i, compound, tyre_age, mounted, inv_compound, inv_used, 
 
 @njit(**_NJIT)
 def _fire(
-    n, nf, fk, fc, fa, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, pit_this, retired, has_finish, finish_time, want_pass, pending_c, pending_s, pstart, pend, pclock, entry_completed, entry_frac, frozen, has_frozen, service_wait, team, nsets, mounted, inv_compound, inv_used, inv_age, used_extra, policy_kind, crew, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, regime, regime_end, has_regime_end, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, entry, exit_f, box_frac, t_in, t_service, t_out, stacking_forbidden, adv_need,
+    n, nf, fk, fc, fa, t, completed, frac, in_pit, phase, compound, tyre_age, fuel_a, pit_this, retired, has_finish, finish_time, want_pass, pending_c, pending_s, pstart, pend, pclock, entry_completed, entry_frac, frozen, has_frozen, service_wait, team, nsets, mounted, inv_compound, inv_used, inv_age, used_extra, policy_kind, crew, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, regime, regime_end, has_regime_end, horizon, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, entry, exit_f, box_frac, t_in, t_service, t_out, stacking_forbidden, adv_need, square_exp,
 ):
     for e in range(nf):
         kind = fk[e]
@@ -799,8 +804,8 @@ def _fire(
                 continue
             off_a = offsets[compound[ahead]]
             off_i = offsets[compound[i]]
-            ft_a = _free_lap(green, off_a, tyre_age[ahead], form_linear, wear, curv, fuel_a[ahead], time_scale, curve_scale, time_per_kg)
-            ft_i = _free_lap(green, off_i, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg)
+            ft_a = _free_lap(green, off_a, tyre_age[ahead], form_linear, wear, curv, fuel_a[ahead], time_scale, curve_scale, time_per_kg, square_exp)
+            ft_i = _free_lap(green, off_i, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg, square_exp)
             if ft_a - ft_i < adv_need - 1e-9:
                 want_pass[i] = -1
                 continue
@@ -896,7 +901,7 @@ def _advance_pit(i, t, completed, frac, phase, compound, tyre_age, pending_c, pe
 
 
 @njit(**_NJIT)
-def _overtakes(n, dt, completed, frac, in_pit, compound, tyre_age, fuel_a, retired, has_finish, speed, want_pass, car_rank, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, regime, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, adv_need, entry_completed, entry_frac, frozen, has_frozen, phase, pstart, pend, pclock):
+def _overtakes(n, dt, completed, frac, in_pit, compound, tyre_age, fuel_a, retired, has_finish, speed, want_pass, car_rank, n_ev, ev_t, ev_k, ev_c, ev_i0, ev_i1, ev_f0, ev_f1, t_box, regime, green, form_linear, wear, curv, offsets, time_scale, curve_scale, time_per_kg, adv_need, entry_completed, entry_frac, frozen, has_frozen, phase, pstart, pend, pclock, square_exp):
     if regime != RG_GREEN or dt < 0.0:
         return ST_OK
     t = t_box[0]
@@ -916,8 +921,8 @@ def _overtakes(n, dt, completed, frac, in_pit, compound, tyre_age, fuel_a, retir
             ahead = order[j - 1]
             off_a = offsets[compound[ahead]]
             off_i = offsets[compound[i]]
-            ft_a = _free_lap(green, off_a, tyre_age[ahead], form_linear, wear, curv, fuel_a[ahead], time_scale, curve_scale, time_per_kg)
-            ft_i = _free_lap(green, off_i, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg)
+            ft_a = _free_lap(green, off_a, tyre_age[ahead], form_linear, wear, curv, fuel_a[ahead], time_scale, curve_scale, time_per_kg, square_exp)
+            ft_i = _free_lap(green, off_i, tyre_age[i], form_linear, wear, curv, fuel_a[i], time_scale, curve_scale, time_per_kg, square_exp)
             if ft_a - ft_i < adv_need - 1e-9:
                 continue
             if speed[i] <= speed[ahead] + EPS:
@@ -1343,6 +1348,7 @@ def compiled_continue(engine, *, max_steps: int = 2_000_000) -> int:
             int(sc["prio_regime"]),
             int(sc["prio_sc"]),
             int(sc["race_rank"]),
+            float(TYRE_AGE_EXPONENT),
         )
     )
     if status != ST_OK:

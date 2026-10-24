@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import random
 import subprocess
 import sys
 
@@ -18,9 +19,10 @@ from f1q.a4.problem import (
     plan_fingerprint,
 )
 from f1q.hashing import sha256_json
-from f1q.simulator.compiled_kernel import KERNEL_VERSION, candidate_cache_key
+from f1q.simulator.compiled_kernel import KERNEL_VERSION, TYRE_AGE_EXPONENT, _free_lap, candidate_cache_key
 from f1q.simulator.engine import RaceEngine
 from f1q.simulator.interface import RaceSimulator
+from f1q.simulator.physics import free_lap_time_s
 
 FAM = "fam.green_pit_low.tyre_near_linear.traffic_sparse"
 PARITY_TOL = 1e-12
@@ -274,6 +276,73 @@ def test_cold_process_loads_candidate():
     proc = subprocess.run([sys.executable, "-c", script], check=False, capture_output=True, text=True)
     assert proc.returncode == 0, proc.stderr
     assert "cold_ok" in proc.stdout
+
+
+def test_known_signature_mismatch_cell_and_power_boundary():
+    """Literal signatures on the former 1/3072 cell, plus ages where age*age != age**2.
+
+    The 1e-12 loss tolerance is not used to accept an event-signature difference.
+    """
+    fam = "fam.green_pit_low.tyre_nonlinear.traffic_dense"
+    spec = family_spec(
+        family_id=fam,
+        block_id=f"engperf.corr.{fam}.r1",
+        regime="SC",
+        partition="development",
+        index=1,
+        seed=41001,
+    )
+    sim = RaceSimulator()
+    sim.initialize(spec)
+    sim.advance_to_checkpoint()
+    blob = sim.serialize()
+    view = extract_causal_view(sim.observe().model_dump(mode="python"))
+    legal = enumerate_legal_policies(build_menu_and_instance(view))
+    plan = legal[1]["wrapped"]["plan"]
+    cand = {"plan": plan, "plan_hash": plan_fingerprint(plan)}
+    # Original failed cell, plus adjacent worlds on the same plan.
+    scalar, out = _both(spec, blob, [cand], [810006, 810007, 810008], arrival=0.02, epoch=float(blob["t"]) + 0.05)
+    ph = cand["plan_hash"]
+    for i, seed in enumerate((810006, 810007, 810008)):
+        assert scalar[ph][i]["world_seed"] == seed
+        assert scalar[ph][i]["event_ordering"] == out["worlds"][ph][i]["event_ordering"]
+        assert abs(float(scalar[ph][i]["loss"]) - float(out["worlds"][ph][i]["loss"])) <= PARITY_TOL
+        assert scalar[ph][i]["commitment_classification"] == out["worlds"][ph][i]["commitment_classification"]
+    cfg = sim.engine.cfg
+    state = sim.engine.state
+    green = float(state["green_lap_s"])
+    wear = float(state["tyre_wear"])
+    curv = float(state["tyre_curvature"])
+    scale = float(cfg["tyres"]["time_scale_s"])
+    curve = float(cfg["tyres"]["curve_scale_s"])
+    tpkg = float(cfg["fuel"]["time_per_kg_s"])
+    separating = []
+    draw = random.Random(0)
+    while len(separating) < 8:
+        age = draw.random() * 30.0
+        if age * age != age ** 2:
+            separating.append(age)
+    saw_product_gap = False
+    for age in separating:
+        if (curv * curve) * (age * age) != (curv * curve) * (age ** 2):
+            saw_product_gap = True
+        for compound, offset in cfg["tyres"]["compound_offset_s"].items():
+            fuel = 12.5
+            scalar_ft = free_lap_time_s(
+                cfg,
+                green_lap_s=green,
+                compound=compound,
+                age_laps=age,
+                form="nonlinear",
+                wear=wear,
+                curvature=curv,
+                fuel_kg=fuel,
+            )
+            compiled_ft = float(
+                _free_lap(green, float(offset), age, 0, wear, curv, fuel, scale, curve, tpkg, TYRE_AGE_EXPONENT)
+            )
+            assert compiled_ft == scalar_ft
+    assert saw_product_gap
 
 
 @pytest.mark.parametrize("regime", ["SC", "VSC"])
