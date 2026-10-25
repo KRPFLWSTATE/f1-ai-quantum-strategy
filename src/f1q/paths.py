@@ -15,6 +15,11 @@ def resolve_project_root(explicit: str | Path | None = None) -> Path:
         _require_marker(root)
         return root
     env = os.environ.get("F1Q_PROJECT_ROOT")
+    if os.environ.get("F1Q_REQUIRE_EXPLICIT_ROOT") == "1" and not env:
+        raise BoundaryError(
+            "F1Q_REQUIRE_EXPLICIT_ROOT is set and F1Q_PROJECT_ROOT is empty; "
+            "refusing to walk parent directories to the real checkout."
+        )
     if env:
         root = Path(env).expanduser().resolve()
         _require_marker(root)

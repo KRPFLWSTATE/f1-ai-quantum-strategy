@@ -156,6 +156,9 @@ def evaluate_candidates_on_bank(
     checkpoint_hash: str,
     nominal_budget_s: float,
 ) -> dict[str, Any]:
+    from f1q.a4.isolation import assert_can_evaluate
+
+    assert_can_evaluate(spec=spec, miniature=False)
     from f1q.a4.backend_select import CANDIDATE, evaluation_backend
     from f1q.a4.batched import evaluate_candidates_batched
 

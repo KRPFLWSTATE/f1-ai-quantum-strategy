@@ -426,6 +426,7 @@ def write_completion_report(
     engineering: str,
     gate_e: dict[str, Any],
     gate_f: dict[str, Any],
+    dest: Path | None = None,
 ) -> str:
     """Generate docs/PHASE_6_COMPLETION_REPORT.md from verified artifacts."""
     ev = root / "evidence/stage6_a4" / run_id
@@ -583,7 +584,7 @@ Independent verifier `{verify.get("n_pass")}/{verify.get("n_total")}` (`PRE_REPO
 ---
 Generated from `{ev}`.
 """
-    out = root / "docs" / "PHASE_6_COMPLETION_REPORT.md"
+    out = dest or (root / "evidence" / "stage6_a4" / run_id / "COMPLETION_SECTION.md")
     atomic_write_text(out, body)
     return sha256_file(out)
 
@@ -597,11 +598,13 @@ def write_validated_closure_report(
     engineering: str,
     gate_e: dict[str, Any],
     gate_f: dict[str, Any],
+    dest: Path | None = None,
 ) -> str:
     """Mandated docs/PHASE_6_VALIDATED_CLOSURE_REPORT.md plus historical completion alias."""
     write_completion_report(
         root, run_id, start_commit=start_commit, reviewed_commit=reviewed_commit,
         engineering=engineering, gate_e=gate_e, gate_f=gate_f,
+        dest=(dest.parent / "COMPLETION_SECTION.md") if dest is not None else None,
     )
     ev = root / "evidence/stage6_a4" / run_id
 
@@ -699,11 +702,8 @@ Prompt compliance: `{matrix.get("passed")}/{matrix.get("total")}`.
 ---
 Generated from `{ev}`. Phase 7 was not started.
 """
-    out = root / "docs" / "PHASE_6_VALIDATED_CLOSURE_REPORT.md"
+    out = dest or (root / "evidence" / "stage6_a4" / run_id / "VALIDATED_SECTION.md")
     atomic_write_text(out, body)
-    alias = root / "docs" / "PHASE_6_COMPLETION_REPORT.md"
-    if alias.is_file():
-        pass
     return sha256_file(out)
 
 

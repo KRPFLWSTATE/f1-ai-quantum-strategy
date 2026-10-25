@@ -147,7 +147,13 @@ def run_admission_check(
     write_json(ev / "REUSED_EVIDENCE.json", reused)
     copy_reused(root, ev)
     write_json(ev / "A3_INVALIDATION_LIVE.json", inspect_a3_defects())
-    parts = build_a4_partitions()
+    if miniature:
+        from f1q.a4.isolation import refuse_engineering_on_scientific_root, synthetic_miniature_partitions
+
+        refuse_engineering_on_scientific_root(root)
+        parts = synthetic_miniature_partitions()
+    else:
+        parts = build_a4_partitions()
     write_json(ev / "PARTITIONS.json", parts)
     write_json(ev / "RESOLVED_CONFIG.json", {"config": cfg, "config_hash": cfg_hash, "seed_hierarchy": SEED_HIERARCHY})
     fits = load_jsonl(ev / "ANCHOR_FITS.jsonl")
@@ -587,12 +593,15 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     cfg, cfg_hash = load_closure_config(root, config_rel)
     if cfg_hash != receipt.get("config_hash"):
         raise StructuralError("ADMISSION", "config hash mismatch")
+    from f1q.a4.isolated_admission import analysis_gate, resolve_runtime_caps, stop_predicate
+    from f1q.a4.isolation import ISOLATED_AMENDMENT_ID
     from f1q.a4.six_hour import AMENDMENT_ID, KERNEL_VERSION, is_six_hour
 
     six = is_six_hour(cfg)
-    wall_cap_s = float(cfg.get("campaign_wall_cap_s")) if six else CAMPAIGN_WALL_CAP_S
-    cpu_cap_s = float(cfg.get("campaign_cpu_cap_s")) if six else CAMPAIGN_CPU_CAP_S
-    if six and str(cfg.get("amendment_id")) != AMENDMENT_ID:
+    runtime_caps = resolve_runtime_caps(cfg)
+    wall_cap_s = float(runtime_caps["campaign_wall_cap_s"])
+    cpu_cap_s = float(runtime_caps["campaign_cpu_cap_s"])
+    if six and str(cfg.get("amendment_id")) not in {AMENDMENT_ID, ISOLATED_AMENDMENT_ID}:
         raise StructuralError("AMENDMENT", "six-hour flag without the frozen amendment id")
     miniature = bool(cfg.get("miniature") or receipt.get("miniature"))
     level = receipt["selected_world_level"]
@@ -857,7 +866,8 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
             _heartbeat(ev, campaign_t0=campaign_t0, phase="train", completed=completed, total=len(train_units), last_case=str(last), active_workers=n_w, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
 
     def _over_cap() -> bool:
-        return time.perf_counter() > t_deadline or cpu_seconds() > cpu_deadline
+        elapsed = time.perf_counter() - campaign_t0
+        return stop_predicate(elapsed, runtime_caps) or cpu_seconds() > cpu_deadline
 
     pool_train = run_pool(process_case_unit, train_units, workers=n_w, heartbeat=_hb, should_stop=_over_cap if six else None)
     labels = []

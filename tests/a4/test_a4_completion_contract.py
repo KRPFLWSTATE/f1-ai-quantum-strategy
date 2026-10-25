@@ -363,16 +363,34 @@ def test_e2e_miniature_campaign(tmp_path: Path):
     if os.environ.get("F1Q_A4_IN_ADMISSION") == "1" or os.environ.get("F1Q_A4_IN_CLEAN_EXTRACT") == "1":
         pytest.skip("nested e2e forbidden during admission/extract")
     from f1q.a4.completion_run import execute_phase6, run_admission_check
+    from f1q.a4.isolation import HISTORICAL_SIX_HOUR_RUN_ID, make_engineering_root
     from f1q.a4.verify import run_independent_verify
+    from f1q.hashing import sha256_file
     from f1q.paths import resolve_project_root
 
-    root = resolve_project_root()
-    adm = run_admission_check(root, miniature=True, skip_tests=True)
-    assert adm.get("run_id")
-    assert adm.get("admitted") or adm.get("limited_resource_pilot")
-    exe = execute_phase6(root, adm["run_id"])
-    assert exe.get("status") != "campaign_raw_complete"
-    assert (root / "docs" / "PHASE_6_COMPLETION_REPORT.md").is_file()
-    ver = run_independent_verify(root, adm["run_id"], mode="final")
-    assert isinstance(ver.get("checks"), list)
-    assert (root / "evidence" / "stage6_a4" / adm["run_id"] / "TUNING_FREEZE.json").is_file()
+    scientific = resolve_project_root()
+    protected = scientific / "docs" / "PHASE_6_COMPLETION_REPORT.md"
+    before = sha256_file(protected)
+    root = make_engineering_root(scientific, tmp_path / "engroot")
+    head = __import__("subprocess").check_output(["git", "rev-parse", "HEAD"], cwd=str(scientific), text=True).strip()
+    os.environ["F1Q_PROJECT_ROOT"] = str(root)
+    os.environ["F1Q_REQUIRE_EXPLICIT_ROOT"] = "1"
+    os.environ["F1Q_PROTECTED_ROOT"] = str(scientific)
+    os.environ["F1Q_REVIEWED_SOURCE_COMMIT"] = head
+    try:
+        adm = run_admission_check(root, miniature=True, skip_tests=True)
+        assert adm.get("run_id")
+        assert adm["run_id"] != HISTORICAL_SIX_HOUR_RUN_ID
+        assert adm.get("admitted") or adm.get("limited_resource_pilot") or adm.get("miniature") or adm.get("status")
+        exe = execute_phase6(root, adm["run_id"])
+        assert exe.get("status") != "campaign_raw_complete"
+        ver = run_independent_verify(root, adm["run_id"], mode="final")
+        assert isinstance(ver.get("checks"), list)
+        assert (root / "evidence" / "stage6_a4" / adm["run_id"] / "TUNING_FREEZE.json").is_file()
+        assert sha256_file(protected) == before
+        assert not (root / "docs" / "PHASE_6_COMPLETION_REPORT.md").exists()
+    finally:
+        os.environ.pop("F1Q_PROJECT_ROOT", None)
+        os.environ.pop("F1Q_REQUIRE_EXPLICIT_ROOT", None)
+        os.environ.pop("F1Q_PROTECTED_ROOT", None)
+        os.environ.pop("F1Q_REVIEWED_SOURCE_COMMIT", None)

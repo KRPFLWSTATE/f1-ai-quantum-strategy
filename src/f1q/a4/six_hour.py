@@ -58,7 +58,9 @@ DISK_RESERVE = 0.20
 
 
 def is_six_hour(cfg: dict[str, Any] | None) -> bool:
-    return str((cfg or {}).get("amendment_id") or "") == AMENDMENT_ID
+    from f1q.a4.isolation import ISOLATED_AMENDMENT_ID
+
+    return str((cfg or {}).get("amendment_id") or "") in {AMENDMENT_ID, ISOLATED_AMENDMENT_ID}
 
 
 def six_hour_caps(cfg: dict[str, Any] | None = None) -> dict[str, float]:
@@ -710,6 +712,11 @@ def run_six_hour_admission(root: Path, config_rel: str = "configs/stage6_a4_desi
     from f1q.a4.qpu_guard import assert_local_only
 
     assert_local_only()
+    cfg, _cfg_hash = load_closure_config(root, config_rel)
+    if str(cfg.get("amendment_id") or "") != AMENDMENT_ID:
+        from f1q.a4.isolated_admission import run_isolated_admission
+
+        return run_isolated_admission(root, config_rel)
     t0 = time.perf_counter()
     cpu0 = cpu_seconds()
     cfg, cfg_hash = load_closure_config(root, config_rel)
@@ -728,8 +735,8 @@ def run_six_hour_admission(root: Path, config_rel: str = "configs/stage6_a4_desi
         "0b697910-e8a2-474b-bc77-bc69ebb8e9c3",
         "fc5f0e00-d9e0-4f89-9eea-498461094969",
     }
-    if RUN_ID in preserved:
-        raise RuntimeError("refusing to write a preserved run id")
+    if RUN_ID in preserved or (ev / "ADMISSION_DECISION.json").is_file():
+        raise RuntimeError("refusing to overwrite the historical six-hour admission")
     ev.mkdir(parents=True, exist_ok=True)
     sealed = verify_sealed_splits(root)
     write_json(ev / "PARTITIONS.json", sealed["parts"])
@@ -740,6 +747,17 @@ def run_six_hour_admission(root: Path, config_rel: str = "configs/stage6_a4_desi
     py = sys.executable
     print(json.dumps({"phase": "pytest"}), flush=True)
     tests = _run_cmd([py, "-m", "pytest", "-q"], root, env)
+    if tests["exit_code"] != 0:
+        print(json.dumps({"phase": "pytest_failed_stop", "exit_code": tests["exit_code"]}), flush=True)
+        return {
+            "admitted": False,
+            "run_id": RUN_ID,
+            "selected_design": "NONE_RESOURCE_LIMIT",
+            "status": "not_admitted_tests",
+            "gates": {"tests": False},
+            "continued_to_parity": False,
+            "continued_to_rates": False,
+        }
     print(json.dumps({"phase": "doctor"}), flush=True)
     doctor = _run_cmd([py, "-m", "f1q", "doctor"], root, env)
     status = _run_cmd([py, "-m", "f1q", "status"], root, env)

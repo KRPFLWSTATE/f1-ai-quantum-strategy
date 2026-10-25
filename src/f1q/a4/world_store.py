@@ -11,6 +11,9 @@ from f1q.hashing import sha256_bytes, sha256_json
 
 
 def write_world_chunk(dest_dir: Path, rows: list[dict[str, Any]], *, prefix: str) -> dict[str, Any]:
+    from f1q.a4.isolation import guard_output_path
+
+    guard_output_path(dest_dir / "chunk.json.gz")
     dest_dir.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(rows, sort_keys=True, default=str).encode("utf-8")
     blob = gzip.compress(payload, compresslevel=6)

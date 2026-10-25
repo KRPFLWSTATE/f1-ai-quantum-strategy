@@ -27,6 +27,9 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
 
 
 def append_jsonl(path: Path, row: dict[str, Any]) -> None:
+    from f1q.a4.isolation import guard_output_path
+
+    guard_output_path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(row, sort_keys=True, default=str) + "\n")

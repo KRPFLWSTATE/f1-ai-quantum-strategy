@@ -1,0 +1,24 @@
+{
+  "schema": "design_r_isolated_probe_map.v1",
+  "frozen_before_measurement": true,
+  "workers": 8,
+  "race_compiled_concurrent": {
+    "families": 8,
+    "regimes": ["SC", "VSC"],
+    "plans_per_case": 4,
+    "worlds_per_case": 8,
+    "schedule": "eight_worker_spawn",
+    "projection": "pool_makespan divided by probe cells, times pooled cells; no second efficiency divisor"
+  },
+  "serial_race_cells": "ablation cells and offline continuations use the slowest single-task per-cell wall because those loops are serial in execute_phase6",
+  "builds": {"repetitions_per_depth": 2, "depths": ["C0_p1", "C0_p2", "C1_p1", "C1_p2"], "wall": "slowest build times unique builds divided by 8 once"},
+  "resamples": {"observations": 8, "pool_draws": 1024, "wall": "slowest times charged resamples, serial coordinator loop, not divided by 8"},
+  "donor_fits": {"depths_probed": ["C0_p1", "C1_p2"], "max_evals": 40, "wall": "slowest times best_found_fits, serial"},
+  "allocator": {"repetitions": 8, "wall": "slowest times operation rows, serial"},
+  "ablations": {"specifications_probed": 7, "scaled_as": "serial_race_cells"},
+  "offline": {"scaled_as": "serial_race_cells"},
+  "underprediction": "max(historical 26010/20752, 1+2*coefficient_of_variation)",
+  "wall_reserve": "compare projected wall to 17280; do not multiply by 1.20 again",
+  "efficiency_rule": "eight-worker makespan already contains contention",
+  "solo": "recorded separately and not used as a divisor"
+}

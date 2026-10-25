@@ -44,10 +44,13 @@ def main(argv: list[str] | None = None) -> int:
 
         cfg_path = root / args.config
         cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) if cfg_path.is_file() else {}
-        if str((cfg or {}).get("amendment_id") or "") == "design_r_six_hour_20261025" and not args.miniature:
+        amendment = str((cfg or {}).get("amendment_id") or "")
+        if amendment in {"design_r_six_hour_20261025", "design_r_isolated_preflight_20261025"} and not args.miniature:
             from f1q.a4.six_hour import run_six_hour_admission
 
             result = run_six_hour_admission(root, args.config)
+            if amendment == "design_r_isolated_preflight_20261025" and result.get("admitted"):
+                result = execute_phase6(root, result["run_id"], args.config)
             print(json.dumps({k: v for k, v in result.items() if k != "receipt"}, indent=2, sort_keys=True, default=str))
             return 0 if result.get("admitted") or result.get("status") == "not_admitted_resource_limit" else 2
         result = run_admission_check(root, args.config, miniature=args.miniature, skip_full_tests=args.skip_full_tests, run_id=args.run_id)

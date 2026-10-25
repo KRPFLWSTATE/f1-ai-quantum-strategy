@@ -147,6 +147,9 @@ def simulate_plan_world_scalar(
     parity: bool = False,
 ) -> dict[str, Any]:
     """Scalar RaceSimulator path. Production campaign must not call this."""
+    from f1q.a4.isolation import assert_can_evaluate
+
+    assert_can_evaluate(spec=spec, miniature=False)
     _KERNEL_COUNTERS["scalar_calls"] += 1
     if parity:
         _KERNEL_COUNTERS["parity_scalar_calls"] += 1

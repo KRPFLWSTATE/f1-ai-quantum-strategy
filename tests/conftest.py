@@ -45,3 +45,26 @@ def project(tmp_path: Path) -> Path:
 @pytest.fixture
 def project_root(project: Path) -> Path:
     return project
+
+
+@pytest.fixture(autouse=True)
+def engineering_isolation(monkeypatch):
+    """Tests are engineering callers. They do not receive the scientific registry."""
+    monkeypatch.setenv("F1Q_ENGINEERING_ONLY", "1")
+    from f1q.a4.isolation import pop_engineering, push_engineering
+
+    token = push_engineering(True)
+    yield
+    pop_engineering(token)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def protected_bytes_hold():
+    from f1q.a4.isolation import snapshot_protected
+
+    root = Path(__file__).resolve().parents[1]
+    before = snapshot_protected(root)
+    yield
+    after = snapshot_protected(root)
+    changed = [key for key, value in before.items() if after.get(key) != value]
+    assert not changed, f"protected bytes changed during the suite: {changed}"

@@ -105,6 +105,17 @@ def prepare_case(
     t0 = time.perf_counter()
     if str(partition) in {"finaltest", "final_test"}:
         raise StructuralError("FINAL_TEST_BOUNDARY", "refusing to prepare a final-test spec", path="prepare_case")
+    from f1q.a4.isolation import assert_can_prepare
+
+    assert_can_prepare(
+        family_id=family_id,
+        block_id=block_id,
+        regime=regime,
+        partition=partition,
+        index=index,
+        seed=seed,
+        miniature=False,
+    )
     spec = family_spec(
             family_id=family_id,
             block_id=block_id,

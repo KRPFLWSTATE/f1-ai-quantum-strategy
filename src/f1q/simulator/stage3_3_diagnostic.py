@@ -412,6 +412,9 @@ def verify_historical_stage3_3(root: Path) -> dict[str, Any]:
 def write_corrected_diagnostic(root: Path, *, path: Path | None = None) -> dict[str, Any]:
     """Write a *current* regression diagnostic. Refuses the immutable Stage 3.3 identity path."""
     out_path = path or (root / STAGE4_2_DIAGNOSTIC_RELPATH)
+    from f1q.a4.isolation import guard_output_path
+
+    guard_output_path(out_path)
     if out_path.resolve() == (root / CORRECTED_DIAGNOSTIC_RELPATH).resolve():
         raise ValueError(
             "refusing to overwrite immutable Stage 3.3 evidence identity; "
@@ -421,8 +424,12 @@ def write_corrected_diagnostic(root: Path, *, path: Path | None = None) -> dict[
     out_path.parent.mkdir(parents=True, exist_ok=True)
     text = json.dumps(doc, indent=2, sort_keys=True) + "\n"
     out_path.write_text(text, encoding="utf-8")
+    try:
+        reported = str(out_path.resolve().relative_to(root.resolve()))
+    except ValueError:
+        reported = str(out_path)
     return {
-        "path": str(out_path.relative_to(root)),
+        "path": reported,
         "sha256": sha256_file(out_path),
         "scientific_payload_sha256": doc["scientific_payload_sha256"],
         "document": doc,

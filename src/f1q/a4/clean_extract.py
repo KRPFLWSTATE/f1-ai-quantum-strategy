@@ -46,10 +46,16 @@ def run_clean_extract_e2e(root: Path) -> dict[str, Any]:
             capture_output=True,
             text=True,
         )
-        env = dict(os.environ)
+        from f1q.a4.isolation import child_env
+
+        env = child_env(tmp, dict(os.environ))
         env["PYTHONPATH"] = str(tmp / "src") + os.pathsep + env.get("PYTHONPATH", "")
         env["F1Q_A4_IN_CLEAN_EXTRACT"] = "1"
         env["F1Q_A4_IN_ADMISSION"] = "1"
+        env["F1Q_PROJECT_ROOT"] = str(tmp.resolve())
+        env["F1Q_REQUIRE_EXPLICIT_ROOT"] = "1"
+        env["F1Q_PROTECTED_ROOT"] = str(Path(root).resolve())
+        env["F1Q_ENGINEERING_ONLY"] = "1"
         head = env.get("F1Q_REVIEWED_SOURCE_COMMIT")
         if not head:
             import subprocess
@@ -64,7 +70,8 @@ def run_clean_extract_e2e(root: Path) -> dict[str, Any]:
             "from pathlib import Path\n"
             "from f1q.a4.completion_run import run_admission_check, execute_phase6\n"
             "from f1q.a4.verify import run_independent_verify\n"
-            "root = Path('.').resolve()\n"
+            "from f1q.paths import resolve_project_root\n"
+            "root = resolve_project_root()\n"
             "adm = run_admission_check(root, miniature=True, skip_tests=True)\n"
             "exe = execute_phase6(root, adm['run_id'])\n"
             "ver = run_independent_verify(root, adm['run_id'], mode='final')\n"

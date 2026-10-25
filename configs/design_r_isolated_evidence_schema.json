@@ -1,0 +1,11 @@
+{
+  "schema": "design_r_scientific_record.v1",
+  "frozen_before_outcomes": true,
+  "checkpoint_snapshot": "once per checkpoint id, canonical JSON, referenced by later rows",
+  "operation_index_row": "reference only; does not repeat the checkpoint snapshot",
+  "distribution_record": "once per checkpoint, family depth, donor policy and policy seed",
+  "paired_world_chunk": "lossless gzip compresslevel 6 from f1q.a4.world_store.write_world_chunk",
+  "parity_traces_included": false,
+  "crash_safe_allowance": "largest single artifact coexists with the rest of the tree during atomic replace",
+  "historical_formula_bytes": "n_units * 2000000 + evaluation_worlds * 200, reported and not the gate"
+}

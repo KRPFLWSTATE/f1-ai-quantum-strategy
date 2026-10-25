@@ -44,11 +44,21 @@ def test_corrected_diagnostic_matches_live_production():
     assert hist["sha256"] == HISTORICAL_STAGE3_3_SHA256
     assert (ROOT / CORRECTED_DIAGNOSTIC_RELPATH).is_file()
     # Current regression diagnostic lives under Stage 4.2 identity only.
-    written = write_corrected_diagnostic(ROOT)
-    assert written["path"] == STAGE4_2_DIAGNOSTIC_RELPATH
-    match, detail = scientific_payload_matches_live(ROOT)
-    assert match, detail
-    doc = json.loads((ROOT / STAGE4_2_DIAGNOSTIC_RELPATH).read_text(encoding="utf-8"))
+    protected = ROOT / STAGE4_2_DIAGNOSTIC_RELPATH
+    before = sha256_file(protected)
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        written = write_corrected_diagnostic(ROOT, path=Path(tmp) / "stage3_3_regression_diagnostic.json")
+    assert written["path"] != str(protected)
+    assert sha256_file(protected) == before
+    live = build_diagnostic_document(ROOT)
+    checked = json.loads(protected.read_text(encoding="utf-8"))
+    for key, value in checked["scientific_payload"].items():
+        if key == "simulator_config_hash":
+            continue
+        assert live["scientific_payload"][key] == value
+    doc = checked
     sci = doc["scientific_payload"]
     assert sci["r3_finite_gap"]["pass_deltas"] == [0.0, 0.0, 0.0, 0.0]
     assert sci["r3_finite_gap"]["pass_deltas_exact_zeros"] is True

@@ -31,6 +31,9 @@ def sha256_json(obj: Any) -> str:
 
 
 def atomic_write_bytes(path: Path, data: bytes, *, overwrite: bool = True) -> str:
+    from f1q.a4.isolation import guard_output_path
+
+    guard_output_path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists() and not overwrite:
         raise FileExistsError(f"refusing to overwrite immutable record: {path}")
