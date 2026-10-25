@@ -1,0 +1,15 @@
+{
+  "admitted": false,
+  "amendment_id": "design_r_isolated_preflight_20261025",
+  "continued_to_corpus": false,
+  "decision_sha256": "6d46d655ec1bca47c065fe92edcbbd9aef840fe9d7d1f310fc4e3ecbcc2d4552",
+  "error": "AttributeError: module 'shutil' has no attribute 'mkdtemp'",
+  "final_test_accessed": false,
+  "gates": {},
+  "phase_7_authorised": false,
+  "qpu_jobs": 0,
+  "registered_scientific_parents_executed": 0,
+  "run_id": "9a32a40a-1790-4f5b-a955-ce093b44cddc",
+  "status": "not_admitted_exception",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/kawinperera/f1-ai-quantum-strategy-design-r-isolated-preflight/src/f1q/a4/isolated_admission.py\", line 220, in run_isolated_admission\n    return _run_isolated_body(root, ev, cfg, cfg_hash, run_id, caps, t0, cpu0)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kawinperera/f1-ai-quantum-strategy-design-r-isolated-preflight/src/f1q/a4/isolated_admission.py\", line 259, in _run_isolated_body\n    tests = run_isolated_pytest(root)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/kawinperera/f1-ai-quantum-strategy-design-r-isolated-preflight/src/f1q/a4/isolated_admission.py\", line 56, in run_isolated_pytest\n    tmp = Path(shutil.mkdtemp(prefix=\"f1q-isolated-suite-\"))\n               ^^^^^^^^^^^^^^\nAttributeError: module 'shutil' has no attribute 'mkdtemp'\n"
+}

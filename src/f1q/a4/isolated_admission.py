@@ -7,6 +7,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import traceback
 from pathlib import Path
@@ -53,7 +54,7 @@ def run_isolated_pytest(root: Path) -> dict[str, Any]:
     """Full suite in a copy that does not contain the scientific outcome registry."""
     before = snapshot_protected(root)
     seal_before = scientific_seal_audit(root)
-    tmp = Path(shutil.mkdtemp(prefix="f1q-isolated-suite-"))
+    tmp = Path(tempfile.mkdtemp(prefix="f1q-isolated-suite-"))
     try:
         def _ignore(directory: str, names: list[str]) -> set[str]:
             ignored = {n for n in names if n in {".git", "__pycache__", ".venv", ".venv-fresh"} or n.endswith(".pyc")}

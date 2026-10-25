@@ -4,7 +4,9 @@ amendment_id: design_r_isolated_preflight_20261025
 architecture: A4_checkpoint_candidate_generation_downstream_reranking
 prospective: true
 outcomes_opened_at_freeze: false
-run_id: 9a32a40a-1790-4f5b-a955-ce093b44cddc
+run_id: ee3945ba-ee39-48e5-a81b-85b981806f2a
+aborted_before_checks_run_id: 9a32a40a-1790-4f5b-a955-ce093b44cddc
+aborted_before_checks_reason: "AttributeError shutil.mkdtemp; no pytest, parity, rates, or parents"
 selected_design: R
 design_f_excluded: true
 design_f_exclusion_reason: "Design F remains outside the retained 86400 CPU-second cap. This instruction does not launch it."

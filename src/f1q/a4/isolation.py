@@ -18,7 +18,8 @@ from typing import Any, Iterator
 _ENGINEERING: ContextVar[bool] = ContextVar("f1q_engineering_context", default=False)
 
 ISOLATED_AMENDMENT_ID = "design_r_isolated_preflight_20261025"
-ISOLATED_RUN_ID = "9a32a40a-1790-4f5b-a955-ce093b44cddc"
+ISOLATED_RUN_ID = "ee3945ba-ee39-48e5-a81b-85b981806f2a"
+ABORTED_BEFORE_CHECKS_RUN_ID = "9a32a40a-1790-4f5b-a955-ce093b44cddc"
 HISTORICAL_SIX_HOUR_RUN_ID = "ed37296f-55c5-44e5-8ffd-77410d4789de"
 
 EXPOSED_MINIATURE_RUNS = (
@@ -46,6 +47,7 @@ PROTECTED_PREFIXES = (
     "evidence/stage6_a4/cdd21ec6-9d95-48a5-806b-64fd7e296434/",
     "evidence/stage6_a4/eeb03bdd-4fdf-4e1e-baf6-590b54c11d4a/",
     "evidence/stage6_a4/engineering_byproducts/",
+    "evidence/stage6_a4/9a32a40a-1790-4f5b-a955-ce093b44cddc/",
     "evidence/performance_feasibility/",
     "evidence/performance_feasibility_followup/",
 )
@@ -73,6 +75,7 @@ PRESERVED_RUN_IDS = {
     "0b697910-e8a2-474b-bc77-bc69ebb8e9c3",
     "fc5f0e00-d9e0-4f89-9eea-498461094969",
     HISTORICAL_SIX_HOUR_RUN_ID,
+    ABORTED_BEFORE_CHECKS_RUN_ID,
     *EXPOSED_MINIATURE_RUNS,
 }
 
