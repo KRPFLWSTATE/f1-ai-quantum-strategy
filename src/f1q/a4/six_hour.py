@@ -296,7 +296,10 @@ def project_resources(
         + int(counts["offline_continuations"])
     )
     race_scalar_s = race_cells * scalar
-    race_accelerated_s = race_scalar_s / speedup
+    if rates.get("compiled_s_per_cell") is not None:
+        race_accelerated_s = race_cells * float(rates["compiled_s_per_cell"])
+    else:
+        race_accelerated_s = race_scalar_s / speedup
     build_s = float(rates["build_cpu_s"])
     resample_s = int(counts["charged_resamples"]) * float(rates["resample_s"])
     fit_s = float(rates["optimiser_s"])
@@ -402,6 +405,7 @@ def measure_race_and_distributions(root: Path) -> dict[str, Any]:
     ratios = []
     scalar_cell = []
     compiled_cell = []
+    candidate_scalar_calls = 0
     try:
         select_evaluation_backend("candidate")
         # Warm the compiler on one synthetic cell before the steady ratios.
@@ -428,6 +432,8 @@ def measure_race_and_distributions(root: Path) -> dict[str, Any]:
             checkpoint_hash=warm.checkpoint_hash,
             nominal_budget_s=30.0,
         )
+        if calls["n"] != 0:
+            raise RuntimeError(f"warmup candidate entered scalar continue_to_finish {calls['n']} times")
         calls["n"] = 0
         for fam_i, fam in enumerate(families):
             for regime in ("SC", "VSC"):
@@ -468,6 +474,7 @@ def measure_race_and_distributions(root: Path) -> dict[str, Any]:
                 scalar_s = time.perf_counter() - t0
                 t1 = time.perf_counter()
                 select_evaluation_backend("candidate")
+                before_candidate = calls["n"]
                 evaluate_candidates_on_bank(
                     spec,
                     pc.checkpoint_blob,
@@ -482,6 +489,11 @@ def measure_race_and_distributions(root: Path) -> dict[str, Any]:
                     nominal_budget_s=30.0,
                 )
                 compiled_s = time.perf_counter() - t1
+                if calls["n"] != before_candidate:
+                    candidate_scalar_calls += calls["n"] - before_candidate
+                    raise RuntimeError(
+                        f"candidate path entered scalar continue_to_finish {calls['n'] - before_candidate} times"
+                    )
                 cells = len(plans) * len(worlds)
                 ratios.append(scalar_s / compiled_s if compiled_s > 0 else 0.0)
                 scalar_cell.append(scalar_s / cells)
@@ -542,8 +554,6 @@ def measure_race_and_distributions(root: Path) -> dict[str, Any]:
     finally:
         select_evaluation_backend("legacy")
         RaceEngine.continue_to_finish = real
-    if calls["n"] != 0:
-        raise RuntimeError(f"candidate path entered scalar continue_to_finish {calls['n']} times")
     if not ratios or min(ratios) <= 0:
         raise RuntimeError("race ratio panel produced no positive ratio")
     return {
@@ -556,7 +566,7 @@ def measure_race_and_distributions(root: Path) -> dict[str, Any]:
         "build_s_by_depth": build_times,
         "resample_s": max(resample_times) if resample_times else None,
         "n_legal": n_legal,
-        "scalar_continue_calls_during_candidate": calls["n"],
+        "scalar_continue_calls_during_candidate": candidate_scalar_calls,
         "carried_speedup_not_used": CARRIED_SPEEDUP,
         "panel": "engperf.sixhour 8 families x SC/VSC x 3 plans x 8 worlds after one warmup cell",
     }
@@ -776,6 +786,7 @@ def run_six_hour_admission(root: Path, config_rel: str = "configs/stage6_a4_desi
     rates = {
         "scalar_s_per_cell": float(rates_raw["scalar_s_per_cell"]),
         "speedup": float(rates_raw["speedup"]),
+        "compiled_s_per_cell": float(rates_raw["compiled_s_per_cell"]),
         "build_cpu_s": float(build_cpu_s),
         "resample_s": float(rates_raw["resample_s"]),
         "optimiser_s": float(optimiser_s),
