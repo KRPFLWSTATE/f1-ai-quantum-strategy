@@ -1,0 +1,50 @@
+{
+  "admitted": false,
+  "amendment_id": "design_r_isolated_preflight_20261025",
+  "config_hash": "993e491e82f281cbdfdfc90b91b12ecdda35e5dc96794fa09412f7ff3368f1ea",
+  "continued_to_parity": false,
+  "continued_to_rates": false,
+  "decision_sha256": "ae3be025c26ceb8f418da0be2acec2bd5797d8062cae7eb003e8ed0492c5fd93",
+  "final_test_accessed": false,
+  "gates": {
+    "seal": true,
+    "snapshot": true,
+    "tests": false
+  },
+  "phase_7_authorised": false,
+  "qpu_jobs": 0,
+  "registered_scientific_parents_executed": 0,
+  "reviewed_source_commit": "e78c65d4b67f4d722e12135af965895571cdf864",
+  "run_id": "ee3945ba-ee39-48e5-a81b-85b981806f2a",
+  "status": "not_admitted_tests",
+  "tests": {
+    "exit_code": 1,
+    "isolated_root": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q-isolated-suite-kzo1rn6a",
+    "pytest_exit_code": 1,
+    "seal_after": {
+      "defects": [],
+      "exposed_miniature_runs_preserved": true,
+      "final_test_outcomes_read": false,
+      "n_distinct_registered_parents_exposed_in_tests": 6,
+      "new_split_outcome_files": [],
+      "ok": true,
+      "old_split_called_untouched": false,
+      "registered_scientific_parents_executed_by_intended_campaign": 0
+    },
+    "seal_after_ok": true,
+    "seal_before": {
+      "defects": [],
+      "exposed_miniature_runs_preserved": true,
+      "final_test_outcomes_read": false,
+      "n_distinct_registered_parents_exposed_in_tests": 6,
+      "new_split_outcome_files": [],
+      "ok": true,
+      "old_split_called_untouched": false,
+      "registered_scientific_parents_executed_by_intended_campaign": 0
+    },
+    "seal_before_ok": true,
+    "snapshot_unchanged": true
+  },
+  "tests_stderr_tail": "",
+  "tests_stdout_tail": ".............................F.......................................... [ 23%]\n.............s.........................................................s [ 46%]\n........................................................................ [ 69%]\n........................................................................ [ 92%]\n........................                                                 [100%]\n=================================== FAILURES ===================================\n/opt/homebrew/Cellar/python@3.12/3.12.13_4/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py:571: subprocess.CalledProcessError: Command '['git', 'rev-parse', 'HEAD']' returned non-zero exit status 128.\n=========================== short test summary info ============================\nFAILED tests/a4/test_a4_completion_contract.py::test_e2e_miniature_campaign\n"
+}

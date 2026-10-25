@@ -40,7 +40,7 @@ A2 lineage preserved. A3 artifacts preserved as an unsuccessful implementation. 
 
 ## Next authorised unit
 
-The six-hour Design R attempt `ed37296f-55c5-44e5-8ffd-77410d4789de` was not admitted. See `docs/PHASE_6_DESIGN_R_AMENDED_CLOSURE_REPORT.md`. Design R and Design F were not started. Phase 7 is not authorised. Do not open final-test. Not hardware. Do not resume `e85ee977-…`, `41c28597-…`, `fcbb3e38-…`, `3de109c7-…`, `09806343-…`, `0b697910-…`, `fc5f0e00-…`, or `ed37296f-…`.
+The six-hour Design R attempt `ed37296f-55c5-44e5-8ffd-77410d4789de` was not admitted. The isolated preflight `ee3945ba-ee39-48e5-a81b-85b981806f2a` stopped at pytest (`not_admitted_tests`) before parity, resource measurement, or any registered parent. See `docs/DESIGN_R_ISOLATED_PREFLIGHT_AND_CONTINUATION_REPORT.md`. Design R and Design F were not admitted. Phase 7 is not authorised. Do not open final-test. Not hardware. Do not resume `e85ee977-…`, `41c28597-…`, `fcbb3e38-…`, `3de109c7-…`, `09806343-…`, `0b697910-…`, `fc5f0e00-…`, `ed37296f-…`, `9a32a40a-…`, or `ee3945ba-…`.
 
 ## Files a future Agent must read first
 
