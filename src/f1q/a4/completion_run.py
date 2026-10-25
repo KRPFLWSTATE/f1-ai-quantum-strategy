@@ -587,6 +587,13 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     cfg, cfg_hash = load_closure_config(root, config_rel)
     if cfg_hash != receipt.get("config_hash"):
         raise StructuralError("ADMISSION", "config hash mismatch")
+    from f1q.a4.six_hour import AMENDMENT_ID, KERNEL_VERSION, is_six_hour
+
+    six = is_six_hour(cfg)
+    wall_cap_s = float(cfg.get("campaign_wall_cap_s")) if six else CAMPAIGN_WALL_CAP_S
+    cpu_cap_s = float(cfg.get("campaign_cpu_cap_s")) if six else CAMPAIGN_CPU_CAP_S
+    if six and str(cfg.get("amendment_id")) != AMENDMENT_ID:
+        raise StructuralError("AMENDMENT", "six-hour flag without the frozen amendment id")
     miniature = bool(cfg.get("miniature") or receipt.get("miniature"))
     level = receipt["selected_world_level"]
     selected_design = str(receipt.get("selected_design") or "")
@@ -605,8 +612,20 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         raise StructuralError("PARTITIONS", "live run partitions must include train/tune/calib block lists", path=str(ev / "PARTITIONS.json"))
     receipt["consumed"] = True
     write_json(receipt_path, receipt)
-    t_deadline = time.perf_counter() + CAMPAIGN_WALL_CAP_S
-    cpu_deadline = cpu_seconds() + CAMPAIGN_CPU_CAP_S
+    t_deadline = time.perf_counter() + wall_cap_s
+    cpu_deadline = cpu_seconds() + cpu_cap_s
+    wall_deadline_epoch = time.time() + wall_cap_s
+    if six:
+        from f1q.a4.backend_select import select_evaluation_backend
+        from f1q.simulator.compiled_kernel import KERNEL_VERSION as live_kernel
+
+        if cfg.get("evaluation_backend") != "candidate" or cfg.get("kernel_version") != live_kernel:
+            raise StructuralError("BACKEND", "six-hour campaign requires compiled-event-loop-2", value=cfg.get("kernel_version"))
+        if live_kernel != KERNEL_VERSION:
+            raise StructuralError("BACKEND", "kernel version mismatch", value=live_kernel)
+        select_evaluation_backend("candidate")
+        if not miniature and selected_design != DESIGN_R:
+            raise StructuralError("DESIGN", "six-hour amendment executes Design R only", value=selected_design)
     workers_spec = receipt.get("machine") or choose_workers()
     if miniature:
         train_blocks = parts["train"][:2]
@@ -660,10 +679,19 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     reset_distribution_counters()
     dist_cache: dict[str, Any] = {}
     mech_cases = train_blocks[:mech_n]
+    from f1q.a4.unit_ledger import checkpoints_for_parent as _ck_early
+
+    fam_index_early = {f: i for i, f in enumerate(cartesian_family_ids())}
+
+    def _regimes_for(block: dict[str, Any]) -> list[str]:
+        if six and selected_design == DESIGN_R and not miniature:
+            return list(_ck_early(block, design=DESIGN_R, family_index=fam_index_early[block["family_id"]]))
+        return ["SC", "VSC"]
+
     for bi, block in enumerate(mech_cases):
         if time.perf_counter() > t_deadline or cpu_seconds() > cpu_deadline:
             break
-        for regime in ("SC", "VSC"):
+        for regime in _regimes_for(block):
             pc = prepare_case(
                 family_id=block["family_id"], block_id=block["block_id"], regime=regime,
                 partition="train", index=int(block["index"]), seed=int(block["seed"]),
@@ -718,7 +746,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
                         })
                 X_by[key].append(xrow)
                 y_by[key].append(yrow)
-        _heartbeat(ev, campaign_t0=t_deadline - CAMPAIGN_WALL_CAP_S, phase="donor_train", completed=bi + 1, total=len(mech_cases), last_case=block["block_id"], active_workers=1, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
+        _heartbeat(ev, campaign_t0=t_deadline - wall_cap_s, phase="donor_train", completed=bi + 1, total=len(mech_cases), last_case=block["block_id"], active_workers=1, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
 
     models = {}
     for key in FAMILY_DEPTH_KEYS:
@@ -736,7 +764,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     for bi, block in enumerate(tune_blocks):
         if time.perf_counter() > t_deadline:
             break
-        for regime in ("SC", "VSC"):
+        for regime in _regimes_for(block):
             pc = prepare_case(family_id=block["family_id"], block_id=block["block_id"], regime=regime, partition="tune", index=int(block["index"]), seed=int(block["seed"]), n_planning=2, n_evaluation=4)
             rng = np.random.default_rng(int(block["seed"]))
             for key in FAMILY_DEPTH_KEYS:
@@ -758,7 +786,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
                     lab = label_from_pool(dist=dist, pool=pool, legal_table=pc.legal_table, resample_s=time.perf_counter() - t_rs)
                     policy_scores[key][policy].append(float(lab["best_of_pool_normalised_regret"]))
                     append_jsonl(ev / "DONOR_SELECTOR_TUNING.jsonl", {"block_id": block["block_id"], "regime": regime, "family_depth": key, "policy": policy, "score": lab["best_of_pool_normalised_regret"], "expectation_diagnostic_only": dist.expectation_scaled, "not_expectation_label": True, "split": "tune"})
-        _heartbeat(ev, campaign_t0=t_deadline - CAMPAIGN_WALL_CAP_S, phase="donor_tune", completed=bi + 1, total=len(tune_blocks), last_case=block["block_id"], active_workers=1, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
+        _heartbeat(ev, campaign_t0=t_deadline - wall_cap_s, phase="donor_tune", completed=bi + 1, total=len(tune_blocks), last_case=block["block_id"], active_workers=1, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
 
     donor_policy_by_fd = {}
     complexity = ["fixed", "nn", "learned", "best_found", "random"]
@@ -796,7 +824,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
                     "donor_policy_by_fd": donor_policy_by_fd,
                     "budgets": budgets,
                     "option_specs": option_specs if option_specs is not None else specs,
-                    "n_policy_seeds": n_seeds,
+                    "n_policy_seeds": 1 if (six and design_for_ck == DESIGN_R and not miniature and split == "calib") else n_seeds,
                     "pool_draws": 64 if miniature else POOL_DRAWS,
                     "persist_worlds": persist,
                     "config_hash": cfg_hash,
@@ -804,6 +832,9 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
                     "freeze": freeze,
                     "allocator_artifact": allocator_artifact,
                     "use_frozen_allocator": use_frozen_allocator,
+                    "evaluation_backend": "candidate" if six else None,
+                    "required_kernel_version": KERNEL_VERSION if six else None,
+                    "wall_deadline_epoch": wall_deadline_epoch if six else None,
                     "n_eval_by_budget": (
                         {str(int(PRIMARY_BUDGET_S)): int(n_eval), **{str(int(b)): 128 for b in budgets if int(b) != int(PRIMARY_BUDGET_S)}}
                         if (not miniature and design_for_ck == DESIGN_R and split == "calib")
@@ -813,7 +844,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         return out
 
     train_units = _units(train_blocks, "train", worlds["training"]["planning"], worlds["training"]["evaluation"])
-    n_w = int(workers_spec.get("workers") or 1)
+    n_w = 8 if (six and not miniature) else int(workers_spec.get("workers") or 1)
     campaign_t0 = time.perf_counter()
     def _hb(msg):
         completed = 0
@@ -825,7 +856,10 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         else:
             _heartbeat(ev, campaign_t0=campaign_t0, phase="train", completed=completed, total=len(train_units), last_case=str(last), active_workers=n_w, elapsed_cpu_s=cpu_seconds(), aggregate_rss=current_rss_bytes(), eta_s=None, evidence_bytes=_dir_bytes(ev))
 
-    pool_train = run_pool(process_case_unit, train_units, workers=n_w, heartbeat=_hb)
+    def _over_cap() -> bool:
+        return time.perf_counter() > t_deadline or cpu_seconds() > cpu_deadline
+
+    pool_train = run_pool(process_case_unit, train_units, workers=n_w, heartbeat=_hb, should_stop=_over_cap if six else None)
     labels = []
     n_train_ok = 0
     for rec in pool_train.results:
@@ -859,7 +893,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         write_json(ev / "ALLOCATOR_MODEL.json", alloc.to_artifact())
 
     tune_units = _units(tune_blocks, "tune", worlds["tuning"]["planning"], worlds["tuning"]["evaluation"])
-    pool_tune = run_pool(process_case_unit, tune_units, workers=n_w)
+    pool_tune = run_pool(process_case_unit, tune_units, workers=n_w, should_stop=_over_cap if six else None)
     n_tune_ok = 0
     for rec in pool_tune.results:
         if not rec.get("ok"):
@@ -873,7 +907,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         "donor_policy_by_fd": {k: v["policy"] for k, v in donor_policy_by_fd.items()},
         "frozen_c0_depth": c0,
         "frozen_c1_depth": c1,
-        "allowed_options": ["stop_fallback", "classical_only", c0, c1],
+        "allowed_options": ["classical_only", c0, c1] if (six and not miniature) else ["stop_fallback", "classical_only", c0, c1],
         "ridge_l2": 1.0,
         "primary_lambda": 0.0,
         "dispatch_threshold": 0.0,
@@ -902,7 +936,7 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
         allowed = set(freeze["allowed_options"])
         if opts - allowed:
             raise StructuralError("FREEZE", "calibration options differ from TUNING_FREEZE.json", path="calib_units", value=sorted(opts - allowed))
-    pool_cal = run_pool(process_case_unit, calib_units, workers=n_w, heartbeat=_hb)
+    pool_cal = run_pool(process_case_unit, calib_units, workers=n_w, heartbeat=_hb, should_stop=_over_cap if six else None)
     residuals = []
     block_max = {}
     halfwidths = []
@@ -1075,40 +1109,46 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
     write_json(ev / "MECHANISM_RESULTS.json", {"distribution_counters": distribution_counters(), "prepare_counters": prepare_counters(), "policies": list(donor_policy_by_fd)})
     from f1q.a4.unit_ledger import ablation_specs as _ablation_specs
     ablation_rows = []
-    for ab in _ablation_specs():
-        payload = {
-            "unit_id": f"ablation:{ab['ablation_id']}",
-            "family_id": calib_blocks[0]["family_id"],
-            "block_id": calib_blocks[0]["block_id"],
-            "regime": "SC",
-            "partition": "calib",
-            "index": int(calib_blocks[0]["index"]),
-            "seed": int(calib_blocks[0]["seed"]),
-            "n_planning": 2 if miniature else worlds["calibration"]["planning"],
-            "n_evaluation": 4 if miniature else min(int(worlds["calibration"]["evaluation"]), 128),
-            "donor_bank": bank,
-            "donor_policy_by_fd": donor_policy_by_fd,
-            "budgets": [PRIMARY_BUDGET_S],
-            "option_specs": [(ab["ablation_id"], ab["mode"], ab.get("family_depth"))],
-            "n_policy_seeds": 1,
-            "pool_draws": 64 if miniature else POOL_DRAWS,
-            "persist_worlds": False,
-            "config_hash": cfg_hash,
-            "source_commit": head,
-            "freeze": {**freeze, "dispatch_threshold": ab.get("threshold_override", freeze.get("dispatch_threshold")), "primary_lambda": ab.get("lambda_override", freeze.get("primary_lambda"))},
-            "allocator_artifact": alloc_art,
-            "use_frozen_allocator": ab["mode"] == "frozen_allocator",
-        }
-        rec = process_case_unit(payload)
-        ablation_rows.append({"ablation_id": ab["ablation_id"], "ok": rec.get("ok"), "n_rows": len(rec.get("rows") or []), "mean_loss": (rec.get("rows") or [{}])[0].get("mean_loss"), "executed": True})
-        for row in rec.get("rows") or []:
-            row = dict(row)
-            row["ablation_id"] = ab["ablation_id"]
-            append_jsonl(ev / "ABLATION_ROWS.jsonl", {k: v for k, v in row.items() if k != "eval_worlds"})
+    ablation_parents = calib_blocks if (six and not miniature) else calib_blocks[:1]
+    for parent in ablation_parents:
+        ab_regime = _regimes_for(parent)[0] if (six and not miniature) else "SC"
+        for ab in _ablation_specs():
+            payload = {
+                "unit_id": f"ablation:{parent['block_id']}:{ab['ablation_id']}",
+                "family_id": parent["family_id"],
+                "block_id": parent["block_id"],
+                "regime": ab_regime,
+                "partition": "calib",
+                "index": int(parent["index"]),
+                "seed": int(parent["seed"]),
+                "n_planning": 2 if miniature else worlds["calibration"]["planning"],
+                "n_evaluation": 4 if miniature else min(int(worlds["calibration"]["evaluation"]), 128),
+                "donor_bank": bank,
+                "donor_policy_by_fd": donor_policy_by_fd,
+                "budgets": [PRIMARY_BUDGET_S],
+                "option_specs": [(ab["ablation_id"], ab["mode"], ab.get("family_depth"))],
+                "n_policy_seeds": 1,
+                "pool_draws": 64 if miniature else POOL_DRAWS,
+                "persist_worlds": False,
+                "config_hash": cfg_hash,
+                "source_commit": head,
+                "freeze": {**freeze, "dispatch_threshold": ab.get("threshold_override", freeze.get("dispatch_threshold")), "primary_lambda": ab.get("lambda_override", freeze.get("primary_lambda"))},
+                "allocator_artifact": alloc_art,
+                "use_frozen_allocator": ab["mode"] == "frozen_allocator",
+                "evaluation_backend": "candidate" if six else None,
+                "required_kernel_version": KERNEL_VERSION if six else None,
+                "wall_deadline_epoch": wall_deadline_epoch if six else None,
+            }
+            rec = process_case_unit(payload)
+            ablation_rows.append({"ablation_id": ab["ablation_id"], "block_id": parent["block_id"], "ok": rec.get("ok"), "n_rows": len(rec.get("rows") or []), "mean_loss": (rec.get("rows") or [{}])[0].get("mean_loss"), "executed": True})
+            for row in rec.get("rows") or []:
+                row = dict(row)
+                row["ablation_id"] = ab["ablation_id"]
+                append_jsonl(ev / "ABLATION_ROWS.jsonl", {k: v for k, v in row.items() if k != "eval_worlds"})
     write_json(ev / "ABLATION_RESULTS.json", {"executed": ablation_rows, "n": len(ablation_rows), "boolean_presence_is_not_evidence": True})
     write_json(ev / "BOUNDARY_RESULTS.json", {"n_portfolio_diff": n_port_diff, "n_executed_diff": n_exec_diff, "harm_blocks": harm})
     write_json(ev / "PRECISION_AND_STAGE7_SIZING.json", {"mc_target": mc_t, "sizing": sizing, "halfwidths": halfwidths})
-    write_json(ev / "CAMPAIGN_RESOURCES.json", {"workers": workers_spec, "train_pool": pool_train.as_dict(), "tune_pool": pool_tune.as_dict(), "calib_pool": pool_cal.as_dict(), "cpu_s": cpu_seconds(), "wall_cap_s": CAMPAIGN_WALL_CAP_S})
+    write_json(ev / "CAMPAIGN_RESOURCES.json", {"workers": workers_spec, "train_pool": pool_train.as_dict(), "tune_pool": pool_tune.as_dict(), "calib_pool": pool_cal.as_dict(), "cpu_s": cpu_seconds(), "wall_cap_s": wall_cap_s, "cpu_cap_s": cpu_cap_s})
     write_json(ev / "DEVIATIONS.json", {"limited_resource_pilot": bool(receipt.get("limited_resource_pilot")), "miniature": miniature, "notes": []})
     claims = claims_ledger(gate_e=gate_e, gate_f=gate_f, proxy_headroom="ZERO")
     write_json(ev / "CLAIMS_LEDGER.json", claims)
@@ -1118,8 +1158,9 @@ def execute_phase6(root: Path, run_id: str, config_rel: str = "configs/stage6_a4
 
     pre = run_independent_verify(root, run_id, mode="pre")
     write_json(ev / "PRE_REPORT_VERIFY.json", pre)
-    write_completion_report(root, run_id, start_commit=START_COMMIT_EXPECTED, reviewed_commit=head, engineering=engineering, gate_e=gate_e, gate_f=gate_f)
-    write_validated_closure_report(root, run_id, start_commit=START_COMMIT_EXPECTED, reviewed_commit=head, engineering=engineering, gate_e=gate_e, gate_f=gate_f)
+    if not six:
+        write_completion_report(root, run_id, start_commit=START_COMMIT_EXPECTED, reviewed_commit=head, engineering=engineering, gate_e=gate_e, gate_f=gate_f)
+        write_validated_closure_report(root, run_id, start_commit=START_COMMIT_EXPECTED, reviewed_commit=head, engineering=engineering, gate_e=gate_e, gate_f=gate_f)
     run_receipt = {
         "run_id": run_id,
         "status": engineering,

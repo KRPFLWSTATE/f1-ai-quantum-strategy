@@ -72,6 +72,7 @@ class PoolRun:
     cpu_s: float = 0.0
     peak_coordinator_rss: int = 0
     retries: int = 0
+    stopped: bool = False
     heartbeats: list[dict[str, Any]] = field(default_factory=list)
 
     def as_dict(self) -> dict[str, Any]:
@@ -88,6 +89,7 @@ class PoolRun:
             "cpu_s": self.cpu_s,
             "peak_coordinator_rss": self.peak_coordinator_rss,
             "retries": self.retries,
+            "stopped": self.stopped,
             "false_worker_claim": self.workers > 1 and len(pids) < 2,
         }
 
@@ -101,6 +103,7 @@ def run_pool(
     heartbeat: Callable[[str], None] | None = None,
     ordered: bool = True,
     task_ceiling_s: float = TASK_CEILING_S,
+    should_stop: Callable[[], bool] | None = None,
 ) -> PoolRun:
     spec = worker_spec or choose_workers()
     n = int(workers if workers is not None else spec["workers"])
@@ -114,6 +117,10 @@ def run_pool(
     if n == 1:
         run.startup_s = time.perf_counter() - t0
         for i, payload in enumerate(payloads):
+            if should_stop is not None and should_stop():
+                run.stopped = True
+                run.results.append({"ok": False, "error": "campaign_cap", "stopped": True, "unit_id": payload.get("unit_id"), "unit_index": i})
+                continue
             rec = _wrap(fn, payload)
             rec["unit_index"] = i
             run.results.append(rec)
@@ -151,6 +158,12 @@ def run_pool(
             done, pending = wait(pending, timeout=min(5.0, HEARTBEAT_S), return_when=FIRST_COMPLETED)
             now = time.perf_counter()
             run.peak_coordinator_rss = max(run.peak_coordinator_rss, current_rss_bytes())
+            if should_stop is not None and should_stop():
+                run.stopped = True
+                for fut in list(pending):
+                    fut.cancel()
+                pending.clear()
+                break
             if heartbeat and now - last_hb >= HEARTBEAT_S:
                 _emit_hb(
                     heartbeat,
@@ -200,10 +213,16 @@ def run_pool(
                         },
                     )
                     last_hb = now
-        run.results = [by_index[i] for i in range(len(payloads))] if ordered else list(by_index.values())
+        if ordered:
+            run.results = [
+                by_index.get(i) or {"ok": False, "error": "campaign_cap", "stopped": True, "unit_index": i, "unit_id": payloads[i].get("unit_id")}
+                for i in range(len(payloads))
+            ]
+        else:
+            run.results = list(by_index.values())
     run.wall_s = time.perf_counter() - t0
     run.cpu_s = cpu_seconds() - cpu0
-    if n > 1 and len(set(run.worker_pids)) < 2:
+    if n > 1 and len(set(run.worker_pids)) < 2 and not run.stopped:
         raise RuntimeError(f"workers>1 reported but distinct worker PIDs={sorted(set(run.worker_pids))}")
     return run
 

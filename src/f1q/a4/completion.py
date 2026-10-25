@@ -367,6 +367,28 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
     from f1q.a4 import worker_init
 
     worker_init.apply()
+    backend_name = payload.get("evaluation_backend")
+    scalar_calls = {"n": 0}
+    kernel_version = None
+    if backend_name == "candidate":
+        from f1q.a4.backend_select import select_evaluation_backend
+        from f1q.simulator.compiled_kernel import KERNEL_VERSION
+        from f1q.simulator.engine import RaceEngine
+
+        kernel_version = KERNEL_VERSION
+        required = payload.get("required_kernel_version")
+        if required and required != KERNEL_VERSION:
+            return {"ok": False, "error": "kernel_version_mismatch", "unit_id": payload.get("unit_id"), "kernel_version": KERNEL_VERSION}
+        select_evaluation_backend("candidate")
+        real_finish = RaceEngine.continue_to_finish
+
+        def _count_scalar(self, *args, **kwargs):
+            scalar_calls["n"] += 1
+            return real_finish(self, *args, **kwargs)
+
+        RaceEngine.continue_to_finish = _count_scalar
+    if payload.get("wall_deadline_epoch") is not None and time.time() > float(payload["wall_deadline_epoch"]):
+        return {"ok": False, "error": "campaign_wall_cap", "stopped": True, "unit_id": payload.get("unit_id")}
     t0 = time.perf_counter()
     reset_prepare_counters()
     reset_distribution_counters()
@@ -471,7 +493,7 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
                         "source_commit": payload.get("source_commit"),
                     }
                 )
-    return {
+    out = {
         "ok": True,
         "unit_id": payload["unit_id"],
         "case_id": pc.case_id,
@@ -498,7 +520,14 @@ def process_case_unit(payload: dict[str, Any]) -> dict[str, Any]:
         "rss": current_rss_bytes(),
         "worker_pid": os.getpid(),
         "cache_stats": {"continuation": cache.stats(), "distribution": dist_cache.stats()},
+        "evaluation_backend": backend_name or "legacy",
+        "kernel_version": kernel_version,
+        "scalar_continue_calls": scalar_calls["n"],
     }
+    if backend_name == "candidate" and scalar_calls["n"] != 0:
+        out["ok"] = False
+        out["error"] = "scalar_fallback"
+    return out
 
 
 def option_specs_all() -> list[tuple[str, str, tuple[str, int] | None]]:

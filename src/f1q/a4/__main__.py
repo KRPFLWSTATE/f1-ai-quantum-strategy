@@ -40,6 +40,16 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2, sort_keys=True, default=str))
         return 0 if result.get("ok") else 1
     if args.admission_check or args.preflight:
+        import yaml
+
+        cfg_path = root / args.config
+        cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8")) if cfg_path.is_file() else {}
+        if str((cfg or {}).get("amendment_id") or "") == "design_r_six_hour_20261025" and not args.miniature:
+            from f1q.a4.six_hour import run_six_hour_admission
+
+            result = run_six_hour_admission(root, args.config)
+            print(json.dumps({k: v for k, v in result.items() if k != "receipt"}, indent=2, sort_keys=True, default=str))
+            return 0 if result.get("admitted") or result.get("status") == "not_admitted_resource_limit" else 2
         result = run_admission_check(root, args.config, miniature=args.miniature, skip_full_tests=args.skip_full_tests, run_id=args.run_id)
         print(json.dumps({k: v for k, v in result.items() if k != "receipt"}, indent=2, sort_keys=True, default=str))
         return 0 if (

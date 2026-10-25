@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import sys
 import tempfile
 from pathlib import Path
 from typing import Any
@@ -57,7 +58,8 @@ def run_clean_extract_e2e(root: Path) -> dict[str, Any]:
             env["F1Q_REVIEWED_SOURCE_COMMIT"] = head
         import subprocess
 
-        py = str(root / ".venv" / "bin" / "python")
+        py_path = root / ".venv" / "bin" / "python"
+        py = str(py_path if py_path.is_file() else Path(sys.executable))
         code = (
             "from pathlib import Path\n"
             "from f1q.a4.completion_run import run_admission_check, execute_phase6\n"
