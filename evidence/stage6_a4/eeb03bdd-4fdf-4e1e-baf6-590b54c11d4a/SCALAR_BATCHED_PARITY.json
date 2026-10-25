@@ -1,0 +1,61 @@
+{
+  "commitment_classes_observed": [
+    "changed-state",
+    "fallback",
+    "fallback_continuation",
+    "late",
+    "recommendation",
+    "stale",
+    "timely"
+  ],
+  "covers_eight_families": true,
+  "covers_sc_vsc": true,
+  "families": [
+    "fam.green_pit_high.tyre_near_linear.traffic_dense",
+    "fam.green_pit_high.tyre_near_linear.traffic_sparse",
+    "fam.green_pit_high.tyre_nonlinear.traffic_dense",
+    "fam.green_pit_high.tyre_nonlinear.traffic_sparse",
+    "fam.green_pit_low.tyre_near_linear.traffic_dense",
+    "fam.green_pit_low.tyre_near_linear.traffic_sparse",
+    "fam.green_pit_low.tyre_nonlinear.traffic_dense",
+    "fam.green_pit_low.tyre_nonlinear.traffic_sparse"
+  ],
+  "kernel_counters": {
+    "batched_calls": 37,
+    "batched_worlds": 3082,
+    "parity_scalar_calls": 3072,
+    "scalar_calls": 3072
+  },
+  "n_cells": 3072,
+  "n_checkpoints": 32,
+  "n_fail": 0,
+  "n_worlds": 32,
+  "ok": true,
+  "regimes": [
+    "SC",
+    "VSC"
+  ],
+  "rows_hash": "7ba095f46f131041988da06db153c36fff450a5747ff6dd0b58d7465c9a08ae8",
+  "tolerance": 1e-12,
+  "variety": {
+    "covers_fallback_timely_late_stale_changed": true,
+    "missing": [],
+    "observed": [
+      "changed-state",
+      "fallback",
+      "fallback_continuation",
+      "late",
+      "recommendation",
+      "stale",
+      "timely"
+    ],
+    "ok": true,
+    "required": [
+      "changed-state",
+      "fallback",
+      "late",
+      "stale",
+      "timely"
+    ]
+  }
+}

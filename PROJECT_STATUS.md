@@ -40,7 +40,7 @@ A2 lineage preserved. A3 artifacts preserved as an unsuccessful implementation. 
 
 ## Next authorised unit
 
-The user instruction of 25 October 2026 authorised one prospective six-hour Design R attempt, run `ed37296f-55c5-44e5-8ffd-77410d4789de`, recorded in `docs/PHASE_6_DESIGN_R_SIX_HOUR_AMENDMENT.md`. That attempt is not yet admitted and has not opened registered outcomes. Phase 7 is not authorised. Do not open final-test. Not hardware. Do not resume `e85ee977-…`, `41c28597-…`, `fcbb3e38-…`, `3de109c7-…`, `09806343-…`, `0b697910-…`, or `fc5f0e00-…`. Design F is excluded. The previous 11,520-second admission wall is historical and is not this attempt's threshold.
+The six-hour Design R attempt `ed37296f-55c5-44e5-8ffd-77410d4789de` was not admitted. See `docs/PHASE_6_DESIGN_R_AMENDED_CLOSURE_REPORT.md`. Design R and Design F were not started. Phase 7 is not authorised. Do not open final-test. Not hardware. Do not resume `e85ee977-…`, `41c28597-…`, `fcbb3e38-…`, `3de109c7-…`, `09806343-…`, `0b697910-…`, `fc5f0e00-…`, or `ed37296f-…`.
 
 ## Files a future Agent must read first
 

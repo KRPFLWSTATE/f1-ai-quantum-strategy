@@ -1,0 +1,150 @@
+{
+  "config": {
+    "admission_wall_limit_s": 11520,
+    "allocator_options": [
+      "stop_fallback",
+      "classical_only",
+      "C0_p1",
+      "C0_p2",
+      "C1_p1",
+      "C1_p2"
+    ],
+    "architecture": "A4_checkpoint_candidate_generation_downstream_reranking",
+    "bootstrap": {
+      "n_boot": 2000,
+      "seed": 20260921
+    },
+    "campaign_cpu_cap_s": 86400,
+    "campaign_wall_cap_s": 14400,
+    "config_id": "stage6_a4_closure",
+    "donor_policies": [
+      "fixed",
+      "nn",
+      "random",
+      "learned",
+      "best_found"
+    ],
+    "effect_threshold": 0.02,
+    "exclusion_codes": [
+      "CLOSED_DECISION_WINDOW",
+      "NO_LEGAL_NONFALLBACK_ACTION"
+    ],
+    "family_depths": [
+      "C0_p1",
+      "C0_p2",
+      "C1_p1",
+      "C1_p2"
+    ],
+    "final_test_open": false,
+    "hardware_execution_enabled": false,
+    "n_stochastic_seeds": 3,
+    "nominal_budgets_s": [
+      5,
+      10,
+      30,
+      60,
+      120
+    ],
+    "phase_7_authorised": false,
+    "pool_draws": 1024,
+    "portfolio_k": 4,
+    "precision_half_width": 0.01,
+    "primary_budget_s": 30,
+    "prior_admission_run_id": "3de109c7-30d9-4cb0-827f-dbd82c4c509d",
+    "prior_failed_run_id": "09806343-f940-4f33-9e0f-eb2855d0714b",
+    "q_quantile": 0.95,
+    "qpu_execution_authorised": false,
+    "reviewed_source_commit_placeholder": "REVIEWED_SOURCE_COMMIT",
+    "ridge_lambdas": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "schema_version": "1.1.0",
+    "scientific_exclusions_frozen": true,
+    "stage7_block_ceiling": 160,
+    "stage7_block_floor": 80,
+    "world_ladder": {
+      "baseline": {
+        "calibration": {
+          "evaluation": 2048,
+          "planning": 32
+        },
+        "offline": {
+          "evaluation": 2048,
+          "planning": 32
+        },
+        "training": {
+          "evaluation": 32,
+          "planning": 4
+        },
+        "tuning": {
+          "evaluation": 128,
+          "planning": 8
+        }
+      },
+      "minimum": {
+        "calibration": {
+          "evaluation": 2048,
+          "planning": 16
+        },
+        "offline": {
+          "evaluation": 2048,
+          "planning": 16
+        },
+        "training": {
+          "evaluation": 16,
+          "planning": 2
+        },
+        "tuning": {
+          "evaluation": 64,
+          "planning": 4
+        }
+      },
+      "preferred": {
+        "calibration": {
+          "evaluation": 2048,
+          "planning": 64
+        },
+        "offline": {
+          "evaluation": 2048,
+          "planning": 64
+        },
+        "training": {
+          "evaluation": 64,
+          "planning": 8
+        },
+        "tuning": {
+          "evaluation": 256,
+          "planning": 16
+        }
+      }
+    },
+    "zero_additional_spending": true
+  },
+  "config_hash": "013cb04fbb7d29aa11f72df2e88defe46e7e0e24489927c2c05cec1f91ded633",
+  "seed_hierarchy": {
+    "circuit_resample_seed": {
+      "count_per_policy_seed": 1,
+      "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+      "not_an_extra_times_three": true
+    },
+    "mechanism_resample_seeds": {
+      "count": 30,
+      "role": "donor-selector/pool diagnostic only"
+    },
+    "policy_seed": {
+      "count": 3,
+      "role": "outer Phase 6 stochastic arm identity",
+      "values": [
+        0,
+        1,
+        2
+      ]
+    },
+    "stage7_design_seeds": {
+      "count": 10,
+      "executed_in_phase6": false
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "admission_wall_limit_s": 11520.0,
+  "calibration_evaluation_starts_at": 2048,
+  "campaign_cpu_cap_s": 86400.0,
+  "dossier_constraints": {
+    "checkpoint_bounded_units": true,
+    "provisional_cpu_hour_ceiling": 24,
+    "ram_fraction": 0.6
+  },
+  "last_resort": "INCOMPLETE_ENGINEERING_RESOURCE_LIMIT",
+  "may_not_drop_denominators": true,
+  "outcomes_opened": false,
+  "prior_75min_and_60min_were_implementation_added": true,
+  "prior_admission_disposition": "SUPERSEDED_RESOURCE_MODEL_ONLY",
+  "prior_admission_run": "3de109c7-30d9-4cb0-827f-dbd82c4c509d",
+  "prospective": true,
+  "schema": "f1q.a4.implementation_resource_amendment.v1",
+  "seed_hierarchy": {
+    "circuit_resample_seed": {
+      "count_per_policy_seed": 1,
+      "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+      "not_an_extra_times_three": true
+    },
+    "mechanism_resample_seeds": {
+      "count": 30,
+      "role": "donor-selector/pool diagnostic only"
+    },
+    "policy_seed": {
+      "count": 3,
+      "role": "outer Phase 6 stochastic arm identity",
+      "values": [
+        0,
+        1,
+        2
+      ]
+    },
+    "stage7_design_seeds": {
+      "count": 10,
+      "executed_in_phase6": false
+    }
+  },
+  "user_protection_wall_s": 14400.0,
+  "world_ladders": {
+    "baseline": {
+      "calibration": {
+        "evaluation": 2048,
+        "planning": 32
+      },
+      "offline": {
+        "evaluation": 2048,
+        "planning": 32
+      },
+      "training": {
+        "evaluation": 32,
+        "planning": 4
+      },
+      "tuning": {
+        "evaluation": 128,
+        "planning": 8
+      }
+    },
+    "minimum": {
+      "calibration": {
+        "evaluation": 2048,
+        "planning": 16
+      },
+      "offline": {
+        "evaluation": 2048,
+        "planning": 16
+      },
+      "training": {
+        "evaluation": 16,
+        "planning": 2
+      },
+      "tuning": {
+        "evaluation": 64,
+        "planning": 4
+      }
+    },
+    "preferred": {
+      "calibration": {
+        "evaluation": 2048,
+        "planning": 64
+      },
+      "offline": {
+        "evaluation": 2048,
+        "planning": 64
+      },
+      "training": {
+        "evaluation": 64,
+        "planning": 8
+      },
+      "tuning": {
+        "evaluation": 256,
+        "planning": 16
+      }
+    }
+  }
+}

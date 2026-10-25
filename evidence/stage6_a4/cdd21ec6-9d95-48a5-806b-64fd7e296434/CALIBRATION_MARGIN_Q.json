@@ -1,0 +1,14 @@
+{
+  "consequence_n24_p95": "for n=24 this is the maximum residual",
+  "formula": "ceil((n+1)*p) clipped to n",
+  "index_one_based": 2,
+  "is_maximum": true,
+  "n": 2,
+  "not_numpy_interpolated_percentile": true,
+  "ordered": [
+    0.0,
+    0.0
+  ],
+  "p": 0.95,
+  "q": 0.0
+}

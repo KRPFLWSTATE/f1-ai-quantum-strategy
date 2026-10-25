@@ -1,0 +1,122 @@
+{
+  "checks": [
+    {
+      "expected": true,
+      "name": "evidence_dir_exists",
+      "observed": true,
+      "pass": true
+    },
+    {
+      "expected": "F_or_R_or_validated_resource_limit",
+      "name": "limited_pilot_cannot_pass_gates_or_closure",
+      "observed": "limited_resource_pilot",
+      "pass": false,
+      "reason": "0b697910-class limited diagnostic is invalid for Phase 6 closure or Gate E/F"
+    },
+    {
+      "expected": 0,
+      "name": "fresh_split_disjoint_retired",
+      "observed": 4,
+      "pass": false
+    },
+    {
+      "expected": 0,
+      "name": "no_finaltest_overlap",
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "partitions_ok_flag",
+      "pass": true
+    },
+    {
+      "expected": 120,
+      "name": "train_parents_registered_120",
+      "observed": 120,
+      "pass": true
+    },
+    {
+      "expected": 80,
+      "name": "tune_parents_registered_80",
+      "observed": 80,
+      "pass": true
+    },
+    {
+      "expected": 24,
+      "name": "calib_parents_registered_24",
+      "observed": 24,
+      "pass": true
+    },
+    {
+      "expected": [
+        "C0_p2",
+        "C1_p2",
+        "classical_only",
+        "stop_fallback"
+      ],
+      "name": "freeze_vs_calib_rows",
+      "observed": [
+        "C0_p1"
+      ],
+      "pass": false
+    },
+    {
+      "expected": false,
+      "name": "qpu_not_authorised",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "final_test_unopened",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "name": "historical_hash_ANCHOR_FITS.jsonl",
+      "observed": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "pass": true
+    },
+    {
+      "expected": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "name": "historical_hash_MANIFEST.json",
+      "observed": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "pass": true
+    },
+    {
+      "name": "donor_bank_four_keys",
+      "pass": true
+    },
+    {
+      "expected": 32,
+      "name": "donor_count_32",
+      "observed": 32,
+      "pass": true
+    },
+    {
+      "expected": ">=2 pids if W>1",
+      "name": "real_worker_pids",
+      "observed": 4,
+      "pass": true
+    },
+    {
+      "n": 55,
+      "n_ok": 55,
+      "name": "manifest_all_hashed",
+      "pass": true
+    },
+    {
+      "name": "prior_0b697910_failure_audit_present",
+      "pass": true
+    }
+  ],
+  "closure_claim": false,
+  "config_hash_fn": "7e0337eec982abfab17599a2ceb4b9ecfd976a67261dea8f5df19ea0fd259070",
+  "mode": "final",
+  "n_pass": 15,
+  "n_total": 18,
+  "ok": false,
+  "run_id": "0b697910-e8a2-474b-bc77-bc69ebb8e9c3",
+  "selected_design": "minimum"
+}

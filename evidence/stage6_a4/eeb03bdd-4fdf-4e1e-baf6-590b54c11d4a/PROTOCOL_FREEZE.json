@@ -1,0 +1,59 @@
+{
+  "config_hash": "013cb04fbb7d29aa11f72df2e88defe46e7e0e24489927c2c05cec1f91ded633",
+  "datetime_utc": "2026-10-25T11:51:16Z",
+  "limited_pilot_spec": null,
+  "limited_resource_pilot": false,
+  "n_stochastic_seeds": 1,
+  "nominal_budgets_s": [
+    5,
+    30
+  ],
+  "pool_draws": 64,
+  "portfolio_k": 4,
+  "primary_budget_s": 30,
+  "reviewed_source_commit": "d12be15362dcea5381baff1ca3fe323645044ad2",
+  "seed_hierarchy": {
+    "circuit_resample_seed": {
+      "count_per_policy_seed": 1,
+      "derivation": "sha256(policy_seed, case_id, family_depth) -> int31",
+      "not_an_extra_times_three": true
+    },
+    "mechanism_resample_seeds": {
+      "count": 30,
+      "role": "donor-selector/pool diagnostic only"
+    },
+    "policy_seed": {
+      "count": 3,
+      "role": "outer Phase 6 stochastic arm identity",
+      "values": [
+        0,
+        1,
+        2
+      ]
+    },
+    "stage7_design_seeds": {
+      "count": 10,
+      "executed_in_phase6": false
+    }
+  },
+  "selected_world_level": "preferred",
+  "worlds": {
+    "calibration": {
+      "evaluation": 8,
+      "planning": 2
+    },
+    "offline": {
+      "evaluation": 4,
+      "planning": 2
+    },
+    "training": {
+      "evaluation": 4,
+      "planning": 2
+    },
+    "tuning": {
+      "evaluation": 4,
+      "planning": 2
+    }
+  },
+  "written_before_opening_calibration_outcomes": true
+}

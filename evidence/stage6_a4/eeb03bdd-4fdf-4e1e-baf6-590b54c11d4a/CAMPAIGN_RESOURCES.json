@@ -1,0 +1,96 @@
+{
+  "calib_pool": {
+    "cpu_s": 205.68390799999986,
+    "distinct_worker_pids": [
+      44683,
+      44684,
+      44685,
+      44686
+    ],
+    "false_worker_claim": false,
+    "n_distinct_worker_pids": 4,
+    "n_ok": 4,
+    "n_results": 4,
+    "peak_coordinator_rss": 6296240128,
+    "retries": 0,
+    "startup_s": 0.00019524991512298584,
+    "stopped": false,
+    "task_counts": {
+      "44683": 1,
+      "44684": 1,
+      "44685": 1,
+      "44686": 1
+    },
+    "wall_s": 53.01293500000611,
+    "workers_requested": 8
+  },
+  "cpu_cap_s": 86400.0,
+  "cpu_s": 996.161182,
+  "train_pool": {
+    "cpu_s": 125.41347100000002,
+    "distinct_worker_pids": [
+      44661,
+      44662,
+      44663,
+      44664
+    ],
+    "false_worker_claim": false,
+    "n_distinct_worker_pids": 4,
+    "n_ok": 4,
+    "n_results": 4,
+    "peak_coordinator_rss": 6296240128,
+    "retries": 0,
+    "startup_s": 0.009925459045916796,
+    "stopped": false,
+    "task_counts": {
+      "44661": 1,
+      "44662": 1,
+      "44663": 1,
+      "44664": 1
+    },
+    "wall_s": 33.88061433308758,
+    "workers_requested": 8
+  },
+  "tune_pool": {
+    "cpu_s": 130.10319800000002,
+    "distinct_worker_pids": [
+      44670,
+      44671,
+      44672,
+      44673
+    ],
+    "false_worker_claim": false,
+    "n_distinct_worker_pids": 4,
+    "n_ok": 4,
+    "n_results": 4,
+    "peak_coordinator_rss": 6296240128,
+    "retries": 0,
+    "startup_s": 0.00018087495118379593,
+    "stopped": false,
+    "task_counts": {
+      "44670": 1,
+      "44671": 1,
+      "44672": 1,
+      "44673": 1
+    },
+    "wall_s": 34.469141291920096,
+    "workers_requested": 8
+  },
+  "wall_cap_s": 14400.0,
+  "workers": {
+    "available_ram_bytes": 25769803776,
+    "blas_threads_per_worker": 1,
+    "cpu_safe_cap": 8,
+    "denominator_source": "measured_peak_worker_rss_times_safety_multiplier",
+    "logical_cpus": 10,
+    "measured_peak_worker_rss_bytes": 937115648,
+    "memory_safe_cap": 10,
+    "mp_context": "spawn",
+    "per_worker_rss_budget_bytes": 1405673472,
+    "ram_limit_bytes": 15461882265,
+    "replaced_assumed_512mib": true,
+    "rule": "min(cpu_count-2, floor(0.60*RAM / (measured_peak_worker_RSS * 1.5)), 8); floor 1",
+    "safety_multiplier": 1.5,
+    "workers": 8
+  }
+}

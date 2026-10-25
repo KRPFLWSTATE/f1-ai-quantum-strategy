@@ -1,0 +1,33 @@
+{
+  "GATE_E": {
+    "BOUNDARY_MECHANISM_PATH_AVAILABLE": true,
+    "GATE_E_SCIENTIFIC_VALUE": "PASS_BOUNDARY_POSITIVE",
+    "SUPERIORITY_PATH_AVAILABLE": false,
+    "n_matched_k": 32,
+    "proxy_headroom_zero": true,
+    "quantum_incremental_evaluated_cases": 16,
+    "reason": "registered F/R sample would support a positive boundary/mechanism result; superiority path closed",
+    "superiority_reason": "PROXY_HEADROOM_ZERO"
+  },
+  "GATE_F": {
+    "GATE_F_LOCAL_PRECISION_AND_RESOURCES": "FAIL",
+    "PHASE_7_AUTHORISED": false,
+    "PHASE_7_BOUNDARY_STUDY_READY": false,
+    "PHASE_7_OPERATIONAL_READY": false,
+    "PHASE_7_SUPERIORITY_READY": false,
+    "n_calib_parents": 24,
+    "reason": "miniature campaign is engineering evidence only; not 24 calibration parents"
+  },
+  "PHASE_6_ENGINEERING": "INCOMPLETE_ENGINEERING",
+  "final_test_accessed": false,
+  "n_cal_ok": 4,
+  "n_train_ok": 4,
+  "n_tune_ok": 4,
+  "not_campaign_raw_complete": true,
+  "phase_7_authorised": false,
+  "q": 0.0,
+  "qpu_jobs": 0,
+  "run_id": "cdd21ec6-9d95-48a5-806b-64fd7e296434",
+  "selected_world_level": "NONE",
+  "status": "INCOMPLETE_ENGINEERING"
+}

@@ -1,0 +1,22 @@
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.05465366691350937}
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.05314349988475442}
+{"family_depth": "C0_p1", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 9.179515749914572}
+{"family_depth": "C0_p2", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 9.019635542063043}
+{"family_depth": "C1_p1", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 6.605966583127156}
+{"family_depth": "C1_p2", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 6.625220540910959}
+{"kind": "four_family_depths", "wall_s": 31.43674208293669}
+{"kind": "donor_policy", "policy": "fixed", "wall_s": 6.630752624943852}
+{"kind": "donor_policy", "policy": "nn", "wall_s": 6.637126666959375}
+{"kind": "donor_policy", "policy": "random", "wall_s": 6.658467292087153}
+{"kind": "donor_policy", "policy": "best_found", "wall_s": 6.6479606670327485}
+{"kind": "resample_30", "n_seeds": 3, "not_expectation_label": true, "wall_s": 0.10887437500059605}
+{"budget_s": 5, "kind": "budget", "wall_s": 6.67548529105261}
+{"budget_s": 10, "kind": "budget", "wall_s": 6.608323542168364}
+{"budget_s": 30, "kind": "budget", "wall_s": 6.604553249897435}
+{"budget_s": 60, "kind": "budget", "wall_s": 6.778802125016227}
+{"budget_s": 120, "kind": "budget", "wall_s": 6.645041707903147}
+{"coverage": true, "kind": "offline", "n_legal": 100, "wall_s": 228.89302962482907}
+{"kind": "calib_2048", "n_eval": 32, "requested": 32, "wall_s": 22.314909583888948}
+{"kind": "pool_one", "pids": [45413], "throughput": 0.28555669243857623, "wall_s": 3.501931583043188}
+{"efficiency": 0.6210462045270921, "kind": "pool_multi", "pids": [45662, 45663, 45661, 45660], "throughput": 0.7093756000651519, "wall_s": 5.638761749956757, "workers": 4}
+{"kind": "case_unit", "wall_s": 4.6156128329457715}

@@ -1,0 +1,28 @@
+{
+  "admission_wall_limit_s": 17280.0,
+  "admission_wall_s": 28414.700906329537,
+  "conservative_cpu_s": 87554.49388312986,
+  "gates": {
+    "admission_wall": false,
+    "backend_uniform": true,
+    "campaign_wall": false,
+    "cpu": false,
+    "crafted_quantum_executed": true,
+    "design_f_not_launched": true,
+    "disk": false,
+    "doctor": true,
+    "independent_counts": true,
+    "k_once": true,
+    "kernel_hash": true,
+    "literal_parity": true,
+    "miniature": true,
+    "numba_import": true,
+    "preflight_wall": true,
+    "ram": true,
+    "sealed_split": false,
+    "tests": false,
+    "workers_8": true
+  },
+  "reason": "one or more six-hour admission gates failed",
+  "required": true
+}

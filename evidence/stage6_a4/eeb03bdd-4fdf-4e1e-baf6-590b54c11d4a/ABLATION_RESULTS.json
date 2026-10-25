@@ -1,0 +1,62 @@
+{
+  "boolean_presence_is_not_evidence": true,
+  "executed": [
+    {
+      "ablation_id": "always_classical",
+      "block_id": "a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "executed": true,
+      "mean_loss": 0.02631578947368421,
+      "n_rows": 1,
+      "ok": true
+    },
+    {
+      "ablation_id": "fixed_threshold",
+      "block_id": "a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "executed": true,
+      "mean_loss": 0.02631578947368421,
+      "n_rows": 1,
+      "ok": true
+    },
+    {
+      "ablation_id": "always_quantum",
+      "block_id": "a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "executed": true,
+      "mean_loss": 0.02631578947368421,
+      "n_rows": 1,
+      "ok": true
+    },
+    {
+      "ablation_id": "no_learned_donor",
+      "block_id": "a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "executed": true,
+      "mean_loss": 0.02631578947368421,
+      "n_rows": 1,
+      "ok": true
+    },
+    {
+      "ablation_id": "c0_for_c1",
+      "block_id": "a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "executed": true,
+      "mean_loss": 0.02631578947368421,
+      "n_rows": 1,
+      "ok": true
+    },
+    {
+      "ablation_id": "no_margin",
+      "block_id": "a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "executed": true,
+      "mean_loss": 0.02631578947368421,
+      "n_rows": 1,
+      "ok": true
+    },
+    {
+      "ablation_id": "positive_lambda",
+      "block_id": "a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000",
+      "executed": true,
+      "mean_loss": 0.02631578947368421,
+      "n_rows": 1,
+      "ok": true
+    }
+  ],
+  "n": 7
+}

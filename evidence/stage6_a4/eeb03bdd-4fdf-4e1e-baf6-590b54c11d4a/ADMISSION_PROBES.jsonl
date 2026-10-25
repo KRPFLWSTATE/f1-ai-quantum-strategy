@@ -1,0 +1,22 @@
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_dense", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "SC", "wall_s": 0.028131416998803616}
+{"family_id": "fam.green_pit_high.tyre_near_linear.traffic_sparse", "kind": "prepare", "n_legal": 100, "n_qubits": 20, "regime": "VSC", "wall_s": 0.02765266690403223}
+{"family_depth": "C0_p1", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 4.793825084110722}
+{"family_depth": "C0_p2", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 4.640191416023299}
+{"family_depth": "C1_p1", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 3.4073740001767874}
+{"family_depth": "C1_p2", "k": 4, "kind": "family_depth", "pool_draws": 64, "wall_s": 3.4239932908676565}
+{"kind": "four_family_depths", "wall_s": 16.268619499867782}
+{"kind": "donor_policy", "policy": "fixed", "wall_s": 3.426658249925822}
+{"kind": "donor_policy", "policy": "nn", "wall_s": 3.4357398331630975}
+{"kind": "donor_policy", "policy": "random", "wall_s": 3.4416717919521034}
+{"kind": "donor_policy", "policy": "best_found", "wall_s": 3.440455500036478}
+{"kind": "resample_30", "n_seeds": 3, "not_expectation_label": true, "wall_s": 0.05419929209165275}
+{"budget_s": 5, "kind": "budget", "wall_s": 3.6501369171310216}
+{"budget_s": 10, "kind": "budget", "wall_s": 3.564679333008826}
+{"budget_s": 30, "kind": "budget", "wall_s": 3.564772624988109}
+{"budget_s": 60, "kind": "budget", "wall_s": 3.4665497499518096}
+{"budget_s": 120, "kind": "budget", "wall_s": 3.4516343330033123}
+{"coverage": true, "kind": "offline", "n_legal": 100, "wall_s": 121.63736275001429}
+{"kind": "calib_2048", "n_eval": 32, "requested": 32, "wall_s": 11.408982082968578}
+{"kind": "pool_one", "pids": [44423], "throughput": 0.5695927605698982, "wall_s": 1.7556402911432087}
+{"efficiency": 0.6737316222611708, "kind": "pool_multi", "pids": [44589, 44587, 44588, 44590], "throughput": 1.5350106184279044, "wall_s": 2.605845166137442, "workers": 4}
+{"kind": "case_unit", "wall_s": 2.0007556246127933}

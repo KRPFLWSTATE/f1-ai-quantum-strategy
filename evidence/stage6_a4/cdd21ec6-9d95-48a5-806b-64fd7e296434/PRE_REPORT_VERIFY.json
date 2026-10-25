@@ -1,0 +1,89 @@
+{
+  "checks": [
+    {
+      "expected": true,
+      "name": "evidence_dir_exists",
+      "observed": true,
+      "pass": true
+    },
+    {
+      "expected": 0,
+      "name": "fresh_split_disjoint_retired",
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "expected": 0,
+      "name": "no_finaltest_overlap",
+      "observed": 0,
+      "pass": true
+    },
+    {
+      "name": "partitions_ok_flag",
+      "pass": true
+    },
+    {
+      "expected": [
+        "C0_p1",
+        "C1_p2",
+        "classical_only",
+        "stop_fallback"
+      ],
+      "name": "freeze_vs_calib_rows",
+      "observed": [],
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "qpu_not_authorised",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": false,
+      "name": "final_test_unopened",
+      "observed": false,
+      "pass": true
+    },
+    {
+      "expected": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "name": "historical_hash_ANCHOR_FITS.jsonl",
+      "observed": "b4d3f84212e674a3bcdb8dbf06cb4baf62d773b6dbd75728d916107484e2e27a",
+      "pass": true
+    },
+    {
+      "expected": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "name": "historical_hash_MANIFEST.json",
+      "observed": "8f620c8fc9048cf27c304847efe7fa79a3eb00aac2f7af6a7b5f0c97db0be70e",
+      "pass": true
+    },
+    {
+      "name": "donor_bank_four_keys",
+      "pass": true
+    },
+    {
+      "expected": 32,
+      "name": "donor_count_32",
+      "observed": 32,
+      "pass": true
+    },
+    {
+      "expected": ">=2 pids if W>1",
+      "name": "real_worker_pids",
+      "observed": 4,
+      "pass": true
+    },
+    {
+      "name": "prior_0b697910_failure_audit_present",
+      "pass": true
+    }
+  ],
+  "closure_claim": false,
+  "config_hash_fn": "b7a21af918a789096aab5f98a78643c3e54c73d3ee1900d6f7cbbb382ef2ea30",
+  "mode": "pre",
+  "n_pass": 13,
+  "n_total": 13,
+  "ok": true,
+  "run_id": "cdd21ec6-9d95-48a5-806b-64fd7e296434",
+  "selected_design": "MINIATURE"
+}

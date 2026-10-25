@@ -1,0 +1,260 @@
+{
+  "admitted": false,
+  "amendment_id": "design_r_six_hour_20261025",
+  "capacity": {
+    "cold_start_reps_s": [
+      38.053636292228475,
+      37.695131624350324,
+      42.503465499030426
+    ],
+    "cold_start_wall_s": 42.503465499030426,
+    "efficiency_8": 0.46288885835714266,
+    "efficiency_8_reps": [
+      0.46288885835714266,
+      0.46848045616493905,
+      0.4943740876549251
+    ],
+    "logical_cpus": 10,
+    "path": "evidence/performance_feasibility_followup/1d1b3499-2ff1-440a-ba33-d45212b31b83/CAPACITY.json",
+    "physical_cpus": 10,
+    "recorded_rss_max_bytes": 3585376256,
+    "sha256": "1c98e11ba3a7de36b7890366ea2af793bd5a657dec2e477447f15c63789e2be3",
+    "twelve_measured": false
+  },
+  "caps": {
+    "admission_wall_limit_s": 17280.0,
+    "campaign_cpu_cap_s": 86400.0,
+    "campaign_wall_cap_s": 21600.0,
+    "historical_admission_wall_s": 11520.0,
+    "historical_campaign_wall_s": 14400.0,
+    "historical_cpu_cap_s": 86400.0
+  },
+  "clean_extract_e2e": {
+    "command": "clean-extract miniature admission\u2192execute\u2192verify",
+    "exit_code": 0,
+    "freeze_present": true,
+    "ok": true,
+    "run_id": "470708c8-4e45-4e26-8318-6549b2869db6",
+    "stderr_tail": "",
+    "stdout_tail": "workers=1 wall=0.0 cpu=0.24286300000000005 rss=125304832 eta=None bytes=732934\n[heartbeat] phase=admission_family_depth 1/4 last=C0_p1 workers=1 wall=9.597762542078272 cpu=9.545282 rss=724811776 eta=None bytes=733201\n[heartbeat] phase=admission_family_depth 2/4 last=C0_p2 workers=1 wall=18.629007125040516 cpu=18.57059 rss=1070596096 eta=None bytes=733471\n[heartbeat] phase=admission_family_depth 3/4 last=C1_p1 workers=1 wall=25.33282308303751 cpu=25.26745 rss=1071251456 eta=None bytes=733743\n[heartbeat] phase=admission_family_depth 4/4 last=C1_p2 workers=1 wall=32.07836329191923 cpu=32.00898900000001 rss=1071677440 eta=None bytes=734014\nAUTHORITATIVE_RUN_ID=470708c8-4e45-4e26-8318-6549b2869db6\nADMISSION_DECISION=ADMITTED_MINIATURE\n[heartbeat] phase=donor_train 1/1 last=a4.v2.train.fam.green_pit_high.tyre_near_linear.traffic_dense.0000 workers=1 wall=79.70248729200102 cpu=448.978867 rss=8868544512 eta=None bytes=1178584\n[heartbeat] phase=donor_tune 1/2 last=a4.v2.tune.fam.green_pit_high.tyre_near_linear.traffic_dense.0000 workers=1 wall=142.90108504192904 cpu=511.818465 rss=8868544512 eta=None bytes=1205951\n[heartbeat] phase=donor_tune 2/2 last=a4.v2.tune.fam.green_pit_high.tyre_near_linear.traffic_dense.0001 workers=1 wall=203.94697183393873 cpu=572.6762779999999 rss=8868544512 eta=None bytes=1216971\n[heartbeat] phase=pool 0/4 last=pending=4 workers=8 wall=30.104985917219892 cpu=572.753873 rss=8868544512 eta=None bytes=1218334\n[heartbeat] phase=pool 0/4 last=pending=4 workers=8 wall=60.12876041722484 cpu=572.757035 rss=8868544512 eta=None bytes=1218663\n[heartbeat] phase=train 0/4 last=STALL dump completed=0 pending=4 workers=8 wall=60.12989875022322 cpu=572.758171 rss=8868544512 eta=None bytes=1218991\n[heartbeat] phase=pool 1/4 last=train:a4.v2.train.fam.green_pit_high.tyre_near_linear.traffic_dense.0000:SC workers=8 wall=62.60496175009757 cpu=572.7601199999999 rss=8868544512 eta=None bytes=1219343\n[heartbeat] phase=pool 2/4 last=train:a4.v2.train.fam.green_pit_high.tyre_near_linear.traffic_dense.0001:VSC workers=8 wall=63.15320266713388 cpu=572.7616509999999 rss=8868544512 eta=None bytes=1219744\n[heartbeat] phase=pool 3/4 last=train:a4.v2.train.fam.green_pit_high.tyre_near_linear.traffic_dense.0000:VSC workers=8 wall=64.67027208418585 cpu=572.7628689999999 rss=8868544512 eta=None bytes=1220146\n[heartbeat] phase=pool 4/4 last=train:a4.v2.train.fam.green_pit_high.tyre_near_linear.traffic_dense.0001:SC workers=8 wall=67.95503270905465 cpu=572.764067 rss=8868544512 eta=None bytes=1220548\n[heartbeat] phase=pool 0/4 last=pending=4 workers=8 wall=165.20862816716544 cpu=1081.4261580000002 rss=8868544512 eta=None bytes=1317431\n[heartbeat] phase=pool 0/4 last=pending=4 workers=8 wall=195.24548379215412 cpu=1081.428707 rss=8868544512 eta=None bytes=1317768\n[heartbeat] phase=train 0/4 last=STALL dump completed=0 pending=4 workers=8 wall=195.24686329206452 cpu=1081.4300190000001 rss=8868544512 eta=None bytes=1318098\n[heartbeat] phase=pool 0/4 last=pending=4 workers=8 wall=225.28623483423144 cpu=1081.4316210000002 rss=8868544512 eta=None bytes=1318459\n[heartbeat] phase=pool 1/4 last=calib:a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000:SC workers=8 wall=238.8556571251247 cpu=1081.43478 rss=8868544512 eta=None bytes=1318796\n[heartbeat] phase=pool 2/4 last=calib:a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0000:VSC workers=8 wall=238.85832970915362 cpu=1081.4365420000001 rss=8868544512 eta=None bytes=1319190\n[heartbeat] phase=pool 3/4 last=calib:a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001:VSC workers=8 wall=242.37464354210533 cpu=1081.4379880000001 rss=8868544512 eta=None bytes=1319594\n[heartbeat] phase=pool 4/4 last=calib:a4.v2.calib.fam.green_pit_high.tyre_near_linear.traffic_dense.0001:SC workers=8 wall=243.89813358406536 cpu=1081.4395250000002 rss=8868544512 eta=None bytes=1319998\nRUN 470708c8-4e45-4e26-8318-6549b2869db6\nSTATUS INCOMPLETE_ENGINEERING\nVERIFY_OK True\nN_PASS 13 / 13\n",
+    "tmp": "/var/folders/kf/z93j58l50sn0wr5wk8s9_47w0000gn/T/f1q-a4-extract-we_vzvwi"
+  },
+  "config_hash": "9754ae22adbcefe554766de8a6c64a43870a772e262364ca532b8be72135b97a",
+  "consumed": false,
+  "counts": {
+    "ablation_rows": 168,
+    "ablation_specifications": 7,
+    "best_found_fits": 480,
+    "builds_2400_proven": false,
+    "charged_builds": 3840,
+    "charged_resamples": 116800,
+    "donor_label_resamples": 115200,
+    "evaluation_worlds": 750232,
+    "k_applied_once": true,
+    "mechanism_checkpoints": 120,
+    "mechanism_policy_rows": 72000,
+    "offline_cases": 8,
+    "offline_continuations": 12800,
+    "plan_matches_helper": true,
+    "plan_world_evaluations_k_once": 202016,
+    "portfolio_k_values": [
+      4
+    ],
+    "tune_policy_resamples": 1600,
+    "unique_parameter_builds": 3840
+  },
+  "crafted_quantum": {
+    "engineering_fixture": true,
+    "kernel_version": "compiled-event-loop-2",
+    "losses": [
+      0.02631578947368421,
+      0.02631578947368421
+    ],
+    "n_worlds_executed": 2,
+    "ok": true,
+    "plan_hash": "3db81be697b2752001fa919920e9817b3992c5d06258c64c791b9c20c2b7ddba",
+    "quantum_incremental_at_k": true,
+    "registered_parent": false,
+    "scalar_continue_calls": 0,
+    "selected": true
+  },
+  "decision_sha256": "46bedf5eecc3800a9ae852707a0661c1a157b004205c7f7913301d09421f7771",
+  "design_f_launched": false,
+  "doctor_exit_code": 0,
+  "final_test_accessed": false,
+  "fit_s": {
+    "C0_p1": 6.642744290875271,
+    "C0_p2": 12.135290416888893,
+    "C1_p1": 0.1898229168727994,
+    "C1_p2": 0.1918244999833405
+  },
+  "free_disk_bytes": 111525814272,
+  "gates": {
+    "admission_wall": false,
+    "backend_uniform": true,
+    "campaign_wall": false,
+    "cpu": false,
+    "crafted_quantum_executed": true,
+    "design_f_not_launched": true,
+    "disk": false,
+    "doctor": true,
+    "independent_counts": true,
+    "k_once": true,
+    "kernel_hash": true,
+    "literal_parity": true,
+    "miniature": true,
+    "numba_import": true,
+    "preflight_wall": true,
+    "ram": true,
+    "sealed_split": false,
+    "tests": false,
+    "workers_8": true
+  },
+  "kernel": {
+    "expected_sha256": "a763fe1bc041f77a4ed7f06978eaf2dfd48a468205d8b675988224afd8a7818f",
+    "ok": true,
+    "sha256": "a763fe1bc041f77a4ed7f06978eaf2dfd48a468205d8b675988224afd8a7818f",
+    "version": "compiled-event-loop-2"
+  },
+  "limited_resource_pilot": false,
+  "machine": {
+    "logical_cpus": 10,
+    "physical_cpus": 10,
+    "workers": 8
+  },
+  "miniature": false,
+  "parity": {
+    "exact_signature_mismatches": 0,
+    "files": 32,
+    "kernel_source_sha256": "a763fe1bc041f77a4ed7f06978eaf2dfd48a468205d8b675988224afd8a7818f",
+    "paired_checkpoint_ratios": {
+      "max": 33.082836749072406,
+      "min": 3.4460043022636966,
+      "n": 32
+    },
+    "parent_cpu_process_time_s": 0.013878000000000057,
+    "rows": 3072,
+    "wall_s": 0.023875958053395152
+  },
+  "phase_7_authorised": false,
+  "preflight_cpu_s": 4972.328784,
+  "preflight_wall_s": 3371.024391666986,
+  "projection": {
+    "admission_wall_s": 28414.700906329537,
+    "campaign_wall_s": 28414.700906329537,
+    "cold_start_wall_s": 42.503465499030426,
+    "components_s": {
+      "builds": 4980.062721893191,
+      "optimiser": 2299.1618549544364,
+      "other_fixed": 0.876838,
+      "prepare": 36.157,
+      "race_accelerated": 52490.341264943825,
+      "resamples": 10048.489019274712
+    },
+    "conservative_cpu_s": 87554.49388312986,
+    "efficiency": 0.46288885835714266,
+    "fixed_s": 17364.74743412234,
+    "point_cpu_s": 69855.08869906617,
+    "race_accelerated_s": 52490.341264943825,
+    "race_cells": 965048,
+    "race_scalar_s": 701750.345283886,
+    "speedup": 10.977800873883242,
+    "steady_wall_s": 28372.197440830507,
+    "underprediction": 1.253373168851195,
+    "workers": 8
+  },
+  "qpu_jobs": 0,
+  "ram_limit_bytes": 15461882265,
+  "rates": {
+    "build_cpu_s": 4980.062721893191,
+    "compiled_s_per_cell": 0.05439143054536544,
+    "optimiser_s": 2299.1618549544364,
+    "other_fixed_s": 0.876838,
+    "prepare_s": 36.157,
+    "resample_s": 0.0860315840691328,
+    "scalar_s_per_cell": 0.7271662604180165,
+    "speedup": 10.977800873883242
+  },
+  "rates_raw": {
+    "build_s": 2.592881709104404,
+    "build_s_by_depth": [
+      2.522303916979581,
+      2.592881709104404,
+      0.06775095919147134,
+      0.004628750029951334
+    ],
+    "carried_speedup_not_used": 22.902642628995448,
+    "compiled_s_per_cell": 0.05439143054536544,
+    "n_legal": 100,
+    "panel": "engperf.sixhour 8 families x SC/VSC x 3 plans x 8 worlds after one warmup cell",
+    "resample_s": 0.0860315840691328,
+    "scalar_continue_calls_during_candidate": 0,
+    "scalar_s_per_cell": 0.7271662604180165,
+    "speedup": 10.977800873883242,
+    "speedup_max": 22.25159999640642,
+    "speedup_n_checkpoints": 16
+  },
+  "registered_scientific_parents_executed": 0,
+  "reviewed_source_commit": "79899879809bbd63774b0c27f8a7b7be315c18a4",
+  "rss": {
+    "scalar_continue_calls": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "simultaneous_rss_max_bytes": 4181278720,
+    "wave_makespans_s": [
+      32.48259479086846,
+      7.908617416862398
+    ],
+    "workers": 8
+  },
+  "run_id": "ed37296f-55c5-44e5-8ffd-77410d4789de",
+  "sealed": {
+    "defects": [
+      "registered_outcomes_opened"
+    ],
+    "final_test_id_sha256": "0053bce4f6001e51e3382df82691451392b458bb7328a84e577c661d87adb74e",
+    "final_test_outcomes_read": false,
+    "n_calib": 24,
+    "n_final_test_ids": 80,
+    "n_train": 120,
+    "n_tune": 80,
+    "ok": false,
+    "opened_outcome_files": [
+      "evidence/stage6_a4/eeb03bdd-4fdf-4e1e-baf6-590b54c11d4a/TRAINING_OPTION_RESULTS.jsonl",
+      "evidence/stage6_a4/eeb03bdd-4fdf-4e1e-baf6-590b54c11d4a/CALIBRATION_OPTION_RESULTS.jsonl",
+      "evidence/stage6_a4/eeb03bdd-4fdf-4e1e-baf6-590b54c11d4a/TUNING_OPTION_RESULTS.jsonl"
+    ],
+    "salt": "a4.partitions.v2.20260922.validated"
+  },
+  "selected_design": "NONE_RESOURCE_LIMIT",
+  "selected_world_level": "minimum",
+  "status_exit_code": 0,
+  "storage_bytes": 175246046400,
+  "tests": {
+    "args": [
+      "/Users/kawinperera/f1-ai-quantum-strategy/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "exit_code": 1,
+    "stderr_tail": "",
+    "stdout_tail": "........................................................................ [ 23%]\n.............s.........................F.....................s.......... [ 47%]\n........................................................................ [ 71%]\n........................................................................ [ 95%]\n..............                                                           [100%]\n=================================== FAILURES ===================================\n_______________________ test_registered_split_is_sealed ________________________\n\n    def test_registered_split_is_sealed():\n        root = resolve_project_root()\n        sealed = verify_sealed_splits(root)\n>       assert sealed[\"ok\"], sealed[\"defects\"]\nE       AssertionError: ['registered_outcomes_opened']\nE       assert False\n\ntests/a4/test_six_hour_amendment.py:40: AssertionError\n=========================== short test summary info ============================\nFAILED tests/a4/test_six_hour_amendment.py::test_registered_split_is_sealed\n"
+  },
+  "underprediction": 1.253373168851195
+}
